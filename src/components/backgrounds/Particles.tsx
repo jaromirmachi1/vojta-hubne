@@ -131,20 +131,35 @@ export function Particles({
       alpha: true,
     })
     const gl = renderer.gl
-    container.appendChild(gl.canvas)
+    const canvas = gl.canvas
+    canvas.style.display = 'block'
+    canvas.style.width = '100%'
+    canvas.style.height = '100%'
+    container.appendChild(canvas)
     gl.clearColor(0, 0, 0, 0)
 
     const camera = new Camera(gl, { fov: 15 })
     camera.position.set(0, 0, cameraDistance)
 
     const resize = () => {
-      const width = container.clientWidth
-      const height = container.clientHeight
+      const width = container.clientWidth || window.innerWidth
+      const height = container.clientHeight || window.innerHeight
+      if (width === 0 || height === 0) return
       renderer.setSize(width, height)
       camera.perspective({ aspect: gl.canvas.width / gl.canvas.height })
     }
+
+    const resizeObserver = new ResizeObserver(resize)
+    resizeObserver.observe(container)
     window.addEventListener('resize', resize, false)
+
+    const viewport = window.visualViewport
+    const onViewportChange = () => resize()
+    viewport?.addEventListener('resize', onViewportChange)
+    viewport?.addEventListener('scroll', onViewportChange)
+
     resize()
+    requestAnimationFrame(resize)
 
     const handleMouseMove = (e: MouseEvent) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1
@@ -238,7 +253,10 @@ export function Particles({
     animationFrameId = requestAnimationFrame(update)
 
     return () => {
+      resizeObserver.disconnect()
       window.removeEventListener('resize', resize)
+      viewport?.removeEventListener('resize', onViewportChange)
+      viewport?.removeEventListener('scroll', onViewportChange)
       if (moveParticlesOnHover) {
         window.removeEventListener('mousemove', handleMouseMove)
       }
