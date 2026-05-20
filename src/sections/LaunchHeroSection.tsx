@@ -132,7 +132,7 @@ export function LaunchHeroSection() {
             <Countdown values={countdown} compact />
           </CountdownWrap>
         )}
-        <FooterNote>Prokrvení · Hubnutí · Regenerace</FooterNote>
+        <FooterNote>Pocit sytosti · Hubnutí · Regenerace</FooterNote>
       </Inner>
     </Section>
   );

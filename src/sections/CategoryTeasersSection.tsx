@@ -1,30 +1,30 @@
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { PageContainer } from '../components/PageContainer'
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { PageContainer } from "../components/PageContainer";
 
 const teasers = [
   {
-    title: 'Doplňky stravy',
-    text: 'GLP-1 Support — kapsle pro energii, spalování a kontrolu chuti.',
-    href: '/homepage#produkty',
+    title: "Doplňky stravy",
+    text: "GLP-1 Support — kapsle pro energii, spalování a kontrolu chuti.",
+    href: "/homepage#produkty",
   },
   {
-    title: 'Proteiny & shaky',
-    text: 'Lean Shake GLP-1 — 22 g bílkovin, vláknina a vitamíny v jedné dávce.',
-    href: '/homepage#produkty',
+    title: "Proteiny & shaky",
+    text: "Lean Shake GLP-1 — 22 g bílkovin, vláknina a vitamíny v jedné dávce.",
+    href: "/homepage#produkty",
   },
   {
-    title: 'Péče o tělo',
-    text: 'Regenerační krémy s GHK-Cu pro prokrvení a obnovu pokožky.',
-    href: '/homepage#produkty',
+    title: "Péče o tělo",
+    text: "Regenerační krémy s GHK-Cu pro pocit sytosti a obnovu pokožky.",
+    href: "/homepage#produkty",
   },
-]
+];
 
 const Section = styled.section`
   padding-block: ${({ theme }) => theme.layout.sectionPaddingY};
-`
+`;
 
-const Inner = styled(PageContainer)``
+const Inner = styled(PageContainer)``;
 
 const Title = styled.h2`
   margin: 0 0 2rem;
@@ -33,7 +33,7 @@ const Title = styled.h2`
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.gold};
-`
+`;
 
 const Grid = styled.div`
   display: grid;
@@ -42,7 +42,7 @@ const Grid = styled.div`
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: repeat(3, 1fr);
   }
-`
+`;
 
 const Card = styled(Link)`
   display: flex;
@@ -65,7 +65,7 @@ const Card = styled(Link)`
     border-color: ${({ theme }) => theme.colors.border};
     transform: translateY(-2px);
   }
-`
+`;
 
 const CardTitle = styled.h3`
   margin: 0;
@@ -74,7 +74,7 @@ const CardTitle = styled.h3`
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.gold};
-`
+`;
 
 const CardText = styled.p`
   margin: 0;
@@ -82,7 +82,7 @@ const CardText = styled.p`
   font-size: 0.875rem;
   line-height: 1.6;
   color: ${({ theme }) => theme.colors.text};
-`
+`;
 
 const CardCta = styled.span`
   font-size: 0.65rem;
@@ -90,7 +90,7 @@ const CardCta = styled.span`
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.goldMuted};
-`
+`;
 
 export function CategoryTeasersSection() {
   return (
@@ -108,5 +108,5 @@ export function CategoryTeasersSection() {
         </Grid>
       </Inner>
     </Section>
-  )
+  );
 }
