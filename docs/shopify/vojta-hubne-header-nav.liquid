@@ -1,0 +1,16 @@
+{% comment %}
+  Optional custom nav — mirrors React SiteHeader links.
+  Use only if Horizon menu block cannot be styled enough.
+  In Customize: add Custom Liquid block in header, or include in a section:
+  {% render 'vojta-hubne-header-nav', marketing_url: 'https://vojtahubne.cz' %}
+  Save as snippets/vojta-hubne-header-nav.liquid in Shopify.
+{% endcomment %}
+
+{% assign marketing = marketing_url | default: 'https://vojtahubne.cz' %}
+
+<nav class="vh-header-nav" aria-label="Hlavní navigace">
+  <a class="vh-header-nav__link" href="{{ marketing }}/homepage#produkty">Produkty</a>
+  <a class="vh-header-nav__link" href="{{ marketing }}/homepage#porovnani">Proč my</a>
+  <a class="vh-header-nav__link" href="{{ marketing }}/homepage#pribeh">Příběh</a>
+  <a class="vh-header-nav__link" href="{{ marketing }}/">Spouštíme brzy</a>
+</nav>

@@ -1,4 +1,26 @@
-# React + TypeScript + Vite
+# Vojta Hubne
+
+React + TypeScript + styled-components — launch countdown (`/`) and homepage (`/homepage`).
+
+## Shopify (later)
+
+Step-by-step guide: **[docs/SHOPIFY-INTEGRATION.md](docs/SHOPIFY-INTEGRATION.md)**  
+Horizon theme (product page files): **[docs/SHOPIFY-HORIZON-THEME.md](docs/SHOPIFY-HORIZON-THEME.md)**  
+Match React navbar on Shopify: **[docs/SHOPIFY-HEADER-MATCH.md](docs/SHOPIFY-HEADER-MATCH.md)**  
+Wide product page (image left): **[docs/SHOPIFY-PRODUCT-LAYOUT.md](docs/SHOPIFY-PRODUCT-LAYOUT.md)**  
+Env template: **`.env.example`**  
+URL helpers (ready to wire): **`src/utils/shopify.ts`**
+
+## Dev
+
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 

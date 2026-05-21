@@ -1,0 +1,458 @@
+/**
+ * Vojta Hubne — Horizon theme overrides
+ * Copy to Shopify: Themes → Horizon → Edit code → Assets → Add asset → vojta-hubne-horizon.css
+ * Then in layout/theme.liquid before </head>:
+ *   {{ 'vojta-hubne-horizon.css' | asset_url | stylesheet_tag }}
+ *
+ * Brand tokens (match src/styles/theme.ts):
+ *   black #000000, surface #0a0a0a, gold #eedc82, goldMuted #c9b56a
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600&display=swap");
+
+:root {
+  --vh-black: #000000;
+  --vh-surface: #0a0a0a;
+  --vh-surface-raised: #111111;
+  --vh-gold: #eedc82;
+  --vh-gold-muted: #c9b56a;
+  --vh-text: rgba(255, 255, 255, 0.72);
+  --vh-text-muted: rgba(255, 255, 255, 0.5);
+  --vh-border: rgba(238, 220, 130, 0.35);
+  --vh-border-subtle: rgba(255, 255, 255, 0.08);
+  --vh-font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --vh-font-sans: "Montserrat", system-ui, sans-serif;
+}
+
+/* Base */
+body,
+.gradient {
+  background-color: var(--vh-black) !important;
+  color: var(--vh-text) !important;
+  font-family: var(--vh-font-sans) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+.product-title,
+[class*="product"] [class*="title"] {
+  font-family: var(--vh-font-display) !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--vh-gold) !important;
+}
+
+a {
+  color: var(--vh-gold-muted);
+}
+
+a:hover {
+  color: var(--vh-gold);
+}
+
+/* ─── Promo bar (PromoBar.tsx) ─── */
+.shopify-section-group-header-group .announcement-bar,
+.announcement-bar,
+[class*="announcement"] {
+  background-color: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.7rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+}
+
+.announcement-bar a,
+[class*="announcement"] a {
+  color: var(--vh-black) !important;
+}
+
+/* ─── Header (SiteHeader.tsx) ─── */
+#header-group,
+.shopify-section-header,
+header,
+.header {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  background-color: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--vh-border-subtle) !important;
+}
+
+#header-group header,
+.header__row,
+.header__columns {
+  min-height: 4.5rem !important;
+  max-width: 1600px !important;
+  margin-inline: auto !important;
+  padding-inline: clamp(1.25rem, 5vw, 3.5rem) !important;
+}
+
+/* Logo */
+.header__heading-logo,
+.header__heading-link img {
+  height: 2.25rem !important;
+  width: auto !important;
+}
+
+/* Desktop menu links — Horizon menu + custom snippet */
+.header-menu a,
+.menu-list__link,
+.vh-header-nav__link {
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  color: var(--vh-text) !important;
+  transition: color 0.2s ease !important;
+}
+
+.header-menu a:hover,
+.menu-list__link:hover,
+.vh-header-nav__link:hover {
+  color: var(--vh-gold) !important;
+}
+
+.vh-header-nav {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+}
+
+@media (min-width: 768px) {
+  .vh-header-nav {
+    display: flex;
+  }
+}
+
+/* Cart icon — match React CartButton (enabled on Shopify) */
+.header-actions a[href*="/cart"],
+.cart-drawer-button,
+.header__icon--cart {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  border: 1px solid var(--vh-border) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--vh-gold) !important;
+}
+
+.header-actions a[href*="/cart"]:hover {
+  background: rgba(238, 220, 130, 0.08) !important;
+}
+
+/* Hide search if React parity (optional — remove if you want search) */
+.header__search,
+.search-action,
+button[aria-label*="Search"],
+a[href*="/search"] {
+  display: none !important;
+}
+
+footer,
+.shopify-section-footer {
+  background-color: var(--vh-surface) !important;
+  border-top: 1px solid var(--vh-border-subtle) !important;
+}
+
+/* ─── Product page layout (Aktin-style: gallery ~62% | sticky details ~38%) ─── */
+/* Layout only — colors/fonts stay Vojta Hubne. Use Horizon Customize settings in SHOPIFY-PRODUCT-LAYOUT.md */
+
+.product-information,
+[class*="product-information"] {
+  background-color: var(--vh-black) !important;
+}
+
+/* Wide centered shell (~Aktin max-width) */
+.shopify-section:has(.product-information),
+.section:has(.product-information__grid) {
+  --page-width: min(100%, 1400px);
+}
+
+.product-information .section,
+.product-information > .section,
+.product-information .page-width,
+.product-information [class*="page-width"] {
+  max-width: 1400px !important;
+  width: 100% !important;
+  margin-inline: auto !important;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem) !important;
+}
+
+/* Desktop: image left (wide) + buy box right (narrow sidebar) — do NOT use Equal columns */
+@media screen and (min-width: 750px) {
+  .product-information__grid:not(.product-information--media-none) {
+    display: grid !important;
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    gap: clamp(1.5rem, 3vw, 2.5rem) !important;
+    align-items: start !important;
+  }
+
+  /* Aktin ratio: ~62% gallery / ~38% details (Horizon default is close; we pin it) */
+  .product-information--media-left:not(.product-information--media-none):not(
+      .product-information__grid--half
+    ) {
+    grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.95fr) !important;
+  }
+
+  .product-information--media-right:not(.product-information--media-none):not(
+      .product-information__grid--half
+    ) {
+    grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.65fr) !important;
+  }
+
+  /* If Equal columns was turned on in editor — still force Aktin split */
+  .product-information__grid--half:not(.product-information--media-none) {
+    grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.95fr) !important;
+  }
+
+  .product-information--media-left .product-information__media {
+    grid-column: 1 !important;
+    order: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .product-information--media-left .product-details {
+    grid-column: 2 !important;
+    order: 1 !important;
+    width: 100% !important;
+    max-width: 420px !important;
+    padding-left: 0 !important;
+    margin: 0 !important;
+  }
+
+  .product-information__grid--limit-details .product-details > .group-block,
+  .product-details > .group-block {
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  /* Sticky right column while scrolling gallery (Aktin) */
+  .product-details.sticky-content--desktop,
+  .product-details.sticky-content,
+  media-gallery.sticky-content {
+    position: sticky !important;
+    top: calc(var(--header-height, 4.5rem) + 1.25rem) !important;
+    align-self: start !important;
+  }
+
+  .product-details.sticky-content--desktop,
+  .product-details.sticky-content {
+    max-height: calc(100vh - var(--header-height, 4.5rem) - 2rem) !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+  }
+}
+
+/* Gallery visible + Aktin grid: hero image + 2-col thumbs */
+.product-information__media {
+  display: block !important;
+  visibility: visible !important;
+}
+
+media-gallery.media-gallery--grid,
+.product-media-gallery {
+  width: 100% !important;
+}
+
+@media screen and (min-width: 750px) {
+  media-gallery.media-gallery--grid .media-gallery__grid {
+    display: grid !important;
+    gap: 12px !important;
+  }
+
+  /* First image full width, rest in 2 columns (needs Customize: 2 columns + large first image) */
+  .media-gallery--large-first-image .media-gallery__grid > :first-child,
+  .media-gallery--two-column .media-gallery__grid > :first-child {
+    grid-column: 1 / -1 !important;
+  }
+
+  .media-gallery--two-column .media-gallery__grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .product-media-container,
+  .media-gallery__grid .product-media-container {
+    background: var(--vh-surface-raised) !important;
+    border: 1px solid var(--vh-border-subtle) !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .product-media-container img,
+  .media-gallery__grid img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .media-gallery--large-first-image .media-gallery__grid > :first-child img {
+    max-height: min(72vh, 720px) !important;
+    object-fit: contain !important;
+  }
+}
+
+/* No images — full-width single column (not thin center strip) */
+@media screen and (min-width: 750px) {
+  .product-information__grid.product-information--media-none .product-details {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    grid-column: 1 / -1 !important;
+  }
+}
+
+/* Right column stack spacing (title → price → variants → ATC → description) */
+.product-details {
+  padding-block: 0.5rem 2rem !important;
+}
+
+.product-details > .group-block,
+.product-details [class*="group-block"] {
+  gap: 1.25rem !important;
+}
+
+.product-details h1,
+.product-details .h3,
+.product-details [class*="title"] {
+  font-size: clamp(1.75rem, 2.5vw, 2.5rem) !important;
+  line-height: 1.1 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.product-details .buy-buttons-block,
+.product-details [class*="buy-buttons"],
+.product-details buy-buttons-component {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.product-details button[name="add"],
+.product-details .add-to-cart-button {
+  width: 100% !important;
+}
+
+/* Description below buy box — full width of right column */
+.product-details .rte,
+.product-details [class*="product-details"] .rte {
+  margin-top: 0.5rem !important;
+  padding-top: 1.5rem !important;
+  border-top: 1px solid var(--vh-border-subtle) !important;
+}
+
+/* Price */
+.price,
+.price__regular,
+.price-item--regular {
+  color: var(--vh-gold) !important;
+  font-weight: 600 !important;
+}
+
+.price__sale,
+.price-item--sale {
+  color: var(--vh-gold) !important;
+}
+
+/* Description body text */
+.rte,
+.product__description,
+[class*="product-details"] p {
+  color: var(--vh-text) !important;
+  line-height: 1.65 !important;
+}
+
+/* Variant buttons */
+.variant-picker button,
+[class*="variant"] button,
+.product-form__input--pill label {
+  background: var(--vh-surface-raised) !important;
+  color: var(--vh-text) !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: 0 !important;
+}
+
+.variant-picker button[aria-checked="true"],
+[class*="variant"] button.is-selected,
+.product-form__input--pill input:checked + label {
+  border-color: var(--vh-border) !important;
+  color: var(--vh-gold) !important;
+}
+
+/* Primary buttons — Add to cart */
+.button--primary,
+button[name="add"],
+.shopify-payment-button__button,
+.add-to-cart-button,
+button.button {
+  background-color: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+  border: 1px solid var(--vh-gold) !important;
+  border-radius: 0 !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+}
+
+.button--primary:hover,
+button[name="add"]:hover {
+  opacity: 0.9 !important;
+}
+
+/* Secondary / outline */
+.button--secondary {
+  background: transparent !important;
+  color: var(--vh-gold) !important;
+  border: 1px solid var(--vh-border) !important;
+}
+
+/* Quantity */
+.quantity,
+.quantity__input {
+  background: var(--vh-surface-raised) !important;
+  border-color: var(--vh-border-subtle) !important;
+  color: var(--vh-white, #fff) !important;
+}
+
+/* Product recommendations */
+.product-recommendations,
+[class*="product-recommendations"] {
+  background-color: var(--vh-surface) !important;
+}
+
+/* Product cards in grid */
+.product-card,
+.card {
+  background: var(--vh-surface-raised) !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: 0 !important;
+}
+
+/* Dividers */
+hr,
+.divider {
+  border-color: var(--vh-border-subtle) !important;
+}
+
+/* Inputs */
+input,
+textarea,
+select {
+  background-color: var(--vh-surface-raised) !important;
+  border-color: var(--vh-border-subtle) !important;
+  color: #fff !important;
+}
