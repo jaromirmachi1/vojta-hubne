@@ -24,7 +24,7 @@ React source of truth:
 
 ### 2. Logo
 
-1. **Settings → Files** → upload `src/assets/logo.png` from this repo
+1. **Settings → Files** → upload `src/assets/VojtHLogo.png` from this repo
 2. **Customize → Header → Logo** → select that image
 3. Logo height ~ **36px** (2.25rem in React)
 

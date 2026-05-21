@@ -5,6 +5,12 @@ import { PageContainer } from '../components/PageContainer'
 
 const Section = styled.section`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: ${({ theme }) => theme.layout.heroMinHeight};
+  min-height: ${({ theme }) => theme.layout.heroMinHeightDvh};
   overflow: hidden;
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
 `
@@ -12,14 +18,17 @@ const Section = styled.section`
 const Inner = styled(PageContainer)`
   position: relative;
   z-index: 1;
+  width: 100%;
+  min-height: 100%;
   display: grid;
   gap: 2rem;
-  padding-block: clamp(3rem, 8vw, 5rem);
+  padding-block: clamp(2rem, 5vh, 3rem);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-template-columns: 1.1fr 0.9fr;
     align-items: center;
     gap: 4rem;
+    padding-block: clamp(2.5rem, 6vh, 4rem);
   }
 `
 

@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-import logoSrc from '../assets/logo.png'
+import { BrandLogo } from './BrandLogo'
 import { PageContainer } from './PageContainer'
 
 const Header = styled.header`
@@ -25,12 +25,7 @@ const LogoLink = styled(Link)`
   display: flex;
   align-items: center;
   flex-shrink: 0;
-
-  img {
-    display: block;
-    height: 2.25rem;
-    width: auto;
-  }
+  text-decoration: none;
 `
 
 const Nav = styled.nav`
@@ -107,7 +102,7 @@ export function SiteHeader() {
     <Header>
       <Inner>
         <LogoLink to="/homepage" aria-label="Vojta Hubne — domů">
-          <img src={logoSrc} alt="Vojta Hubne" width={978} height={652} />
+          <BrandLogo variant="nav" />
         </LogoLink>
 
         <Nav aria-label="Hlavní navigace">

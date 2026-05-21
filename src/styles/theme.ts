@@ -1,3 +1,6 @@
+const headerHeight = '4.5rem'
+const promoBarHeight = '2.25rem'
+
 export const theme = {
   colors: {
     black: '#000000',
@@ -28,7 +31,11 @@ export const theme = {
     maxWidth: '1600px',
     contentPadding: 'clamp(1.25rem, 5vw, 3.5rem)',
     sectionPaddingY: 'clamp(3rem, 7vw, 5rem)',
-    headerHeight: '4.5rem',
+    headerHeight,
+    promoBarHeight,
+    /** Homepage hero: full viewport below promo + header */
+    heroMinHeight: `calc(100svh - ${headerHeight} - ${promoBarHeight})`,
+    heroMinHeightDvh: `calc(100dvh - ${headerHeight} - ${promoBarHeight})`,
   },
 } as const
 

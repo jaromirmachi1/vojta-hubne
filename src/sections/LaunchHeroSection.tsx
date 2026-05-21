@@ -1,13 +1,17 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 import { LAUNCH_DATE } from "../config/launch";
 import { BrandLogo } from "../components/BrandLogo";
 import { Countdown } from "../components/Countdown";
 import { LaunchBackground } from "../components/backgrounds/LaunchBackground";
 import { useCountdown } from "../hooks/useCountdown";
 
-const shimmer = keyframes`
-  0%, 100% { opacity: 0.55; }
-  50% { opacity: 0.95; }
+const launchLabel = css`
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: clamp(0.7rem, 1.6vw, 0.8rem);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.gold};
 `;
 
 const Section = styled.section`
@@ -43,24 +47,12 @@ const LogoWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  img {
-    display: block;
-    width: min(100%, clamp(9rem, 24vw, 16rem));
-    max-height: clamp(4rem, 14svh, 8rem);
-    height: auto;
-    object-fit: contain;
-  }
 `;
 
 const Eyebrow = styled.p`
   margin: 0;
   flex-shrink: 0;
-  font-size: 0.65rem;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
-  animation: ${shimmer} 4s ease-in-out infinite;
+  ${launchLabel}
 `;
 
 const Title = styled.h1`
@@ -102,10 +94,8 @@ const CountdownWrap = styled.div`
 const FooterNote = styled.p`
   margin: 0;
   flex-shrink: 0;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
+  ${launchLabel}
+  letter-spacing: 0.18em;
 `;
 
 export function LaunchHeroSection() {

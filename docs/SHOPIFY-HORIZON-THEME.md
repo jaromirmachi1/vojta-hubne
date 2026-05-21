@@ -193,7 +193,7 @@ See **[SHOPIFY-HEADER-MATCH.md](./SHOPIFY-HEADER-MATCH.md)** (promo bar, menu li
 
 In **Customize → Header**:
 
-- Upload same logo as `src/assets/logo.png`
+- Upload same logo as `src/assets/VojtHLogo.png`
 - Menu link: `https://vojtahubne.cz/homepage` (Domů / Značka)
 
 Keeps one brand journey: marketing site ↔ shop.
