@@ -126,11 +126,47 @@ Na localhostu app automaticky používá **myshopify** odkazy v dev režimu.
 
 | Chyba | Řešení |
 |-------|--------|
+| **`shop.vojtahubne.cz` ukazuje launch / countdown** | Subdoména míří na **Vercel**, ne Shopify. Viz níže. |
 | Celá doména jen na Shopify | Přidej A/CNAME pro `@` a `www` na Vercel |
 | `shop` jde na Vercel | CNAME `shop` musí být `shops.myshopify.com` |
 | Shopify: Neplatné DNS | Počkej 1–24 h; zkontroluj přesný CNAME z Shopify |
 | Vercel: Invalid Configuration | Zkopíruj záznamy z Vercel dashboardu 1:1 |
 | WWW nefunguje | Přidej CNAME `www` |
+
+### `shop.vojtahubne.cz` → countdown (Vercel místo Shopify)
+
+Příznak: TLS je OK, ale stránka vypadá jako **vojtahubne.cz** (odpočet), ne Shopify obchod.
+
+**Příčina:** DNS nebo Vercel má `shop` napojený na React projekt.
+
+**Oprava:**
+
+1. **Vercel** → Project → **Settings → Domains**  
+   → pokud je tam `shop.vojtahubne.cz`, **odeber** ji (shop patří jen Shopify)
+
+2. **Registrátor DNS** — záznam pro `shop`:
+   - **CNAME** `shop` → `shops.myshopify.com`  
+   - **ne** na Vercel / `cname.vercel-dns.com`
+
+3. **Shopify** → Nastavení → Domény → `shop.vojtahubne.cz` = **Připojeno**
+
+4. Ověření: `https://shop.vojtahubne.cz` musí ukázat **Shopify obchod** (produkty, košík), ne React launch.
+
+Na homepage (`vojtahubne.cz`) klik na produkt → `https://shop.vojtahubne.cz/products/...` (až DNS sedí).
+
+---
+
+## Preview funguje, `shop.vojtahubne.cz/collections/all` ne?
+
+**Preview** (např. `….shopifypreview.com/collections/all`) běží na **Shopify** — tam je katalog v pořádku (11 produktů).
+
+Když **`shop.vojtahubne.cz`** ukazuje launch / prázdnou stránku, doména stále míří na **Vercel**, ne na Shopify. Kolekce je OK — špatný host.
+
+**Oprava:** viz sekce výše (`shop` → CNAME `shops.myshopify.com`, odebrat `shop` z Vercel Domains).
+
+Po opravě DNS bude `https://shop.vojtahubne.cz/collections/all` stejné jako preview.
+
+Nav **Produkty** na homepage vede na `shop…/collections/all`. Karty produktů → `shop…/products/{handle}`.
 
 ---
 

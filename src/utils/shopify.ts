@@ -43,11 +43,15 @@ export function getShopifyCartUrl(): string | null {
   return `${base}/cart`
 }
 
-/** All products / catalog */
+/** Shop catalog — all products (works on Shopify; same as theme “Katalog”) */
 export function getShopifyCatalogUrl(): string | null {
   const base = getShopifyStoreUrl()
   if (!base) return null
-  return `${base}/collections/all`
+
+  const path =
+    import.meta.env.VITE_SHOPIFY_CATALOG_PATH?.trim() || '/collections/all'
+  const normalized = path.startsWith('/') ? path : `/${path}`
+  return `${base}${normalized}`
 }
 
 /** Collection by handle, e.g. "bestsellery" */
