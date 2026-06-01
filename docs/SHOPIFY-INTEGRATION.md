@@ -29,10 +29,10 @@ Handles in `src/data/products.ts` → **Search engine listing / URL handle** in 
 
 | Product | Shopify handle |
 |---------|----------------|
-| GLP-1 Support | `glp-1-support` |
+| GLP-1 Support | `glp1-support` |
 | Lean Shake GLP-1 | `lean-shake-glp-1` |
-| Cream GLP-1 GHK-Cu | `cream-glp-1-ghk-cu` |
-| Regenerační krém Emulfeel® | `regeneracni-krem-emulfeel` |
+| Cream GLP-1 GHK-Cu | `ghk-cu-cream` |
+| Regenerační krém Emulfeel® | `antiage-cream-emulfeel®` |
 
 ### Per product
 
@@ -62,6 +62,8 @@ https://YOUR-STORE.myshopify.com/products/glp-1-support
 3. Set **`shop.vojtahubne.cz`** as online store (or follow Shopify wizard)
 
 ### DNS (registrar)
+
+**Full tutorial:** **[DNS-SETUP.md](./DNS-SETUP.md)** (Vercel + Shopify split)
 
 | Type | Name | Value |
 |------|------|--------|
@@ -132,16 +134,17 @@ const shopUrl = getShopifyProductUrl(product.shopifyHandle)
 
 ---
 
-## Part 5 — Level 2: Storefront API (later)
+## Part 5 — Level 2: Headless product pages (Storefront API)
 
-Sync title, price, image from Shopify on the homepage.
+**Step-by-step setup:** **[SHOPIFY-HEADLESS-SETUP.md](./SHOPIFY-HEADLESS-SETUP.md)**
+
+Custom React PDP at `vojtahubne.cz/products/{handle}` — implemented in this repo.
 
 ### 5.1 Custom app
 
 1. **Settings → Apps → Develop apps → Create app**
 2. Name: `Vojta Hubne Headless`
-3. Storefront API scopes (read):
-   - `unauthenticated_read_product_listings`
+3. Storefront API scopes — see headless setup doc
 4. Install app → copy **Storefront API access token**
 
 ### 5.2 Env
@@ -153,20 +156,17 @@ VITE_SHOPIFY_STOREFRONT_TOKEN=your_token
 
 Add on Vercel. **Never** put Admin API token in frontend.
 
-### 5.3 GraphQL endpoint
+### 5.3 Code (in repo)
 
-```text
-POST https://YOUR-STORE.myshopify.com/api/2024-01/graphql.json
-Header: X-Shopify-Storefront-Access-Token: TOKEN
-```
+- `src/api/shopify/` — GraphQL client, product + cart
+- `src/pages/ProductPage.tsx` — `/products/:handle`
+- `src/hooks/useShopifyProduct.ts`
+- `ProductCard` → links to `/products/{handle}`
 
-Use `onlineStoreUrl` from response for product links.
+### 5.4 Optional later
 
-### 5.4 App changes (future)
-
-- `src/api/shopify.ts` — fetch helper
-- `src/hooks/useShopifyProducts.ts`
-- Replace `featuredProducts` mock with API data on `HomePage`
+- Replace `featuredProducts` mock with API on homepage
+- Cart drawer before checkout redirect
 
 ---
 

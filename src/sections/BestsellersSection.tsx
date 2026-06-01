@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { BestsellersPagination } from '../components/BestsellersPagination'
 import { PageContainer } from '../components/PageContainer'
 import { ProductCard } from '../components/ProductCard'
-import { featuredProducts } from '../data/products'
 import { useItemsPerPage } from '../hooks/useItemsPerPage'
+import { useShopifyProducts } from '../hooks/useShopifyProducts'
 
 const Section = styled.section`
   padding-block: ${({ theme }) => theme.layout.sectionPaddingY};
@@ -41,16 +41,23 @@ const Grid = styled.div<{ $columns: number }>`
   grid-template-columns: repeat(${({ $columns }) => $columns}, minmax(0, 1fr));
 `
 
+const Status = styled.p`
+  margin: 0 0 1.5rem;
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.textMuted};
+`
+
 export function BestsellersSection() {
+  const { products, loading, fromShopify, error } = useShopifyProducts()
   const itemsPerPage = useItemsPerPage()
   const [page, setPage] = useState(0)
 
-  const totalPages = Math.max(1, Math.ceil(featuredProducts.length / itemsPerPage))
+  const totalPages = Math.max(1, Math.ceil(products.length / itemsPerPage))
 
   const visibleProducts = useMemo(() => {
     const start = page * itemsPerPage
-    return featuredProducts.slice(start, start + itemsPerPage)
-  }, [page, itemsPerPage])
+    return products.slice(start, start + itemsPerPage)
+  }, [page, itemsPerPage, products])
 
   useEffect(() => {
     if (page > totalPages - 1) {
@@ -70,7 +77,15 @@ export function BestsellersSection() {
           <Title>Trendy bestsellery</Title>
         </Header>
 
-        <Grid $columns={Math.min(itemsPerPage, visibleProducts.length)}>
+        {loading ? (
+          <Status>Načítám produkty z e-shopu…</Status>
+        ) : error ? (
+          <Status>{error}</Status>
+        ) : fromShopify ? null : (
+          <Status>Zobrazení katalogu (offline režim)</Status>
+        )}
+
+        <Grid $columns={Math.min(itemsPerPage, Math.max(visibleProducts.length, 1))}>
           {visibleProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

@@ -8,6 +8,9 @@ Step-by-step guide: **[docs/SHOPIFY-INTEGRATION.md](docs/SHOPIFY-INTEGRATION.md)
 Horizon theme (product page files): **[docs/SHOPIFY-HORIZON-THEME.md](docs/SHOPIFY-HORIZON-THEME.md)**  
 Match React navbar on Shopify: **[docs/SHOPIFY-HEADER-MATCH.md](docs/SHOPIFY-HEADER-MATCH.md)**  
 Wide product page (image left): **[docs/SHOPIFY-PRODUCT-LAYOUT.md](docs/SHOPIFY-PRODUCT-LAYOUT.md)**  
+DNS (vojtahubne.cz + shop): **[docs/DNS-SETUP.md](docs/DNS-SETUP.md)**  
+Shopify Step 1 (Headless token): **[docs/SHOPIFY-STEP-1.md](docs/SHOPIFY-STEP-1.md)**  
+Headless / API reference: **[docs/SHOPIFY-HEADLESS-SETUP.md](docs/SHOPIFY-HEADLESS-SETUP.md)**  
 Env template: **`.env.example`**  
 URL helpers (ready to wire): **`src/utils/shopify.ts`**
 

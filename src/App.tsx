@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HomePage } from './pages/HomePage'
 import { LaunchingSoonPage } from './pages/LaunchingSoonPage'
+import { ProductPage } from './pages/ProductPage'
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LaunchingSoonPage />} />
         <Route path="/homepage" element={<HomePage />} />
+        <Route path="/products/:handle" element={<ProductPage />} />
       </Routes>
     </BrowserRouter>
   )

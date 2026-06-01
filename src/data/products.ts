@@ -15,8 +15,10 @@ export type Product = {
   format: string;
   benefits: string[];
   featured: boolean;
-  /** Shopify handle — připraveno pro budoucí napojení */
+  /** Shopify URL handle — must match Admin (see docs/SHOPIFY-STEP-1.md) */
   shopifyHandle: string;
+  /** Filled from Storefront API when available */
+  price?: string;
 };
 
 export const featuredProducts: Product[] = [
@@ -33,7 +35,7 @@ export const featuredProducts: Product[] = [
     format: "160 kapslí · 125,4 g",
     benefits: ["Kontrola chuti", "Podpora sytosti", "Energie"],
     featured: true,
-    shopifyHandle: "glp-1-support",
+    shopifyHandle: "glp1-support",
   },
   {
     id: "lean-shake-glp-1",
@@ -63,7 +65,7 @@ export const featuredProducts: Product[] = [
     format: "300 ml",
     benefits: ["GHK-Cu", "Hřejivý efekt", "Hydratace"],
     featured: true,
-    shopifyHandle: "cream-glp-1-ghk-cu",
+    shopifyHandle: "ghk-cu-cream",
   },
   {
     id: "regeneracni-krem-emulfeel",
@@ -78,6 +80,6 @@ export const featuredProducts: Product[] = [
     format: "50 ml",
     benefits: ["GHK-Cu", "Zklidnění", "Elasticita"],
     featured: true,
-    shopifyHandle: "regeneracni-krem-emulfeel",
+    shopifyHandle: "antiage-cream-emulfeel®",
   },
 ];

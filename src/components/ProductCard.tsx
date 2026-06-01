@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import type { Product } from '../data/products'
+import { getShopifyProductUrl } from '../utils/shopify'
 
 const Card = styled.article`
   display: flex;
@@ -70,6 +71,13 @@ const Name = styled.h3`
   color: ${({ theme }) => theme.colors.gold};
 `
 
+const Price = styled.p`
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.gold};
+`
+
 const Tagline = styled.p`
   margin: 0;
   font-size: 0.7rem;
@@ -110,7 +118,8 @@ const Benefit = styled.li`
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
 `
 
-const Cta = styled.button`
+const Cta = styled.a`
+  display: block;
   width: 100%;
   margin-top: 0.5rem;
   padding: 0.85rem 1rem;
@@ -119,6 +128,8 @@ const Cta = styled.button`
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.gold};
   border: none;
@@ -128,6 +139,23 @@ const Cta = styled.button`
   &:hover {
     opacity: 0.9;
   }
+
+`
+
+const CtaDisabled = styled.span`
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.textMuted};
+  background: ${({ theme }) => theme.colors.surface};
+  border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  opacity: 0.6;
 `
 
 type ProductCardProps = {
@@ -135,6 +163,8 @@ type ProductCardProps = {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const shopUrl = getShopifyProductUrl(product.shopifyHandle)
+
   return (
     <Card>
       <ImageWrap>
@@ -144,6 +174,7 @@ export function ProductCard({ product }: ProductCardProps) {
       <Body>
         <Category>{product.category}</Category>
         <Name>{product.name}</Name>
+        {product.price ? <Price>{product.price}</Price> : null}
         <Tagline>{product.tagline}</Tagline>
         <Description>{product.description}</Description>
         <Meta>{product.format}</Meta>
@@ -152,7 +183,13 @@ export function ProductCard({ product }: ProductCardProps) {
             <Benefit key={benefit}>{benefit}</Benefit>
           ))}
         </Benefits>
-        <Cta type="button">Brzy v e-shopu</Cta>
+        {shopUrl ? (
+          <Cta href={shopUrl} target="_blank" rel="noopener noreferrer">
+            Zobrazit v e-shopu
+          </Cta>
+        ) : (
+          <CtaDisabled>Brzy v e-shopu</CtaDisabled>
+        )}
       </Body>
     </Card>
   )
