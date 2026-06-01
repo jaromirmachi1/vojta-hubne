@@ -98,26 +98,6 @@ const CartLink = styled.a`
   }
 `
 
-const CartButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 0;
-  background: transparent;
-  color: ${({ theme }) => theme.colors.gold};
-  cursor: not-allowed;
-  opacity: 0.5;
-
-  svg {
-    width: 1.1rem;
-    height: 1.1rem;
-  }
-`
-
 export function SiteHeader() {
   const catalogUrl = getShopifyCatalogUrl()
   const cartUrl = getShopifyCartUrl()
@@ -130,36 +110,21 @@ export function SiteHeader() {
         </LogoLink>
 
         <Nav aria-label="Hlavní navigace">
-          {catalogUrl ? (
-            <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
-          ) : (
-            <StyledNavLink to="/homepage#produkty">Produkty</StyledNavLink>
-          )}
+          <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
           <StyledNavLink to="/homepage#porovnani">Proč my</StyledNavLink>
           <StyledNavLink to="/homepage#pribeh">Příběh</StyledNavLink>
           <ExternalNavLink href="/">Spouštíme brzy</ExternalNavLink>
         </Nav>
 
         <Actions>
-          {cartUrl ? (
-            <CartLink href={cartUrl} aria-label="Košík">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-                <path d="M6 6h15l-1.5 9h-12L6 6z" />
-                <path d="M6 6L5 3H2" />
-                <circle cx="9" cy="20" r="1" />
-                <circle cx="18" cy="20" r="1" />
-              </svg>
-            </CartLink>
-          ) : (
-            <CartButton type="button" aria-label="Košík (brzy)" disabled>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
-                <path d="M6 6h15l-1.5 9h-12L6 6z" />
-                <path d="M6 6L5 3H2" />
-                <circle cx="9" cy="20" r="1" />
-                <circle cx="18" cy="20" r="1" />
-              </svg>
-            </CartButton>
-          )}
+          <CartLink href={cartUrl} aria-label="Košík">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+              <path d="M6 6h15l-1.5 9h-12L6 6z" />
+              <path d="M6 6L5 3H2" />
+              <circle cx="9" cy="20" r="1" />
+              <circle cx="18" cy="20" r="1" />
+            </svg>
+          </CartLink>
         </Actions>
       </Inner>
     </Header>

@@ -214,9 +214,9 @@ Keeps one brand journey: marketing site ↔ shop.
 
 For “same vibe”, dark + gold + fonts + sharp corners (no big border-radius) is enough.
 
-### Alternative: headless product page on Vercel (advanced)
+### Current decision: Shopify owns product pages
 
-Build `/products/:handle` in this React repo with Storefront API — full design control, checkout still on Shopify. More dev work; only choose this if Horizon theming is too limiting.
+Keep product detail, cart and checkout in Shopify. React can still enrich homepage product cards through the Storefront API, but production PDP links should stay on `shop.vojtahubne.cz/products/...`.
 
 ---
 

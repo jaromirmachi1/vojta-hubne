@@ -1,3 +1,20 @@
 {
+  "redirects": [
+    {
+      "source": "/collections/:path*",
+      "destination": "https://shop.vojtahubne.cz/collections/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/products/:path*",
+      "destination": "https://shop.vojtahubne.cz/products/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/cart",
+      "destination": "https://shop.vojtahubne.cz/cart",
+      "permanent": true
+    }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

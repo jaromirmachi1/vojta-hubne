@@ -69,12 +69,9 @@ Load **`docs/shopify/vojta-hubne-horizon.css`** (see [SHOPIFY-HORIZON-THEME.md](
 
 ## Option B — One shared navbar everywhere (advanced)
 
-Only possible if **marketing site and shop share one frontend**:
+Only possible if **marketing site and shop share one frontend**. That is not the current production choice.
 
-- Same domain + React Router for `/`, `/homepage`, `/products/...` (Storefront API), **or**
-- iframe embed (not recommended)
-
-Otherwise: **two UIs, same design** (Option A) is normal for headless.
+For the current hybrid, use **two UIs with the same design** (Option A): React header on `vojtahubne.cz`, Shopify header on `shop.vojtahubne.cz`.
 
 ---
 
@@ -82,7 +79,7 @@ Otherwise: **two UIs, same design** (Option A) is normal for headless.
 
 | React homepage | Shopify |
 |----------------|---------|
-| Cart disabled (placeholder) | Real cart → `/cart` |
+| Cart links to `shop.vojtahubne.cz/cart` | Real cart → `/cart` |
 
 On shop, keep cart **enabled** — that is correct for e-commerce.
 

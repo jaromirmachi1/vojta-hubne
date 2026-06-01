@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { PageContainer } from '../components/PageContainer'
+import { getShopifyCatalogUrl } from '../utils/shopify'
 
 const Section = styled.section`
   padding-block: clamp(3rem, 7vw, 4rem);
@@ -37,7 +37,7 @@ const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
 `
 
-const Cta = styled(Link)`
+const Cta = styled.a`
   display: inline-flex;
   padding: 1rem 2rem;
   font-size: 0.7rem;
@@ -50,15 +50,17 @@ const Cta = styled(Link)`
 `
 
 export function NewsletterSection() {
+  const catalogUrl = getShopifyCatalogUrl()
+
   return (
     <Section>
       <Inner>
-        <Title>Spouštíme brzy</Title>
+        <Title>Vyberte si produkt</Title>
         <Text>
-          E-shop a Shopify napojení připravujeme. Do té doby sledujte odpočet na
-          úvodní stránce a buďte mezi prvními, kdo si produkty objedná.
+          Katalog, košík a bezpečný checkout běží na Shopify. Homepage slouží jako
+          prémiový vstup do značky, nákup probíhá v e-shopu.
         </Text>
-        <Cta to="/">Sledovat odpočet</Cta>
+        <Cta href={catalogUrl}>Otevřít e-shop</Cta>
       </Inner>
     </Section>
   )

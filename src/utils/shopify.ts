@@ -1,9 +1,8 @@
-/**
- * Shopify URL helpers — product links open the Shopify storefront.
- * Storefront API: see src/api/shopify and docs/SHOPIFY-HEADLESS-SETUP.md
- */
+/** Shopify URL helpers — product links open the Shopify storefront. */
 
 export { isStorefrontConfigured } from '../api/shopify/client'
+
+const FALLBACK_SHOPIFY_STORE_URL = 'https://shop.vojtahubne.cz'
 
 const storeDomain = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN?.replace(
   /^https?:\/\//,
@@ -13,7 +12,7 @@ const storeDomain = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN?.replace(
 const customStoreUrl = import.meta.env.VITE_SHOPIFY_STORE_URL?.replace(/\/$/, '')
 
 /** Public shop base URL for product/cart links */
-export function getShopifyStoreUrl(): string | null {
+export function getShopifyStoreUrl(): string {
   // Local dev: shop.vojtahubne.cz often has no DNS yet — myshopify always works
   if (import.meta.env.DEV && storeDomain) {
     return `https://${storeDomain}`
@@ -22,7 +21,7 @@ export function getShopifyStoreUrl(): string | null {
   if (customStoreUrl) return customStoreUrl
   if (storeDomain) return `https://${storeDomain}`
 
-  return null
+  return FALLBACK_SHOPIFY_STORE_URL
 }
 
 export function isShopifyConfigured(): boolean {
@@ -37,16 +36,14 @@ export function getShopifyProductUrl(handle: string): string | null {
 }
 
 /** Cart page */
-export function getShopifyCartUrl(): string | null {
+export function getShopifyCartUrl(): string {
   const base = getShopifyStoreUrl()
-  if (!base) return null
   return `${base}/cart`
 }
 
 /** Shop catalog — all products (works on Shopify; same as theme “Katalog”) */
-export function getShopifyCatalogUrl(): string | null {
+export function getShopifyCatalogUrl(): string {
   const base = getShopifyStoreUrl()
-  if (!base) return null
 
   const path =
     import.meta.env.VITE_SHOPIFY_CATALOG_PATH?.trim() || '/collections/all'

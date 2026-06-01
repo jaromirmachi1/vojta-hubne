@@ -15,8 +15,8 @@ const benefits = [
     text: 'Krémy s GHK-Cu a Emulfeel® pro pokožku po tréninku i každodenní péči.',
   },
   {
-    title: 'Shopify ready',
-    text: 'E-shop připravujeme — produkty jsou strukturované pro snadné napojení.',
+    title: 'Rychlý nákup',
+    text: 'Produktové stránky, košík a checkout běží přímo na Shopify.',
   },
 ]
 

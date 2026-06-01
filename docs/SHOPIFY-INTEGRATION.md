@@ -1,242 +1,105 @@
-# Shopify + Vojta Hubne — integration guide
+# Shopify + Vojta Hubne — current hybrid setup
 
-Keep the React site on **Vercel** (`vojtahubne.cz`). Send product clicks to **Shopify** for product pages, cart, and checkout.
+The production architecture is intentionally hybrid:
 
-## Recommended setup
+| Layer | URL | Host | Purpose |
+|-------|-----|------|---------|
+| Marketing / launch / homepage | `vojtahubne.cz` | Vercel | Brand story, SEO content, curated product cards |
+| Product detail / catalog / cart / checkout | `shop.vojtahubne.cz` | Shopify | Selling, inventory, payments, shipping |
 
-| Site | URL | Host |
-|------|-----|------|
-| Launch + marketing | `vojtahubne.cz` | Vercel |
-| E-shop | `shop.vojtahubne.cz` | Shopify |
-
----
-
-## Part 1 — Shopify store
-
-1. Sign up at [shopify.com](https://www.shopify.com).
-2. **Settings → Store details** — name, currency (CZK).
-3. **Settings → Payments** — activate provider.
-4. **Settings → Shipping and delivery** — rates.
-5. **Settings → Policies** — privacy, terms, returns.
-
-Note your store URL: `https://YOUR-STORE.myshopify.com`
+React does **not** own production product detail pages. Any `/products/:handle` route on Vercel redirects to the matching Shopify product page.
 
 ---
 
-## Part 2 — Products (must match code handles)
+## What React Uses Shopify For
 
-Handles in `src/data/products.ts` → **Search engine listing / URL handle** in Shopify must be identical.
+1. Homepage product data can be enriched from the Shopify Storefront API:
+   - title
+   - image
+   - price
+   - handle
+2. Product cards link to Shopify product pages:
+   - `https://shop.vojtahubne.cz/products/{handle}`
+3. Header links:
+   - `Produkty` → `https://shop.vojtahubne.cz/collections/all`
+   - cart icon → `https://shop.vojtahubne.cz/cart`
+4. Legacy shop paths on the marketing domain redirect to Shopify:
+   - `vojtahubne.cz/collections/*` → `shop.vojtahubne.cz/collections/*`
+   - `vojtahubne.cz/products/*` → `shop.vojtahubne.cz/products/*`
+   - `vojtahubne.cz/cart` → `shop.vojtahubne.cz/cart`
+
+If Storefront API env vars are missing, the homepage still renders the local curated products from `src/data/products.ts`. Links still point to Shopify because `src/utils/shopify.ts` has a production fallback URL.
+
+---
+
+## Required Environment Variables
+
+Set these locally in `.env` and in Vercel.
+
+```env
+VITE_SHOPIFY_STORE_URL=https://shop.vojtahubne.cz
+VITE_SHOPIFY_STORE_DOMAIN=9kihpp-rg.myshopify.com
+VITE_SHOPIFY_STOREFRONT_TOKEN=your_storefront_public_token
+```
+
+Notes:
+
+- `VITE_SHOPIFY_STORE_URL` is the public shop URL for links.
+- `VITE_SHOPIFY_STORE_DOMAIN` must be the `.myshopify.com` hostname for API calls.
+- `VITE_SHOPIFY_STOREFRONT_TOKEN` is the public Headless channel Storefront token.
+- Vercel requires a redeploy after env changes because Vite bakes env into the build.
+
+Optional:
+
+```env
+VITE_SHOPIFY_CATALOG_PATH=/collections/all
+```
+
+---
+
+## Product Handles
+
+Handles in Shopify must match `src/data/products.ts`.
 
 | Product | Shopify handle |
 |---------|----------------|
 | GLP-1 Support | `glp1-support` |
 | Lean Shake GLP-1 | `lean-shake-glp-1` |
-| Cream GLP-1 GHK-Cu | `ghk-cu-cream` |
-| Regenerační krém Emulfeel® | `antiage-cream-emulfeel®` |
-
-### Per product
-
-1. **Products → Add product**
-2. Title, description, images, price, inventory
-3. URL handle = table above (exact spelling)
-4. Save
-
-### Test URL
-
-```text
-https://YOUR-STORE.myshopify.com/products/glp-1-support
-```
-
-### Optional collection
-
-**Products → Collections** → e.g. `Bestsellery` → add all 4 products (useful for Storefront API later).
+| GHK-Cu Cream | `ghk-cu-cream` |
+| Antiage Cream Emulfeel® | `antiage-cream-emulfeel®` |
 
 ---
 
-## Part 3 — Shop domain (subdomain)
+## Go-Live Checklist
 
-### Shopify
-
-1. **Settings → Domains**
-2. Connect `vojtahubne.cz` if owned
-3. Set **`shop.vojtahubne.cz`** as online store (or follow Shopify wizard)
-
-### DNS (registrar)
-
-**Full tutorial:** **[DNS-SETUP.md](./DNS-SETUP.md)** (Vercel + Shopify split)
-
-| Type | Name | Value |
-|------|------|--------|
-| CNAME | `shop` | `shops.myshopify.com` (use value Shopify shows) |
-
-Root domain stays on **Vercel** for the React app.
-
-### Temporary (before DNS)
-
-```text
-https://YOUR-STORE.myshopify.com
-```
+- [ ] `shop.vojtahubne.cz` points to Shopify (`shops.myshopify.com`)
+- [ ] `shop.vojtahubne.cz` is removed from Vercel project domains
+- [ ] Shopify domain status is connected
+- [ ] Products are active and published to Online Store
+- [ ] Headless channel token is copied into Vercel env
+- [ ] Vercel production redeployed after env changes
+- [ ] `vojtahubne.cz/homepage` shows product cards
+- [ ] Header `Produkty` opens Shopify catalog
+- [ ] Product card CTA opens Shopify PDP
+- [ ] Cart icon opens Shopify cart
 
 ---
 
-## Part 4 — Level 1: Link homepage → Shopify (start here)
+## Troubleshooting
 
-No API. Buttons open Shopify product pages.
-
-### 4.1 Local env
-
-Copy `.env.example` → `.env`:
-
-```env
-VITE_SHOPIFY_STORE_URL=https://shop.vojtahubne.cz
-```
-
-Restart: `npm run dev`
-
-### 4.2 Code (already prepared)
-
-- `src/utils/shopify.ts` — `getShopifyProductUrl()`, `getShopifyCartUrl()`
-- Wire in `src/components/ProductCard.tsx` (see checklist below)
-
-### 4.3 ProductCard example
-
-```tsx
-import { getShopifyProductUrl } from '../utils/shopify'
-
-const shopUrl = getShopifyProductUrl(product.shopifyHandle)
-
-{shopUrl ? (
-  <a href={shopUrl}>Zobrazit v e-shopu</a>
-) : (
-  <button type="button" disabled>Brzy v e-shopu</button>
-)}
-```
-
-### 4.4 Other links
-
-| Location | Link to |
-|----------|---------|
-| Product cards | `/products/{shopifyHandle}` |
-| Header cart | `/cart` |
-| Comparison CTA | product or collection |
-
-### 4.5 Vercel
-
-1. Project → **Settings → Environment Variables**
-2. `VITE_SHOPIFY_STORE_URL` = `https://shop.vojtahubne.cz`
-3. **Redeploy** (required after env change)
-
-### 4.6 Verify
-
-1. `vojtahubne.cz/homepage`
-2. Click product → Shopify PDP
-3. Add to cart → Shopify checkout
+| Symptom | Most likely cause | Fix |
+|---------|-------------------|-----|
+| Homepage shows products without prices | Vercel missing Storefront API env vars | Add `VITE_SHOPIFY_STORE_DOMAIN` + `VITE_SHOPIFY_STOREFRONT_TOKEN`, then redeploy |
+| Header `Produkty` stays on `/homepage#produkty` | Old Vercel deployment | Deploy the latest `main` |
+| Product route shows API/config screen | Old Vercel deployment | Deploy the latest `main`; `/products/:handle` now redirects to Shopify |
+| `www.vojtahubne.cz/collections/all` is blank | Main domain is React/Vercel, not Shopify, and old deployment has no redirect | Deploy the latest `main`; Vercel redirects `/collections/*` to Shopify |
+| `shop.vojtahubne.cz` shows launch countdown | `shop` still points to Vercel | Remove `shop.vojtahubne.cz` from Vercel and set DNS CNAME to Shopify |
+| Shopify preview has products but live shop does not | Live custom domain is not pointing to Shopify | Fix DNS/domain setup in `DNS-SETUP.md` |
 
 ---
 
-## Part 5 — Level 2: Headless product pages (Storefront API)
+## Related Docs
 
-**Step-by-step setup:** **[SHOPIFY-HEADLESS-SETUP.md](./SHOPIFY-HEADLESS-SETUP.md)**
-
-Custom React PDP at `vojtahubne.cz/products/{handle}` — implemented in this repo.
-
-### 5.1 Custom app
-
-1. **Settings → Apps → Develop apps → Create app**
-2. Name: `Vojta Hubne Headless`
-3. Storefront API scopes — see headless setup doc
-4. Install app → copy **Storefront API access token**
-
-### 5.2 Env
-
-```env
-VITE_SHOPIFY_STORE_DOMAIN=your-store.myshopify.com
-VITE_SHOPIFY_STOREFRONT_TOKEN=your_token
-```
-
-Add on Vercel. **Never** put Admin API token in frontend.
-
-### 5.3 Code (in repo)
-
-- `src/api/shopify/` — GraphQL client, product + cart
-- `src/pages/ProductPage.tsx` — `/products/:handle`
-- `src/hooks/useShopifyProduct.ts`
-- `ProductCard` → links to `/products/{handle}`
-
-### 5.4 Optional later
-
-- Replace `featuredProducts` mock with API on homepage
-- Cart drawer before checkout redirect
-
----
-
-## Part 6 — Checkout flow
-
-```text
-Homepage (Vercel) → Shopify product → Cart → Shopify checkout
-```
-
-Checkout stays on Shopify for Level 1.
-
----
-
-## Part 7 — Go-live checklist
-
-- [ ] 4 products in Shopify, handles match `products.ts`
-- [ ] Prices, images, policies complete
-- [ ] Test order (test gateway on dev store)
-- [ ] `VITE_SHOPIFY_STORE_URL` on Vercel + redeploy
-- [ ] ProductCard links wired (`ProductCard.tsx`)
-- [ ] `shop.vojtahubne.cz` SSL active
-- [ ] `vercel.json` SPA rewrite deployed (`/homepage` works)
-
----
-
-## Part 8 — Avoid
-
-| Don't | Why |
-|-------|-----|
-| Vercel + Shopify both on `vojtahubne.cz/products` | Routing conflict |
-| Admin API token in React | Security |
-| Wrong handle (`glp-1-support-2`) | 404 on Shopify |
-| Skip redeploy after Vercel env | Old build without shop URL |
-
----
-
-## URL reference
-
-```text
-Marketing:    https://vojtahubne.cz
-Homepage:     https://vojtahubne.cz/homepage
-Shop:         https://shop.vojtahubne.cz
-Product:      https://shop.vojtahubne.cz/products/glp-1-support
-Cart:         https://shop.vojtahubne.cz/cart
-```
-
----
-
-## Suggested timeline
-
-1. Shopify store + 4 products + handles
-2. Test myshopify URLs + payments/shipping
-3. Domain `shop.vojtahubne.cz` + Vercel env + ProductCard links (Level 1)
-4. After launch → Storefront API (Level 2) if needed
-
----
-
-## Horizon theme (product page styling)
-
-If your shop uses **Shopify Horizon**, product page code is **not** in this repo. See:
-
-**[docs/SHOPIFY-HORIZON-THEME.md](./SHOPIFY-HORIZON-THEME.md)**
-
----
-
-## Code wiring checklist (when ready)
-
-- [ ] Copy `.env.example` → `.env` with real shop URL
-- [ ] Update `ProductCard.tsx` to use `getShopifyProductUrl()`
-- [ ] Enable header cart link → `getShopifyCartUrl()`
-- [ ] Add env on Vercel + redeploy
-- [ ] (Optional) `ProductComparisonSection` CTA → product URL
-- [ ] (Optional) Storefront API — see Part 5
+- [DNS-SETUP.md](./DNS-SETUP.md) — Vercel + Shopify domain split
+- [SHOPIFY-STEP-1.md](./SHOPIFY-STEP-1.md) — Storefront API token for homepage data
+- [SHOPIFY-HORIZON-THEME.md](./SHOPIFY-HORIZON-THEME.md) — Shopify theme styling

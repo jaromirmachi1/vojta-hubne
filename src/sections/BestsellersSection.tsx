@@ -48,7 +48,7 @@ const Status = styled.p`
 `
 
 export function BestsellersSection() {
-  const { products, loading, fromShopify, error } = useShopifyProducts()
+  const { products, loading } = useShopifyProducts()
   const itemsPerPage = useItemsPerPage()
   const [page, setPage] = useState(0)
 
@@ -77,13 +77,7 @@ export function BestsellersSection() {
           <Title>Trendy bestsellery</Title>
         </Header>
 
-        {loading ? (
-          <Status>Načítám produkty z e-shopu…</Status>
-        ) : error ? (
-          <Status>{error}</Status>
-        ) : fromShopify ? null : (
-          <Status>Zobrazení katalogu (offline režim)</Status>
-        )}
+        {loading ? <Status>Načítám produkty z e-shopu…</Status> : null}
 
         <Grid $columns={Math.min(itemsPerPage, Math.max(visibleProducts.length, 1))}>
           {visibleProducts.map((product) => (

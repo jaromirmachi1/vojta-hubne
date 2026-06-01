@@ -112,9 +112,11 @@ Official docs: [Storefront API — Getting started](https://shopify.dev/docs/sto
 
 ---
 
-## Next (Step 2 — code)
+## Next
 
-- Homepage products from API  
-- Cards link to `VITE_SHOPIFY_STORE_URL/products/{handle}`  
+- Add the same env vars in Vercel → Settings → Environment Variables
+- Redeploy production after env changes
+- Homepage product cards can then pull live Shopify title, image and price
+- Product clicks still go to `VITE_SHOPIFY_STORE_URL/products/{handle}`
 
-Reply **“Step 1 done”** when token is in `.env` (don’t send the token).
+Do not send or commit the real token. Public Storefront tokens are browser-safe, but keeping them out of docs avoids accidental confusion with private tokens.

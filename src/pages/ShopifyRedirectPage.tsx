@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { ShopLayout } from '../layouts/ShopLayout'
-import { getShopifyProductUrl } from '../utils/shopify'
+import { getShopifyCatalogUrl, getShopifyStoreUrl } from '../utils/shopify'
 
 const StateWrap = styled.div`
   display: flex;
@@ -62,20 +62,20 @@ const ExternalLink = styled.a`
   }
 `
 
-export function ProductPage() {
-  const { handle } = useParams<{ handle: string }>()
-  const shopUrl = handle ? getShopifyProductUrl(handle) : null
+export function ShopifyCollectionRedirectPage() {
+  const params = useParams()
+  const collectionPath = params['*']
+  const shopUrl = collectionPath
+    ? `${getShopifyStoreUrl()}/collections/${collectionPath}`
+    : getShopifyCatalogUrl()
 
   usePageMeta({
-    title: 'Přesměrování do e-shopu — Vojta Hubne',
-    description:
-      'Produkt Vojta Hubne se otevírá v oficiálním Shopify e-shopu.',
+    title: 'Přesměrování do katalogu — Vojta Hubne',
+    description: 'Katalog Vojta Hubne se otevírá v oficiálním Shopify e-shopu.',
   })
 
   useEffect(() => {
-    if (shopUrl) {
-      window.location.replace(shopUrl)
-    }
+    window.location.replace(shopUrl)
   }, [shopUrl])
 
   return (
@@ -83,13 +83,33 @@ export function ProductPage() {
       <StateWrap>
         <StateTitle>Přesměrovávám do e-shopu</StateTitle>
         <StateText>
-          Produkt otevíráme na Shopify, kde je dostupná aktuální cena, sklad a checkout.
+          Katalog otevíráme na Shopify, kde jsou aktuální produkty, sklad a checkout.
         </StateText>
-        {shopUrl ? (
-          <ExternalLink href={shopUrl}>Otevřít produkt</ExternalLink>
-        ) : (
-          <StateLink to="/homepage#produkty">Zpět na produkty</StateLink>
-        )}
+        <ExternalLink href={shopUrl}>Otevřít katalog</ExternalLink>
+      </StateWrap>
+    </ShopLayout>
+  )
+}
+
+export function ShopifyCartRedirectPage() {
+  const shopUrl = `${getShopifyStoreUrl()}/cart`
+
+  usePageMeta({
+    title: 'Přesměrování do košíku — Vojta Hubne',
+    description: 'Košík Vojta Hubne se otevírá v oficiálním Shopify e-shopu.',
+  })
+
+  useEffect(() => {
+    window.location.replace(shopUrl)
+  }, [shopUrl])
+
+  return (
+    <ShopLayout>
+      <StateWrap>
+        <StateTitle>Přesměrovávám do košíku</StateTitle>
+        <StateText>Košík a checkout běží bezpečně na Shopify.</StateText>
+        <ExternalLink href={shopUrl}>Otevřít košík</ExternalLink>
+        <StateLink to="/homepage#produkty">Zpět na produkty</StateLink>
       </StateWrap>
     </ShopLayout>
   )
