@@ -48,6 +48,37 @@ const Text = styled.p`
   color: ${({ theme }) => theme.colors.text};
 `
 
+const CommunityLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  align-self: flex-start;
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.gold};
+  transition:
+    color 0.2s ease,
+    gap 0.2s ease;
+
+  &::after {
+    content: '→';
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.white};
+
+    &::after {
+      transform: translateX(3px);
+    }
+  }
+`
+
 const Quote = styled.blockquote`
   margin: 0;
   padding: 2rem;
@@ -79,15 +110,25 @@ export function StorySection() {
           <Eyebrow>Příběh značky</Eyebrow>
           <Title>Od 150 kg k novému životu</Title>
           <Text>
-            Vojta Hubne není další fitness značka z reklamy. Je to projekt člověka,
-            který prošel extrémní transformací — od 150 kilogramů k 85. Ví, co
-            znamená boj s váhou, chutí k jídlu i regenerací po tréninku.
+            Vojta si prošel celoživotním bojem s obezitou. Po letech neúspěšných
+            pokusů, zdravotních komplikacích a váze 157 kg se v roce 2024 rozhodl
+            převzít kontrolu nad svým zdravím. Díky kombinaci změny životního
+            stylu, disciplíny a moderní léčby dokázal zhubnout více než 57
+            kilogramů a zásadně zlepšit kvalitu svého života.
           </Text>
           <Text>
-            Proto vznikla řada produktů, které pokrývají celý cyklus: kontrolu
-            chuti a metabolismus, kvalitní bílkoviny ve shaku i péči o pokožku po
-            namáhaném těle. Stejná estetika, stejná kvalita — od kapslí po krém.
+            Dnes otevřeně sdílí své zkušenosti, boří mýty o obezitě a pomáhá
+            lidem pochopit, že obezita není selhání charakteru, ale komplexní
+            onemocnění. Je zakladatelem komunity Cesta z obezity, kde podporuje
+            tisíce lidí na jejich vlastní cestě ke zdravějšímu životu.
           </Text>
+          <CommunityLink
+            href="https://www.cestazobezity.cz"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Cesta z obezity
+          </CommunityLink>
         </Content>
         <Quote>
           <p>

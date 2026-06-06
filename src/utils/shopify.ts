@@ -2,7 +2,7 @@
 
 export { isStorefrontConfigured } from '../api/shopify/client'
 
-const FALLBACK_SHOPIFY_STORE_URL = 'https://shop.vojtahubne.cz'
+const FALLBACK_SHOPIFY_STORE_DOMAIN = '9kihpp-rg.myshopify.com'
 
 const storeDomain = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN?.replace(
   /^https?:\/\//,
@@ -10,18 +10,17 @@ const storeDomain = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN?.replace(
 ).replace(/\/$/, '')
 
 const customStoreUrl = import.meta.env.VITE_SHOPIFY_STORE_URL?.replace(/\/$/, '')
+const useCustomStoreUrl = import.meta.env.VITE_SHOPIFY_USE_CUSTOM_DOMAIN === 'true'
 
 /** Public shop base URL for product/cart links */
 export function getShopifyStoreUrl(): string {
-  // Local dev: shop.vojtahubne.cz often has no DNS yet — myshopify always works
-  if (import.meta.env.DEV && storeDomain) {
-    return `https://${storeDomain}`
+  if (useCustomStoreUrl && customStoreUrl) {
+    return customStoreUrl
   }
 
-  if (customStoreUrl) return customStoreUrl
   if (storeDomain) return `https://${storeDomain}`
 
-  return FALLBACK_SHOPIFY_STORE_URL
+  return `https://${FALLBACK_SHOPIFY_STORE_DOMAIN}`
 }
 
 export function isShopifyConfigured(): boolean {

@@ -19,10 +19,11 @@ React does **not** own production product detail pages. Any `/products/:handle` 
    - price
    - handle
 2. Product cards link to Shopify product pages:
-   - `https://shop.vojtahubne.cz/products/{handle}`
+   - default: `https://9kihpp-rg.myshopify.com/products/{handle}`
+   - after DNS is fixed: `https://shop.vojtahubne.cz/products/{handle}`
 3. Header links:
-   - `Produkty` → `https://shop.vojtahubne.cz/collections/all`
-   - cart icon → `https://shop.vojtahubne.cz/cart`
+   - `Produkty` → Shopify catalog
+   - cart icon → Shopify cart
 4. Legacy shop paths on the marketing domain redirect to Shopify:
    - `vojtahubne.cz/collections/*` → `shop.vojtahubne.cz/collections/*`
    - `vojtahubne.cz/products/*` → `shop.vojtahubne.cz/products/*`
@@ -44,7 +45,8 @@ VITE_SHOPIFY_STOREFRONT_TOKEN=your_storefront_public_token
 
 Notes:
 
-- `VITE_SHOPIFY_STORE_URL` is the public shop URL for links.
+- Links use `VITE_SHOPIFY_STORE_DOMAIN` by default to avoid loops while the custom shop domain is still being connected.
+- `VITE_SHOPIFY_STORE_URL` is the future public shop URL.
 - `VITE_SHOPIFY_STORE_DOMAIN` must be the `.myshopify.com` hostname for API calls.
 - `VITE_SHOPIFY_STOREFRONT_TOKEN` is the public Headless channel Storefront token.
 - Vercel requires a redeploy after env changes because Vite bakes env into the build.
@@ -53,6 +55,12 @@ Optional:
 
 ```env
 VITE_SHOPIFY_CATALOG_PATH=/collections/all
+```
+
+After `shop.vojtahubne.cz` is definitely connected to Shopify and removed from Vercel domains, set:
+
+```env
+VITE_SHOPIFY_USE_CUSTOM_DOMAIN=true
 ```
 
 ---
@@ -93,6 +101,7 @@ Handles in Shopify must match `src/data/products.ts`.
 | Header `Produkty` stays on `/homepage#produkty` | Old Vercel deployment | Deploy the latest `main` |
 | Product route shows API/config screen | Old Vercel deployment | Deploy the latest `main`; `/products/:handle` now redirects to Shopify |
 | `www.vojtahubne.cz/collections/all` is blank | Main domain is React/Vercel, not Shopify, and old deployment has no redirect | Deploy the latest `main`; Vercel redirects `/collections/*` to Shopify |
+| Browser says too many redirects between `www` and `shop` | `shop.vojtahubne.cz` is still handled by Vercel, not Shopify | Keep links on `.myshopify.com`; remove `shop.vojtahubne.cz` from Vercel and fix DNS before enabling `VITE_SHOPIFY_USE_CUSTOM_DOMAIN` |
 | `shop.vojtahubne.cz` shows launch countdown | `shop` still points to Vercel | Remove `shop.vojtahubne.cz` from Vercel and set DNS CNAME to Shopify |
 | Shopify preview has products but live shop does not | Live custom domain is not pointing to Shopify | Fix DNS/domain setup in `DNS-SETUP.md` |
 

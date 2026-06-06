@@ -2,17 +2,17 @@
   "redirects": [
     {
       "source": "/collections/:path*",
-      "destination": "https://shop.vojtahubne.cz/collections/:path*",
+      "destination": "https://9kihpp-rg.myshopify.com/collections/:path*",
       "permanent": true
     },
     {
       "source": "/products/:path*",
-      "destination": "https://shop.vojtahubne.cz/products/:path*",
+      "destination": "https://9kihpp-rg.myshopify.com/products/:path*",
       "permanent": true
     },
     {
       "source": "/cart",
-      "destination": "https://shop.vojtahubne.cz/cart",
+      "destination": "https://9kihpp-rg.myshopify.com/cart",
       "permanent": true
     }
   ],

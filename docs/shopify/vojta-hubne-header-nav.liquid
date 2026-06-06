@@ -1,16 +1,55 @@
 {% comment %}
-  Optional custom nav — mirrors React SiteHeader links.
-  Use only if Horizon menu block cannot be styled enough.
-  In Customize: add Custom Liquid block in header, or include in a section:
-  {% render 'vojta-hubne-header-nav', marketing_url: 'https://vojtahubne.cz' %}
-  Save as snippets/vojta-hubne-header-nav.liquid in Shopify.
+  Vojta Hubne custom Shopify header — mirrors React SiteHeader.
+
+  Setup:
+  1. Shopify Admin → Content → Files / Theme assets: upload VojtHLogo.png
+  2. Save this file as snippets/vojta-hubne-header-nav.liquid
+  3. In sections/header.liquid, render it instead of the default header markup:
+     {% render 'vojta-hubne-header-nav', marketing_url: 'https://www.vojtahubne.cz' %}
+  4. Load assets/vojta-hubne-horizon.css in layout/theme.liquid.
 {% endcomment %}
 
-{% assign marketing = marketing_url | default: 'https://vojtahubne.cz' %}
+{% assign marketing = marketing_url | default: 'https://www.vojtahubne.cz' %}
+{% assign catalog_url = routes.all_products_collection_url %}
+{% if catalog_url == blank %}
+  {% assign catalog_url = '/collections/all' %}
+{% endif %}
+{% assign cart_url = routes.cart_url %}
 
-<nav class="vh-header-nav" aria-label="Hlavní navigace">
-  <a class="vh-header-nav__link" href="{{ marketing }}/homepage#produkty">Produkty</a>
-  <a class="vh-header-nav__link" href="{{ marketing }}/homepage#porovnani">Proč my</a>
-  <a class="vh-header-nav__link" href="{{ marketing }}/homepage#pribeh">Příběh</a>
-  <a class="vh-header-nav__link" href="{{ marketing }}/">Spouštíme brzy</a>
-</nav>
+<div class="vh-shop-header">
+  <div class="vh-shop-header__inner">
+    <a class="vh-shop-header__logo-link" href="{{ marketing }}/homepage" aria-label="Vojta Hubne — domů">
+      <img
+        class="vh-shop-header__logo"
+        src="{{ 'VojtHLogo.png' | asset_url }}"
+        alt="Vojta Hubne"
+        width="1196"
+        height="382"
+        loading="eager"
+      >
+    </a>
+
+    <nav class="vh-shop-header__nav" aria-label="Hlavní navigace">
+      <a class="vh-shop-header__nav-link" href="{{ catalog_url }}">Produkty</a>
+      <a class="vh-shop-header__nav-link" href="{{ marketing }}/homepage#porovnani">Proč my</a>
+      <a class="vh-shop-header__nav-link" href="{{ marketing }}/homepage#pribeh">Příběh</a>
+      <a class="vh-shop-header__nav-link" href="{{ marketing }}/">Spouštíme brzy</a>
+    </nav>
+
+    <div class="vh-shop-header__actions">
+      <a class="vh-shop-header__cart-link" href="{{ cart_url }}" aria-label="Košík">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M6 6h15l-1.5 9h-12L6 6z"></path>
+          <path d="M6 6L5 3H2"></path>
+          <circle cx="9" cy="20" r="1"></circle>
+          <circle cx="18" cy="20" r="1"></circle>
+        </svg>
+        {% if cart.item_count > 0 %}
+          <span class="vh-shop-header__cart-count" aria-label="{{ cart.item_count }} položek v košíku">
+            {{ cart.item_count }}
+          </span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</div>

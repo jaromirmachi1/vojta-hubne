@@ -118,7 +118,13 @@ Nástroje:
 | Web (Vercel preview) | URL z Vercelu |
 | E-shop | https://9kihpp-rg.myshopify.com |
 
-Na localhostu app automaticky používá **myshopify** odkazy v dev režimu.
+App používá **myshopify** odkazy, dokud není `shop.vojtahubne.cz` bezpečně připojené k Shopify. Tím se zabrání redirect loopu, pokud `shop` ještě omylem míří na Vercel.
+
+Až bude `shop.vojtahubne.cz` opravdu na Shopify a odstraněné z Vercel Domains, můžeš ve Vercelu zapnout:
+
+```env
+VITE_SHOPIFY_USE_CUSTOM_DOMAIN=true
+```
 
 ---
 

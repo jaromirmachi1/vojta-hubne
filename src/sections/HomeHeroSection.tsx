@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import heroPortrait from '../assets/SzzEgtimTNU2uqEm_2g6w.JPG.webp'
 import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
 import { PageContainer } from '../components/PageContainer'
 
@@ -137,37 +138,46 @@ const SecondaryLink = styled(Link)`
   }
 `
 
-const Visual = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
-`
+const Portrait = styled.figure`
+  position: relative;
+  margin: 0;
+  width: 100%;
+  max-width: 28rem;
+  justify-self: center;
 
-const VisualCard = styled.div`
-  padding: 1.25rem;
-  border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
-  background: rgba(17, 17, 17, 0.6);
-  backdrop-filter: blur(8px);
-
-  &:first-child {
-    grid-column: 1 / -1;
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    justify-self: end;
+    max-width: none;
   }
 `
 
-const VisualTitle = styled.h2`
-  margin: 0 0 0.5rem;
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.gold};
+const PortraitFrame = styled.div`
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  background: ${({ theme }) => theme.colors.black};
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.08) 0%,
+      transparent 35%,
+      rgba(0, 0, 0, 0.45) 100%
+    );
+    pointer-events: none;
+  }
 `
 
-const VisualText = styled.p`
-  margin: 0;
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: ${({ theme }) => theme.colors.textMuted};
+const PortraitImage = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 `
 
 export function HomeHeroSection() {
@@ -198,20 +208,18 @@ export function HomeHeroSection() {
             <SecondaryLink to="/">Spouštíme brzy</SecondaryLink>
           </Actions>
         </Content>
-        <Visual aria-hidden>
-          <VisualCard>
-            <VisualTitle>GLP-1 Support</VisualTitle>
-            <VisualText>Energie · Spalování · Kontrola chuti</VisualText>
-          </VisualCard>
-          <VisualCard>
-            <VisualTitle>Lean Shake</VisualTitle>
-            <VisualText>Sytost · Kontrola · Výsledky</VisualText>
-          </VisualCard>
-          <VisualCard>
-            <VisualTitle>Regenerace</VisualTitle>
-            <VisualText>Krémy GHK-Cu & Emulfeel®</VisualText>
-          </VisualCard>
-        </Visual>
+        <Portrait>
+          <PortraitFrame>
+            <PortraitImage
+              src={heroPortrait}
+              alt="Vojta Hubne — zakladatel značky, cesta z 150 kg na 85 kg"
+              width={960}
+              height={1200}
+              fetchPriority="high"
+              decoding="async"
+            />
+          </PortraitFrame>
+        </Portrait>
       </Inner>
     </Section>
   )

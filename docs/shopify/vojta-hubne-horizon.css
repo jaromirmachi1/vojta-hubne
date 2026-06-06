@@ -20,8 +20,12 @@
   --vh-text-muted: rgba(255, 255, 255, 0.5);
   --vh-border: rgba(238, 220, 130, 0.35);
   --vh-border-subtle: rgba(255, 255, 255, 0.08);
+  --vh-product-tile: rgba(238, 220, 130, 0.08);
+  --vh-product-tile-hover: rgba(238, 220, 130, 0.12);
   --vh-font-display: "Bebas Neue", "Arial Narrow", sans-serif;
   --vh-font-sans: "Montserrat", system-ui, sans-serif;
+  --vh-page-max-width: 1600px;
+  --vh-page-padding-inline: clamp(1.25rem, 5vw, 3.5rem);
 }
 
 /* Base */
@@ -30,6 +34,11 @@ body,
   background-color: var(--vh-black) !important;
   color: var(--vh-text) !important;
   font-family: var(--vh-font-sans) !important;
+}
+
+html,
+body {
+  overflow-x: clip !important;
 }
 
 h1,
@@ -70,7 +79,7 @@ a:hover {
   color: var(--vh-black) !important;
 }
 
-/* ─── Header (SiteHeader.tsx) ─── */
+/* ─── Header (SiteHeader.tsx parity) ─── */
 #header-group,
 .shopify-section-header,
 header,
@@ -82,6 +91,12 @@ header,
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
   border-bottom: 1px solid var(--vh-border-subtle) !important;
+}
+
+.shopify-section-header:has(.vh-shop-header),
+#header-group:has(.vh-shop-header) {
+  background: transparent !important;
+  border-bottom: 0 !important;
 }
 
 #header-group header,
@@ -100,7 +115,228 @@ header,
   width: auto !important;
 }
 
-/* Desktop menu links — Horizon menu + custom snippet */
+/* Full custom Shopify header — use with snippets/vojta-hubne-header-nav.liquid */
+#header-component .vh-shop-header {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+  z-index: 100 !important;
+  display: block !important;
+  width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  height: 4.5rem !important;
+  min-height: 4.5rem !important;
+  background: rgba(0, 0, 0, 0.92) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid var(--vh-border-subtle) !important;
+  font-family: var(--vh-font-sans) !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+}
+
+#header-component .vh-shop-header *,
+#header-component .vh-shop-header *::before,
+#header-component .vh-shop-header *::after {
+  box-sizing: border-box !important;
+}
+
+#header-component .vh-shop-header__inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 1.5rem !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  margin: 0 auto !important;
+  padding-inline: clamp(1.25rem, 5vw, 3.5rem) !important;
+  overflow: hidden !important;
+}
+
+#header-component .vh-shop-header__logo-link {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+
+#header-component .vh-shop-header__logo {
+  display: block !important;
+  width: auto !important;
+  height: 2.25rem !important;
+  max-width: none !important;
+  object-fit: contain !important;
+}
+
+#header-component .vh-shop-header__nav {
+  display: none !important;
+  align-items: center !important;
+  gap: 2rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#header-component .vh-shop-header__actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  flex-shrink: 0 !important;
+}
+
+#header-component .vh-shop-header__nav-link,
+#header-component .vh-shop-header__cart-link {
+  color: var(--vh-text) !important;
+  text-decoration: none !important;
+}
+
+#header-component .vh-shop-header__nav-link {
+  display: inline-flex !important;
+  align-items: center !important;
+  min-height: 4.5rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  transition: color 0.2s ease !important;
+}
+
+#header-component .vh-shop-header__nav-link:hover {
+  color: var(--vh-gold) !important;
+}
+
+#header-component .vh-shop-header__cart-link {
+  position: relative !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  min-width: 2.5rem !important;
+  min-height: 2.5rem !important;
+  padding: 0 !important;
+  border: 1px solid var(--vh-border) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--vh-gold) !important;
+  transition: background 0.2s ease !important;
+}
+
+#header-component .vh-shop-header__cart-link:hover {
+  background: rgba(238, 220, 130, 0.08) !important;
+}
+
+#header-component .vh-shop-header__cart-link svg {
+  width: 1.1rem !important;
+  height: 1.1rem !important;
+  color: currentColor !important;
+  stroke: currentColor !important;
+}
+
+#header-component .vh-shop-header__cart-count {
+  position: absolute !important;
+  top: -0.35rem !important;
+  right: -0.35rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 1.1rem !important;
+  height: 1.1rem !important;
+  padding-inline: 0.25rem !important;
+  border-radius: 999px !important;
+  background: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.65rem !important;
+  font-weight: 600 !important;
+}
+
+@media (min-width: 768px) {
+  #header-component .vh-shop-header__nav {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 900px) {
+  #header-component .vh-shop-header__inner {
+    gap: 1rem !important;
+    padding-inline: clamp(1rem, 4vw, 2rem) !important;
+  }
+
+  #header-component .vh-shop-header__nav {
+    gap: clamp(1rem, 3vw, 1.5rem) !important;
+  }
+
+  #header-component .vh-shop-header__nav-link {
+    font-size: 0.68rem !important;
+    letter-spacing: 0.12em !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #header-component .vh-shop-header__inner {
+    justify-content: space-between !important;
+    padding-inline: 1rem !important;
+  }
+
+  #header-component .vh-shop-header__nav {
+    display: none !important;
+  }
+
+  #header-component .vh-shop-header__logo {
+    height: 2rem !important;
+  }
+
+  #header-component .vh-shop-header__cart-link {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    min-width: 2.25rem !important;
+    min-height: 2.25rem !important;
+  }
+}
+
+/* Hide default Horizon rows when custom header is inside <header-component> */
+#header-component:has(.vh-shop-header) > .header__underlay,
+#header-component:has(.vh-shop-header) > .header__row,
+#header-component:has(.vh-shop-header) > .header__navigation-bar-row {
+  display: none !important;
+}
+
+#header-component:has(.vh-shop-header) {
+  background: transparent !important;
+  border: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Horizon sets .header[data-sticky-state='idle'] { opacity: 0 } — keep custom bar visible */
+#header-component.header:has(.vh-shop-header)[data-sticky-state="idle"],
+#header-component.header:has(.vh-shop-header)[data-sticky-state="active"] {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#header-component:has(.vh-shop-header) .vh-shop-header {
+  position: relative;
+  z-index: 2;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+#header-component:has(.vh-shop-header) .visually-hidden {
+  position: absolute !important;
+}
+
+/* Desktop menu links — Horizon menu + legacy custom nav snippet */
 .header-menu a,
 .menu-list__link,
 .vh-header-nav__link {
@@ -165,7 +401,23 @@ footer,
   border-top: 1px solid var(--vh-border-subtle) !important;
 }
 
-/* ─── Product page layout (Aktin-style: gallery ~62% | sticky details ~38%) ─── */
+/* Match React PageContainer only inside main content — keep header, announcement and footer full width */
+main .shopify-section > .section:not(:has(.vh-shop-header)),
+main .shopify-section .page-width,
+main .shopify-section [class*="page-width"],
+main .shopify-section .section--page-width {
+  width: 100% !important;
+  max-width: var(--vh-page-max-width) !important;
+  margin-inline: auto !important;
+  padding-inline: var(--vh-page-padding-inline) !important;
+}
+
+/* Preserve full-bleed section backgrounds while constraining their content wrappers */
+main .shopify-section {
+  background-color: inherit;
+}
+
+/* ─── Product page layout (gallery ~50% | sticky details ~50%) ─── */
 /* Layout only — colors/fonts stay Vojta Hubne. Use Horizon Customize settings in SHOPIFY-PRODUCT-LAYOUT.md */
 
 .product-information,
@@ -176,17 +428,17 @@ footer,
 /* Wide centered shell (~Aktin max-width) */
 .shopify-section:has(.product-information),
 .section:has(.product-information__grid) {
-  --page-width: min(100%, 1400px);
+  --page-width: min(100%, var(--vh-page-max-width));
 }
 
 .product-information .section,
 .product-information > .section,
 .product-information .page-width,
 .product-information [class*="page-width"] {
-  max-width: 1400px !important;
+  max-width: var(--vh-page-max-width) !important;
   width: 100% !important;
   margin-inline: auto !important;
-  padding-inline: clamp(1.25rem, 4vw, 2.5rem) !important;
+  padding-inline: var(--vh-page-padding-inline) !important;
 }
 
 /* Desktop: image left (wide) + buy box right (narrow sidebar) — do NOT use Equal columns */
@@ -196,25 +448,25 @@ footer,
     grid-column: 1 / -1 !important;
     width: 100% !important;
     gap: clamp(1.5rem, 3vw, 2.5rem) !important;
-    align-items: start !important;
+    align-items: center !important;
   }
 
-  /* Aktin ratio: ~62% gallery / ~38% details (Horizon default is close; we pin it) */
+  /* Balanced ratio: smaller gallery, more room for buy box */
   .product-information--media-left:not(.product-information--media-none):not(
       .product-information__grid--half
     ) {
-    grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.95fr) !important;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 1.15fr) !important;
   }
 
   .product-information--media-right:not(.product-information--media-none):not(
       .product-information__grid--half
     ) {
-    grid-template-columns: minmax(320px, 0.95fr) minmax(0, 1.65fr) !important;
+    grid-template-columns: minmax(320px, 1.15fr) minmax(0, 1.05fr) !important;
   }
 
-  /* If Equal columns was turned on in editor — still force Aktin split */
+  /* If Equal columns was turned on in editor — still force balanced split */
   .product-information__grid--half:not(.product-information--media-none) {
-    grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.95fr) !important;
+    grid-template-columns: minmax(0, 1.05fr) minmax(320px, 1.15fr) !important;
   }
 
   .product-information--media-left .product-information__media {
@@ -225,11 +477,15 @@ footer,
     padding-right: 0 !important;
   }
 
+  .product-details {
+    align-self: start !important;
+  }
+
   .product-information--media-left .product-details {
     grid-column: 2 !important;
     order: 1 !important;
     width: 100% !important;
-    max-width: 420px !important;
+    max-width: none !important;
     padding-left: 0 !important;
     margin: 0 !important;
   }
@@ -259,8 +515,22 @@ footer,
 
 /* Gallery visible + Aktin grid: hero image + 2-col thumbs */
 .product-information__media {
-  display: block !important;
   visibility: visible !important;
+}
+
+@media screen and (min-width: 750px) {
+  .product-information__media {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: center !important;
+  }
+}
+
+@media screen and (max-width: 749px) {
+  .product-information__media {
+    display: block !important;
+  }
 }
 
 media-gallery.media-gallery--grid,
@@ -286,7 +556,7 @@ media-gallery.media-gallery--grid,
 
   .product-media-container,
   .media-gallery__grid .product-media-container {
-    background: var(--vh-surface-raised) !important;
+    background: var(--vh-black) !important;
     border: 1px solid var(--vh-border-subtle) !important;
     border-radius: 0 !important;
     overflow: hidden !important;
@@ -300,9 +570,132 @@ media-gallery.media-gallery--grid,
   }
 
   .media-gallery--large-first-image .media-gallery__grid > :first-child img {
-    max-height: min(72vh, 720px) !important;
+    max-height: min(56vh, 560px) !important;
     object-fit: contain !important;
   }
+
+  .product-information__media media-gallery,
+  .product-information__media .product-media-gallery,
+  .product-information__media slideshow-component {
+    max-width: min(100%, 560px) !important;
+    width: 100% !important;
+    margin-inline: auto !important;
+  }
+
+  .product-information__media .product-media-container,
+  .product-information__media .media-gallery__grid > :first-child {
+    max-height: min(56vh, 560px) !important;
+  }
+
+  .product-information__media .product-media-container img,
+  .product-information__media .media-gallery__grid > :first-child img,
+  .product-information__media slideshow-slide.product-media-container img {
+    max-height: min(56vh, 560px) !important;
+    object-fit: contain !important;
+  }
+}
+
+/* Ensure real Shopify product media always renders on PDP */
+.product-information .product-media-container,
+.product-information .product-media,
+.product-information .media-gallery__grid > * {
+  background: var(--vh-black) !important;
+}
+
+.product-information .media,
+.product-information .product__media,
+.product-information .product-media,
+.product-information .product-media-container,
+.product-information deferred-media,
+.product-information .deferred-media,
+.product-information .deferred-media__poster,
+.product-information .media-gallery__item,
+.product-information [data-media-id] {
+  background: var(--vh-black) !important;
+  background-color: var(--vh-black) !important;
+  background-image: none !important;
+}
+
+.product-information .media::before,
+.product-information .media::after,
+.product-information .product__media::before,
+.product-information .product__media::after,
+.product-information .product-media::before,
+.product-information .product-media::after,
+.product-information .product-media-container::before,
+.product-information .product-media-container::after,
+.product-information .deferred-media__poster::before,
+.product-information .deferred-media__poster::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.product-information .product-media-container img,
+.product-information .product-media img,
+.product-information .media-gallery__grid img,
+.product-information media-gallery img,
+.product-information .media img,
+.product-information .product__media img,
+.product-information .deferred-media__poster img {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: var(--vh-black) !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.product-information .product-media-container .placeholder-svg,
+.product-information .product-media .placeholder-svg,
+.product-information [class*="product-media"] .placeholder-svg,
+.product-information .media .placeholder-svg {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+.product-information .product-media-container:has(img[src]),
+.product-information .product-media:has(img[src]),
+.product-information [class*="product-media"]:has(img[src]),
+.product-information .media:has(img[src]),
+.product-information .deferred-media__poster:has(img[src]) {
+  background: var(--vh-black) !important;
+  background-color: var(--vh-black) !important;
+  background-image: none !important;
+}
+
+.product-information .product-media-container:has(img[src]) *,
+.product-information .product-media:has(img[src]) *,
+.product-information [class*="product-media"]:has(img[src]) *,
+.product-information .media:has(img[src]) *,
+.product-information .deferred-media__poster:has(img[src]) * {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.product-information .product-media-container:has(img[src]) .placeholder-svg,
+.product-information .product-media:has(img[src]) .placeholder-svg,
+.product-information [class*="product-media"]:has(img[src]) .placeholder-svg,
+.product-information .media:has(img[src]) .placeholder-svg,
+.product-information .deferred-media__poster:has(img[src]) .placeholder-svg {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.product-media-container img,
+.media-gallery__grid img,
+.product-media img,
+[class*="product-media"] img {
+  object-fit: contain !important;
+  background: var(--vh-black) !important;
 }
 
 /* No images — full-width single column (not thin center strip) */
@@ -442,6 +835,256 @@ button[name="add"]:hover {
   border-radius: 0 !important;
 }
 
+/* Collection grid — clean product cells inspired by Vilgain, adapted to Vojta Hubne */
+main .collection,
+main [class*="collection"] {
+  background: var(--vh-black) !important;
+}
+
+main .collection .product-grid,
+main .collection ul[class*="product-grid"],
+main .collection [class*="product-grid"],
+main .collection [class*="grid"] {
+  gap: clamp(0.9rem, 1.6vw, 1.25rem) !important;
+}
+
+main .collection .product-card,
+main .collection .card,
+main .collection [class*="product-card"],
+main .collection [class*="card-product"] {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  transition:
+    transform 0.22s ease,
+    background 0.22s ease !important;
+}
+
+main .collection .product-card:hover,
+main .collection .card:hover,
+main .collection [class*="product-card"]:hover,
+main .collection [class*="card-product"]:hover {
+  transform: translateY(-2px) !important;
+  border-color: transparent !important;
+  background: transparent !important;
+}
+
+main .collection .product-card a,
+main .collection .card a,
+main .collection [class*="product-card"] a,
+main .collection [class*="card-product"] a {
+  text-decoration: none !important;
+}
+
+main .collection .card__inner,
+main .collection .card__content,
+main .collection .card-wrapper,
+main .collection .product-card-wrapper,
+main .collection [class*="card__inner"],
+main .collection [class*="card-wrapper"],
+main .collection [class*="product-card-wrapper"] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+main .collection .card__media,
+main .collection .product-card__media,
+main .collection .product-card__image,
+main .collection [class*="card-media"],
+main .collection [class*="product-card"] [class*="media"],
+main .collection [class*="product-card"] [class*="image"] {
+  position: relative !important;
+  display: grid !important;
+  place-items: center !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 100% !important;
+  min-height: 0 !important;
+  padding: clamp(1.25rem, 2.2vw, 2rem) !important;
+  background: #030303 !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  transition:
+    border-color 0.22s ease,
+    background 0.22s ease !important;
+}
+
+main .collection .product-card:hover .card__media,
+main .collection .card:hover .card__media,
+main .collection [class*="product-card"]:hover [class*="media"],
+main .collection [class*="card-product"]:hover [class*="media"],
+main .collection [class*="product-card"]:hover [class*="image"] {
+  border-color: var(--vh-border) !important;
+  background: #050505 !important;
+}
+
+main .collection .card__media img,
+main .collection .product-card__media img,
+main .collection .product-card__image img,
+main .collection [class*="product-card"] img,
+main .collection [class*="card-product"] img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 92% !important;
+  max-height: 92% !important;
+  margin: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: transparent !important;
+  transition: transform 0.24s ease !important;
+}
+
+main .collection .product-card:hover img,
+main .collection .card:hover img,
+main .collection [class*="product-card"]:hover img,
+main .collection [class*="card-product"]:hover img {
+  transform: scale(1.025) !important;
+}
+
+main .collection .card__content,
+main .collection .card__information,
+main .collection .product-card__content,
+main .collection .product-card__info,
+main .collection [class*="product-card"] [class*="content"],
+main .collection [class*="product-card"] [class*="info"] {
+  display: flex !important;
+  flex: 1 !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+  padding: 0.75rem 0 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+main .collection .card__heading,
+main .collection .card__heading a,
+main .collection .product-card__title,
+main .collection [class*="product-card"] h3,
+main .collection [class*="card-product"] h3,
+main .collection [class*="product-card"] [class*="title"] {
+  margin: 0 !important;
+  font-family: var(--vh-font-display) !important;
+  font-size: clamp(1.05rem, 1.45vw, 1.35rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0.055em !important;
+  text-transform: uppercase !important;
+  color: var(--vh-gold) !important;
+}
+
+main .collection .card__heading a:hover,
+main .collection .product-card__title:hover,
+main .collection [class*="product-card"] h3 a:hover {
+  color: var(--vh-gold) !important;
+}
+
+main .collection .card__description,
+main .collection .product-card__description,
+main .collection [class*="description"] {
+  margin: 0 !important;
+  display: -webkit-box !important;
+  overflow: hidden !important;
+  color: var(--vh-text-muted) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.72rem !important;
+  line-height: 1.45 !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2 !important;
+}
+
+main .collection .price,
+main .collection .price__regular,
+main .collection .price-item,
+main .collection [class*="price"] {
+  margin-top: 0.2rem !important;
+  color: var(--vh-gold) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+
+main .collection .price__sale,
+main .collection .price-item--sale {
+  color: var(--vh-gold) !important;
+}
+
+main .collection .price__compare,
+main .collection .price-item--regular s,
+main .collection s.price-item {
+  color: var(--vh-text-muted) !important;
+  font-weight: 400 !important;
+}
+
+main .collection .badge,
+main .collection [class*="badge"] {
+  border-radius: 0 !important;
+  background: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.62rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+main .collection .quick-add,
+main .collection [class*="quick-add"],
+main .collection product-form {
+  margin-top: auto !important;
+}
+
+main .collection .quick-add button,
+main .collection [class*="quick-add"] button,
+main .collection product-form button {
+  min-height: 2.4rem !important;
+  width: 100% !important;
+  margin-top: 0.75rem !important;
+  background: var(--vh-gold) !important;
+  border: 1px solid var(--vh-gold) !important;
+  border-radius: 0 !important;
+  color: var(--vh-black) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.68rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+}
+
+@media (min-width: 990px) {
+  main .collection .product-grid,
+  main .collection ul[class*="product-grid"],
+  main .collection [class*="product-grid"] {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 749px) {
+  main .collection .card__media,
+  main .collection .product-card__media,
+  main .collection .product-card__image,
+  main .collection [class*="product-card"] [class*="media"],
+  main .collection [class*="product-card"] [class*="image"] {
+    padding: 1rem !important;
+  }
+
+  main .collection .card__content,
+  main .collection .card__information,
+  main .collection .product-card__content,
+  main .collection .product-card__info {
+    padding: 0.75rem !important;
+  }
+}
+
 /* Dividers */
 hr,
 .divider {
@@ -455,4 +1098,690 @@ select {
   background-color: var(--vh-surface-raised) !important;
   border-color: var(--vh-border-subtle) !important;
   color: #fff !important;
+}
+
+/* Final Horizon collection-card override.
+   Keep only the image/media square bordered; product info stays clean underneath. */
+main product-card,
+main .product-card,
+main .card,
+main .card-product,
+main .card-wrapper,
+main .product-card-wrapper,
+main [class*="product-card"],
+main [class*="card-product"] {
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+main product-card > *,
+main .product-card > *,
+main .card > *,
+main .card-product > *,
+main .card-wrapper > *,
+main .product-card-wrapper > *,
+main [class*="product-card"] > *,
+main [class*="card-product"] > * {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+main .card__inner,
+main .card__content,
+main .card__information,
+main .card-product__content,
+main .card-product__information,
+main .product-card__content,
+main .product-card__info,
+main [class*="card__inner"],
+main [class*="card__content"],
+main [class*="card__information"],
+main [class*="product-card__content"],
+main [class*="product-card__info"] {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+main .card__media,
+main .card__media .media,
+main .card-product__media,
+main .product-card__media,
+main .product-card__image,
+main product-card [class*="media"],
+main .product-card [class*="media"],
+main .card-product [class*="media"],
+main [class*="product-card"] [class*="media"],
+main [class*="card-product"] [class*="media"] {
+  display: grid !important;
+  place-items: center !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 100% !important;
+  min-height: auto !important;
+  padding: clamp(1rem, 2vw, 1.75rem) !important;
+  overflow: hidden !important;
+  background: #030303 !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+main .card__media img,
+main .card-product__media img,
+main .product-card__media img,
+main .product-card__image img,
+main product-card img,
+main .product-card img,
+main .card-product img,
+main [class*="product-card"] img,
+main [class*="card-product"] img {
+  position: relative !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 92% !important;
+  max-height: 92% !important;
+  margin: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+  background: transparent !important;
+}
+
+main .card__information,
+main .card-product__information,
+main .product-card__info,
+main [class*="card__information"],
+main [class*="product-card__info"] {
+  padding: 0.75rem 0 0 !important;
+}
+
+main .card__heading,
+main .card__heading a,
+main .card-product__title,
+main .product-card__title,
+main product-card h3,
+main .product-card h3,
+main .card-product h3,
+main [class*="product-card"] h3,
+main [class*="card-product"] h3 {
+  margin: 0 0 0.25rem !important;
+  font-family: var(--vh-font-display) !important;
+  font-size: clamp(1.05rem, 1.45vw, 1.3rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0.055em !important;
+  text-transform: uppercase !important;
+  color: var(--vh-gold) !important;
+}
+
+main product-card .price,
+main .product-card .price,
+main .card-product .price,
+main .card .price,
+main [class*="product-card"] .price,
+main [class*="card-product"] .price,
+main product-card [class*="price"],
+main .product-card [class*="price"],
+main .card-product [class*="price"] {
+  color: var(--vh-gold) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+
+/* Single-border product image box.
+   Horizon nests image wrappers (card__inner > card__media > media); only card__inner should draw the square. */
+main .collection .card__inner,
+main .collection [class*="card__inner"] {
+  display: grid !important;
+  place-items: center !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 100% !important;
+  padding: clamp(1rem, 2vw, 1.75rem) !important;
+  overflow: hidden !important;
+  background: #030303 !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+main .collection .card__inner:hover,
+main .collection [class*="card__inner"]:hover {
+  border-color: var(--vh-border) !important;
+}
+
+main .collection .card__inner .card__media,
+main .collection .card__inner .media,
+main .collection .card__inner [class*="media"],
+main .collection .card__inner [class*="image"],
+main .collection [class*="card__inner"] .card__media,
+main .collection [class*="card__inner"] .media,
+main .collection [class*="card__inner"] [class*="media"],
+main .collection [class*="card__inner"] [class*="image"] {
+  position: static !important;
+  inset: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  aspect-ratio: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+main .collection .card__inner .media::before,
+main .collection .card__inner .media::after,
+main .collection .card__inner [class*="media"]::before,
+main .collection .card__inner [class*="media"]::after,
+main .collection [class*="card__inner"] .media::before,
+main .collection [class*="card__inner"] .media::after,
+main .collection [class*="card__inner"] [class*="media"]::before,
+main .collection [class*="card__inner"] [class*="media"]::after {
+  display: none !important;
+  content: none !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+main .collection .card__inner img,
+main .collection [class*="card__inner"] img {
+  position: static !important;
+  inset: auto !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 90% !important;
+  max-height: 90% !important;
+  margin: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+main .collection .card__content,
+main .collection .card__information,
+main .collection [class*="card__content"],
+main .collection [class*="card__information"] {
+  padding: 0.75rem 0 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Absolute last override for Horizon cards.
+   Previous broad media selectors can still hit nested wrappers; this removes every inner frame
+   and leaves one border on the outer card image holder only. */
+main .card__inner,
+main [class*="card__inner"],
+main .product-card__image,
+main .card-product__image {
+  display: grid !important;
+  place-items: center !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 100% !important;
+  padding: clamp(1rem, 2vw, 1.75rem) !important;
+  background: #030303 !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+main .card__inner *,
+main [class*="card__inner"] *,
+main .product-card__image *,
+main .card-product__image * {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: 0 !important;
+}
+
+main .card__inner .media,
+main .card__inner [class*="media"],
+main [class*="card__inner"] .media,
+main [class*="card__inner"] [class*="media"],
+main .product-card__image .media,
+main .product-card__image [class*="media"],
+main .card-product__image .media,
+main .card-product__image [class*="media"] {
+  position: static !important;
+  inset: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  aspect-ratio: auto !important;
+  overflow: visible !important;
+}
+
+main .card__inner .media::before,
+main .card__inner .media::after,
+main .card__inner [class*="media"]::before,
+main .card__inner [class*="media"]::after,
+main [class*="card__inner"] .media::before,
+main [class*="card__inner"] .media::after,
+main [class*="card__inner"] [class*="media"]::before,
+main [class*="card__inner"] [class*="media"]::after {
+  display: none !important;
+  content: none !important;
+}
+
+main .card__inner img,
+main [class*="card__inner"] img,
+main .product-card__image img,
+main .card-product__image img {
+  position: static !important;
+  inset: auto !important;
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 90% !important;
+  max-height: 90% !important;
+  margin: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+}
+
+/* Exact Horizon product-card media DOM:
+   a.contents > slideshow-component > slideshow-container > slideshow-slides
+   > slideshow-slide.product-media-container--image > .product-media > img */
+main a.contents,
+main a.contents slideshow-component,
+main a.contents slideshow-container,
+main a.contents slideshow-slides {
+  display: block !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+main a.contents slideshow-slide.product-media-container,
+main a.contents slideshow-slide.product-media-container--image {
+  display: grid !important;
+  place-items: center !important;
+  aspect-ratio: 1 / 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: clamp(1rem, 2vw, 1.75rem) !important;
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(238, 220, 130, 0.1),
+      transparent 58%
+    ),
+    var(--vh-product-tile) !important;
+  border: 0 !important;
+  border-radius: 0.9rem !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+}
+
+main a.contents slideshow-slide.product-media-container:hover,
+main a.contents slideshow-slide.product-media-container--image:hover {
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(238, 220, 130, 0.14),
+      transparent 58%
+    ),
+    var(--vh-product-tile-hover) !important;
+}
+
+/* Make the image fill a bit more (reduces inner padding) */
+main a.contents slideshow-slide.product-media-container,
+main a.contents slideshow-slide.product-media-container--image {
+  padding: clamp(0.8rem, 1.6vw, 1.4rem) !important;
+}
+
+main a.contents slideshow-slide.product-media-container .product-media,
+main a.contents slideshow-slide.product-media-container--image .product-media {
+  position: static !important;
+  inset: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  aspect-ratio: auto !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+main a.contents slideshow-slide.product-media-container .product-media::before,
+main a.contents slideshow-slide.product-media-container .product-media::after,
+main
+  a.contents
+  slideshow-slide.product-media-container--image
+  .product-media::before,
+main
+  a.contents
+  slideshow-slide.product-media-container--image
+  .product-media::after,
+main a.contents slideshow-slide.product-media-container::before,
+main a.contents slideshow-slide.product-media-container::after,
+main a.contents slideshow-slide.product-media-container--image::before,
+main a.contents slideshow-slide.product-media-container--image::after {
+  display: none !important;
+  content: none !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+main
+  a.contents
+  slideshow-slide.product-media-container
+  img.product-media__image,
+main
+  a.contents
+  slideshow-slide.product-media-container--image
+  img.product-media__image {
+  position: static !important;
+  inset: auto !important;
+  display: block !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  margin: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: scale(1.2) !important;
+  transform-origin: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Collection product title is a <p role="heading" aria-level="3"> (not an <h3>) */
+main .collection p[role="heading"][aria-level="3"],
+main .collection [role="heading"][aria-level="3"] {
+  margin: 0 !important;
+  font-family: var(--vh-font-display) !important;
+  font-size: clamp(1.2rem, 1.7vw, 1.55rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0.055em !important;
+  text-transform: uppercase !important;
+  color: var(--vh-gold) !important;
+}
+
+/* Exact Horizon title block: .text-block--...__product_title_... > p[role=heading] */
+main .text-block[class*="product_title"] p[role="heading"],
+main .text-block[class*="product-title"] p[role="heading"],
+main div[class*="product_title"] p[role="heading"],
+main div[class*="product-title"] p[role="heading"] {
+  margin: 0 !important;
+  font-family: var(--vh-font-display) !important;
+  font-size: clamp(1.1rem, 1.55vw, 1.4rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.05 !important;
+  letter-spacing: 0.055em !important;
+  text-transform: uppercase !important;
+  color: var(--vh-gold) !important;
+}
+
+/* Collection cards: show only featured image (first slide) */
+main a.contents slideshow-container,
+main a.contents slideshow-slides {
+  display: grid !important;
+  grid-template-areas: "slide" !important;
+  width: 100% !important;
+  overflow: hidden !important;
+}
+
+main a.contents slideshow-slides > slideshow-slide,
+main a.contents slideshow-slide[aria-hidden="true"],
+main a.contents slideshow-slide:not(:first-of-type) {
+  grid-area: slide !important;
+  position: absolute !important;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+main a.contents slideshow-slides > slideshow-slide:first-of-type {
+  position: relative !important;
+  display: grid !important;
+  width: 100% !important;
+  height: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Cart page — dark summary, full product thumbnails, transparent quantity controls */
+body:has(main cart-items),
+body:has(main .cart-items),
+body:has(main form[action*="/cart"]),
+main .cart,
+main cart-items,
+main form[action*="/cart"] {
+  background: var(--vh-black) !important;
+  color: var(--vh-text) !important;
+}
+
+main .cart__items,
+main .cart-items,
+main cart-items,
+main form[action*="/cart"],
+main [class*="cart-items"],
+main [class*="cart-line"],
+main [class*="line-item"] {
+  background: transparent !important;
+  border-color: var(--vh-border-subtle) !important;
+}
+
+main .cart-item__image,
+main .cart-item__media img,
+main .cart-items img,
+main cart-items img,
+main form[action*="/cart"] img,
+main [class*="cart-item"] img,
+main [class*="line-item"] img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 6rem !important;
+  max-height: 6rem !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: var(--vh-black) !important;
+  border: 0 !important;
+}
+
+main .cart-item__media,
+main .cart-items a:has(img),
+main cart-items a:has(img),
+main form[action*="/cart"] a:has(img),
+main [class*="cart-item"][class*="media"],
+main [class*="line-item"][class*="media"] {
+  display: grid !important;
+  place-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  overflow: visible !important;
+}
+
+main .cart__footer,
+main .cart__blocks,
+main .cart__summary,
+main .cart-summary,
+main .cart-drawer__footer,
+main [class*="cart-summary"],
+main [class*="cart__footer"],
+main [class*="cart__blocks"],
+main [class*="checkout"],
+main [class*="subtotal"] {
+  background: var(--vh-surface-raised) !important;
+  color: var(--vh-text) !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+main .cart__footer *,
+main .cart__blocks *,
+main .cart__summary *,
+main .cart-summary *,
+main [class*="cart-summary"] *,
+main [class*="cart__footer"] *,
+main [class*="cart__blocks"] *,
+main [class*="subtotal"] * {
+  color: inherit !important;
+}
+
+main .cart-items .quantity,
+main cart-items .quantity,
+main form[action*="/cart"] .quantity,
+main .cart-items quantity-selector,
+main cart-items quantity-selector,
+main form[action*="/cart"] quantity-selector,
+main .cart-items .quantity-selector,
+main cart-items .quantity-selector,
+main form[action*="/cart"] .quantity-selector,
+main .cart-items [class*="quantity"],
+main cart-items [class*="quantity"],
+main form[action*="/cart"] [class*="quantity"] {
+  min-height: 2.5rem !important;
+  background: transparent !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: 0 !important;
+  color: var(--vh-text) !important;
+}
+
+main .cart-items .quantity button,
+main cart-items .quantity button,
+main form[action*="/cart"] .quantity button,
+main .cart-items .quantity__button,
+main cart-items .quantity__button,
+main form[action*="/cart"] .quantity__button,
+main .cart-items quantity-selector button,
+main cart-items quantity-selector button,
+main form[action*="/cart"] quantity-selector button,
+main .cart-items [class*="quantity"] button,
+main cart-items [class*="quantity"] button,
+main form[action*="/cart"] [class*="quantity"] button {
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  min-width: 2.5rem !important;
+  min-height: 2.5rem !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: var(--vh-gold) !important;
+}
+
+main .cart-items .quantity input,
+main cart-items .quantity input,
+main form[action*="/cart"] .quantity input,
+main .cart-items .quantity__input,
+main cart-items .quantity__input,
+main form[action*="/cart"] .quantity__input,
+main .cart-items quantity-selector input,
+main cart-items quantity-selector input,
+main form[action*="/cart"] quantity-selector input,
+main .cart-items [class*="quantity"] input,
+main cart-items [class*="quantity"] input,
+main form[action*="/cart"] [class*="quantity"] input {
+  height: 2.5rem !important;
+  min-height: 2.5rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  color: var(--vh-text) !important;
+  text-align: center !important;
+}
+
+main .cart-remove-button,
+main .cart-item__remove,
+main cart-remove-button,
+main button[name="remove"],
+main button[name*="remove"],
+main a[href*="/cart/change"],
+main a[href*="/cart/update"],
+main .cart-items [class*="remove"] button,
+main cart-items [class*="remove"] button,
+main form[action*="/cart"] [class*="remove"] button,
+main .cart-items [class*="remove"] a,
+main cart-items [class*="remove"] a,
+main form[action*="/cart"] [class*="remove"] a {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  min-width: 2.5rem !important;
+  min-height: 2.5rem !important;
+  padding: 0 !important;
+  background: var(--vh-gold) !important;
+  border: 1px solid var(--vh-gold) !important;
+  border-radius: 0 !important;
+  color: var(--vh-black) !important;
+}
+
+main .cart-remove-button svg,
+main .cart-item__remove svg,
+main cart-remove-button svg,
+main button[name="remove"] svg,
+main button[name*="remove"] svg,
+main a[href*="/cart/change"] svg,
+main a[href*="/cart/update"] svg,
+main .cart-items [class*="remove"] svg,
+main cart-items [class*="remove"] svg,
+main form[action*="/cart"] [class*="remove"] svg {
+  width: 1rem !important;
+  height: 1rem !important;
+}
+
+main .cart__checkout-button,
+main .cart__footer button[name="checkout"],
+main .cart__blocks button[name="checkout"],
+main button[name="checkout"],
+main [class*="checkout"] button {
+  background: var(--vh-gold) !important;
+  border: 1px solid var(--vh-gold) !important;
+  border-radius: 0 !important;
+  color: var(--vh-black) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
 }

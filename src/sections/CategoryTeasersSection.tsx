@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import vitalityImage from "../assets/vitality.png";
+import saltedkarImage from "../assets/saltedkar.png";
+import vitalbundleImage from "../assets/vitalbundle.png";
 import { PageContainer } from "../components/PageContainer";
 
 const teasers = [
@@ -7,16 +10,22 @@ const teasers = [
     title: "Doplňky stravy",
     text: "GLP-1 Support — kapsle pro energii, spalování a kontrolu chuti.",
     href: "/homepage#produkty",
+    image: vitalityImage,
+    imageAlt: "Doplňky stravy Vojta Hubne — Aquamin Mg a D3 + K2",
   },
   {
     title: "Proteiny & shaky",
     text: "Lean Shake GLP-1 — 22 g bílkovin, vláknina a vitamíny v jedné dávce.",
     href: "/homepage#produkty",
+    image: saltedkarImage,
+    imageAlt: "Lean Shake GLP-1 slaný karamel — proteinový shake",
   },
   {
     title: "Péče o tělo",
     text: "Regenerační krémy s GHK-Cu pro pocit sytosti a obnovu pokožky.",
     href: "/homepage#produkty",
+    image: vitalbundleImage,
+    imageAlt: "Péče o tělo — GHK-Cu cream a Antiage cream",
   },
 ];
 
@@ -47,16 +56,10 @@ const Grid = styled.div`
 const Card = styled(Link)`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  min-height: 10rem;
-  padding: 1.5rem;
+  height: 100%;
   text-decoration: none;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
-  background: linear-gradient(
-    145deg,
-    ${({ theme }) => theme.colors.surfaceRaised} 0%,
-    ${({ theme }) => theme.colors.black} 100%
-  );
+  background: ${({ theme }) => theme.colors.surfaceRaised};
   transition:
     border-color 0.25s ease,
     transform 0.25s ease;
@@ -65,6 +68,33 @@ const Card = styled(Link)`
     border-color: ${({ theme }) => theme.colors.border};
     transform: translateY(-2px);
   }
+`;
+
+const CardBody = styled.div`
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem;
+`;
+
+const CardContent = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+`;
+
+const ImageWrap = styled.div`
+  flex-shrink: 0;
+  width: clamp(4.5rem, 28%, 6.5rem);
+`;
+
+const Image = styled.img`
+  display: block;
+  width: 100%;
+  height: auto;
 `;
 
 const CardTitle = styled.h3`
@@ -100,9 +130,16 @@ export function CategoryTeasersSection() {
         <Grid>
           {teasers.map((teaser) => (
             <Card key={teaser.title} to={teaser.href}>
-              <CardTitle>{teaser.title}</CardTitle>
-              <CardText>{teaser.text}</CardText>
-              <CardCta>Zobrazit produkty →</CardCta>
+              <CardBody>
+                <CardContent>
+                  <CardTitle>{teaser.title}</CardTitle>
+                  <CardText>{teaser.text}</CardText>
+                  <CardCta>Zobrazit produkty →</CardCta>
+                </CardContent>
+                <ImageWrap>
+                  <Image src={teaser.image} alt={teaser.imageAlt} loading="lazy" />
+                </ImageWrap>
+              </CardBody>
             </Card>
           ))}
         </Grid>

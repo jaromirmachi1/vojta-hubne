@@ -21,7 +21,10 @@ const Card = styled.article`
 const ImageWrap = styled.div`
   position: relative;
   aspect-ratio: 4 / 3;
+  display: grid;
+  place-items: center;
   overflow: hidden;
+  padding: clamp(0.75rem, 1.5vw, 1.1rem);
   background: ${({ theme }) => theme.colors.black};
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
 `
@@ -29,7 +32,7 @@ const ImageWrap = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
 `
 

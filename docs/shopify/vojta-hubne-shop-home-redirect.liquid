@@ -1,0 +1,17 @@
+{% comment %}
+  Shop "home" = catalog, not Shopify default homepage.
+
+  In layout/theme.liquid, inside <head>, add:
+    {% render 'vojta-hubne-shop-home-redirect' %}
+
+  Sends shop.vojtahubne.cz/ → /collections/all.
+  Does NOT affect cart, checkout, products, or vojtahubne.cz.
+{% endcomment %}
+
+{% if template.name == 'index' and request.path == '/' %}
+  {% assign shop_home = routes.all_products_collection_url | default: '/collections/all' %}
+  <meta http-equiv="refresh" content="0; url={{ shop_home }}">
+  <script>
+    window.location.replace({{ shop_home | json }});
+  </script>
+{% endif %}
