@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { eyebrowText } from '../styles/eyebrow'
 import { PageContainer } from '../components/PageContainer'
 import { glpSupportComparison } from '../data/productComparison'
 
@@ -98,18 +99,17 @@ const VisualPlaceholder = styled.div`
   text-align: center;
   background: ${({ theme }) => theme.colors.surfaceRaised};
   border: 1px dashed ${({ theme }) => theme.colors.border};
-  border-radius: 0;
+  border-radius: ${({ theme }) => theme.radii.lg};
 
   span:first-child {
     font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.goldMuted};
+    letter-spacing: 0.16em;
+    ${eyebrowText}
   }
 
   span:last-child {
     font-size: 0.8rem;
-    color: ${({ theme }) => theme.colors.textMuted};
+    color: ${({ theme }) => theme.colors.text};
   }
 `
 
@@ -136,6 +136,7 @@ const Card = styled.div<{ $featured?: boolean }>`
   border: 1px solid
     ${({ theme, $featured }) =>
       $featured ? theme.colors.border : theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.lg};
 `
 
 const CardTitle = styled.h3<{ $variant: 'competitor' | 'ours' }>`
@@ -146,7 +147,7 @@ const CardTitle = styled.h3<{ $variant: 'competitor' | 'ours' }>`
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: ${({ theme, $variant }) =>
-    $variant === 'ours' ? theme.colors.gold : theme.colors.textMuted};
+    $variant === 'ours' ? theme.colors.gold : theme.colors.text};
 `
 
 const IngredientList = styled.ul`
@@ -187,7 +188,7 @@ const GradeBadge = styled.span<{ $variant: 'competitor' | 'ours' }>`
   font-size: 0.7rem;
   font-weight: 700;
   color: ${({ theme, $variant }) =>
-    $variant === 'ours' ? theme.colors.black : theme.colors.textMuted};
+    $variant === 'ours' ? theme.colors.black : theme.colors.text};
   background: ${({ theme, $variant }) =>
     $variant === 'ours' ? theme.colors.gold : 'rgba(255, 255, 255, 0.06)'};
   border: 1px solid
@@ -195,11 +196,10 @@ const GradeBadge = styled.span<{ $variant: 'competitor' | 'ours' }>`
       $variant === 'ours' ? theme.colors.gold : theme.colors.borderSubtle};
 `
 
-const IngredientName = styled.span<{ $muted?: boolean }>`
+const IngredientName = styled.span`
   font-size: 0.875rem;
   line-height: 1.35;
-  color: ${({ theme, $muted }) =>
-    $muted ? theme.colors.textMuted : theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
 `
 
 const IngredientMeta = styled.div`
@@ -214,7 +214,7 @@ const IngredientPercent = styled.span<{ $variant: 'competitor' | 'ours' }>`
   font-size: 0.875rem;
   font-weight: 600;
   color: ${({ theme, $variant }) =>
-    $variant === 'ours' ? theme.colors.gold : theme.colors.textMuted};
+    $variant === 'ours' ? theme.colors.gold : theme.colors.text};
 `
 
 const IngredientNote = styled.span`
@@ -247,6 +247,7 @@ const Cta = styled.a`
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.gold};
   border: 1px solid ${({ theme }) => theme.colors.gold};
+  border-radius: ${({ theme }) => theme.radii.pill};
   transition: opacity 0.2s ease;
 
   &:hover {
@@ -287,7 +288,7 @@ export function ProductComparisonSection() {
                   <IngredientRow key={item.name}>
                     <IngredientDot $tone="muted" aria-hidden />
                     <GradeBadge $variant="competitor">{item.grade}</GradeBadge>
-                    <IngredientName $muted>{item.name}</IngredientName>
+                    <IngredientName>{item.name}</IngredientName>
                     <IngredientMeta>
                       <IngredientPercent $variant="competitor">
                         {item.percent}

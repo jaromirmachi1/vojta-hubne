@@ -45,12 +45,11 @@ const StyledNavLink = styled(NavLink)`
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.gold};
   transition: color 0.2s ease;
 
-  &:hover,
-  &.active {
-    color: ${({ theme }) => theme.colors.gold};
+  &:hover {
+    color: ${({ theme }) => theme.colors.white};
   }
 `
 
@@ -60,11 +59,11 @@ const ExternalNavLink = styled.a`
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.gold};
   transition: color 0.2s ease;
 
   &:hover {
-    color: ${({ theme }) => theme.colors.gold};
+    color: ${({ theme }) => theme.colors.white};
   }
 `
 
@@ -82,7 +81,7 @@ const CartLink = styled.a`
   height: 2.5rem;
   padding: 0;
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 0;
+  border-radius: ${({ theme }) => theme.radii.pill};
   background: transparent;
   color: ${({ theme }) => theme.colors.gold};
   text-decoration: none;
@@ -113,7 +112,6 @@ export function SiteHeader() {
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
           <StyledNavLink to="/homepage#porovnani">Proč my</StyledNavLink>
           <StyledNavLink to="/homepage#pribeh">Příběh</StyledNavLink>
-          <ExternalNavLink href="/">Spouštíme brzy</ExternalNavLink>
         </Nav>
 
         <Actions>

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { eyebrowText } from '../styles/eyebrow'
 import { PageContainer } from '../components/PageContainer'
 
 const Section = styled.section`
@@ -27,9 +28,8 @@ const Content = styled.div`
 const Eyebrow = styled.p`
   margin: 0;
   font-size: 0.7rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
+  letter-spacing: 0.22em;
+  ${eyebrowText}
 `
 
 const Title = styled.h2`
@@ -54,13 +54,17 @@ const CommunityLink = styled.a`
   gap: 0.45rem;
   align-self: flex-start;
   margin-top: 0.75rem;
+  padding: 0.85rem 1.1rem;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.gold};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.pill};
   transition:
+    background 0.2s ease,
     color 0.2s ease,
     gap 0.2s ease;
 
@@ -72,6 +76,7 @@ const CommunityLink = styled.a`
 
   &:hover {
     color: ${({ theme }) => theme.colors.white};
+    background: rgba(238, 220, 130, 0.06);
 
     &::after {
       transform: translateX(3px);
@@ -83,6 +88,7 @@ const Quote = styled.blockquote`
   margin: 0;
   padding: 2rem;
   border-left: 2px solid ${({ theme }) => theme.colors.gold};
+  border-radius: ${({ theme }) => theme.radii.xl};
   background: ${({ theme }) => theme.colors.surfaceRaised};
 
   p {
@@ -96,9 +102,8 @@ const Quote = styled.blockquote`
   footer {
     margin-top: 1rem;
     font-size: 0.75rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: ${({ theme }) => theme.colors.goldMuted};
+    letter-spacing: 0.16em;
+    ${eyebrowText}
   }
 `
 

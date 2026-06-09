@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { eyebrowText } from '../styles/eyebrow'
 import heroPortrait from '../assets/SzzEgtimTNU2uqEm_2g6w.JPG.webp'
 import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
 import { PageContainer } from '../components/PageContainer'
@@ -42,9 +43,8 @@ const Content = styled.div`
 const Eyebrow = styled.p`
   margin: 0;
   font-size: 0.7rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
+  letter-spacing: 0.22em;
+  ${eyebrowText}
 `
 
 const Title = styled.h1`
@@ -88,9 +88,8 @@ const StatValue = styled.span`
 
 const StatLabel = styled.span`
   font-size: 0.7rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
+  letter-spacing: 0.16em;
+  ${eyebrowText}
 `
 
 const Actions = styled.div`
@@ -112,6 +111,7 @@ const PrimaryLink = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.gold};
+  border-radius: ${({ theme }) => theme.radii.pill};
   transition: opacity 0.2s ease;
 
   &:hover {
@@ -131,6 +131,7 @@ const SecondaryLink = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.gold};
   border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.pill};
   transition: background 0.2s ease;
 
   &:hover {
@@ -156,6 +157,7 @@ const PortraitFrame = styled.div`
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.xl};
   background: ${({ theme }) => theme.colors.black};
 
   &::after {

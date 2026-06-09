@@ -4,6 +4,7 @@ import vitalityImage from "../assets/vitality.png";
 import saltedkarImage from "../assets/saltedkar.png";
 import vitalbundleImage from "../assets/vitalbundle.png";
 import { PageContainer } from "../components/PageContainer";
+import { eyebrowText } from "../styles/eyebrow";
 
 const teasers = [
   {
@@ -59,7 +60,9 @@ const Card = styled(Link)`
   height: 100%;
   text-decoration: none;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.colors.surfaceRaised};
+  overflow: hidden;
   transition:
     border-color 0.25s ease,
     transform 0.25s ease;
@@ -89,6 +92,8 @@ const CardContent = styled.div`
 const ImageWrap = styled.div`
   flex-shrink: 0;
   width: clamp(4.5rem, 28%, 6.5rem);
+  border-radius: ${({ theme }) => theme.radii.md};
+  overflow: hidden;
 `;
 
 const Image = styled.img`
@@ -116,10 +121,8 @@ const CardText = styled.p`
 
 const CardCta = styled.span`
   font-size: 0.65rem;
-  font-weight: 600;
   letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
+  ${eyebrowText}
 `;
 
 export function CategoryTeasersSection() {

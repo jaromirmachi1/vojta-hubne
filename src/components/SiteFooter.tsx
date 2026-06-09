@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { eyebrowText } from '../styles/eyebrow'
 import { PageContainer } from './PageContainer'
 
 const Footer = styled.footer`
@@ -37,7 +38,7 @@ const Text = styled.p`
   max-width: 20rem;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: ${({ theme }) => theme.colors.text};
 `
 
 const Column = styled.div`
@@ -48,10 +49,8 @@ const Column = styled.div`
 
 const ColumnTitle = styled.h2`
   font-size: 0.7rem;
-  font-weight: 600;
   letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
+  ${eyebrowText}
 `
 
 const FooterLink = styled(Link)`
@@ -68,7 +67,7 @@ const Bottom = styled(PageContainer)`
   padding-block: 1.25rem;
   text-align: center;
   font-size: 0.75rem;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: ${({ theme }) => theme.colors.text};
   border-top: 1px solid ${({ theme }) => theme.colors.borderSubtle};
 `
 

@@ -15,6 +15,7 @@ const Unit = styled.div<{ $compact?: boolean }>`
   gap: 0.35rem;
   padding: ${({ $compact }) => ($compact ? '0.65rem 0.35rem' : '1rem 0.5rem')};
   border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.lg};
 `
 
 const Value = styled.span<{ $compact?: boolean }>`

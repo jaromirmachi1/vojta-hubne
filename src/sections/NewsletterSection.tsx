@@ -47,6 +47,7 @@ const Cta = styled.a`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.gold};
+  border-radius: ${({ theme }) => theme.radii.pill};
 `
 
 export function NewsletterSection() {

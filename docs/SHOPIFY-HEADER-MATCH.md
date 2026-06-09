@@ -17,7 +17,7 @@ React source of truth:
 
 1. **Customize → Header** (or **Announcement bar** section)
 2. Enable announcement bar
-3. Text: `E-shop spouštíme brzy — sledujte odpočet na úvodní stránce`
+3. Text: `Chceš zhubnout? Podpoř sytost, metabolismus a disciplínu — nakupuj teď v e-shopu →` (link to catalog)
 4. Background: `#eedc82`
 5. Text color: `#000000`
 6. Typography: small, uppercase, wide letter-spacing if available
@@ -39,7 +39,6 @@ Add links (same as React):
 | Produkty | `https://vojtahubne.cz/homepage#produkty` |
 | Proč my | `https://vojtahubne.cz/homepage#porovnani` |
 | Příběh | `https://vojtahubne.cz/homepage#pribeh` |
-| Spouštíme brzy | `https://vojtahubne.cz/` |
 
 Optional shop-only link:
 

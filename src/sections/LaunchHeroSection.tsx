@@ -8,7 +8,7 @@ import { useCountdown } from "../hooks/useCountdown";
 const launchLabel = css`
   font-family: ${({ theme }) => theme.fonts.sans};
   font-size: clamp(0.7rem, 1.6vw, 0.8rem);
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.gold};

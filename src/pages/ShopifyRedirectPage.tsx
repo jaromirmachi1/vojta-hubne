@@ -40,6 +40,7 @@ const StateLink = styled(Link)`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.gold};
   border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.pill};
   padding: 0.85rem 1.25rem;
 
   &:hover {
@@ -55,6 +56,7 @@ const ExternalLink = styled.a`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.gold};
   border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.pill};
   padding: 0.85rem 1.25rem;
 
   &:hover {

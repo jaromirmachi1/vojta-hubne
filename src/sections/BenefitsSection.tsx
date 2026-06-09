@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { eyebrowText } from '../styles/eyebrow'
 import { PageContainer } from '../components/PageContainer'
 
 const benefits = [
@@ -35,9 +36,8 @@ const Header = styled.header`
 const Eyebrow = styled.p`
   margin: 0 0 0.5rem;
   font-size: 0.7rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
+  letter-spacing: 0.22em;
+  ${eyebrowText}
 `
 
 const Title = styled.h2`
@@ -65,6 +65,7 @@ const Grid = styled.div`
 const Card = styled.article`
   padding: 1.5rem;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.colors.surfaceRaised};
 `
 

@@ -18,6 +18,7 @@ const ArrowButton = styled.button`
   color: ${({ theme }) => theme.colors.gold};
   background: transparent;
   border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.pill};
   cursor: pointer;
   transition:
     background 0.2s ease,
@@ -49,7 +50,7 @@ const Dot = styled.button<{ $active: boolean }>`
   height: 0.5rem;
   padding: 0;
   border: none;
-  border-radius: 0;
+  border-radius: ${({ theme }) => theme.radii.pill};
   background: ${({ theme, $active }) =>
     $active ? theme.colors.gold : 'rgba(255, 255, 255, 0.2)'};
   cursor: pointer;

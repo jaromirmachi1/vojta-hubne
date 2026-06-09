@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { eyebrowText } from '../styles/eyebrow'
 import type { Product } from '../data/products'
 import { getShopifyProductUrl } from '../utils/shopify'
 
@@ -6,8 +7,10 @@ const Card = styled.article`
   display: flex;
   flex-direction: column;
   height: 100%;
+  overflow: hidden;
   background: ${({ theme }) => theme.colors.surfaceRaised};
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.lg};
   transition:
     border-color 0.25s ease,
     transform 0.25s ease;
@@ -47,6 +50,7 @@ const Badge = styled.span`
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.gold};
+  border-radius: ${({ theme }) => theme.radii.pill};
 `
 
 const Body = styled.div`
@@ -59,9 +63,8 @@ const Body = styled.div`
 
 const Category = styled.span`
   font-size: 0.65rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
+  letter-spacing: 0.16em;
+  ${eyebrowText}
 `
 
 const Name = styled.h3`
@@ -86,7 +89,7 @@ const Tagline = styled.p`
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: ${({ theme }) => theme.colors.text};
 `
 
 const Description = styled.p`
@@ -100,7 +103,7 @@ const Description = styled.p`
 const Meta = styled.p`
   margin: 0;
   font-size: 0.75rem;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: ${({ theme }) => theme.colors.text};
 `
 
 const Benefits = styled.ul`
@@ -119,6 +122,7 @@ const Benefit = styled.li`
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.text};
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.pill};
 `
 
 const Cta = styled.a`
@@ -136,6 +140,7 @@ const Cta = styled.a`
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.gold};
   border: none;
+  border-radius: ${({ theme }) => theme.radii.pill};
   cursor: pointer;
   transition: opacity 0.2s ease;
 
@@ -158,6 +163,7 @@ const CtaDisabled = styled.span`
   color: ${({ theme }) => theme.colors.textMuted};
   background: ${({ theme }) => theme.colors.surface};
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.pill};
   opacity: 0.6;
 `
 

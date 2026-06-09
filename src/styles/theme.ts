@@ -9,8 +9,8 @@ export const theme = {
     gold: '#eedc82',
     goldMuted: '#c9b56a',
     white: '#ffffff',
-    text: 'rgba(255, 255, 255, 0.92)',
-    textMuted: 'rgba(255, 255, 255, 0.78)',
+    text: '#ffffff',
+    textMuted: 'rgba(255, 255, 255, 0.9)',
     textHeading: '#ffffff',
     background: '#000000',
     border: 'rgba(238, 220, 130, 0.35)',
@@ -36,6 +36,13 @@ export const theme = {
     /** Homepage hero: full viewport below promo + header */
     heroMinHeight: `calc(100svh - ${headerHeight} - ${promoBarHeight})`,
     heroMinHeightDvh: `calc(100dvh - ${headerHeight} - ${promoBarHeight})`,
+  },
+  radii: {
+    sm: '0.5rem',
+    md: '0.75rem',
+    lg: '1rem',
+    xl: '1.25rem',
+    pill: '999px',
   },
 } as const
 

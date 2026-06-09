@@ -26,6 +26,11 @@
   --vh-font-sans: "Montserrat", system-ui, sans-serif;
   --vh-page-max-width: 1600px;
   --vh-page-padding-inline: clamp(1.25rem, 5vw, 3.5rem);
+  --vh-radius-sm: 0.5rem;
+  --vh-radius-md: 0.75rem;
+  --vh-radius-lg: 1rem;
+  --vh-radius-xl: 1.25rem;
+  --vh-radius-pill: 999px;
 }
 
 /* Base */
@@ -189,9 +194,7 @@ header,
   flex-shrink: 0 !important;
 }
 
-#header-component .vh-shop-header__nav-link,
 #header-component .vh-shop-header__cart-link {
-  color: var(--vh-text) !important;
   text-decoration: none !important;
 }
 
@@ -207,11 +210,13 @@ header,
   line-height: 1 !important;
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
+  color: var(--vh-gold) !important;
+  text-decoration: none !important;
   transition: color 0.2s ease !important;
 }
 
 #header-component .vh-shop-header__nav-link:hover {
-  color: var(--vh-gold) !important;
+  color: #ffffff !important;
 }
 
 #header-component .vh-shop-header__cart-link {
@@ -225,7 +230,7 @@ header,
   min-height: 2.5rem !important;
   padding: 0 !important;
   border: 1px solid var(--vh-border) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   background: transparent !important;
   color: var(--vh-gold) !important;
   transition: background 0.2s ease !important;
@@ -346,14 +351,14 @@ header,
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   text-decoration: none !important;
-  color: var(--vh-text) !important;
+  color: var(--vh-gold) !important;
   transition: color 0.2s ease !important;
 }
 
 .header-menu a:hover,
 .menu-list__link:hover,
 .vh-header-nav__link:hover {
-  color: var(--vh-gold) !important;
+  color: #ffffff !important;
 }
 
 .vh-header-nav {
@@ -378,7 +383,7 @@ header,
   width: 2.5rem !important;
   height: 2.5rem !important;
   border: 1px solid var(--vh-border) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   background: transparent !important;
   color: var(--vh-gold) !important;
 }
@@ -491,7 +496,7 @@ footer .email-signup__form {
 footer .email-signup__input-group {
   min-height: 4.35rem !important;
   border: 1px solid rgba(238, 220, 130, 0.22) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   background:
     linear-gradient(135deg, rgba(238, 220, 130, 0.08), transparent 42%),
     rgba(10, 10, 10, 0.82) !important;
@@ -523,7 +528,7 @@ footer .email-signup__button {
   background: var(--vh-gold) !important;
   color: var(--vh-black) !important;
   border: 0 !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   transition:
     background 0.2s ease,
     transform 0.2s ease !important;
@@ -585,7 +590,7 @@ footer .footer-utilities a:hover {
 footer .terms-policies-popover {
   padding: 1rem !important;
   border: 1px solid rgba(238, 220, 130, 0.18) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-lg) !important;
   background: rgba(10, 10, 10, 0.96) !important;
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.42) !important;
   backdrop-filter: blur(14px) !important;
@@ -815,7 +820,7 @@ media-gallery.media-gallery--grid,
   .media-gallery__grid .product-media-container {
     background: transparent !important;
     border: 0 !important;
-    border-radius: 0 !important;
+    border-radius: var(--vh-radius-lg) !important;
     overflow: visible !important;
     box-shadow: none !important;
   }
@@ -1097,7 +1102,7 @@ media-gallery.media-gallery--grid,
   background: var(--vh-surface-raised) !important;
   color: var(--vh-text) !important;
   border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
 }
 
 .variant-picker button[aria-checked="true"],
@@ -1116,7 +1121,7 @@ button.button {
   background-color: var(--vh-gold) !important;
   color: var(--vh-black) !important;
   border: 1px solid var(--vh-gold) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   font-family: var(--vh-font-sans) !important;
   font-size: 0.75rem !important;
   font-weight: 600 !important;
@@ -1134,6 +1139,7 @@ button[name="add"]:hover {
   background: transparent !important;
   color: var(--vh-gold) !important;
   border: 1px solid var(--vh-border) !important;
+  border-radius: var(--vh-radius-pill) !important;
 }
 
 /* Quantity */
@@ -1141,6 +1147,7 @@ button[name="add"]:hover {
 .quantity__input {
   background: var(--vh-surface-raised) !important;
   border-color: var(--vh-border-subtle) !important;
+  border-radius: var(--vh-radius-pill) !important;
   color: var(--vh-white, #fff) !important;
 }
 
@@ -1155,7 +1162,7 @@ button[name="add"]:hover {
 .card {
   background: var(--vh-surface-raised) !important;
   border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-lg) !important;
 }
 
 /* Collection grid — clean product cells inspired by Vilgain, adapted to Vojta Hubne */
@@ -1181,7 +1188,7 @@ main .collection [class*="card-product"] {
   overflow: visible !important;
   background: transparent !important;
   border: 0 !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-lg) !important;
   box-shadow: none !important;
   transition:
     transform 0.22s ease,
@@ -1232,7 +1239,7 @@ main .collection [class*="product-card"] [class*="image"] {
   padding: clamp(1.25rem, 2.2vw, 2rem) !important;
   background: #030303 !important;
   border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-lg) !important;
   overflow: hidden !important;
   transition:
     border-color 0.22s ease,
@@ -1351,7 +1358,7 @@ main .collection s.price-item {
 
 main .collection .badge,
 main .collection [class*="badge"] {
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   background: var(--vh-gold) !important;
   color: var(--vh-black) !important;
   font-family: var(--vh-font-sans) !important;
@@ -1375,7 +1382,7 @@ main .collection product-form button {
   margin-top: 0.75rem !important;
   background: var(--vh-gold) !important;
   border: 1px solid var(--vh-gold) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   color: var(--vh-black) !important;
   font-family: var(--vh-font-sans) !important;
   font-size: 0.68rem !important;
@@ -1489,7 +1496,7 @@ main [class*="card-product"] [class*="media"] {
   overflow: hidden !important;
   background: #030303 !important;
   border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-lg) !important;
   box-shadow: none !important;
 }
 
@@ -1571,7 +1578,7 @@ main .collection [class*="card__inner"] {
   overflow: hidden !important;
   background: #030303 !important;
   border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-lg) !important;
   box-shadow: none !important;
 }
 
@@ -1661,7 +1668,7 @@ main .card-product__image {
   padding: clamp(1rem, 2vw, 1.75rem) !important;
   background: #030303 !important;
   border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-lg) !important;
   box-shadow: none !important;
   overflow: hidden !important;
 }
@@ -1985,7 +1992,7 @@ main [class*="subtotal"] {
   background: var(--vh-surface-raised) !important;
   color: var(--vh-text) !important;
   border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-lg) !important;
   box-shadow: none !important;
 }
 
@@ -2015,7 +2022,7 @@ main form[action*="/cart"] [class*="quantity"] {
   min-height: 2.5rem !important;
   background: transparent !important;
   border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   color: var(--vh-text) !important;
 }
 
@@ -2038,7 +2045,7 @@ main form[action*="/cart"] [class*="quantity"] button {
   padding: 0 !important;
   background: transparent !important;
   border: 0 !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   color: var(--vh-gold) !important;
 }
 
@@ -2085,7 +2092,7 @@ main form[action*="/cart"] [class*="remove"] a {
   padding: 0 !important;
   background: var(--vh-gold) !important;
   border: 1px solid var(--vh-gold) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   color: var(--vh-black) !important;
 }
 
@@ -2112,7 +2119,7 @@ main cart-items [class*="checkout"] button,
 main form[action*="/cart"] [class*="checkout"] button {
   background: var(--vh-gold) !important;
   border: 1px solid var(--vh-gold) !important;
-  border-radius: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
   color: var(--vh-black) !important;
   font-family: var(--vh-font-sans) !important;
   font-size: 0.75rem !important;

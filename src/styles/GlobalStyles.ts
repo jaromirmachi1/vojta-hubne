@@ -16,7 +16,7 @@ export const GlobalStyles = createGlobalStyle`
     font-family: ${({ theme }) => theme.fonts.sans};
     font-size: 16px;
     line-height: 1.5;
-    font-weight: 300;
+    font-weight: 400;
     color: ${({ theme }) => theme.colors.text};
     background: ${({ theme }) => theme.colors.background};
     -webkit-font-smoothing: antialiased;

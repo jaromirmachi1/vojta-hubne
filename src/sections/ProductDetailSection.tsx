@@ -35,6 +35,7 @@ const MainImageWrap = styled.div`
   aspect-ratio: 1;
   background: ${({ theme }) => theme.colors.surfaceRaised};
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.xl};
   overflow: hidden;
 `
 
@@ -60,6 +61,7 @@ const ThumbButton = styled.button<{ $active?: boolean }>`
   border: 1px solid
     ${({ theme, $active }) =>
       $active ? theme.colors.border : theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.md};
   background: ${({ theme }) => theme.colors.surfaceRaised};
   cursor: pointer;
   overflow: hidden;
@@ -146,6 +148,7 @@ const VariantButton = styled.button<{ $active?: boolean }>`
   border: 1px solid
     ${({ theme, $active }) =>
       $active ? theme.colors.border : theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.pill};
   cursor: pointer;
   transition:
     border-color 0.2s ease,
@@ -173,6 +176,7 @@ const QuantityInput = styled.input`
   color: ${({ theme }) => theme.colors.white};
   background: ${({ theme }) => theme.colors.surfaceRaised};
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.pill};
 `
 
 const AddButton = styled.button`
@@ -187,6 +191,7 @@ const AddButton = styled.button`
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.gold};
   border: none;
+  border-radius: ${({ theme }) => theme.radii.pill};
   cursor: pointer;
   transition: opacity 0.2s ease;
 

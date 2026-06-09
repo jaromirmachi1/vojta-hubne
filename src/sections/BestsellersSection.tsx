@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
+import { eyebrowText } from '../styles/eyebrow'
 import { BestsellersPagination } from '../components/BestsellersPagination'
 import { PageContainer } from '../components/PageContainer'
 import { ProductCard } from '../components/ProductCard'
@@ -20,9 +21,8 @@ const Header = styled.header`
 const Eyebrow = styled.p`
   margin: 0 0 0.5rem;
   font-size: 0.7rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
+  letter-spacing: 0.22em;
+  ${eyebrowText}
 `
 
 const Title = styled.h2`
@@ -44,7 +44,7 @@ const Grid = styled.div<{ $columns: number }>`
 const Status = styled.p`
   margin: 0 0 1.5rem;
   font-size: 0.8rem;
-  color: ${({ theme }) => theme.colors.textMuted};
+  color: ${({ theme }) => theme.colors.text};
 `
 
 export function BestsellersSection() {
