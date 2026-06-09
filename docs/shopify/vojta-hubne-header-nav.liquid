@@ -49,6 +49,127 @@
           </span>
         {% endif %}
       </a>
+
+      <button
+        class="vh-shop-header__menu-toggle"
+        type="button"
+        data-vh-menu-toggle
+        aria-label="Otevřít menu"
+        aria-expanded="false"
+        aria-controls="vh-mobile-nav"
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M4 7h16M4 12h16M4 17h16"></path>
+        </svg>
+      </button>
     </div>
   </div>
+
+  <div
+    id="vh-mobile-nav"
+    class="vh-mobile-nav"
+    data-vh-mobile-nav
+    role="dialog"
+    aria-modal="true"
+    aria-label="Mobilní navigace"
+    hidden
+  >
+    <button class="vh-mobile-nav__close" type="button" data-vh-menu-close aria-label="Zavřít menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18"></path>
+      </svg>
+    </button>
+
+    <nav class="vh-mobile-nav__links" aria-label="Hlavní navigace">
+      <a class="vh-mobile-nav__link" href="{{ catalog_url }}">Produkty</a>
+      <a class="vh-mobile-nav__link" href="{{ marketing }}/homepage#porovnani">Proč my</a>
+      <a class="vh-mobile-nav__link" href="{{ marketing }}/homepage#pribeh">Příběh</a>
+    </nav>
+
+    <footer class="vh-mobile-nav__footer">
+      <hr class="vh-mobile-nav__rule">
+      <div class="vh-mobile-nav__footer-row">
+        <a
+          class="vh-mobile-nav__footer-link vh-mobile-nav__footer-link--instagram"
+          href="https://www.instagram.com/vojtahubne/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Instagram
+        </a>
+        <a class="vh-mobile-nav__footer-link" href="{{ marketing }}">vojta-hubne.cz</a>
+      </div>
+    </footer>
+  </div>
 </div>
+
+<script>
+  (function () {
+    const header = document.querySelector('.vh-shop-header');
+    if (!header) return;
+
+    const toggle = header.querySelector('[data-vh-menu-toggle]');
+    const overlay = header.querySelector('[data-vh-mobile-nav]');
+    if (!toggle || !overlay) return;
+
+    document.body.appendChild(overlay);
+
+    const closeButtons = overlay.querySelectorAll('[data-vh-menu-close]');
+    const links = overlay.querySelectorAll(
+      '.vh-mobile-nav__link, .vh-mobile-nav__footer-link',
+    );
+
+    let scrollPosition = 0;
+
+    const lockScroll = () => {
+      scrollPosition = window.scrollY;
+      document.body.classList.add('vh-mobile-nav-open');
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + scrollPosition + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    };
+
+    const unlockScroll = () => {
+      document.body.classList.remove('vh-mobile-nav-open');
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollPosition);
+    };
+
+    const setOpen = (open) => {
+      overlay.hidden = !open;
+      overlay.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Zavřít menu' : 'Otevřít menu');
+
+      if (open) {
+        lockScroll();
+      } else {
+        unlockScroll();
+      }
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(!overlay.classList.contains('is-open'));
+    });
+
+    closeButtons.forEach((button) => {
+      button.addEventListener('click', () => setOpen(false));
+    });
+
+    links.forEach((link) => {
+      link.addEventListener('click', () => setOpen(false));
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && overlay.classList.contains('is-open')) {
+        setOpen(false);
+      }
+    });
+  })();
+</script>

@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { BrandLogo } from './BrandLogo'
+import { MobileNavMenu } from './MobileNavMenu'
 import { PageContainer } from './PageContainer'
 import { getShopifyCartUrl, getShopifyCatalogUrl } from '../utils/shopify'
 
@@ -73,7 +75,7 @@ const Actions = styled.div`
   gap: 0.75rem;
 `
 
-const CartLink = styled.a`
+const iconButtonStyles = css`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,11 +86,25 @@ const CartLink = styled.a`
   border-radius: ${({ theme }) => theme.radii.pill};
   background: transparent;
   color: ${({ theme }) => theme.colors.gold};
-  text-decoration: none;
+  cursor: pointer;
   transition: background 0.2s ease;
 
   &:hover {
     background: rgba(238, 220, 130, 0.08);
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+`
+
+const MenuToggle = styled.button`
+  ${iconButtonStyles}
+  display: flex;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: none;
   }
 
   svg {
@@ -97,9 +113,26 @@ const CartLink = styled.a`
   }
 `
 
+const CartLink = styled.a`
+  ${iconButtonStyles}
+  text-decoration: none;
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+`
+
 export function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false)
   const catalogUrl = getShopifyCatalogUrl()
   const cartUrl = getShopifyCartUrl()
+
+  const mobileLinks = [
+    { label: 'Produkty', href: catalogUrl, external: true },
+    { label: 'Proč my', href: '/homepage#porovnani' },
+    { label: 'Příběh', href: '/homepage#pribeh' },
+  ] as const
 
   return (
     <Header>
@@ -123,8 +156,26 @@ export function SiteHeader() {
               <circle cx="18" cy="20" r="1" />
             </svg>
           </CartLink>
+
+          <MenuToggle
+            type="button"
+            aria-label={menuOpen ? 'Zavřít menu' : 'Otevřít menu'}
+            aria-expanded={menuOpen}
+            aria-controls="vh-mobile-nav"
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          </MenuToggle>
         </Actions>
       </Inner>
+
+      <MobileNavMenu
+        isOpen={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        links={[...mobileLinks]}
+      />
     </Header>
   )
 }
