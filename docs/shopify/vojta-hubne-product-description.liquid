@@ -1,0 +1,31 @@
+{% comment %}
+  Vojta Hubne — centered product description section.
+
+  Use as a separate Custom Liquid section BELOW Product information:
+    {% render 'vojta-hubne-product-description' %}
+
+  Then remove the default Product description block from Product details
+  so the description is not duplicated in the right buy column.
+{% endcomment %}
+
+{% liquid
+  assign p = product
+  if p == blank or p.id == blank
+    if closest.product != blank and closest.product.id != blank
+      assign p = closest.product
+    endif
+  endif
+%}
+
+{%- if p != blank and p.description != blank -%}
+  <section class="vh-product-description-section" aria-labelledby="vh-product-description-title">
+    <div class="vh-product-description-section__inner">
+      <h2 id="vh-product-description-title" class="vh-product-description-section__title">
+        Detail produktu
+      </h2>
+      <div class="vh-product-description-section__content rte">
+        {{ p.description }}
+      </div>
+    </div>
+  </section>
+{%- endif -%}

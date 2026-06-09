@@ -207,6 +207,26 @@ Keeps one brand journey: marketing site ↔ shop.
 | Gold CTA button | Add to cart button |
 | Dark section background | Color scheme on sections |
 
+### Step 7 — Footer content
+
+In **Customize → Footer**, keep the newsletter block but replace the default English copy:
+
+- Heading: `Přidej se k Vojta Hubne`
+- Text: `Nové produkty, akce a praktické tipy pro transformaci těla přímo do e-mailu.`
+- Newsletter placeholder: `E-mailová adresa`
+
+In **Settings → Policies**, fill every policy that Shopify shows in the footer:
+
+- Obchodní podmínky
+- Zásady ochrany osobních údajů
+- Zásady doručování
+- Vrácení peněz / reklamace
+- Kontaktní údaje
+- Právní upozornění
+- Cookie preferences / consent banner
+
+Footer/legal info should include the official business name, IČO/DIČ if applicable, registered address, support e-mail, delivery/return contact, and expected response time. Do not publish placeholders.
+
 ### What you cannot copy 1:1 from React
 
 - React Bits **particles** background → not in Horizon by default (would need custom JS or static image)

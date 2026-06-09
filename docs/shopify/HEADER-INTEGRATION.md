@@ -18,6 +18,16 @@ You do **not** replace the whole `sections/header.liquid`. Add **one line** and 
 {{ 'vojta-hubne-horizon.css' | asset_url | stylesheet_tag }}
 ```
 
+Before `</body>` (after theme scripts):
+
+```liquid
+<script src="{{ 'vojta-hubne-collection-media-fix.js' | asset_url }}" defer="defer"></script>
+```
+
+Do **not** use `| script_tag` here — Theme Check flags it as parser-blocking (red error in the editor). `defer` is correct for this script.
+
+**Verify the JS loaded:** on `/collections/all`, open DevTools → Network → filter `collection-media-fix`. If missing, the asset file is not uploaded or the script tag is missing.
+
 ## 2. One line in `sections/header.liquid`
 
 Find this block (near the bottom of the liquid logic, before the rows loop):

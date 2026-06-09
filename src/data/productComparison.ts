@@ -1,6 +1,8 @@
-import glpSupportImage from '../assets/products/glp-support.png'
+import glpGenericImage from '../assets/glp1generic.png'
+import glpSupportImage from '../assets/glpppp.png'
+import { getShopifyProductUrl } from '../utils/shopify'
 
-/** Mock comparison — GLP-1 Support vs. generic. Swap `visualImage` when assets are ready. */
+/** Mock comparison — GLP-1 Support vs. generic. */
 export const glpSupportComparison = {
   productId: 'glp-1-support',
   productName: 'GLP-1 Support',
@@ -9,7 +11,7 @@ export const glpSupportComparison = {
   competitor: {
     shortName: 'Běžný spalovač tuků',
     ingredientCountLabel: '7 ingrediencí',
-    visualImage: null as string | null,
+    visualImage: glpGenericImage,
     ingredients: [
       { name: 'Proprietární směs', percent: '—', grade: 4 },
       { name: 'Kofein', percent: '25 %', grade: 3 },
@@ -31,10 +33,10 @@ export const glpSupportComparison = {
       { name: 'Kreatin monohydrát', percent: '500 mg', grade: 1 },
       { name: 'VinOgrape®', percent: '300 mg', grade: 1, note: '(polyfenoly)' },
     ],
-    summary: 'o 58 % méně složek',
+    summary: 'Prémiová formule — ne náhodná směs',
   },
   cta: {
     label: 'Více o GLP-1 Support',
-    href: '/homepage#produkty',
+    href: `${getShopifyProductUrl('glp1-support')}?variant=59680004145486`,
   },
 } as const

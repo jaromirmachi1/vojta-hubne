@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { PageContainer } from '../components/PageContainer'
 import { glpSupportComparison } from '../data/productComparison'
@@ -75,14 +74,14 @@ const ProductVisual = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 18rem;
-  min-height: 11rem;
-  padding: 1rem;
+  max-width: 14rem;
+  min-height: 16rem;
+  padding: 0.5rem 1rem;
 
   img {
     width: 100%;
     height: auto;
-    max-height: 10rem;
+    max-height: 18rem;
     object-fit: contain;
   }
 `
@@ -235,7 +234,7 @@ const CardSummary = styled.p`
   border-top: 1px solid ${({ theme }) => theme.colors.borderSubtle};
 `
 
-const Cta = styled(Link)`
+const Cta = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -335,7 +334,7 @@ export function ProductComparisonSection() {
           </Column>
         </CompareRow>
 
-        <Cta to={data.cta.href}>{data.cta.label} →</Cta>
+        <Cta href={data.cta.href}>{data.cta.label} →</Cta>
       </Inner>
     </Section>
   )

@@ -28,6 +28,17 @@ Colors, fonts, and square corners stay **black + gold** (`vojta-hubne-horizon.cs
 └──────────────────────────────────────────────────────────────────┘
 ```
 
+**Vojta Hubne (Natios-style):** long **Popis produktu** is centered full-width **below** the image + buy row using a separate Custom Liquid section.
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│  ┌─────────────────────────────┐  ┌──────────────────────────┐ │
+│  │     MAIN PRODUCT IMAGE      │  │ Title, tags, price, ATC  │ │
+│  └─────────────────────────────┘  └──────────────────────────┘ │
+│           Long description (centered, max ~720px)                │
+└──────────────────────────────────────────────────────────────────┘
+```
+
 ---
 
 ## Step 1 — Product images (required)
@@ -79,11 +90,50 @@ Click **Product media gallery** in the left sidebar:
 **Block order** (drag in sidebar — Aktin-like):
 
 1. Title  
-2. Price  
-3. (Optional) Divider  
-4. Variant picker  
-5. Buy buttons (quantity + Add to cart + accelerated checkout)  
-6. Product description (long text + bullets **below** the buy box)
+2. **Custom Liquid** — product tags under title ([PRODUCT-TAGS.md](./shopify/PRODUCT-TAGS.md))  
+3. Price  
+4. (Optional) Divider  
+5. Variant picker  
+6. Buy buttons (quantity + Add to cart + accelerated checkout)  
+7. Remove the default **Product description** block from Product details if you add the centered description section below.
+
+---
+
+## Step 4b — Benefits Strip
+
+To add the mocked benefits row between the buy area and the long description:
+
+1. **Snippets → Add snippet**
+   - Name: `vojta-hubne-product-benefits.liquid`
+   - Paste from `docs/shopify/vojta-hubne-product-benefits.liquid`
+2. **Customize → Product page**
+   - Add a **Custom Liquid** section directly **below Product information**
+   - Paste:
+
+```liquid
+{% render 'vojta-hubne-product-benefits' %}
+```
+
+This section is mocked for now. Update the text/icons later when shipping, returns, support, and product guarantees are final.
+
+---
+
+## Step 4c — Centered Long Description
+
+To place the main product description below the image + buy row:
+
+1. **Snippets → Add snippet**
+   - Name: `vojta-hubne-product-description.liquid`
+   - Paste from `docs/shopify/vojta-hubne-product-description.liquid`
+2. **Customize → Product page**
+   - Add a **Custom Liquid** section directly **below the benefits strip**
+   - Paste:
+
+```liquid
+{% render 'vojta-hubne-product-description' %}
+```
+
+3. In **Product information → Product details**, remove the old **Product description** block so the description is not duplicated in the right column.
 
 ---
 
