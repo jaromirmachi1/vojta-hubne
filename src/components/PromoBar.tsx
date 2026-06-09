@@ -24,7 +24,7 @@ const catalogUrl = getShopifyCatalogUrl()
 export function PromoBar() {
   return (
     <Bar href={catalogUrl}>
-      Chceš zhubnout? Podpoř sytost, metabolismus a disciplínu — nakupuj teď v e-shopu →
+      Objednávky přijaté nyní expedujeme od středy 17. 6.
     </Bar>
   )
 }

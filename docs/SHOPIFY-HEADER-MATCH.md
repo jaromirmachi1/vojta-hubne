@@ -23,7 +23,7 @@ CSS: `vojta-hubne-horizon.css` → **Promo bar** block (gold bg, Montserrat 0.7r
 3. **Text** (copy exactly):
 
    ```
-   Chceš zhubnout? Podpoř sytost, metabolismus a disciplínu — nakupuj teď v e-shopu →
+   Objednávky přijaté nyní expedujeme od středy 17. 6.
    ```
 
 4. **Link:** `/collections/all` (same catalog as homepage promo bar)

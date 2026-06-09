@@ -69,7 +69,7 @@ a:hover {
 /* ─── Promo bar (= src/components/PromoBar.tsx) ───
    Horizon sets inline font-weight:100 / 0.625rem on slideshow-slide — override below.
    Theme editor text:
-   Chceš zhubnout? Podpoř sytost, metabolismus a disciplínu — nakupuj teď v e-shopu →
+   Objednávky přijaté nyní expedujeme od středy 17. 6.
 */
 .shopify-section:has(.announcement-bar),
 .shopify-section:has(announcement-bar-component) {
