@@ -39,6 +39,12 @@ const Grid = styled.div<{ $columns: number }>`
   display: grid;
   gap: 1.25rem;
   grid-template-columns: repeat(${({ $columns }) => $columns}, minmax(0, 1fr));
+  align-items: stretch;
+
+  & > a,
+  & > article {
+    height: 100%;
+  }
 `
 
 const Status = styled.p`

@@ -15,12 +15,26 @@ React source of truth:
 
 ### 1. Gold promo bar (= `PromoBar`)
 
-1. **Customize → Header** (or **Announcement bar** section)
-2. Enable announcement bar
-3. Text: `Chceš zhubnout? Podpoř sytost, metabolismus a disciplínu — nakupuj teď v e-shopu →` (link to catalog)
-4. Background: `#eedc82`
-5. Text color: `#000000`
-6. Typography: small, uppercase, wide letter-spacing if available
+React source: `src/components/PromoBar.tsx`  
+CSS: `vojta-hubne-horizon.css` → **Promo bar** block (gold bg, Montserrat 0.7rem, weight 600, uppercase).
+
+1. **Customize → Header** → **Announcement bar** (or **Header announcements**)
+2. Enable the bar
+3. **Text** (copy exactly):
+
+   ```
+   Chceš zhubnout? Podpoř sytost, metabolismus a disciplínu — nakupuj teď v e-shopu →
+   ```
+
+4. **Link:** `/collections/all` (same catalog as homepage promo bar)
+5. In **announcement block** settings (Horizon), if typography options appear:
+   - Prefer **Montserrat** / body font
+   - CSS overrides thin weight — but you can set **Semibold (600)** if available
+   - Auto-rotate: **Off** (single message like React)
+6. **Link** (optional): `/collections/all` — if the block supports a URL
+7. Re-upload **`vojta-hubne-horizon.css`** and hard refresh (Cmd+Shift+R)
+
+Horizon ships inline `font-weight: 100` and `0.625rem` on the slide — the CSS file forces homepage parity (`0.7rem`, weight `600`, gold bar, `0.14em` tracking).
 
 ### 2. Logo
 
@@ -59,6 +73,8 @@ In **Customize → Header**:
 | **Hide search** | React has no search — turn off search in header |
 | Cart icon | On (Shopify cart — works unlike disabled React button) |
 | Transparent header on product | **Off** (React always solid black bar) |
+
+**Width:** React `SiteHeader` uses `PageContainer` — `max-width: 1600px`, `padding-inline: clamp(1.25rem, 5vw, 3.5rem)`. Custom snippet `vh-shop-header__inner` gets the same via `vojta-hubne-horizon.css` (do not use `100vw` full-bleed on the inner row).
 
 ### 5. Custom CSS
 

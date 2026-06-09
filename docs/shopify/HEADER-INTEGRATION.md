@@ -26,7 +26,18 @@ Before `</body>` (after theme scripts):
 
 Do **not** use `| script_tag` here — Theme Check flags it as parser-blocking (red error in the editor). `defer` is correct for this script.
 
+This asset now handles two collection-page behaviors:
+
+- resets Horizon product-card media after back/forward navigation
+- adds the premium category cells on `/collections/all`
+
 **Verify the JS loaded:** on `/collections/all`, open DevTools → Network → filter `collection-media-fix`. If missing, the asset file is not uploaded or the script tag is missing.
+
+**Exact category labels:** the script reads Shopify product JSON in real time. It uses a `vh-filter|...` or `vh-category|...` product tag first, then falls back to product title/type rules. Example product tag:
+
+```text
+vh-filter|Proteinové doplňky
+```
 
 ## 2. One line in `sections/header.liquid`
 

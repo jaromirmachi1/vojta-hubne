@@ -107,6 +107,7 @@ Add tags on each product in Shopify Admin. Each line is one tag.
 | `vh-line\|`   | `vh-line\|Sytost`              | Gold highlight chip under title          |
 | `vh-meta\|`   | `vh-meta\|450 g`               | Trailing text after `\|` on the same row |
 | `vh-spec\|`   | `vh-spec\|Forma\|Kapsle`       | Left spec table row                      |
+| `vh-bullets-title\|` | `vh-bullets-title\|Aktivní složky v 1 dávce (30 g):` | Bold heading above bullet list |
 | `vh-bullet\|` | `vh-bullet\|Vegan, bez lepku`  | Right bullet point                       |
 
 **Do not** put `|` inside spec values — use it only to separate label and value.
@@ -126,6 +127,9 @@ vh-desc|Proteinový koktejl pro každodenní podporu sytosti. 15 dávek v balen�
 vh-spec|Forma|Prášek
 vh-spec|Denní dávka|1–2 odměrky
 vh-spec|Množství|450 g
+vh-bullets-title|Aktivní složky v 1 dávce (30 g):
+vh-bullet|Bílkoviny – 22 g
+vh-bullet|CaroLean™ – 1000 mg
 vh-bullet|Vysoký obsah bílkovin
 vh-bullet|Bez přidaného cukru
 vh-bullet|Vegan

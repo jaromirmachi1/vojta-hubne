@@ -9,6 +9,7 @@
     vh-line|Hydratace           → gold chips (• separated)
     vh-meta|50 ml               → trailing | segment on chip row
     vh-spec|Forma|Krém          → spec table
+    vh-bullets-title|Aktivní složky v 1 dávce (30 g): → heading above bullets
     vh-bullet|Vegan, bez lepku  → bullet list
 
   Theme: Product details → Custom Liquid directly below Title (above Price):
@@ -132,16 +133,26 @@
           {%- endif -%}
 
           {%- if has_bullets -%}
-            <ul class="vh-product-tags__bullets">
+            <div class="vh-product-tags__bullets-wrap">
               {%- for tag in p.tags -%}
-                {%- if tag contains 'vh-bullet|' -%}
-                  {%- assign bullet_text = tag | remove: 'vh-bullet|' | strip -%}
-                  {%- if bullet_text != blank -%}
-                    <li>{{ bullet_text }}</li>
+                {%- if tag contains 'vh-bullets-title|' -%}
+                  {%- assign bullets_title = tag | remove: 'vh-bullets-title|' | strip -%}
+                  {%- if bullets_title != blank -%}
+                    <p class="vh-product-tags__bullets-title">{{ bullets_title }}</p>
                   {%- endif -%}
                 {%- endif -%}
               {%- endfor -%}
-            </ul>
+              <ul class="vh-product-tags__bullets">
+                {%- for tag in p.tags -%}
+                  {%- if tag contains 'vh-bullet|' -%}
+                    {%- assign bullet_text = tag | remove: 'vh-bullet|' | strip -%}
+                    {%- if bullet_text != blank -%}
+                      <li>{{ bullet_text }}</li>
+                    {%- endif -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              </ul>
+            </div>
           {%- endif -%}
         </div>
       {%- endif -%}
