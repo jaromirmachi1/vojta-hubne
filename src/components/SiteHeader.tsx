@@ -42,7 +42,7 @@ const Nav = styled.nav`
   }
 `
 
-const StyledHashLink = styled(HashLink)`
+const navLinkStyles = css`
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -54,6 +54,14 @@ const StyledHashLink = styled(HashLink)`
   &:hover {
     color: ${({ theme }) => theme.colors.white};
   }
+`
+
+const StyledHashLink = styled(HashLink)`
+  ${navLinkStyles}
+`
+
+const StyledNavLink = styled(Link)`
+  ${navLinkStyles}
 `
 
 const ExternalNavLink = styled.a`
@@ -132,7 +140,7 @@ export function SiteHeader() {
   const mobileLinks = [
     { label: 'Produkty', href: catalogUrl, external: true },
     { label: 'Proč my', sectionId: 'porovnani' },
-    { label: 'Příběh', sectionId: 'pribeh' },
+    { label: 'Kontakt', to: '/kontakt' },
   ] as const
 
   return (
@@ -145,7 +153,7 @@ export function SiteHeader() {
         <Nav aria-label="Hlavní navigace">
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
           <StyledHashLink sectionId="porovnani">Proč my</StyledHashLink>
-          <StyledHashLink sectionId="pribeh">Příběh</StyledHashLink>
+          <StyledNavLink to="/kontakt">Kontakt</StyledNavLink>
         </Nav>
 
         <Actions>

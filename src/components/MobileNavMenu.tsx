@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { HashLink } from './HashLink'
 
 export type MobileNavLink =
   | { label: string; href: string; external: true }
+  | { label: string; to: string }
   | { label: string; sectionId: string }
 
 type MobileNavMenuProps = {
@@ -97,6 +99,10 @@ const linkStyles = css`
 `
 
 const MenuHashLink = styled(HashLink)`
+  ${linkStyles}
+`
+
+const MenuInternalLink = styled(Link)`
   ${linkStyles}
 `
 
@@ -228,6 +234,10 @@ export function MobileNavMenu({ isOpen, onClose, links }: MobileNavMenuProps) {
             <MenuExternalLink key={link.href} href={link.href} onClick={onClose}>
               {link.label}
             </MenuExternalLink>
+          ) : 'to' in link ? (
+            <MenuInternalLink key={link.to} to={link.to} onClick={onClose}>
+              {link.label}
+            </MenuInternalLink>
           ) : (
             <MenuHashLink
               key={link.sectionId}
