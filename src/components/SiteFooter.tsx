@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { eyebrowText } from '../styles/eyebrow'
+import { HashLink } from './HashLink'
 import { PageContainer } from './PageContainer'
 
 const Footer = styled.footer`
@@ -53,7 +53,7 @@ const ColumnTitle = styled.h2`
   ${eyebrowText}
 `
 
-const FooterLink = styled(Link)`
+const FooterLink = styled(HashLink)`
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
@@ -79,12 +79,12 @@ export function SiteFooter() {
           <BrandName>Vojta Hubne</BrandName>
           <Text>
             Prémiové doplňky a péče o tělo. Postavené na reálné transformaci —
-            od 150 kg k 85 kg.
+            od 160 kg k 99 kg.
           </Text>
         </Brand>
         <Column>
           <ColumnTitle>Obchod</ColumnTitle>
-          <FooterLink to="/#produkty">Produkty</FooterLink>
+          <FooterLink sectionId="produkty">Produkty</FooterLink>
         </Column>
         <Column>
           <ColumnTitle>Kontakt</ColumnTitle>

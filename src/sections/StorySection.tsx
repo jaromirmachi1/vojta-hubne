@@ -113,12 +113,12 @@ export function StorySection() {
       <Inner>
         <Content>
           <Eyebrow>Příběh značky</Eyebrow>
-          <Title>Od 150 kg k novému životu</Title>
+          <Title>Od 160 kg k novému životu</Title>
           <Text>
             Vojta si prošel celoživotním bojem s obezitou. Po letech neúspěšných
-            pokusů, zdravotních komplikacích a váze 157 kg se v roce 2024 rozhodl
+            pokusů, zdravotních komplikacích a váze 160 kg se v roce 2024 rozhodl
             převzít kontrolu nad svým zdravím. Díky kombinaci změny životního
-            stylu, disciplíny a moderní léčby dokázal zhubnout více než 57
+            stylu, disciplíny a moderní léčby dokázal zhubnout 61
             kilogramů a zásadně zlepšit kvalitu svého života.
           </Text>
           <Text>

@@ -1,13 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
+import { HashLink } from './HashLink'
 
-export type MobileNavLink = {
-  label: string
-  href: string
-  external?: boolean
-}
+export type MobileNavLink =
+  | { label: string; href: string; external: true }
+  | { label: string; sectionId: string }
 
 type MobileNavMenuProps = {
   isOpen: boolean
@@ -98,7 +96,7 @@ const linkStyles = css`
   }
 `
 
-const MenuLink = styled(Link)`
+const MenuHashLink = styled(HashLink)`
   ${linkStyles}
 `
 
@@ -160,6 +158,7 @@ const FooterSiteLink = styled.a`
 
 export function MobileNavMenu({ isOpen, onClose, links }: MobileNavMenuProps) {
   const scrollPositionRef = useRef(0)
+  const skipScrollRestoreRef = useRef(false)
 
   useEffect(() => {
     if (!isOpen) return
@@ -198,7 +197,10 @@ export function MobileNavMenu({ isOpen, onClose, links }: MobileNavMenuProps) {
       style.width = previous.width
       style.overflow = previous.overflow
       style.touchAction = previous.touchAction
-      window.scrollTo(0, scrollPositionRef.current)
+      if (!skipScrollRestoreRef.current) {
+        window.scrollTo(0, scrollPositionRef.current)
+      }
+      skipScrollRestoreRef.current = false
       window.removeEventListener('keydown', onKeyDown)
     }
   }, [isOpen, onClose])
@@ -222,14 +224,21 @@ export function MobileNavMenu({ isOpen, onClose, links }: MobileNavMenuProps) {
 
       <Nav aria-label="Hlavní navigace">
         {links.map((link) =>
-          link.external ? (
+          'external' in link ? (
             <MenuExternalLink key={link.href} href={link.href} onClick={onClose}>
               {link.label}
             </MenuExternalLink>
           ) : (
-            <MenuLink key={link.href} to={link.href} onClick={onClose}>
+            <MenuHashLink
+              key={link.sectionId}
+              sectionId={link.sectionId}
+              onClick={() => {
+                skipScrollRestoreRef.current = true
+                onClose()
+              }}
+            >
               {link.label}
-            </MenuLink>
+            </MenuHashLink>
           ),
         )}
       </Nav>

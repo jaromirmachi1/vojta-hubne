@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { HashLink } from "../components/HashLink";
 import vitalityImage from "../assets/vitality.png";
 import saltedkarImage from "../assets/saltedkar.png";
 import vitalbundleImage from "../assets/vitalbundle.png";
@@ -10,21 +10,21 @@ const teasers = [
   {
     title: "Doplňky stravy",
     text: "GLP-1 Support — kapsle pro energii, spalování a kontrolu chuti.",
-    href: "/#produkty",
+    sectionId: "produkty",
     image: vitalityImage,
     imageAlt: "Doplňky stravy Vojta Hubne — Aquamin Mg a D3 + K2",
   },
   {
     title: "Proteiny & shaky",
     text: "Lean Shake GLP-1 — 22 g bílkovin, vláknina a vitamíny v jedné dávce.",
-    href: "/#produkty",
+    sectionId: "produkty",
     image: saltedkarImage,
     imageAlt: "Lean Shake GLP-1 slaný karamel — proteinový shake",
   },
   {
     title: "Péče o tělo",
     text: "Regenerační krémy s GHK-Cu pro pocit sytosti a obnovu pokožky.",
-    href: "/#produkty",
+    sectionId: "produkty",
     image: vitalbundleImage,
     imageAlt: "Péče o tělo — GHK-Cu cream a Antiage cream",
   },
@@ -54,7 +54,7 @@ const Grid = styled.div`
   }
 `;
 
-const Card = styled(Link)`
+const Card = styled(HashLink)`
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -132,7 +132,7 @@ export function CategoryTeasersSection() {
         <Title>Prozkoumej kategorie</Title>
         <Grid>
           {teasers.map((teaser) => (
-            <Card key={teaser.title} to={teaser.href}>
+            <Card key={teaser.title} sectionId={teaser.sectionId}>
               <CardBody>
                 <CardContent>
                   <CardTitle>{teaser.title}</CardTitle>

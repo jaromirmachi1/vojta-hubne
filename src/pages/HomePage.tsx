@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useHashScroll } from '../hooks/useHashScroll'
 import { BenefitsSection } from '../sections/BenefitsSection'
 import { BestsellersSection } from '../sections/BestsellersSection'
 import { CategoryTeasersSection } from '../sections/CategoryTeasersSection'
@@ -9,6 +10,8 @@ import { ShopLayout } from '../layouts/ShopLayout'
 import { homePageMeta } from '../seo/homePageMeta'
 
 export function HomePage() {
+  useHashScroll()
+
   useEffect(() => {
     document.title = homePageMeta.title
     const description = document.querySelector('meta[name="description"]')

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { BrandLogo } from './BrandLogo'
+import { HashLink } from './HashLink'
 import { MobileNavMenu } from './MobileNavMenu'
 import { PageContainer } from './PageContainer'
 import { getShopifyCartUrl, getShopifyCatalogUrl } from '../utils/shopify'
@@ -41,7 +42,7 @@ const Nav = styled.nav`
   }
 `
 
-const StyledNavLink = styled(NavLink)`
+const StyledHashLink = styled(HashLink)`
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.14em;
@@ -130,8 +131,8 @@ export function SiteHeader() {
 
   const mobileLinks = [
     { label: 'Produkty', href: catalogUrl, external: true },
-    { label: 'Proč my', href: '/#porovnani' },
-    { label: 'Příběh', href: '/#pribeh' },
+    { label: 'Proč my', sectionId: 'porovnani' },
+    { label: 'Příběh', sectionId: 'pribeh' },
   ] as const
 
   return (
@@ -143,8 +144,8 @@ export function SiteHeader() {
 
         <Nav aria-label="Hlavní navigace">
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
-          <StyledNavLink to="/#porovnani">Proč my</StyledNavLink>
-          <StyledNavLink to="/#pribeh">Příběh</StyledNavLink>
+          <StyledHashLink sectionId="porovnani">Proč my</StyledHashLink>
+          <StyledHashLink sectionId="pribeh">Příběh</StyledHashLink>
         </Nav>
 
         <Actions>

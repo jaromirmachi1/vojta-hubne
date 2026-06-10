@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { eyebrowText } from '../styles/eyebrow'
 import heroPortrait from '../assets/SzzEgtimTNU2uqEm_2g6w.JPG.webp'
 import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
+import { HashLink } from '../components/HashLink'
 import { PageContainer } from '../components/PageContainer'
 import { getShopifyCatalogUrl } from '../utils/shopify'
 
@@ -100,7 +100,7 @@ const Actions = styled.div`
   margin-top: 0.5rem;
 `
 
-const PrimaryLink = styled(Link)`
+const PrimaryLink = styled(HashLink)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -209,7 +209,7 @@ export function HomeHeroSection() {
             </Stat>
           </Stats>
           <Actions>
-            <PrimaryLink to="/#produkty">Nejprodávanější</PrimaryLink>
+            <PrimaryLink sectionId="produkty">Nejprodávanější</PrimaryLink>
             <SecondaryLink href={catalogUrl}>Nakupovat v e-shopu</SecondaryLink>
           </Actions>
         </Content>

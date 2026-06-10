@@ -34,4 +34,13 @@ export const GlobalStyles = createGlobalStyle`
     font-weight: 400;
     color: ${({ theme }) => theme.colors.textHeading};
   }
+
+  #produkty,
+  #porovnani,
+  #pribeh {
+    scroll-margin-top: calc(
+      ${({ theme }) => theme.layout.promoBarHeight} +
+        ${({ theme }) => theme.layout.headerHeight} + 0.5rem
+    );
+  }
 `
