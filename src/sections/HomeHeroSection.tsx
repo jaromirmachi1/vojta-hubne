@@ -4,6 +4,7 @@ import { eyebrowText } from '../styles/eyebrow'
 import heroPortrait from '../assets/SzzEgtimTNU2uqEm_2g6w.JPG.webp'
 import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
 import { PageContainer } from '../components/PageContainer'
+import { getShopifyCatalogUrl } from '../utils/shopify'
 
 const Section = styled.section`
   position: relative;
@@ -119,7 +120,7 @@ const PrimaryLink = styled(Link)`
   }
 `
 
-const SecondaryLink = styled(Link)`
+const SecondaryLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -183,6 +184,8 @@ const PortraitImage = styled.img`
 `
 
 export function HomeHeroSection() {
+  const catalogUrl = getShopifyCatalogUrl()
+
   return (
     <Section>
       <LaunchBackground />
@@ -206,8 +209,8 @@ export function HomeHeroSection() {
             </Stat>
           </Stats>
           <Actions>
-            <PrimaryLink to="/homepage#produkty">Nejprodávanější</PrimaryLink>
-            <SecondaryLink to="/">Spouštíme brzy</SecondaryLink>
+            <PrimaryLink to="/#produkty">Nejprodávanější</PrimaryLink>
+            <SecondaryLink href={catalogUrl}>Nakupovat v e-shopu</SecondaryLink>
           </Actions>
         </Content>
         <Portrait>

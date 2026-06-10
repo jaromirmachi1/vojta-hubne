@@ -130,21 +130,21 @@ export function SiteHeader() {
 
   const mobileLinks = [
     { label: 'Produkty', href: catalogUrl, external: true },
-    { label: 'Proč my', href: '/homepage#porovnani' },
-    { label: 'Příběh', href: '/homepage#pribeh' },
+    { label: 'Proč my', href: '/#porovnani' },
+    { label: 'Příběh', href: '/#pribeh' },
   ] as const
 
   return (
     <Header>
       <Inner>
-        <LogoLink to="/homepage" aria-label="Vojta Hubne — domů">
+        <LogoLink to="/" aria-label="Vojta Hubne — domů">
           <BrandLogo variant="nav" />
         </LogoLink>
 
         <Nav aria-label="Hlavní navigace">
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
-          <StyledNavLink to="/homepage#porovnani">Proč my</StyledNavLink>
-          <StyledNavLink to="/homepage#pribeh">Příběh</StyledNavLink>
+          <StyledNavLink to="/#porovnani">Proč my</StyledNavLink>
+          <StyledNavLink to="/#pribeh">Příběh</StyledNavLink>
         </Nav>
 
         <Actions>

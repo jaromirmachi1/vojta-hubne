@@ -84,8 +84,7 @@ export function SiteFooter() {
         </Brand>
         <Column>
           <ColumnTitle>Obchod</ColumnTitle>
-          <FooterLink to="/homepage#produkty">Produkty</FooterLink>
-          <FooterLink to="/">Spouštíme brzy</FooterLink>
+          <FooterLink to="/#produkty">Produkty</FooterLink>
         </Column>
         <Column>
           <ColumnTitle>Kontakt</ColumnTitle>

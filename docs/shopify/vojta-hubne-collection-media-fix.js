@@ -10,6 +10,8 @@
 (function () {
   const CARD_LINK_SELECTOR =
     "main .card-gallery a.contents[aria-label], main .product-grid a.contents[aria-label]";
+  const RECOMMENDATION_CARD_LINK_SELECTOR =
+    ".product-recommendations .card-gallery a.contents[aria-label], product-recommendations .card-gallery a.contents[aria-label]";
   const GRID_ITEM_SELECTOR = "main .product-grid > .product-grid__item";
   const FILTER_ID = "vh-collection-category-filter";
   const ALL_CATEGORY = "__all";
@@ -71,6 +73,24 @@
   function resetAll() {
     if (!isCollectionPage()) return;
     document.querySelectorAll(CARD_LINK_SELECTOR).forEach(resetCard);
+  }
+
+  function resetRecommendationCards() {
+    document.querySelectorAll(RECOMMENDATION_CARD_LINK_SELECTOR).forEach(resetCard);
+  }
+
+  function setupRecommendationCards() {
+    const recommendations = document.querySelector(
+      "product-recommendations, .product-recommendations",
+    );
+    if (!recommendations) return;
+
+    resetRecommendationCards();
+
+    const observer = new MutationObserver(() => {
+      resetRecommendationCards();
+    });
+    observer.observe(recommendations, { childList: true, subtree: true });
   }
 
   function getProductLink(card) {
@@ -344,14 +364,158 @@
     scrollCollectionToTop();
   }
 
+  const ARROW_PREV_SVG =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>';
+  const ARROW_NEXT_SVG =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+
+  function setupProductGallery() {
+    const gallery = document.querySelector(
+      ".product-information__media media-gallery.media-gallery--grid",
+    );
+    if (!gallery || gallery.dataset.vhGalleryReady === "true") return;
+
+    const slideshow = gallery.querySelector("slideshow-component");
+    const container = gallery.querySelector("slideshow-container");
+    const slides = [...gallery.querySelectorAll("slideshow-slide")];
+    const thumbs = [...gallery.querySelectorAll(".media-gallery__grid > li")];
+    const dots = [
+      ...gallery.querySelectorAll(".slideshow-controls__dots button"),
+    ];
+
+    if (!slideshow || !container || !slides.length) return;
+
+    gallery.dataset.vhGalleryReady = "true";
+
+    const getCurrentIndex = () => {
+      const selectedDot = dots.findIndex(
+        (dot) => dot.getAttribute("aria-selected") === "true",
+      );
+      if (selectedDot >= 0) return selectedDot;
+
+      const activeSlide = slides.findIndex(
+        (slide) => slide.getAttribute("aria-hidden") === "false",
+      );
+      return activeSlide >= 0 ? activeSlide : 0;
+    };
+
+    const updateThumbActive = (index) => {
+      thumbs.forEach((thumb, thumbIndex) => {
+        const target = thumb.querySelector(".product-media-container") || thumb;
+        target.classList.toggle("is-vh-active", thumbIndex === index);
+      });
+    };
+
+    const selectSlide = (index) => {
+      const safeIndex = (index + slides.length) % slides.length;
+      const dot = dots[safeIndex];
+
+      if (dot) {
+        dot.click();
+      } else {
+        slides.forEach((slide, slideIndex) => {
+          const hidden = slideIndex !== safeIndex;
+          slide.setAttribute("aria-hidden", hidden ? "true" : "false");
+          slide.hidden = hidden;
+        });
+      }
+
+      updateThumbActive(safeIndex);
+    };
+
+    thumbs.forEach((thumb, index) => {
+      thumb.addEventListener("click", (event) => {
+        if (event.target.closest(".product-media-container__zoom-button")) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        selectSlide(index);
+      });
+    });
+
+    if (!container.querySelector(".vh-gallery-arrow--prev")) {
+      const prev = document.createElement("button");
+      prev.type = "button";
+      prev.className = "vh-gallery-arrow vh-gallery-arrow--prev";
+      prev.setAttribute("aria-label", "Předchozí obrázek");
+      prev.innerHTML = ARROW_PREV_SVG;
+
+      const next = document.createElement("button");
+      next.type = "button";
+      next.className = "vh-gallery-arrow vh-gallery-arrow--next";
+      next.setAttribute("aria-label", "Další obrázek");
+      next.innerHTML = ARROW_NEXT_SVG;
+
+      prev.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        selectSlide(getCurrentIndex() - 1);
+      });
+
+      next.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        selectSlide(getCurrentIndex() + 1);
+      });
+
+      container.appendChild(prev);
+      container.appendChild(next);
+
+      if (slides.length <= 1) {
+        prev.hidden = true;
+        next.hidden = true;
+      }
+    }
+
+    if (slides.length <= 1) {
+      const thumbGrid = gallery.querySelector(".media-gallery__grid");
+      if (thumbGrid) thumbGrid.hidden = true;
+    }
+
+    slides.forEach((slide) => {
+      const observer = new MutationObserver(() => {
+        updateThumbActive(getCurrentIndex());
+      });
+      observer.observe(slide, {
+        attributes: true,
+        attributeFilter: ["aria-hidden"],
+      });
+    });
+
+    dots.forEach((dot) => {
+      const observer = new MutationObserver(() => {
+        updateThumbActive(getCurrentIndex());
+      });
+      observer.observe(dot, {
+        attributes: true,
+        attributeFilter: ["aria-selected"],
+      });
+    });
+
+    updateThumbActive(getCurrentIndex());
+  }
+
   function scheduleReset() {
     refreshCollectionPage();
-    [0, 50, 150, 350, 700].forEach((delay) => {
-      window.setTimeout(refreshCollectionPage, delay);
+    setupRecommendationCards();
+    resetRecommendationCards();
+    setupProductGallery();
+    [0, 50, 150, 350, 700, 1200].forEach((delay) => {
+      window.setTimeout(() => {
+        refreshCollectionPage();
+        resetRecommendationCards();
+        setupProductGallery();
+      }, delay);
     });
     requestAnimationFrame(() => {
       refreshCollectionPage();
-      requestAnimationFrame(refreshCollectionPage);
+      resetRecommendationCards();
+      setupProductGallery();
+      requestAnimationFrame(() => {
+        refreshCollectionPage();
+        resetRecommendationCards();
+        setupProductGallery();
+      });
     });
   }
 

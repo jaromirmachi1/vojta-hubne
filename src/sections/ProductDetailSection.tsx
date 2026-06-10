@@ -137,22 +137,30 @@ const VariantList = styled.div`
 `
 
 const VariantButton = styled.button<{ $active?: boolean }>`
-  padding: 0.65rem 1rem;
+  padding: 0.65rem 1.15rem;
   font-family: inherit;
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: ${({ theme, $active }) => ($active ? theme.colors.gold : theme.colors.text)};
-  background: ${({ theme }) => theme.colors.surfaceRaised};
-  border: 1px solid
-    ${({ theme, $active }) =>
-      $active ? theme.colors.border : theme.colors.borderSubtle};
+  color: ${({ theme, $active }) =>
+    $active ? theme.colors.white : theme.colors.black};
+  background: ${({ theme, $active }) =>
+    $active ? theme.colors.black : theme.colors.gold};
+  border: 1px solid ${({ theme }) => theme.colors.gold};
   border-radius: ${({ theme }) => theme.radii.pill};
   cursor: pointer;
   transition:
+    background 0.2s ease,
     border-color 0.2s ease,
     color 0.2s ease;
+
+  &:hover:not(:disabled) {
+    background: ${({ theme, $active }) =>
+      $active ? theme.colors.surfaceRaised : 'rgba(238, 220, 130, 0.9)'};
+    color: ${({ theme, $active }) =>
+      $active ? theme.colors.white : theme.colors.black};
+  }
 
   &:disabled {
     opacity: 0.45;

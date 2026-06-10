@@ -90,7 +90,7 @@ export function ProductPage() {
         {shopUrl ? (
           <ExternalLink href={shopUrl}>Otevřít produkt</ExternalLink>
         ) : (
-          <StateLink to="/homepage#produkty">Zpět na produkty</StateLink>
+          <StateLink to="/#produkty">Zpět na produkty</StateLink>
         )}
       </StateWrap>
     </ShopLayout>

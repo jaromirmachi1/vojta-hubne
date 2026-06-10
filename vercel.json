@@ -1,6 +1,11 @@
 {
   "redirects": [
     {
+      "source": "/homepage",
+      "destination": "/",
+      "permanent": true
+    },
+    {
       "source": "/collections/:path*",
       "destination": "https://9kihpp-rg.myshopify.com/collections/:path*",
       "permanent": true

@@ -111,7 +111,7 @@ export function ShopifyCartRedirectPage() {
         <StateTitle>Přesměrovávám do košíku</StateTitle>
         <StateText>Košík a checkout běží bezpečně na Shopify.</StateText>
         <ExternalLink href={shopUrl}>Otevřít košík</ExternalLink>
-        <StateLink to="/homepage#produkty">Zpět na produkty</StateLink>
+        <StateLink to="/#produkty">Zpět na produkty</StateLink>
       </StateWrap>
     </ShopLayout>
   )

@@ -23,7 +23,7 @@ const NavLogo = styled.img`
 `
 
 type BrandLogoProps = {
-  /** `hero` — launch page; `nav` — site header */
+  /** `hero` — homepage hero; `nav` — site header */
   variant?: 'hero' | 'nav'
 }
 

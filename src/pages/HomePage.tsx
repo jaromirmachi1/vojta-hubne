@@ -3,7 +3,6 @@ import { BenefitsSection } from '../sections/BenefitsSection'
 import { BestsellersSection } from '../sections/BestsellersSection'
 import { CategoryTeasersSection } from '../sections/CategoryTeasersSection'
 import { HomeHeroSection } from '../sections/HomeHeroSection'
-import { NewsletterSection } from '../sections/NewsletterSection'
 import { ProductComparisonSection } from '../sections/ProductComparisonSection'
 import { StorySection } from '../sections/StorySection'
 import { ShopLayout } from '../layouts/ShopLayout'
@@ -26,7 +25,6 @@ export function HomePage() {
       <StorySection />
       <ProductComparisonSection />
       <BenefitsSection />
-      <NewsletterSection />
     </ShopLayout>
   )
 }
