@@ -1,0 +1,118 @@
+{% comment %}
+  Vojta Hubne — Kontakt page (Shopify).
+
+  Setup:
+  1. Save as sections/vh-contact-page.liquid (or snippets + Custom Liquid)
+  2. Online Store → Pages → Add page "Kontakt", handle: kontakt
+  3. Theme template: assign section or paste in Custom Liquid on the page
+  4. Menu "Kontakt" → /pages/kontakt (or link to https://www.vojtahubne.cz/kontakt)
+{% endcomment %}
+
+<section class="vh-contact-page">
+  <div class="vh-contact-page__inner">
+    <div class="vh-contact-page__info">
+      <p class="vh-contact-page__eyebrow">Provozovatel</p>
+      <h1 class="vh-contact-page__title">Kontaktní informace</h1>
+
+      <dl class="vh-contact-page__details">
+        <div>
+          <dt>E-mail</dt>
+          <dd><a href="mailto:admin.rkrymlak@gmail.com">admin.rkrymlak@gmail.com</a></dd>
+        </div>
+        <div>
+          <dt>Provozovatel</dt>
+          <dd>RM Solution Group s.r.o.</dd>
+        </div>
+        <div>
+          <dt>IČO</dt>
+          <dd>29615551</dd>
+        </div>
+        <div>
+          <dt>Adresa</dt>
+          <dd>Žabeň 309, 739 25 Žabeň</dd>
+        </div>
+      </dl>
+
+      <p class="vh-contact-page__text">
+        Objednávky a reklamace vyřizujeme přes e-shop. Obecné dotazy nám napište přes formulář.
+      </p>
+    </div>
+
+    <div class="vh-contact-page__form-wrap">
+      <p class="vh-contact-page__eyebrow">Napište nám</p>
+      <h2 class="vh-contact-page__title">Kontakt</h2>
+
+      {% form 'contact', class: 'vh-contact-page__form' %}
+        {% if form.posted_successfully? %}
+          <p class="vh-contact-page__success" role="status">
+            Děkujeme. Vaše zpráva byla odeslána, ozveme se co nejdříve.
+          </p>
+        {% endif %}
+
+        {% if form.errors %}
+          <p class="vh-contact-page__error" role="alert">
+            Formulář se nepodařilo odeslat. Zkontrolujte prosím vyplněné údaje.
+          </p>
+        {% endif %}
+
+        <div class="vh-contact-page__field">
+          <label for="ContactForm-name">Jméno</label>
+          <input
+            id="ContactForm-name"
+            type="text"
+            name="contact[name]"
+            autocomplete="name"
+            placeholder="Vaše jméno"
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}"
+          >
+        </div>
+
+        <div class="vh-contact-page__field">
+          <label for="ContactForm-email">E-mail *</label>
+          <input
+            id="ContactForm-email"
+            type="email"
+            name="contact[email]"
+            autocomplete="email"
+            required
+            placeholder="vas@email.cz"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+          >
+        </div>
+
+        <div class="vh-contact-page__field">
+          <label for="ContactForm-phone">Telefon</label>
+          <input
+            id="ContactForm-phone"
+            type="tel"
+            name="contact[phone]"
+            autocomplete="tel"
+            placeholder="+420 …"
+            value="{% if form.phone %}{{ form.phone }}{% endif %}"
+          >
+        </div>
+
+        <div class="vh-contact-page__field">
+          <label for="ContactForm-body">Vaše zpráva *</label>
+          <textarea
+            id="ContactForm-body"
+            name="contact[body]"
+            required
+            placeholder="Napište nám, s čím vám můžeme pomoci."
+          >{% if form.body %}{{ form.body }}{% endif %}</textarea>
+        </div>
+
+        <button class="vh-contact-page__submit" type="submit">Odeslat formulář</button>
+
+        <p class="vh-contact-page__hint">
+          Odesláním souhlasíte se zpracováním údajů dle
+          {% if shop.privacy_policy %}
+            <a href="{{ shop.privacy_policy.url }}">zásad ochrany osobních údajů</a>.
+          {% else %}
+            zásad ochrany osobních údajů.
+          {% endif %}
+        </p>
+      {% endform %}
+    </div>
+  </div>
+</section>

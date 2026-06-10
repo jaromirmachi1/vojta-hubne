@@ -67,10 +67,10 @@ a:hover {
 }
 
 /* ─── Promo bar (= src/components/PromoBar.tsx) ───
-   Horizon sets inline font-weight:100 / 0.625rem on slideshow-slide — override below.
-   Theme editor text:
-   Objednávky přijaté nyní expedujeme od středy 17. 6.
-*/
+    Horizon sets inline font-weight:100 / 0.625rem on slideshow-slide — override below.
+    Theme editor text:
+    Objednávky přijaté nyní expedujeme od středy 17. 6.
+ */
 .shopify-section:has(.announcement-bar),
 .shopify-section:has(announcement-bar-component) {
   width: 100% !important;
@@ -741,10 +741,76 @@ footer .footer-content {
   margin-inline: auto !important;
   padding-block: clamp(3rem, 6vw, 5.5rem) !important;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.82fr) !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(18rem, 0.82fr) !important;
   align-items: end !important;
-  gap: clamp(2rem, 8vw, 8rem) !important;
+  gap: clamp(2rem, 5vw, 4rem) !important;
   border-top: 1px solid rgba(238, 220, 130, 0.16);
+}
+
+footer .footer-content:has(.vh-footer-legal) {
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(18rem, 0.82fr) !important;
+}
+
+/* Footer legal columns — RM Solution Group + policy links */
+.vh-footer-legal {
+  grid-column: 1 / 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-self: start;
+}
+
+.vh-footer-legal__column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.vh-footer-legal__title {
+  margin: 0 0 0.15rem !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  color: var(--vh-gold-muted) !important;
+  line-height: 1.4 !important;
+}
+
+.vh-footer-legal__company {
+  margin: 0 !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  color: var(--vh-text) !important;
+}
+
+.vh-footer-legal__text {
+  margin: 0 !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
+  color: var(--vh-text) !important;
+}
+
+.vh-footer-legal__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.vh-footer-legal__link {
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  color: var(--vh-text) !important;
+  text-decoration: none !important;
+  transition: color 0.2s ease !important;
+}
+
+.vh-footer-legal__link:hover {
+  color: var(--vh-gold) !important;
 }
 
 footer .footer-content .group-block-content {
@@ -862,7 +928,7 @@ footer .footer-utilities__group-copyright .footer-utilities__text {
 }
 
 footer .footer-utilities__group-copyright .footer-utilities__text::before {
-  content: "© 2026 Vojta Hubne. Všechna práva vyhrazena.";
+  content: "© 2026 Vojta Hubne · RM Solution Group s.r.o.";
   color: var(--vh-text-muted);
   font-size: 0.72rem;
 }
@@ -903,6 +969,11 @@ footer .social-icons__wrapper {
   footer .utilities {
     grid-template-columns: minmax(0, 1fr) !important;
     align-items: start !important;
+  }
+
+  .vh-footer-legal {
+    grid-column: 1 / -1 !important;
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 
   footer .email-signup-block,
@@ -1091,214 +1162,61 @@ media-gallery.media-gallery--grid,
   width: 100% !important;
 }
 
-/* PDP gallery — one main image with arrows + small thumbnails below */
-.product-information__media media-gallery.media-gallery--grid {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0.85rem !important;
-  width: 100% !important;
-  max-width: min(100%, 560px) !important;
-  margin-inline: auto !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  slideshow-component {
-  position: relative !important;
-  order: 1 !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  margin-inline: 0 !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  slideshow-container {
-  position: relative !important;
-  overflow: hidden !important;
-  border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: var(--vh-radius-lg) !important;
-  background: #030303 !important;
-}
-
-.product-information__media media-gallery.media-gallery--grid slideshow-slides {
-  display: block !important;
-  position: relative !important;
-  overflow: hidden !important;
-  min-height: min(52vh, 520px) !important;
-  aspect-ratio: 1 / 1 !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  slideshow-slide.product-media-container {
-  --grid-template-rows: auto !important;
-  --grid-template-rows-desktop: auto !important;
-  --constrained-height: none !important;
-  --slide-width: 100% !important;
-  display: none !important;
-  place-items: center !important;
-  width: 100% !important;
-  height: 100% !important;
-  min-height: 0 !important;
-  max-height: none !important;
-  margin: 0 !important;
-  padding: clamp(1rem, 2vw, 1.75rem) !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  slideshow-slide.product-media-container[aria-hidden="false"] {
-  display: grid !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  slideshow-slide.product-media-container
-  img {
-  width: 100% !important;
-  height: 100% !important;
-  max-height: min(52vh, 520px) !important;
-  object-fit: contain !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  .media-gallery__grid {
-  order: 2 !important;
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 0.65rem !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  list-style: none !important;
-  grid-template-columns: none !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  .media-gallery__grid
-  > li {
-  flex: 0 0 auto !important;
-  width: clamp(4.25rem, 12vw, 5.25rem) !important;
-  grid-column: auto !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  .media-gallery__grid
-  .product-media-container {
-  width: 100% !important;
-  aspect-ratio: 1 / 1 !important;
-  max-height: clamp(4.25rem, 12vw, 5.25rem) !important;
-  padding: 0.35rem !important;
-  background: #030303 !important;
-  border: 1px solid var(--vh-border-subtle) !important;
-  border-radius: var(--vh-radius-md) !important;
-  overflow: hidden !important;
-  cursor: pointer !important;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  .media-gallery__grid
-  .product-media-container.is-vh-active,
-.product-information__media
-  media-gallery.media-gallery--grid
-  .media-gallery__grid
-  .product-media-container:hover {
-  border-color: var(--vh-gold) !important;
-  box-shadow: 0 0 0 1px rgba(238, 220, 130, 0.35) !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  .media-gallery__grid
-  .product-media-container.is-vh-active {
-  border-color: var(--vh-gold) !important;
-  box-shadow: 0 0 0 1px var(--vh-gold) !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  .media-gallery__grid
-  .product-media-container
-  img {
-  width: 100% !important;
-  height: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  .product-media-container__zoom-button {
-  display: none !important;
-}
-
-.product-information__media
-  media-gallery.media-gallery--grid
-  .media-gallery__mobile-controls {
-  display: none !important;
-}
-
-.vh-gallery-arrow {
-  position: absolute !important;
-  top: 50% !important;
-  z-index: 4 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 2.5rem !important;
-  height: 2.5rem !important;
-  padding: 0 !important;
-  border: 1px solid var(--vh-border) !important;
-  border-radius: var(--vh-radius-pill) !important;
-  background: rgba(0, 0, 0, 0.72) !important;
-  color: var(--vh-gold) !important;
-  cursor: pointer !important;
-  transform: translateY(-50%) !important;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease !important;
-}
-
-.vh-gallery-arrow:hover {
-  background: rgba(238, 220, 130, 0.14) !important;
-  color: #ffffff !important;
-  border-color: var(--vh-gold) !important;
-}
-
-.vh-gallery-arrow svg {
-  width: 1rem !important;
-  height: 1rem !important;
-  stroke: currentColor !important;
-}
-
-.vh-gallery-arrow--prev {
-  left: 0.75rem !important;
-}
-
-.vh-gallery-arrow--next {
-  right: 0.75rem !important;
-}
-
-@media screen and (max-width: 749px) {
-  .product-information__media
-    media-gallery.media-gallery--grid
-    slideshow-slides {
-    min-height: min(68vw, 420px) !important;
+@media screen and (min-width: 750px) {
+  media-gallery.media-gallery--grid .media-gallery__grid {
+    display: grid !important;
+    gap: 12px !important;
   }
 
-  .product-information__media
-    media-gallery.media-gallery--grid
-    slideshow-slide.product-media-container
-    img {
-    max-height: min(68vw, 420px) !important;
+  /* First image full width, rest in 2 columns (needs Customize: 2 columns + large first image) */
+  .media-gallery--large-first-image .media-gallery__grid > :first-child,
+  .media-gallery--two-column .media-gallery__grid > :first-child {
+    grid-column: 1 / -1 !important;
+  }
+
+  .media-gallery--two-column .media-gallery__grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .product-media-container,
+  .media-gallery__grid .product-media-container {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: var(--vh-radius-lg) !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+  }
+
+  .product-media-container img,
+  .media-gallery__grid img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .media-gallery--large-first-image .media-gallery__grid > :first-child img {
+    max-height: min(56vh, 560px) !important;
+    object-fit: contain !important;
+  }
+
+  .product-information__media media-gallery,
+  .product-information__media .product-media-gallery,
+  .product-information__media slideshow-component {
+    max-width: min(100%, 560px) !important;
+    width: 100% !important;
+    margin-inline: auto !important;
+  }
+
+  .product-information__media .product-media-container,
+  .product-information__media .media-gallery__grid > :first-child {
+    max-height: min(56vh, 560px) !important;
+  }
+
+  .product-information__media .product-media-container img,
+  .product-information__media .media-gallery__grid > :first-child img,
+  .product-information__media slideshow-slide.product-media-container img {
+    max-height: min(56vh, 560px) !important;
+    object-fit: contain !important;
   }
 }
 
@@ -2079,7 +1997,7 @@ select {
 }
 
 /* Final Horizon collection-card override.
-   Keep only the image/media square bordered; product info stays clean underneath. */
+    Keep only the image/media square bordered; product info stays clean underneath. */
 main product-card,
 main .product-card,
 main .card,
@@ -2215,7 +2133,7 @@ main .card-product [class*="price"] {
 }
 
 /* Single-border product image box.
-   Horizon nests image wrappers (card__inner > card__media > media); only card__inner should draw the square. */
+    Horizon nests image wrappers (card__inner > card__media > media); only card__inner should draw the square. */
 main .collection .card__inner,
 main .collection [class*="card__inner"] {
   display: grid !important;
@@ -2303,8 +2221,8 @@ main .collection [class*="card__information"] {
 }
 
 /* Absolute last override for Horizon cards.
-   Previous broad media selectors can still hit nested wrappers; this removes every inner frame
-   and leaves one border on the outer card image holder only. */
+    Previous broad media selectors can still hit nested wrappers; this removes every inner frame
+    and leaves one border on the outer card image holder only. */
 main .card__inner,
 main [class*="card__inner"],
 main .product-card__image,
@@ -2383,8 +2301,8 @@ main .card-product__image img {
 }
 
 /* Exact Horizon product-card media DOM:
-   a.contents > slideshow-component > slideshow-container > slideshow-slides
-   > slideshow-slide.product-media-container--image > .product-media > img */
+    a.contents > slideshow-component > slideshow-container > slideshow-slides
+    > slideshow-slide.product-media-container--image > .product-media > img */
 main a.contents,
 main a.contents slideshow-component,
 main a.contents slideshow-container,
@@ -2501,7 +2419,7 @@ main
 }
 
 /* Collection cards can come back from browser history with Horizon slideshow
-   dimensions restored from the PDP state. Pin the collection tile media again. */
+    dimensions restored from the PDP state. Pin the collection tile media again. */
 main .collection a.contents,
 main .collection a.contents slideshow-component,
 main .collection a.contents slideshow-container,
@@ -2625,18 +2543,103 @@ main [class*="line-item"][class*="media"] {
   overflow: visible !important;
 }
 
+/* Kill Horizon's light section shell — it peeks through rounded summary corners */
+main .shopify-section:has(.cart-page) .section-background,
+main .shopify-section:has(cart-items-component) .section-background {
+  background: transparent !important;
+  background-color: var(--vh-black) !important;
+}
+
+main .shopify-section:has(.cart-page) > .section,
+main .shopify-section:has(cart-items-component) > .section,
+main .shopify-section:has(.cart-page) .section-content-wrapper,
+main .cart-page,
+main .cart-page__summary,
+main .cart-page__main {
+  background: transparent !important;
+}
+
+main .cart-page [class*="color-scheme"],
+main cart-items-component [class*="color-scheme"] {
+  background: transparent !important;
+  --color-background: var(--vh-black) !important;
+  --color-background-rgb: 0 0 0 !important;
+}
+
+/* Cart layout — keep summary on the right edge of the page content, not viewport center */
+@media screen and (min-width: 750px) {
+  main .section--page-width .cart-page:has(.cart-summary--extend),
+  main .cart-page {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: minmax(0, 1fr) clamp(16rem, 22vw, 22rem) !important;
+    column-gap: clamp(1.5rem, 4vw, 3.5rem) !important;
+    align-items: start !important;
+  }
+
+  main .cart-page__main,
+  main .cart-page__title,
+  main .cart-page__items,
+  main .cart-page__more-blocks {
+    grid-column: 1 !important;
+    width: 100% !important;
+  }
+
+  main .cart-page__summary {
+    grid-column: 2 !important;
+    grid-row: 1 / -1 !important;
+    justify-self: stretch !important;
+    align-self: start !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding-top: 0 !important;
+    position: sticky !important;
+    top: calc(4.5rem + 2.25rem + 1rem) !important;
+  }
+
+  main .cart-summary,
+  main .cart-summary--extend {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    justify-self: stretch !important;
+  }
+
+  main .cart-summary--extend .cart-summary__inner {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    padding-inline: clamp(1rem, 2vw, 1.75rem) !important;
+  }
+}
+
+/* Summary wrappers stay transparent; one dark card on the inner shell only */
 main .cart__footer,
 main .cart__blocks,
 main .cart__summary,
 main .cart-summary,
+main .cart-summary--extend,
+main .cart-page__summary,
+main .cart-totals,
+main .cart-totals__container,
+main .cart-totals__original-container,
+main .cart-actions,
+main .cart-discount,
+main .cart-note,
 main .cart-drawer__footer,
-main [class*="cart-summary"],
+main [class*="cart-summary"]:not(.cart-summary__inner),
 main [class*="cart__footer"],
 main [class*="cart__blocks"],
-main .cart [class*="checkout"],
-main cart-items [class*="checkout"],
-main form[action*="/cart"] [class*="checkout"],
 main [class*="subtotal"] {
+  background: transparent !important;
+  color: var(--vh-text) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+main .cart-summary__inner {
   background: var(--vh-surface-raised) !important;
   color: var(--vh-text) !important;
   border: 1px solid var(--vh-border-subtle) !important;
@@ -2648,6 +2651,7 @@ main .cart__footer *,
 main .cart__blocks *,
 main .cart__summary *,
 main .cart-summary *,
+main .cart-summary__inner *,
 main [class*="cart-summary"] *,
 main [class*="cart__footer"] *,
 main [class*="cart__blocks"] *,
@@ -3367,4 +3371,217 @@ main .card-gallery a.contents slideshow-slides {
   .vh-product-description-section__title {
     max-width: 9ch;
   }
+}
+
+/* ─── Kontakt page (Shopify + matches React /kontakt) ─── */
+.vh-contact-page {
+  padding-block: clamp(3rem, 7vw, 5rem);
+  background: var(--vh-black);
+  color: var(--vh-text);
+}
+
+.vh-contact-page__inner {
+  width: min(100%, var(--vh-page-max-width));
+  margin-inline: auto;
+  padding-inline: var(--vh-page-padding-inline);
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2rem);
+}
+
+@media screen and (min-width: 1024px) {
+  .vh-contact-page__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+}
+
+.vh-contact-page__info,
+.vh-contact-page__form-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--vh-radius-xl);
+}
+
+.vh-contact-page__info {
+  border: 1px solid var(--vh-border);
+  background:
+    linear-gradient(145deg, rgba(238, 220, 130, 0.18), rgba(238, 220, 130, 0.04) 55%),
+    var(--vh-surface-raised);
+}
+
+.vh-contact-page__form-wrap {
+  border: 1px solid var(--vh-border-subtle);
+  background: var(--vh-surface);
+}
+
+.vh-contact-page__eyebrow {
+  margin: 0;
+  font-family: var(--vh-font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vh-gold-muted);
+}
+
+.vh-contact-page__title {
+  margin: 0 !important;
+  font-family: var(--vh-font-display) !important;
+  font-size: clamp(2rem, 5vw, 3rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: var(--vh-gold) !important;
+  line-height: 0.95 !important;
+}
+
+.vh-contact-page__details {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.vh-contact-page__details div {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.vh-contact-page__details dt {
+  margin: 0;
+  font-family: var(--vh-font-sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vh-gold-muted);
+}
+
+.vh-contact-page__details dd {
+  margin: 0;
+  font-family: var(--vh-font-sans);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--vh-text);
+}
+
+.vh-contact-page__details a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.vh-contact-page__details a:hover {
+  color: var(--vh-gold);
+}
+
+.vh-contact-page__text,
+.vh-contact-page__hint {
+  margin: 0;
+  font-family: var(--vh-font-sans);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--vh-text);
+}
+
+.vh-contact-page__hint {
+  font-size: 0.78rem;
+  color: var(--vh-text-muted);
+}
+
+.vh-contact-page__hint a {
+  color: var(--vh-gold-muted);
+  text-decoration: none;
+}
+
+.vh-contact-page__hint a:hover {
+  color: var(--vh-gold);
+}
+
+.vh-contact-page__form {
+  display: grid;
+  gap: 1rem;
+}
+
+.vh-contact-page__field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.vh-contact-page__field label {
+  font-family: var(--vh-font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vh-gold-muted);
+}
+
+.vh-contact-page__field input,
+.vh-contact-page__field textarea {
+  width: 100%;
+  font-family: var(--vh-font-sans);
+  font-size: 0.95rem;
+  color: var(--vh-text);
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--vh-border-subtle);
+  border-radius: var(--vh-radius-md);
+}
+
+.vh-contact-page__field input {
+  min-height: 3rem;
+  padding: 0.85rem 1rem;
+}
+
+.vh-contact-page__field textarea {
+  min-height: 9rem;
+  padding: 0.85rem 1rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.vh-contact-page__field input:focus,
+.vh-contact-page__field textarea:focus {
+  outline: none;
+  border-color: var(--vh-border);
+}
+
+.vh-contact-page__submit {
+  justify-self: start;
+  margin-top: 0.35rem;
+  padding: 1rem 1.75rem;
+  font-family: var(--vh-font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vh-black);
+  background: var(--vh-gold);
+  border: 0;
+  border-radius: var(--vh-radius-pill);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.vh-contact-page__submit:hover {
+  opacity: 0.9;
+}
+
+.vh-contact-page__success {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(238, 220, 130, 0.35);
+  border-radius: var(--vh-radius-md);
+  background: rgba(238, 220, 130, 0.08);
+  color: var(--vh-gold);
+}
+
+.vh-contact-page__error {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(255, 120, 120, 0.35);
+  border-radius: var(--vh-radius-md);
+  background: rgba(255, 80, 80, 0.08);
+  color: #ffb4b4;
 }

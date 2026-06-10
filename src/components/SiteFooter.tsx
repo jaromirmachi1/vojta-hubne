@@ -1,7 +1,10 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
+import { companyInfo } from '../data/company'
 import { eyebrowText } from '../styles/eyebrow'
 import { HashLink } from './HashLink'
 import { PageContainer } from './PageContainer'
+import { getShopifyPolicyUrl } from '../utils/shopify'
 
 const Footer = styled.footer`
   margin-top: auto;
@@ -15,45 +18,59 @@ const Inner = styled(PageContainer)`
   padding-block: 3rem;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: 1.5fr 1fr 1fr;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
   }
-`
-
-const Brand = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-`
-
-const BrandName = styled.span`
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: 1.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.gold};
-`
-
-const Text = styled.p`
-  margin: 0;
-  max-width: 20rem;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  color: ${({ theme }) => theme.colors.text};
 `
 
 const Column = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.85rem;
 `
 
 const ColumnTitle = styled.h2`
+  margin: 0 0 0.25rem;
   font-size: 0.7rem;
   letter-spacing: 0.18em;
   ${eyebrowText}
 `
 
-const FooterLink = styled(HashLink)`
+const CompanyName = styled.p`
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: ${({ theme }) => theme.colors.text};
+`
+
+const Text = styled.p`
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: ${({ theme }) => theme.colors.text};
+`
+
+const FooterNavLink = styled(Link)`
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.text};
+  text-decoration: none;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.gold};
+  }
+`
+
+const FooterExternalLink = styled.a`
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.text};
+  text-decoration: none;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.gold};
+  }
+`
+
+const FooterHashLink = styled(HashLink)`
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
@@ -75,23 +92,34 @@ export function SiteFooter() {
   return (
     <Footer>
       <Inner>
-        <Brand>
-          <BrandName>Vojta Hubne</BrandName>
-          <Text>
-            Prémiové doplňky a péče o tělo. Postavené na reálné transformaci —
-            od 160 kg k 99 kg.
-          </Text>
-        </Brand>
         <Column>
-          <ColumnTitle>Obchod</ColumnTitle>
-          <FooterLink sectionId="produkty">Produkty</FooterLink>
+          <ColumnTitle>Kontaktní informace</ColumnTitle>
+          <CompanyName>{companyInfo.name}</CompanyName>
+          <Text>{companyInfo.addressLine}</Text>
+          <Text>IČO: {companyInfo.ico}</Text>
+          <FooterExternalLink href={`mailto:${companyInfo.email}`}>
+            {companyInfo.email}
+          </FooterExternalLink>
         </Column>
+
         <Column>
-          <ColumnTitle>Kontakt</ColumnTitle>
-          <Text>Objednávky a dotazy — brzy online.</Text>
+          <ColumnTitle>Důležité informace</ColumnTitle>
+          <FooterNavLink to="/kontakt">Kontakt</FooterNavLink>
+          <FooterExternalLink href={getShopifyPolicyUrl('shipping-policy')}>
+            Doprava a platba
+          </FooterExternalLink>
+          <FooterExternalLink href={getShopifyPolicyUrl('terms-of-service')}>
+            Obchodní podmínky
+          </FooterExternalLink>
+          <FooterExternalLink href={getShopifyPolicyUrl('privacy-policy')}>
+            Ochrana osobních údajů
+          </FooterExternalLink>
+          <FooterHashLink sectionId="produkty">Produkty</FooterHashLink>
         </Column>
       </Inner>
-      <Bottom>© {new Date().getFullYear()} Vojta Hubne. Všechna práva vyhrazena.</Bottom>
+      <Bottom>
+        © {new Date().getFullYear()} Vojta Hubne · {companyInfo.name}
+      </Bottom>
     </Footer>
   )
 }

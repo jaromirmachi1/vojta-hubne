@@ -56,3 +56,18 @@ export function getShopifyCollectionUrl(handle: string): string | null {
   if (!base || !handle) return null
   return `${base}/collections/${encodeURIComponent(handle)}`
 }
+
+type ShopifyPolicySlug =
+  | 'shipping-policy'
+  | 'terms-of-service'
+  | 'privacy-policy'
+
+/** Shopify policy pages (Settings → Policies). */
+export function getShopifyPolicyUrl(slug: ShopifyPolicySlug): string {
+  return `${getShopifyStoreUrl()}/policies/${slug}`
+}
+
+/** Shopify native contact form endpoint (Settings → Notifications). */
+export function getShopifyContactFormUrl(): string {
+  return `${getShopifyStoreUrl()}/contact#contact_form`
+}
