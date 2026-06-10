@@ -1,0 +1,37 @@
+{% comment %}
+  Vojta Hubne — footer legal section (use when Customize has no Custom Liquid).
+
+  Setup:
+  1. Upload snippets/vojta-hubne-footer-legal.liquid
+  2. Upload this file as sections/vh-footer-legal.liquid
+  3. Edit sections/footer-group.json — add BEFORE "footer" in "order":
+       "vh_footer_legal"
+     And in "sections":
+       "vh_footer_legal": { "type": "vh-footer-legal", "settings": {} }
+  4. Upload vojta-hubne-horizon.css
+
+  EASIER ALTERNATIVE: edit sections/footer.liquid only — see FOOTER-INTEGRATION.md
+{% endcomment %}
+
+<div class="section section--page-width color-scheme-1">
+  <div class="footer-content">
+    {% render 'vojta-hubne-footer-legal', marketing_url: 'https://www.vojtahubne.cz' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "VH Footer Legal",
+  "tag": "section",
+  "class": "vh-footer-legal-section",
+  "enabled_on": {
+    "groups": ["footer"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "VH Footer Legal"
+    }
+  ]
+}
+{% endschema %}

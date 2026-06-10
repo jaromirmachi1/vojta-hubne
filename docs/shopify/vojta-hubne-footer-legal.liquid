@@ -1,11 +1,11 @@
 {% comment %}
   Vojta Hubne — footer legal columns (Kontaktní informace + Důležité informace).
 
-  Setup:
-  1. Save as snippets/vojta-hubne-footer-legal.liquid
-  2. Customize → Footer → Add block → Custom Liquid
-  3. Paste: {% render 'vojta-hubne-footer-legal', marketing_url: 'https://www.vojtahubne.cz' %}
-  4. Place above the newsletter block (drag to top of footer content)
+  Setup (Horizon has NO Custom Liquid in Footer — use Edit code):
+  See docs/shopify/FOOTER-INTEGRATION.md
+
+  Quick fix: sections/footer.liquid — add BEFORE {% content_for 'blocks' %}:
+  {% render 'vojta-hubne-footer-legal', marketing_url: 'https://www.vojtahubne.cz' %}
 {% endcomment %}
 
 {% assign marketing = marketing_url | default: 'https://www.vojtahubne.cz' %}
@@ -40,6 +40,7 @@
       {% else %}
         <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/privacy-policy">Ochrana osobních údajů</a>
       {% endif %}
+      <a class="vh-footer-legal__link" href="{{ marketing }}/#produkty">Produkty</a>
     </nav>
   </div>
 </div>

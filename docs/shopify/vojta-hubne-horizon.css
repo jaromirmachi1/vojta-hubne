@@ -749,6 +749,16 @@ footer .footer-content {
 
 footer .footer-content:has(.vh-footer-legal) {
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(18rem, 0.82fr) !important;
+  align-items: start !important;
+}
+
+/* Newsletter + email signup stack in column 3 (legal spans cols 1–2) */
+footer .footer-content:has(.vh-footer-legal) > *:not(.vh-footer-legal) {
+  grid-column: 3 !important;
+  justify-self: stretch !important;
+  align-self: start !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 /* Footer legal columns — RM Solution Group + policy links */
@@ -766,7 +776,9 @@ footer .footer-content:has(.vh-footer-legal) {
   gap: 0.65rem;
 }
 
+footer .footer-content .vh-footer-legal h2.vh-footer-legal__title,
 .vh-footer-legal__title {
+  max-width: none !important;
   margin: 0 0 0.15rem !important;
   font-family: var(--vh-font-sans) !important;
   font-size: 0.7rem !important;
@@ -775,23 +787,33 @@ footer .footer-content:has(.vh-footer-legal) {
   text-transform: uppercase !important;
   color: var(--vh-gold-muted) !important;
   line-height: 1.4 !important;
+  white-space: normal !important;
+  word-break: normal !important;
 }
 
+footer .footer-content .vh-footer-legal .vh-footer-legal__company,
 .vh-footer-legal__company {
+  max-width: none !important;
   margin: 0 !important;
   font-family: var(--vh-font-sans) !important;
   font-size: 0.95rem !important;
   font-weight: 600 !important;
   line-height: 1.5 !important;
   color: var(--vh-text) !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
+footer .footer-content .vh-footer-legal .vh-footer-legal__text,
 .vh-footer-legal__text {
+  max-width: none !important;
   margin: 0 !important;
   font-family: var(--vh-font-sans) !important;
   font-size: 0.875rem !important;
   line-height: 1.6 !important;
   color: var(--vh-text) !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
 }
 
 .vh-footer-legal__nav {
@@ -817,7 +839,7 @@ footer .footer-content .group-block-content {
   gap: 0.85rem !important;
 }
 
-footer .footer-content h2 {
+footer .footer-content h2:not(.vh-footer-legal__title) {
   max-width: 9ch;
   margin: 0 !important;
   font-family: var(--vh-font-display) !important;
@@ -831,7 +853,7 @@ footer .footer-content h2 {
 
 footer .footer-content rte-formatter,
 footer .footer-content .rte,
-footer .footer-content p {
+footer .footer-content p:not(.vh-footer-legal__company):not(.vh-footer-legal__text) {
   max-width: 30rem !important;
   margin: 0 !important;
   color: var(--vh-text) !important;
@@ -846,12 +868,17 @@ footer .email-signup-block {
   justify-self: end !important;
 }
 
+footer .footer-content:has(.vh-footer-legal) .email-signup-block {
+  max-width: 100% !important;
+  margin-block-start: 0.35rem !important;
+}
+
 footer .email-signup__form {
   width: 100% !important;
 }
 
 footer .email-signup__input-group {
-  min-height: 4.35rem !important;
+  min-height: 2.85rem !important;
   border: 1px solid rgba(238, 220, 130, 0.22) !important;
   border-radius: var(--vh-radius-pill) !important;
   background:
@@ -859,18 +886,18 @@ footer .email-signup__input-group {
     rgba(10, 10, 10, 0.82) !important;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.055),
-    0 18px 48px rgba(0, 0, 0, 0.28) !important;
+    0 12px 32px rgba(0, 0, 0, 0.22) !important;
   overflow: hidden !important;
 }
 
 footer .email-signup__input {
-  min-height: 4.35rem !important;
-  padding-inline: 1.25rem !important;
+  min-height: 2.85rem !important;
+  padding-inline: 1rem !important;
   background: transparent !important;
   color: rgba(255, 255, 255, 0.88) !important;
   border: 0 !important;
   font-family: var(--vh-font-sans) !important;
-  font-size: 0.86rem !important;
+  font-size: 0.82rem !important;
   letter-spacing: 0.02em !important;
 }
 
@@ -879,9 +906,9 @@ footer .email-signup__input::placeholder {
 }
 
 footer .email-signup__button {
-  width: 4.35rem !important;
-  min-width: 4.35rem !important;
-  min-height: 4.35rem !important;
+  width: 2.85rem !important;
+  min-width: 2.85rem !important;
+  min-height: 2.85rem !important;
   background: var(--vh-gold) !important;
   color: var(--vh-black) !important;
   border: 0 !important;
@@ -981,8 +1008,16 @@ footer .social-icons__wrapper {
     justify-self: stretch !important;
   }
 
-  footer .footer-content h2 {
+  footer .footer-content h2:not(.vh-footer-legal__title) {
     max-width: 8ch;
+  }
+
+  footer .footer-content .vh-footer-legal {
+    grid-column: 1 / -1 !important;
+  }
+
+  footer .footer-content:has(.vh-footer-legal) > *:not(.vh-footer-legal) {
+    grid-column: 1 / -1 !important;
   }
 }
 
@@ -2777,6 +2812,36 @@ main form[action*="/cart"] [class*="checkout"] button {
   font-size: 0.75rem !important;
   font-weight: 600 !important;
   letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+}
+
+/* Cart discount — override summary inherit so apply button and input read correctly */
+main .cart-discount__input,
+main cart-discount-component .cart-discount__input {
+  background: transparent !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  border-radius: var(--vh-radius-pill) !important;
+  color: var(--vh-text) !important;
+  font-family: var(--vh-font-sans) !important;
+}
+
+main .cart-discount__input::placeholder,
+main cart-discount-component .cart-discount__input::placeholder {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+main .cart-discount__button,
+main cart-discount-component .cart-discount__button,
+main .cart-discount__form button[type="submit"],
+main cart-discount-component .cart-discount__form button[type="submit"] {
+  background: var(--vh-gold) !important;
+  border: 1px solid var(--vh-gold) !important;
+  border-radius: var(--vh-radius-pill) !important;
+  color: var(--vh-black) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
 }
 

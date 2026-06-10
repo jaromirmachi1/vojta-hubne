@@ -47,7 +47,7 @@ export const featuredProducts: Product[] = [
       "Proteinový shake s CaroLean®, VinOgrape® a vitamíny. 22 g bílkovin v jedné dávce pro každodenní kontrolu váhy.",
     image: leanShake,
     category: "Proteiny & shaky",
-    format: "15 dávek · 450 g",
+    format: "14 dávek · 420 g",
     benefits: ["Vysoký obsah bílkovin", "Vláknina", "Vitamíny"],
     featured: true,
     shopifyHandle: "lean-shake-glp-1",
