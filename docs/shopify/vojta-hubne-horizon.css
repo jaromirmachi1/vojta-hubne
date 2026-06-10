@@ -1101,7 +1101,9 @@ media-gallery.media-gallery--grid,
   margin-inline: auto !important;
 }
 
-.product-information__media media-gallery.media-gallery--grid slideshow-component {
+.product-information__media
+  media-gallery.media-gallery--grid
+  slideshow-component {
   position: relative !important;
   order: 1 !important;
   width: 100% !important;
@@ -1109,7 +1111,9 @@ media-gallery.media-gallery--grid,
   margin-inline: 0 !important;
 }
 
-.product-information__media media-gallery.media-gallery--grid slideshow-container {
+.product-information__media
+  media-gallery.media-gallery--grid
+  slideshow-container {
   position: relative !important;
   overflow: hidden !important;
   border: 1px solid var(--vh-border-subtle) !important;
@@ -1158,7 +1162,9 @@ media-gallery.media-gallery--grid,
   object-fit: contain !important;
 }
 
-.product-information__media media-gallery.media-gallery--grid .media-gallery__grid {
+.product-information__media
+  media-gallery.media-gallery--grid
+  .media-gallery__grid {
   order: 2 !important;
   display: flex !important;
   flex-wrap: wrap !important;
@@ -1282,7 +1288,9 @@ media-gallery.media-gallery--grid,
 }
 
 @media screen and (max-width: 749px) {
-  .product-information__media media-gallery.media-gallery--grid slideshow-slides {
+  .product-information__media
+    media-gallery.media-gallery--grid
+    slideshow-slides {
     min-height: min(68vw, 420px) !important;
   }
 
@@ -1577,7 +1585,10 @@ media-gallery.media-gallery--grid,
   color: var(--vh-black) !important;
 }
 
-.product-details .variant-option__button-label:hover:not(:has([data-option-available="false"])) {
+.product-details
+  .variant-option__button-label:hover:not(
+    :has([data-option-available="false"])
+  ) {
   background-color: rgba(238, 220, 130, 0.9) !important;
   border-color: var(--vh-gold) !important;
   color: var(--vh-black) !important;
@@ -1597,7 +1608,9 @@ media-gallery.media-gallery--grid,
   background: #000000 !important;
 }
 
-.product-details .variant-option__button-label:has(:checked):hover .variant-option__button-label__pill {
+.product-details
+  .variant-option__button-label:has(:checked):hover
+  .variant-option__button-label__pill {
   background: #111111 !important;
 }
 

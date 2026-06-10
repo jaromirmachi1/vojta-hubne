@@ -194,13 +194,13 @@ export function HomeHeroSection() {
           <Eyebrow>Prémiová řada GLP-1</Eyebrow>
           <Title>Transformace, která má váhu</Title>
           <Lead>
-            Vojta Hubne — značka postavená na reálné cestě z 150 kg na 85 kg.
+            Vojta Hubne — značka postavená na reálné cestě z 160 kg na 99 kg.
             Doplňky stravy a regenerační péče pro ty, kteří chtějí výsledky, ne
             prázdné sliby.
           </Lead>
           <Stats>
             <Stat>
-              <StatValue>150→85</StatValue>
+              <StatValue>160→99</StatValue>
               <StatLabel>Kilogramů pryč</StatLabel>
             </Stat>
             <Stat>
@@ -217,7 +217,7 @@ export function HomeHeroSection() {
           <PortraitFrame>
             <PortraitImage
               src={heroPortrait}
-              alt="Vojta Hubne — zakladatel značky, cesta z 150 kg na 85 kg"
+              alt="Vojta Hubne — zakladatel značky, cesta z 160 kg na 99 kg"
               width={960}
               height={1200}
               fetchPriority="high"
