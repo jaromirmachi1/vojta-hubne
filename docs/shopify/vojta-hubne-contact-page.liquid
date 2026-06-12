@@ -6,7 +6,13 @@
   2. Online Store → Pages → Add page "Kontakt", handle: kontakt
   3. Theme template: assign section or paste in Custom Liquid on the page
   4. Menu "Kontakt" → /pages/kontakt (or link to https://www.vojtahubne.cz/kontakt)
+
+  Contact form delivery:
+  Shopify emails {% form 'contact' %} to the store contact address.
+  Admin → Settings → General → Store contact email → info@vojtahubne.cz
 {% endcomment %}
+
+{% assign vh_contact_email = 'info@vojtahubne.cz' %}
 
 <section class="vh-contact-page">
   <div class="vh-contact-page__inner">
@@ -17,7 +23,7 @@
       <dl class="vh-contact-page__details">
         <div>
           <dt>E-mail</dt>
-          <dd><a href="mailto:admin.rkrymlak@gmail.com">admin.rkrymlak@gmail.com</a></dd>
+          <dd><a href="mailto:{{ vh_contact_email }}">{{ vh_contact_email }}</a></dd>
         </div>
         <div>
           <dt>Provozovatel</dt>
@@ -43,6 +49,9 @@
       <h2 class="vh-contact-page__title">Kontakt</h2>
 
       {% form 'contact', class: 'vh-contact-page__form' %}
+        <input type="hidden" name="contact[title]" value="Kontakt — Vojta Hubne">
+        <input type="hidden" name="contact[tags]" value="vojtahubne-kontakt">
+
         {% if form.posted_successfully? %}
           <p class="vh-contact-page__success" role="status">
             Děkujeme. Vaše zpráva byla odeslána, ozveme se co nejdříve.

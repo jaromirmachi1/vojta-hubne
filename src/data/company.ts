@@ -5,5 +5,9 @@ export const companyInfo = {
   address: 'Žabeň 309',
   zipCity: '739 25 Žabeň',
   addressLine: 'Žabeň 309, 739 25 Žabeň',
-  email: 'admin.rkrymlak@gmail.com',
+  /** Public inbox + contact form delivery (Shopify Admin store email must match). */
+  email: 'info@vojtahubne.cz',
 } as const
+
+/** Contact form submissions are emailed here via Shopify /contact. */
+export const contactFormRecipientEmail = companyInfo.email

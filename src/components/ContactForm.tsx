@@ -121,6 +121,8 @@ export function ContactForm() {
     >
       <input type="hidden" name="form_type" value="contact" />
       <input type="hidden" name="utf8" value="✓" />
+      <input type="hidden" name="contact[title]" value="Kontakt — Vojta Hubne" />
+      <input type="hidden" name="contact[tags]" value="vojtahubne-kontakt" />
 
       <Field>
         <Label htmlFor={nameId}>Jméno</Label>

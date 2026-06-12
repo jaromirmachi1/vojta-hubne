@@ -1,6 +1,7 @@
 /** Shopify URL helpers — product links open the Shopify storefront. */
 
 export { isStorefrontConfigured } from '../api/shopify/client'
+import { contactFormRecipientEmail } from '../data/company'
 
 const FALLBACK_SHOPIFY_STORE_DOMAIN = '9kihpp-rg.myshopify.com'
 
@@ -67,7 +68,15 @@ export function getShopifyPolicyUrl(slug: ShopifyPolicySlug): string {
   return `${getShopifyStoreUrl()}/policies/${slug}`
 }
 
-/** Shopify native contact form endpoint (Settings → Notifications). */
+/**
+ * Shopify native contact form endpoint.
+ * Deliveries go to the store contact email in Shopify Admin (see contactFormRecipientEmail).
+ */
 export function getShopifyContactFormUrl(): string {
   return `${getShopifyStoreUrl()}/contact#contact_form`
+}
+
+/** Inbox configured for contact form notifications. */
+export function getContactFormRecipientEmail(): string {
+  return contactFormRecipientEmail
 }
