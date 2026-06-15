@@ -1,6 +1,6 @@
 # Vojta Hubne
 
-React + TypeScript + styled-components — launch countdown (`/`) and marketing homepage (`/homepage`).
+React + TypeScript + styled-components — marketing homepage at `/` and Shopify e-shop integration.
 
 ## Shopify Hybrid
 
