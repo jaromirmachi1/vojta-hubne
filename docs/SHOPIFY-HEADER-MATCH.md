@@ -23,7 +23,7 @@ CSS: `vojta-hubne-horizon.css` → **Promo bar** block (gold bg, Montserrat 0.7r
 3. **Text** (copy exactly):
 
    ```
-   Objednávky přijaté nyní expedujeme od středy 17. 6.
+   Objednávky přijaté nyní expedujeme od čtvrtka 18. 6.
    ```
 
 4. **Link:** `/collections/all` (same catalog as homepage promo bar)

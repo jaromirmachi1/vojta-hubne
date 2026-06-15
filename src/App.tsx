@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { AlternativeHomePage } from './pages/AlternativeHomePage'
 import { ContactPage } from './pages/ContactPage'
 import { HomePage } from './pages/HomePage'
 import { NotFoundPage } from './pages/NotFoundPage'
@@ -18,6 +19,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/alt" element={<AlternativeHomePage />} />
         <Route path="/kontakt" element={<ContactPage />} />
         <Route path="/homepage/*" element={<LegacyHomepageRedirect />} />
         <Route path="/products/:handle" element={<ProductPage />} />

@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { getShopifyCatalogUrl } from '../utils/shopify'
+import styled from "styled-components";
+import { getShopifyCatalogUrl } from "../utils/shopify";
 
 const Bar = styled.a`
   display: block;
@@ -17,14 +17,14 @@ const Bar = styled.a`
   &:hover {
     opacity: 0.92;
   }
-`
+`;
 
-const catalogUrl = getShopifyCatalogUrl()
+const catalogUrl = getShopifyCatalogUrl();
 
 export function PromoBar() {
   return (
     <Bar href={catalogUrl}>
-      Objednávky přijaté nyní expedujeme od středy 17. 6.
+      Objednávky přijaté nyní expedujeme od čtvrtku 18. 6.
     </Bar>
-  )
+  );
 }

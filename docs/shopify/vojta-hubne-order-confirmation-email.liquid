@@ -1,0 +1,162 @@
+{% comment %}
+  Vojta Hubne — Order confirmation e-mail (Shopify Notifications).
+
+  Setup: docs/shopify/ORDER-EMAIL-SETUP.md
+
+  Admin → Settings → Notifications → Order confirmation → Edit code
+  Paste this entire file, then Save → Send test.
+
+  Update the shipping date line when the dispatch batch changes.
+
+  Logo: upload Vojta_Hubne_logo.png to Content → Files (same name as theme asset).
+  Notification e-mails cannot read theme assets — Files or shop.email_logo_url only.
+{% endcomment %}
+
+{% assign vh_logo_url = 'Vojta_Hubne_logo.png' | file_img_url: '400x' %}
+{% if vh_logo_url == blank and shop.email_logo_url != blank %}
+  {% assign vh_logo_url = shop.email_logo_url %}
+{% endif %}
+
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <title>Potvrzení objednávky {{ order.name }} — Vojta Hubne</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      body { margin: 0; padding: 0; background-color: #0a0a0a; }
+      a { color: #eedc82; }
+      @media (max-width: 600px) {
+        .container { width: 100% !important; }
+        .cell { padding-left: 16px !important; padding-right: 16px !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0a0a;border-collapse:collapse;">
+      <tr>
+        <td align="center" style="padding:24px 12px;">
+          <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;border-collapse:collapse;">
+
+            <!-- Header -->
+            <tr>
+              <td class="cell" align="center" style="padding:32px 24px 24px;border-bottom:1px solid rgba(238,220,130,0.25);">
+                {% if vh_logo_url != blank %}
+                  <a href="{{ shop.url }}" style="text-decoration:none;">
+                    <img
+                      src="{% if vh_logo_url contains 'http' %}{{ vh_logo_url }}{% else %}https:{{ vh_logo_url }}{% endif %}"
+                      alt="Vojta Hubne"
+                      width="200"
+                      style="display:block;margin:0 auto 12px;max-width:200px;width:100%;height:auto;border:0;"
+                    >
+                  </a>
+                {% else %}
+                  <p style="margin:0 0 8px;font-family:Georgia,'Times New Roman',serif;font-size:28px;letter-spacing:0.12em;text-transform:uppercase;color:#eedc82;">
+                    Vojta Hubne
+                  </p>
+                {% endif %}
+                <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.55);">
+                  Děkujeme za Vaši objednávku
+                </p>
+              </td>
+            </tr>
+
+            <!-- Personal message -->
+            <tr>
+              <td class="cell" style="padding:28px 24px;background-color:#111111;">
+                <p style="margin:0 0 16px;font-family:Helvetica,Arial,sans-serif;font-size:16px;line-height:1.7;color:#ffffff;">
+                  {% if customer.first_name != blank %}
+                    Dobrý den {{ customer.first_name }},
+                  {% else %}
+                    Dobrý den,
+                  {% endif %}
+                </p>
+
+                <p style="margin:0 0 16px;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.75;color:rgba(255,255,255,0.92);">
+                  chtěl bych Vám touto cestou z celého srdce poděkovat za Vaši objednávku na našem e-shopu Vojta Hubne. Toho, že věříte v naši značku a rozhodli jste se u nás nakoupit, si nesmírně vážím. Vaše důvěra je pro mě obrovským závazkem.
+                </p>
+
+                <p style="margin:0 0 16px;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.75;color:rgba(255,255,255,0.92);">
+                  Rád bych Vás informoval, že veškeré objednávky budeme odesílat tento <strong style="color:#eedc82;">čtvrtek 18.&nbsp;6.&nbsp;2026</strong>. Protože si Vaší podpory opravdu vážím a chci Vám udělat radost, přibalili jsme Vám do balíčku jako poděkování menší dárek. Věřím, že Vás potěší!
+                </p>
+
+                <p style="margin:0 0 16px;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.75;color:rgba(255,255,255,0.92);">
+                  Ještě jednou děkuji, že jste do toho šli s námi, a přeji Vám krásný den.
+                </p>
+
+                <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:15px;line-height:1.75;color:rgba(255,255,255,0.92);">
+                  S pozdravem,<br>
+                  <strong style="color:#eedc82;">Vojta Hubne</strong>
+                </p>
+              </td>
+            </tr>
+
+            <!-- Order summary -->
+            <tr>
+              <td class="cell" style="padding:24px;background-color:#0a0a0a;">
+                <p style="margin:0 0 12px;font-family:Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#c9b56a;">
+                  Vaše objednávka {{ order.name }}
+                </p>
+
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;border:1px solid rgba(255,255,255,0.1);">
+                  <tr>
+                    <th align="left" style="padding:10px 12px;font-family:Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);border-bottom:1px solid rgba(255,255,255,0.1);">
+                      Produkt
+                    </th>
+                    <th align="right" style="padding:10px 12px;font-family:Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.55);border-bottom:1px solid rgba(255,255,255,0.1);">
+                      Cena
+                    </th>
+                  </tr>
+                  {% for line in line_items %}
+                    <tr>
+                      <td style="padding:12px;font-family:Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;color:#ffffff;border-bottom:1px solid rgba(255,255,255,0.08);">
+                        {{ line.title }}{% if line.quantity > 1 %} <span style="color:rgba(255,255,255,0.55);">× {{ line.quantity }}</span>{% endif %}
+                        {% if line.variant.title != 'Default Title' %}
+                          <br><span style="font-size:12px;color:rgba(255,255,255,0.55);">{{ line.variant.title }}</span>
+                        {% endif %}
+                      </td>
+                      <td align="right" style="padding:12px;font-family:Helvetica,Arial,sans-serif;font-size:14px;color:#eedc82;border-bottom:1px solid rgba(255,255,255,0.08);white-space:nowrap;">
+                        {{ line.final_line_price | money }}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  <tr>
+                    <td style="padding:12px;font-family:Helvetica,Arial,sans-serif;font-size:14px;color:rgba(255,255,255,0.75);">
+                      Celkem
+                    </td>
+                    <td align="right" style="padding:12px;font-family:Helvetica,Arial,sans-serif;font-size:15px;font-weight:600;color:#eedc82;">
+                      {{ total_price | money_with_currency }}
+                    </td>
+                  </tr>
+                </table>
+
+                {% if order_status_url %}
+                  <p style="margin:20px 0 0;text-align:center;">
+                    <a href="{{ order_status_url }}" style="display:inline-block;padding:14px 28px;font-family:Helvetica,Arial,sans-serif;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;color:#0a0a0a;background-color:#eedc82;border-radius:999px;">
+                      Zobrazit stav objednávky
+                    </a>
+                  </p>
+                {% endif %}
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td class="cell" align="center" style="padding:24px;border-top:1px solid rgba(255,255,255,0.08);">
+                <p style="margin:0 0 8px;font-family:Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:rgba(255,255,255,0.5);">
+                  Máte dotaz? Napište nám na
+                  <a href="mailto:info@vojtahubne.cz" style="color:#eedc82;text-decoration:none;">info@vojtahubne.cz</a>
+                </p>
+                <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:11px;line-height:1.6;color:rgba(255,255,255,0.38);">
+                  {{ shop.name }} · RM Solution Group s.r.o.<br>
+                  <a href="{{ shop.url }}" style="color:rgba(255,255,255,0.45);text-decoration:none;">{{ shop.url }}</a>
+                </p>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
