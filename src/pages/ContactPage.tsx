@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
 import styled from 'styled-components'
 import { ContactForm } from '../components/ContactForm'
 import { PageContainer } from '../components/PageContainer'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { companyInfo } from '../data/company'
 import { ShopLayout } from '../layouts/ShopLayout'
 import { contactPageMeta } from '../seo/contactPageMeta'
@@ -104,13 +104,7 @@ const ContactLink = styled.a`
 `
 
 export function ContactPage() {
-  useEffect(() => {
-    document.title = contactPageMeta.title
-    const description = document.querySelector('meta[name="description"]')
-    if (description) {
-      description.setAttribute('content', contactPageMeta.description)
-    }
-  }, [])
+  usePageMeta(contactPageMeta)
 
   return (
     <ShopLayout>

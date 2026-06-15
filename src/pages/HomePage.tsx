@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
 import { useHashScroll } from '../hooks/useHashScroll'
+import { useJsonLd } from '../hooks/useJsonLd'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { BenefitsSection } from '../sections/BenefitsSection'
 import { BestsellersSection } from '../sections/BestsellersSection'
 import { CategoryTeasersSection } from '../sections/CategoryTeasersSection'
@@ -8,17 +9,12 @@ import { ProductComparisonSection } from '../sections/ProductComparisonSection'
 import { StorySection } from '../sections/StorySection'
 import { ShopLayout } from '../layouts/ShopLayout'
 import { homePageMeta } from '../seo/homePageMeta'
+import { getHomePageSchema } from '../seo/homePageSchema'
 
 export function HomePage() {
   useHashScroll()
-
-  useEffect(() => {
-    document.title = homePageMeta.title
-    const description = document.querySelector('meta[name="description"]')
-    if (description) {
-      description.setAttribute('content', homePageMeta.description)
-    }
-  }, [])
+  usePageMeta(homePageMeta)
+  useJsonLd('vh-home-schema', getHomePageSchema())
 
   return (
     <ShopLayout>

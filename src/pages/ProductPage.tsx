@@ -72,6 +72,8 @@ export function ProductPage() {
     title: 'Přesměrování do e-shopu — Vojta Hubne',
     description:
       'Produkt Vojta Hubne se otevírá v oficiálním Shopify e-shopu.',
+    path: `/products/${handle ?? ''}`,
+    noindex: true,
   })
 
   useEffect(() => {

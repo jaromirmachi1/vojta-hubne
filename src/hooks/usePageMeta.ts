@@ -1,20 +1,37 @@
 import { useEffect } from 'react'
+import { applyPageMeta, type PageMetaInput } from '../seo/applyPageMeta'
 
-type PageMeta = {
-  title: string
-  description: string
-}
+export function usePageMeta(meta: PageMetaInput) {
+  const {
+    title,
+    description,
+    path = '/',
+    image,
+    imageAlt,
+    imageWidth,
+    imageHeight,
+    noindex,
+  } = meta
 
-export function usePageMeta({ title, description }: PageMeta) {
   useEffect(() => {
-    document.title = title
-
-    let descriptionTag = document.querySelector('meta[name="description"]')
-    if (!descriptionTag) {
-      descriptionTag = document.createElement('meta')
-      descriptionTag.setAttribute('name', 'description')
-      document.head.appendChild(descriptionTag)
-    }
-    descriptionTag.setAttribute('content', description)
-  }, [title, description])
+    applyPageMeta({
+      title,
+      description,
+      path,
+      image,
+      imageAlt,
+      imageWidth,
+      imageHeight,
+      noindex,
+    })
+  }, [
+    title,
+    description,
+    path,
+    image,
+    imageAlt,
+    imageWidth,
+    imageHeight,
+    noindex,
+  ])
 }

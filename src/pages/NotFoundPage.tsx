@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { PageContainer } from '../components/PageContainer'
+import { usePageMeta } from '../hooks/usePageMeta'
 import { ShopLayout } from '../layouts/ShopLayout'
 import { notFoundPageMeta } from '../seo/notFoundPageMeta'
 import { eyebrowText } from '../styles/eyebrow'
@@ -133,13 +133,7 @@ const ShopLink = styled.a`
 export function NotFoundPage() {
   const catalogUrl = getShopifyCatalogUrl()
 
-  useEffect(() => {
-    document.title = notFoundPageMeta.title
-    const description = document.querySelector('meta[name="description"]')
-    if (description) {
-      description.setAttribute('content', notFoundPageMeta.description)
-    }
-  }, [])
+  usePageMeta(notFoundPageMeta)
 
   return (
     <ShopLayout>

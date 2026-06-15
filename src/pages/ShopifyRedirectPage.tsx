@@ -74,6 +74,7 @@ export function ShopifyCollectionRedirectPage() {
   usePageMeta({
     title: 'Přesměrování do katalogu — Vojta Hubne',
     description: 'Katalog Vojta Hubne se otevírá v oficiálním Shopify e-shopu.',
+    noindex: true,
   })
 
   useEffect(() => {
@@ -99,6 +100,7 @@ export function ShopifyCartRedirectPage() {
   usePageMeta({
     title: 'Přesměrování do košíku — Vojta Hubne',
     description: 'Košík Vojta Hubne se otevírá v oficiálním Shopify e-shopu.',
+    noindex: true,
   })
 
   useEffect(() => {
