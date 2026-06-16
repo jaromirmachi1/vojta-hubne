@@ -1,5 +1,5 @@
-import glpGenericImage from '../assets/glp1generic.png'
-import glpSupportImage from '../assets/glpppp.png'
+import glpGenericImage from '../assets/genericglp.png'
+import glpSupportImage from '../assets/glp11.png'
 import { getShopifyProductUrl } from '../utils/shopify'
 
 /** Mock comparison — GLP-1 Support vs. generic. */
