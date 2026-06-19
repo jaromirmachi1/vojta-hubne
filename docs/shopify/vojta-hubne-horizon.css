@@ -69,7 +69,7 @@ a:hover {
 /* ─── Promo bar (= src/components/PromoBar.tsx) ───
     Horizon sets inline font-weight:100 / 0.625rem on slideshow-slide — override below.
     Theme editor text:
-    Objednávky přijaté nyní expedujeme od čtvrtka 18. 6.
+    Objednávky přijaté do 18. 6. 2026 byly expedovány a jsou na cestě k vám
  */
 .shopify-section:has(.announcement-bar),
 .shopify-section:has(announcement-bar-component) {
