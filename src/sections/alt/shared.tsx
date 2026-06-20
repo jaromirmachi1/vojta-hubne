@@ -6,6 +6,7 @@ import { eyebrowText } from '../../styles/eyebrow'
 export const AltSection = styled.section`
   padding-block: ${({ theme }) => theme.layout.sectionPaddingY};
   background: ${({ theme }) => theme.colors.background};
+  scroll-margin-top: ${({ theme }) => theme.layout.altStickyScrollMargin};
 `
 
 export const AltInner = styled.div`

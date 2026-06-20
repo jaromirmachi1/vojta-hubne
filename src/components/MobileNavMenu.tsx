@@ -8,11 +8,15 @@ export type MobileNavLink =
   | { label: string; href: string; external: true }
   | { label: string; to: string }
   | { label: string; sectionId: string }
+  | { label: string; regimePathId: string }
 
 type MobileNavMenuProps = {
   isOpen: boolean
   onClose: () => void
   links: MobileNavLink[]
+  /** Hash link base path (default `/`). */
+  hashPathname?: string
+  onRegimePathClick?: (pathId: string) => void
 }
 
 const Overlay = styled.div<{ $open: boolean }>`
@@ -110,6 +114,12 @@ const MenuExternalLink = styled.a`
   ${linkStyles}
 `
 
+const MenuButton = styled.button`
+  ${linkStyles}
+  text-align: left;
+  cursor: pointer;
+`
+
 const Footer = styled.footer`
   padding: clamp(1.5rem, 5vw, 2.5rem) clamp(1.5rem, 8vw, 3.5rem)
     clamp(2rem, 6vw, 3rem);
@@ -162,7 +172,13 @@ const FooterSiteLink = styled.a`
   ${footerLinkStyles}
 `
 
-export function MobileNavMenu({ isOpen, onClose, links }: MobileNavMenuProps) {
+export function MobileNavMenu({
+  isOpen,
+  onClose,
+  links,
+  hashPathname = '/',
+  onRegimePathClick,
+}: MobileNavMenuProps) {
   const scrollPositionRef = useRef(0)
   const skipScrollRestoreRef = useRef(false)
 
@@ -238,10 +254,23 @@ export function MobileNavMenu({ isOpen, onClose, links }: MobileNavMenuProps) {
             <MenuInternalLink key={link.to} to={link.to} onClick={onClose}>
               {link.label}
             </MenuInternalLink>
+          ) : 'regimePathId' in link ? (
+            <MenuButton
+              key={link.regimePathId}
+              type="button"
+              onClick={() => {
+                skipScrollRestoreRef.current = true
+                onRegimePathClick?.(link.regimePathId)
+                onClose()
+              }}
+            >
+              {link.label}
+            </MenuButton>
           ) : (
             <MenuHashLink
               key={link.sectionId}
               sectionId={link.sectionId}
+              pathname={hashPathname}
               onClick={() => {
                 skipScrollRestoreRef.current = true
                 onClose()

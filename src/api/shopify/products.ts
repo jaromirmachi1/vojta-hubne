@@ -1,7 +1,17 @@
 import { storefrontFetch } from './client'
-import { PRODUCT_BY_HANDLE_QUERY, PRODUCTS_LIST_QUERY } from './queries'
+import {
+  COLLECTION_PRODUCTS_QUERY,
+  PRODUCT_BY_HANDLE_QUERY,
+  PRODUCTS_LIST_QUERY,
+} from './queries'
 import type { ShopifyProductListNode } from '../../utils/mergeShopifyProducts'
 import type { ShopifyImage, ShopifyProduct, ShopifyProductVariant } from '../../types/shopify'
+
+export type ShopifyCollectionProducts = {
+  title: string
+  handle: string
+  products: ShopifyProductListNode[]
+}
 
 type ProductByHandleResponse = {
   product: {
@@ -20,6 +30,14 @@ type ProductsListResponse = {
   products: { nodes: ShopifyProductListNode[] }
 }
 
+type CollectionProductsResponse = {
+  collection: {
+    title: string
+    handle: string
+    products: { nodes: ShopifyProductListNode[] }
+  } | null
+}
+
 export async function getShopifyProductList(
   first = 50,
 ): Promise<ShopifyProductListNode[]> {
@@ -27,6 +45,24 @@ export async function getShopifyProductList(
     first,
   })
   return data.products.nodes
+}
+
+export async function getCollectionProducts(
+  handle: string,
+  first = 12,
+): Promise<ShopifyCollectionProducts | null> {
+  const data = await storefrontFetch<CollectionProductsResponse>(
+    COLLECTION_PRODUCTS_QUERY,
+    { handle, first },
+  )
+
+  if (!data.collection) return null
+
+  return {
+    title: data.collection.title,
+    handle: data.collection.handle,
+    products: data.collection.products.nodes,
+  }
 }
 
 export async function getProductByHandle(handle: string): Promise<ShopifyProduct | null> {

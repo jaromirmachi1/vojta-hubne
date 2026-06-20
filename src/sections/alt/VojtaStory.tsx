@@ -1,139 +1,242 @@
+import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import styled from 'styled-components'
-import heroPortrait from '../../assets/SzzEgtimTNU2uqEm_2g6w.JPG.webp'
-import { ALT_SECTION_IDS } from '../../data/altHomepage'
+import mockPhotoA from '../../assets/vojtahubneprofilovka.png'
+import mockPhotoB from '../../assets/SzzEgtimTNU2uqEm_2g6w.JPG.webp'
+import {
+  ALT_SECTION_IDS,
+  vojtaStoryCopy,
+  vojtaStoryTimeline,
+} from '../../data/altHomepage'
+import { vojtaStoryExpandedCopy } from '../../data/vojtaStoryExpanded'
+import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { Reveal } from './motion'
-import { AltInner, AltSection, SectionTitle } from './shared'
+import { AltInner, AltSection, GhostButton } from './shared'
+import { VojtaStoryExpanded } from './VojtaStoryExpanded'
+
+const mockPhotos = [mockPhotoA, mockPhotoB, mockPhotoB, mockPhotoA]
 
 const Grid = styled.div`
   display: grid;
-  gap: clamp(2rem, 5vw, 3rem);
+  gap: clamp(1.75rem, 4vw, 2.5rem);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
     align-items: center;
+    gap: clamp(2rem, 4vw, 4rem);
   }
 `
 
-const Copy = styled.div`
+const ContentColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: clamp(1rem, 2.5vw, 1.35rem);
+`
+
+const Title = styled.h2`
+  margin: 0;
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.gold};
 `
 
 const Paragraph = styled.p`
   margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.8;
-  color: ${({ theme }) => theme.colors.text};
+  max-width: 28rem;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: ${({ theme }) => theme.colors.textMuted};
 `
 
-const Stats = styled.div`
+const StoryCta = styled(GhostButton)`
+  align-self: flex-start;
+  margin-top: 0.25rem;
+`
+
+const ExpandedWrap = styled(motion.div)`
+  overflow: hidden;
+`
+
+const TimelineWrap = styled.div`
+  width: 100%;
+  min-width: 0;
+`
+
+const Timeline = styled.ol`
   display: flex;
-  flex-wrap: wrap;
-  gap: clamp(1.25rem, 4vw, 2.5rem);
-  margin-block: 0.5rem;
+  align-items: flex-start;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    overflow: visible;
+    justify-content: space-between;
+    width: 100%;
+  }
 `
 
-const Stat = styled.div`
+const TimelineItem = styled.li`
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  min-width: 0;
+  justify-content: center;
+
+  &:last-child {
+    flex: 0 0 auto;
+  }
+`
+
+const StepCard = styled.figure`
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
-`
-
-const StatValue = styled.span`
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: clamp(2rem, 5vw, 2.75rem);
-  line-height: 1;
-  letter-spacing: 0.04em;
-  color: ${({ theme }) => theme.colors.gold};
-`
-
-const StatLabel = styled.span`
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.goldMuted};
-`
-
-const Portrait = styled.figure`
+  align-items: center;
+  gap: 0.85rem;
   margin: 0;
+  width: clamp(7rem, 16vw, 10rem);
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    width: clamp(8rem, 14vw, 11.5rem);
+  }
 `
 
-const PortraitFrame = styled.div`
-  aspect-ratio: 4 / 5;
+const StepFrame = styled.div`
+  width: 100%;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
-  border-radius: ${({ theme }) => theme.radii.xl};
+  border-radius: ${({ theme }) => theme.radii.lg};
+  background: ${({ theme }) => theme.colors.surfaceRaised};
 `
 
-const PortraitImage = styled.img`
+const StepImage = styled.img`
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
+  filter: saturate(0.88) contrast(1.02);
+`
+
+const StepCaption = styled.figcaption`
+  margin: 0;
+  font-size: clamp(0.72rem, 1.3vw, 0.85rem);
+  line-height: 1.35;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.textMuted};
+`
+
+const StepArrow = styled.span`
+  flex-shrink: 0;
+  padding-inline: clamp(0.35rem, 1vw, 0.65rem);
+  margin-top: clamp(3rem, 9vw, 4rem);
+  font-size: 1.05rem;
+  line-height: 1;
+  color: ${({ theme }) => theme.colors.goldMuted};
 `
 
 export function VojtaStory() {
+  const reducedMotion = useReducedMotion()
+  const [expanded, setExpanded] = useState(false)
+
+  const motionProps = reducedMotion
+    ? {}
+    : {
+        initial: { opacity: 0, height: 0 },
+        animate: { opacity: 1, height: 'auto' },
+        exit: { opacity: 0, height: 0 },
+        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
+      }
+
+  const toggleExpanded = () => {
+    setExpanded((current) => {
+      const next = !current
+      if (!next) return next
+      window.setTimeout(() => {
+        document
+          .getElementById('vojta-story-expanded')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }, 120)
+      return next
+    })
+  }
+
   return (
     <AltSection id={ALT_SECTION_IDS.story}>
       <AltInner>
-        <Reveal>
-          <SectionTitle>Proč tomu věřím</SectionTitle>
-        </Reveal>
         <Grid>
-          <Copy>
+          <ContentColumn>
             <Reveal>
-              <Paragraph>
-                Ve 160 kilogramech jsem zkusil všechno. Diety, prášky, programy.
-                Buď fungovaly měsíc, nebo vůbec. Nikde jsem nenašel systém, který
-                by byl postavený na reálném životě člověka, který prostě potřebuje
-                zhubnout — bez výmluv a bez sponzorů. Tak jsem si ho vytvořil.
-              </Paragraph>
+              <Title>{vojtaStoryCopy.title}</Title>
             </Reveal>
-            <Reveal delay={0.08}>
-              <Stats>
-                <Stat>
-                  <StatValue>61 kg</StatValue>
-                  <StatLabel>pryč</StatLabel>
-                </Stat>
-                <Stat>
-                  <StatValue>3 roky</StatValue>
-                  <StatLabel>konzistence</StatLabel>
-                </Stat>
-                <Stat>
-                  <StatValue>0 zkratek</StatValue>
-                  <StatLabel>slibů</StatLabel>
-                </Stat>
-              </Stats>
+            <Reveal delay={0.06}>
+              <Paragraph>{vojtaStoryCopy.paragraph}</Paragraph>
             </Reveal>
-            <Reveal delay={0.12}>
-              <Paragraph>
-                Neprodávám zázrak. Prodávám to, co mi samotnému chybělo — jasný
-                plán, kvalitní složení a produkty, které dávají smysl v běžném dni.
-                Když něco nefungovalo, vyhodil jsem to. Co zůstalo, je to, co
-                dnes nabízím pod značkou Vojta Hubne.
-              </Paragraph>
+            <Reveal delay={0.1}>
+              <StoryCta
+                type="button"
+                aria-expanded={expanded}
+                aria-controls="vojta-story-expanded"
+                onClick={toggleExpanded}
+              >
+                {expanded
+                  ? vojtaStoryExpandedCopy.collapseCta
+                  : vojtaStoryCopy.cta}
+              </StoryCta>
             </Reveal>
-            <Reveal delay={0.16}>
-              <Paragraph>
-                Pokud hledáš rychlou dietu na týden, tohle není pro tebe. Pokud
-                chceš systém, který můžeš žít — a který vznikl z reálné cesty —
-                jsi na správném místě.
-              </Paragraph>
-            </Reveal>
-          </Copy>
-          <Reveal delay={0.1}>
-            <Portrait>
-              <PortraitFrame>
-                <PortraitImage
-                  src={heroPortrait}
-                  alt="Vojta Hubne — transformace z 160 kg na 99 kg"
-                  loading="lazy"
-                />
-              </PortraitFrame>
-            </Portrait>
+          </ContentColumn>
+
+          <Reveal delay={0.08}>
+            <TimelineWrap>
+              <Timeline aria-label="Cesta transformace Vojty">
+                {vojtaStoryTimeline.map((step, index) => (
+                  <TimelineItem key={step.id}>
+                    <StepCard>
+                      <StepFrame>
+                        <StepImage
+                          src={mockPhotos[index]}
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      </StepFrame>
+                      <StepCaption>{step.caption}</StepCaption>
+                    </StepCard>
+                    {index < vojtaStoryTimeline.length - 1 ? (
+                      <StepArrow aria-hidden>→</StepArrow>
+                    ) : null}
+                  </TimelineItem>
+                ))}
+              </Timeline>
+            </TimelineWrap>
           </Reveal>
         </Grid>
+
+        <AnimatePresence initial={false}>
+          {expanded ? (
+            <ExpandedWrap
+              key="vojta-story-expanded"
+              id="vojta-story-expanded"
+              {...motionProps}
+            >
+              <VojtaStoryExpanded />
+            </ExpandedWrap>
+          ) : null}
+        </AnimatePresence>
       </AltInner>
     </AltSection>
   )

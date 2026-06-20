@@ -88,9 +88,13 @@ const Bottom = styled(PageContainer)`
   border-top: 1px solid ${({ theme }) => theme.colors.borderSubtle};
 `
 
-export function SiteFooter() {
+type SiteFooterProps = {
+  id?: string
+}
+
+export function SiteFooter({ id }: SiteFooterProps) {
   return (
-    <Footer>
+    <Footer id={id}>
       <Inner>
         <Column>
           <ColumnTitle>Kontaktní informace</ColumnTitle>

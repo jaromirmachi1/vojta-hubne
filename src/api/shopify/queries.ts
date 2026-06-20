@@ -88,3 +88,29 @@ export const CART_CREATE_MUTATION = `
     }
   }
 `
+
+export const COLLECTION_PRODUCTS_QUERY = `
+  query CollectionProducts($handle: String!, $first: Int!) {
+    collection(handle: $handle) {
+      title
+      handle
+      products(first: $first) {
+        nodes {
+          id
+          handle
+          title
+          featuredImage {
+            url
+            altText
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
+    }
+  }
+`

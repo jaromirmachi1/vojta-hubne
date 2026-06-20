@@ -1,3 +1,4 @@
 export { createCart } from './cart'
 export { storefrontFetch, isStorefrontConfigured } from './client'
-export { getProductByHandle, getShopifyProductList } from './products'
+export type { ShopifyCollectionProducts } from './products'
+export { getCollectionProducts, getProductByHandle, getShopifyProductList } from './products'

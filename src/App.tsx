@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-route
 import { AlternativeHomePage } from './pages/AlternativeHomePage'
 import { ContactPage } from './pages/ContactPage'
 import { HomePage } from './pages/HomePage'
+import { KlubPage } from './pages/KlubPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { ProductPage } from './pages/ProductPage'
 import {
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/alt" element={<AlternativeHomePage />} />
+        <Route path="/klub" element={<KlubPage />} />
         <Route path="/kontakt" element={<ContactPage />} />
         <Route path="/homepage/*" element={<LegacyHomepageRedirect />} />
         <Route path="/products/:handle" element={<ProductPage />} />

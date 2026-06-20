@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { ALT_SECTION_IDS, howItWorksSteps } from '../../data/altHomepage'
 import { Reveal } from './motion'
+import { HowItWorksOutcomes } from './HowItWorksOutcomes'
+import { RecommendedProgramOffer } from './RecommendedProgramOffer'
 import { AltInner, AltSection, SectionTitle } from './shared'
 
 const Steps = styled.ol`
@@ -84,6 +86,9 @@ export function HowItWorks() {
             </Step>
           ))}
         </Steps>
+
+        <HowItWorksOutcomes />
+        <RecommendedProgramOffer />
       </AltInner>
     </AltSection>
   )

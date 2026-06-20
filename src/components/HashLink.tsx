@@ -4,6 +4,8 @@ import { scrollToSection } from '../utils/scrollToSection'
 
 type HashLinkProps = {
   sectionId: string
+  /** Page path for same-page scroll (default `/`). Use `/alt` on the alt homepage. */
+  pathname?: string
   children: ReactNode
   className?: string
   onClick?: () => void
@@ -11,18 +13,19 @@ type HashLinkProps = {
 
 export function HashLink({
   sectionId,
+  pathname = '/',
   children,
   className,
   onClick,
 }: HashLinkProps) {
   const location = useLocation()
   const navigate = useNavigate()
-  const href = `/#${sectionId}`
+  const href = `${pathname}#${sectionId}`
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
 
-    if (location.pathname === '/') {
+    if (location.pathname === pathname) {
       window.history.pushState(null, '', href)
 
       if (onClick) {
@@ -37,7 +40,7 @@ export function HashLink({
       return
     }
 
-    navigate({ pathname: '/', hash: `#${sectionId}` })
+    navigate({ pathname, hash: `#${sectionId}` })
   }
 
   return (

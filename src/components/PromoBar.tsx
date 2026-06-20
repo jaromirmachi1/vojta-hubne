@@ -24,7 +24,7 @@ const catalogUrl = getShopifyCatalogUrl();
 export function PromoBar() {
   return (
     <Bar href={catalogUrl}>
-      Objednávky přijaté do 18. 6. 2026 byly expedovány a jsou na cestě k vám
+      Objednávky přijaté v pracovní dny do 14:00 expedujeme ještě tentýž den
     </Bar>
   );
 }
