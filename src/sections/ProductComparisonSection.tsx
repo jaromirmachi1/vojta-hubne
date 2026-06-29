@@ -68,10 +68,7 @@ const Column = styled.div<{ $desktopOrder?: number }>`
   align-items: center;
   gap: 1rem;
   min-width: 0;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    order: ${({ $desktopOrder }) => $desktopOrder ?? 'initial'};
-  }
+  order: ${({ $desktopOrder }) => $desktopOrder ?? 'initial'};
 `
 
 const ProductVisual = styled.div`
@@ -144,8 +141,16 @@ const Card = styled.div<{ $featured?: boolean }>`
   border-radius: ${({ theme }) => theme.radii.lg};
 `
 
-const CardTitle = styled.h3<{ $variant: 'competitor' | 'ours' }>`
+const CardHeader = styled.div`
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
   margin: 0 0 1.1rem;
+`
+
+const CardTitle = styled.h3<{ $variant: 'competitor' | 'ours' }>`
+  margin: 0;
   font-family: ${({ theme }) => theme.fonts.display};
   font-size: 1.35rem;
   font-weight: 400;
@@ -153,6 +158,16 @@ const CardTitle = styled.h3<{ $variant: 'competitor' | 'ours' }>`
   text-transform: uppercase;
   color: ${({ theme, $variant }) =>
     $variant === 'ours' ? theme.colors.gold : theme.colors.text};
+`
+
+const ProductLabel = styled.span<{ $variant: 'competitor' | 'ours' }>`
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: ${({ theme, $variant }) =>
+    $variant === 'ours' ? theme.colors.goldMuted : theme.colors.textMuted};
 `
 
 const IngredientList = styled.ul`
@@ -285,9 +300,12 @@ export function ProductComparisonSection() {
               )}
             </ProductVisual>
             <Card>
-              <CardTitle $variant="competitor">
-                {data.competitor.ingredientCountLabel}
-              </CardTitle>
+              <CardHeader>
+                <CardTitle $variant="competitor">
+                  {data.competitor.ingredientCountLabel}
+                </CardTitle>
+                <ProductLabel $variant="competitor">Běžný GLP</ProductLabel>
+              </CardHeader>
               <IngredientList>
                 {data.competitor.ingredients.map((item) => (
                   <IngredientRow key={item.name}>
@@ -319,7 +337,10 @@ export function ProductComparisonSection() {
               )}
             </ProductVisual>
             <Card $featured>
-              <CardTitle $variant="ours">{data.ours.ingredientCountLabel}</CardTitle>
+              <CardHeader>
+                <CardTitle $variant="ours">{data.ours.ingredientCountLabel}</CardTitle>
+                <ProductLabel $variant="ours">Vojta Hubne</ProductLabel>
+              </CardHeader>
               <IngredientList>
                 {data.ours.ingredients.map((item) => (
                   <IngredientRow key={item.name}>
