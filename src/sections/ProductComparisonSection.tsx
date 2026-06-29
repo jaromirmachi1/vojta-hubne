@@ -62,12 +62,16 @@ const CompareRow = styled.div`
   }
 `
 
-const Column = styled.div`
+const Column = styled.div<{ $desktopOrder?: number }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
   min-width: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    order: ${({ $desktopOrder }) => $desktopOrder ?? 'initial'};
+  }
 `
 
 const ProductVisual = styled.div`
@@ -125,6 +129,7 @@ const Arrow = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     display: flex;
+    order: 2;
   }
 `
 
@@ -268,7 +273,7 @@ export function ProductComparisonSection() {
         </Header>
 
         <CompareRow>
-          <Column>
+          <Column $desktopOrder={3}>
             <ProductVisual>
               {data.competitor.visualImage ? (
                 <img src={data.competitor.visualImage} alt="" />
@@ -302,7 +307,7 @@ export function ProductComparisonSection() {
 
           <Arrow aria-hidden>→</Arrow>
 
-          <Column>
+          <Column $desktopOrder={1}>
             <ProductVisual>
               {data.ours.visualImage ? (
                 <img src={data.ours.visualImage} alt={data.productName} />

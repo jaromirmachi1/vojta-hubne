@@ -7,7 +7,7 @@ export const glpSupportComparison = {
   productId: 'glp-1-support',
   productName: 'GLP-1 Support',
   headline: 'Zajímej se o to opravdu důležité:',
-  headlineHighlight: 'složení',
+  headlineHighlight: 'srovnání',
   competitor: {
     shortName: 'Běžný spalovač tuků',
     ingredientCountLabel: '7 ingrediencí',
@@ -28,9 +28,9 @@ export const glpSupportComparison = {
     visualImage: glpSupportImage,
     ingredients: [
       { name: 'Carolean® — karob & nopal', percent: '3 200 mg', grade: 1, note: '(sytost)' },
+      { name: 'Kreatin monohydrát', percent: '1000 mg', grade: 1 },
       { name: 'Berberin HCl', percent: '500 mg', grade: 1 },
       { name: 'Gymnema sylvestre', percent: '500 mg', grade: 1 },
-      { name: 'Kreatin monohydrát', percent: '500 mg', grade: 1 },
       { name: 'VinOgrape®', percent: '300 mg', grade: 1, note: '(polyfenoly)' },
     ],
     summary: 'Prémiová formule — ne náhodná směs',
