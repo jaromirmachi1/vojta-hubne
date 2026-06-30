@@ -11,7 +11,7 @@ import {
 import { vojtaStoryExpandedCopy } from '../../data/vojtaStoryExpanded'
 import { useReducedMotion } from '../../hooks/useReducedMotion'
 import { Reveal } from './motion'
-import { AltInner, AltSection, GhostButton } from './shared'
+import { AltInner, AltSection, GhostButton, altMobileImage, altMobileImageFrame } from './shared'
 import { VojtaStoryExpanded } from './VojtaStoryExpanded'
 
 const mockPhotos = [mockPhotoA, mockPhotoB, mockPhotoB, mockPhotoA]
@@ -19,6 +19,7 @@ const mockPhotos = [mockPhotoA, mockPhotoB, mockPhotoB, mockPhotoA]
 const Grid = styled.div`
   display: grid;
   gap: clamp(1.75rem, 4vw, 2.5rem);
+  min-width: 0;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
@@ -31,6 +32,10 @@ const ContentColumn = styled.div`
   display: flex;
   flex-direction: column;
   gap: clamp(1rem, 2.5vw, 1.35rem);
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 `
 
 const Title = styled.h2`
@@ -46,15 +51,19 @@ const Title = styled.h2`
 
 const Paragraph = styled.p`
   margin: 0;
+  width: 100%;
   max-width: 28rem;
   font-size: 0.95rem;
   line-height: 1.75;
+  overflow-wrap: anywhere;
   color: ${({ theme }) => theme.colors.textMuted};
 `
 
 const StoryCta = styled(GhostButton)`
   align-self: flex-start;
   margin-top: 0.25rem;
+  white-space: normal;
+  text-align: left;
 `
 
 const ExpandedWrap = styled(motion.div)`
@@ -64,6 +73,14 @@ const ExpandedWrap = styled(motion.div)`
 const TimelineWrap = styled.div`
   width: 100%;
   min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Timeline = styled.ol`
@@ -121,6 +138,7 @@ const StepFrame = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
   border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.colors.surfaceRaised};
+  ${altMobileImageFrame}
 `
 
 const StepImage = styled.img`
@@ -130,6 +148,7 @@ const StepImage = styled.img`
   object-fit: cover;
   object-position: top center;
   filter: saturate(0.88) contrast(1.02);
+  ${altMobileImage}
 `
 
 const StepCaption = styled.figcaption`

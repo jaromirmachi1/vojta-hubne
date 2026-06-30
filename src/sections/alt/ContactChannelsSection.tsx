@@ -22,6 +22,7 @@ const Title = styled.h2`
   line-height: 0.92;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 `
 
 const TitleWhite = styled.span`
@@ -106,6 +107,7 @@ const CardTop = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+  min-width: 0;
 `
 
 const Index = styled.span`
@@ -166,7 +168,9 @@ const Value = styled.span<{ $compact?: boolean }>`
 const ValueRow = styled.span`
   display: inline-flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
+  min-width: 0;
 `
 
 const Arrow = styled.span`

@@ -3,7 +3,7 @@ import heroPortrait from '../../assets/SzzEgtimTNU2uqEm_2g6w.JPG.webp'
 import { useRegimeQuiz } from '../../contexts/RegimeQuizContext'
 import { regimeProblems } from '../../data/altHomepage'
 import { Reveal } from './motion'
-import { ScrollLink } from './shared'
+import { ScrollLink, altMobileImage, altMobileImageFrame } from './shared'
 
 const REGIME_QUIZ_PRODUCTS_ID = 'regime-quiz-products'
 
@@ -136,6 +136,7 @@ const Visual = styled.figure`
   margin: 0;
   justify-self: center;
   width: min(100%, 20rem);
+  ${altMobileImageFrame}
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     width: 100%;
@@ -164,6 +165,7 @@ const VisualImage = styled.img`
   height: auto;
   object-fit: contain;
   object-position: bottom center;
+  ${altMobileImage}
 `
 
 function ProblemIcon({ problemId }: { problemId: string }) {

@@ -2,6 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components'
 import vojtaPortrait from '../../assets/vojtahubneprofilovka.png'
 import { howItWorksOutcomes } from '../../data/altHomepage'
 import { Reveal } from './motion'
+import { altMobileImage, altMobileImageFrame } from './shared'
 
 const OutcomesScriptFont = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Italianno&display=swap');
@@ -79,6 +80,7 @@ const PortraitWrap = styled.figure`
   justify-content: center;
   margin: 0;
   min-height: clamp(14rem, 32vw, 20rem);
+  ${altMobileImageFrame}
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     align-self: end;
@@ -94,6 +96,7 @@ const PortraitImage = styled.img`
   object-fit: contain;
   object-position: bottom center;
   filter: contrast(1.02) saturate(0.95);
+  ${altMobileImage}
 `
 
 const QuoteBlock = styled.blockquote`

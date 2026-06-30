@@ -10,10 +10,14 @@ import { Reveal } from './motion'
 import { AltInner, AltSection, GhostButton, SectionTitle } from './shared'
 
 const TableWrap = styled.div`
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin-inline: calc(-1 * ${({ theme }) => theme.layout.contentPadding});
   padding-inline: ${({ theme }) => theme.layout.contentPadding};
+  padding-bottom: 0.25rem;
+  overscroll-behavior-x: contain;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     margin-inline: 0;
@@ -24,9 +28,13 @@ const TableWrap = styled.div`
 
 const Table = styled.table`
   width: 100%;
-  min-width: 44rem;
+  min-width: 38rem;
   border-collapse: separate;
   border-spacing: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    min-width: 44rem;
+  }
 `
 
 const Th = styled.th<{ $highlighted?: boolean }>`

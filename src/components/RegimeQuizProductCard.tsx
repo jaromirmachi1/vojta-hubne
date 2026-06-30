@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import type { ShopifyProductListNode } from '../utils/mergeShopifyProducts'
 import { formatShopifyPrice } from '../utils/shopifyFormat'
 import { getShopifyProductUrl } from '../utils/shopify'
+import { altMobileImage, altMobileImageFrame } from '../sections/alt/shared'
 
 const Card = styled.a`
   display: flex;
@@ -38,6 +39,7 @@ const ImageWrap = styled.div`
   padding: 0.75rem 1rem;
   background: ${({ theme }) => theme.colors.black};
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  ${altMobileImageFrame}
 `
 
 const Image = styled.img`
@@ -47,6 +49,7 @@ const Image = styled.img`
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  ${altMobileImage}
 `
 
 const Placeholder = styled.div`

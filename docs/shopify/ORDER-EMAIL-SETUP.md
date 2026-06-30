@@ -3,6 +3,7 @@
 Soubor: **`vojta-hubne-order-confirmation-email.liquid`**
 
 E-mail obsahuje:
+
 - osobní poděkování od Vojty
 - informaci o odeslání **čtvrtek 18. 6. 2026**
 - zmínku o dárku v balíčku
@@ -66,12 +67,12 @@ Děkujeme za objednávku {{ order.name }} — Vojta Hubne
 
 ## Důležité
 
-| Co | Poznámka |
-|----|---------|
-| Datum odeslání | V šabloně je natvrdo **18. 6. 2026** — po tomto termínu text v liquid souboru upravte |
-| Jméno zákazníka | Pokud má Shopify jméno, použije se `Dobrý den {{ jméno }},` |
-| Notifikace vs. marketing | Toto je **transakční** e-mail (potvrzení objednávky), ne newsletter |
-| Shipping confirmation | Pro samostatný e-mail „zásilka odeslána“ použijte šablonu **Shipping confirmation** a zkopírujte jen blok „Personal message“ |
+| Co                       | Poznámka                                                                                                                     |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| Datum odeslání           | V šabloně je natvrdo **18. 6. 2026** — po tomto termínu text v liquid souboru upravte                                        |
+| Jméno zákazníka          | Pokud má Shopify jméno, použije se `Dobrý den {{ jméno }},`                                                                  |
+| Notifikace vs. marketing | Toto je **transakční** e-mail (potvrzení objednávky), ne newsletter                                                          |
+| Shipping confirmation    | Pro samostatný e-mail „zásilka odeslána“ použijte šablonu **Shipping confirmation** a zkopírujte jen blok „Personal message“ |
 
 ---
 

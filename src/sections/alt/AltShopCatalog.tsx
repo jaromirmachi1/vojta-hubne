@@ -10,7 +10,7 @@ import {
 import { ALT_SECTION_IDS } from '../../data/altHomepage'
 import { getShopifyCatalogUrl } from '../../utils/shopify'
 import { Reveal } from './motion'
-import { AltInner, AltSection } from './shared'
+import { AltInner, AltSection, altMobileImage, altMobileImageFrame } from './shared'
 
 const Block = styled.div`
   display: flex;
@@ -30,6 +30,7 @@ const SectionHeader = styled.header`
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem 1.5rem;
+  min-width: 0;
 `
 
 const BundlesHeader = styled.header`
@@ -76,7 +77,7 @@ const ViewAllLink = styled.a`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.textMuted};
   transition: color 0.2s ease;
-  white-space: nowrap;
+  white-space: normal;
 
   &:hover {
     color: ${({ theme }) => theme.colors.gold};
@@ -144,6 +145,7 @@ const BundleImageWrap = styled.div`
     ),
     ${({ theme }) => theme.colors.black};
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  ${altMobileImageFrame}
 `
 
 const BundleImage = styled.img`
@@ -154,6 +156,7 @@ const BundleImage = styled.img`
   max-height: 100%;
   object-fit: contain;
   object-position: center center;
+  ${altMobileImage}
 `
 
 const BundleBody = styled.div`
@@ -229,7 +232,7 @@ const ProductGrid = styled.div`
 
 const ProductCard = styled.a`
   display: grid;
-  grid-template-columns: minmax(5.75rem, 36%) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   gap: clamp(0.75rem, 2vw, 1rem);
   align-items: stretch;
   min-height: 100%;
@@ -254,8 +257,12 @@ const ProductCard = styled.a`
     outline-offset: 2px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (min-width: 420px) {
     grid-template-columns: minmax(5.25rem, 32%) minmax(0, 1fr);
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: minmax(5.75rem, 36%) minmax(0, 1fr);
   }
 `
 
@@ -264,6 +271,7 @@ const ProductImageWrap = styled.div`
   align-items: center;
   justify-content: center;
   min-height: clamp(6.5rem, 18vw, 8rem);
+  min-width: 0;
   padding: clamp(0.45rem, 1.5vw, 0.65rem);
   border-radius: ${({ theme }) => theme.radii.md};
   background:
@@ -273,6 +281,7 @@ const ProductImageWrap = styled.div`
       transparent 70%
     ),
     ${({ theme }) => theme.colors.black};
+  ${altMobileImageFrame}
 `
 
 const ProductImage = styled.img`
@@ -283,6 +292,7 @@ const ProductImage = styled.img`
   max-height: 100%;
   object-fit: contain;
   object-position: center center;
+  ${altMobileImage}
 `
 
 const ProductBody = styled.div`

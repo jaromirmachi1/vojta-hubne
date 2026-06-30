@@ -8,10 +8,14 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
+    width: 100%;
+    overflow-x: clip;
     color-scheme: dark;
   }
 
   body {
+    width: 100%;
+    overflow-x: clip;
     margin: 0;
     font-family: ${({ theme }) => theme.fonts.sans};
     font-size: 16px;
@@ -24,6 +28,8 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   #root {
+    width: 100%;
+    overflow-x: clip;
     min-height: 100svh;
   }
 

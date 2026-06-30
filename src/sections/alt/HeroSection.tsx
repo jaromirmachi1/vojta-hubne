@@ -5,6 +5,8 @@ import { scrollToSection } from '../../utils/scrollToSection'
 import { StaggerItem, StaggerReveal } from './motion'
 import {
   AltInner,
+  altMobileImage,
+  altMobileImageFrame,
   PrimaryButton,
   ScrollGhostButton,
 } from './shared'
@@ -16,12 +18,17 @@ const HeroScriptFont = createGlobalStyle`
 const Section = styled.section`
   display: flex;
   align-items: center;
-  height: ${({ theme }) => theme.layout.altHeroMinHeight};
-  height: ${({ theme }) => theme.layout.altHeroMinHeightDvh};
-  max-height: ${({ theme }) => theme.layout.altHeroMinHeightDvh};
+  min-height: ${({ theme }) => theme.layout.altHeroMinHeight};
+  min-height: ${({ theme }) => theme.layout.altHeroMinHeightDvh};
   overflow: hidden;
   background: ${({ theme }) => theme.colors.surface};
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    height: ${({ theme }) => theme.layout.altHeroMinHeight};
+    height: ${({ theme }) => theme.layout.altHeroMinHeightDvh};
+    max-height: ${({ theme }) => theme.layout.altHeroMinHeightDvh};
+  }
 `
 
 const Inner = styled(AltInner)`
@@ -29,14 +36,14 @@ const Inner = styled(AltInner)`
   gap: clamp(1rem, 3vw, 1.75rem);
   align-items: center;
   width: 100%;
-  height: 100%;
-  min-height: 0;
+  min-height: 100%;
   padding-block: clamp(1rem, 2.5vh, 1.75rem);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
     align-items: stretch;
     gap: clamp(1rem, 2vw, 1.75rem);
+    height: 100%;
   }
 `
 
@@ -87,19 +94,27 @@ const VisualColumn = styled.figure`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   gap: clamp(0.75rem, 2vh, 1.25rem);
   margin: 0;
   width: 100%;
-  height: 100%;
   min-height: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    align-items: flex-end;
+    height: 100%;
+  }
 `
 
 const StatsBlock = styled.div`
   width: 100%;
   max-width: 20rem;
-  text-align: right;
+  text-align: center;
   flex-shrink: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    text-align: right;
+  }
 `
 
 const WeightLine = styled.p`
@@ -125,7 +140,7 @@ const GoldRule = styled.div`
   width: min(100%, 10rem);
   height: 2px;
   margin-top: 0.9rem;
-  margin-left: auto;
+  margin-inline: auto;
   background: linear-gradient(
     90deg,
     transparent 0%,
@@ -134,6 +149,11 @@ const GoldRule = styled.div`
   );
   border-radius: ${({ theme }) => theme.radii.pill};
   opacity: 0.85;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    margin-left: auto;
+    margin-right: 0;
+  }
 `
 
 const HeroImageWrap = styled.div`
@@ -144,8 +164,13 @@ const HeroImageWrap = styled.div`
   flex: 1 1 auto;
   min-height: 0;
   margin-top: auto;
-  padding-inline: clamp(0.75rem, 3vw, 2rem);
-  overflow: visible;
+  padding-inline: 0;
+  overflow: hidden;
+  ${altMobileImageFrame}
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding-inline: clamp(0.75rem, 3vw, 2rem);
+  }
 `
 
 const HeroImage = styled.img`
@@ -157,12 +182,12 @@ const HeroImage = styled.img`
   margin-inline: auto;
   object-fit: contain;
   object-position: bottom center;
-  transform: translateX(-8%);
+  transform: none;
+  ${altMobileImage}
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     max-width: min(100%, 32rem);
     max-height: clamp(18rem, 68vh, 34rem);
-    transform: translateX(-10%);
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {

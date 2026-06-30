@@ -4,6 +4,8 @@ import { scrollToSection } from '../../utils/scrollToSection'
 import { eyebrowText } from '../../styles/eyebrow'
 
 export const AltSection = styled.section`
+  width: 100%;
+  overflow-x: clip;
   padding-block: ${({ theme }) => theme.layout.sectionPaddingY};
   background: ${({ theme }) => theme.colors.background};
   scroll-margin-top: ${({ theme }) => theme.layout.altStickyScrollMargin};
@@ -11,9 +13,37 @@ export const AltSection = styled.section`
 
 export const AltInner = styled.div`
   width: 100%;
+  min-width: 0;
   max-width: ${({ theme }) => theme.layout.maxWidth};
   margin-inline: auto;
   padding-inline: ${({ theme }) => theme.layout.contentPadding};
+`
+
+/** Uniform product/visual image box on mobile (< tablet). */
+export const altMobileImageFrame = css`
+  @media (max-width: calc(${({ theme }) => theme.breakpoints.tablet} - 1px)) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 11rem;
+    min-height: 11rem;
+    max-height: 11rem;
+    aspect-ratio: unset;
+    padding: 0.75rem 1rem;
+    overflow: hidden;
+  }
+`
+
+export const altMobileImage = css`
+  @media (max-width: calc(${({ theme }) => theme.breakpoints.tablet} - 1px)) {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    transform: none;
+  }
 `
 
 export const Eyebrow = styled.p`

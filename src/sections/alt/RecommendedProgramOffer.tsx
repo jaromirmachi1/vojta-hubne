@@ -6,7 +6,7 @@ import {
   programOffer,
 } from '../../data/altHomepage'
 import { Reveal } from './motion'
-import { Eyebrow, PrimaryButton, ScrollLink } from './shared'
+import { Eyebrow, PrimaryButton, ScrollLink, altMobileImage, altMobileImageFrame } from './shared'
 
 const Wrap = styled.div`
   margin-top: clamp(2.5rem, 6vw, 4rem);
@@ -85,12 +85,14 @@ const ImageWrap = styled.figure`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${altMobileImageFrame}
 `
 
 const ProductImage = styled.img`
   width: min(100%, 22rem);
   height: auto;
   object-fit: contain;
+  ${altMobileImage}
 `
 
 const SecondaryScroll = styled.div`

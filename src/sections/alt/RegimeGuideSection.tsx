@@ -9,7 +9,7 @@ import {
 import { ALT_SECTION_IDS } from '../../data/altHomepage'
 import { scrollToSection } from '../../utils/scrollToSection'
 import { Reveal } from './motion'
-import { AltInner, AltSection, PrimaryButton } from './shared'
+import { AltInner, AltSection, PrimaryButton, altMobileImage, altMobileImageFrame } from './shared'
 
 const Shell = styled.div`
   display: flex;
@@ -18,6 +18,7 @@ const Shell = styled.div`
 `
 
 const GuideCard = styled.div`
+  min-width: 0;
   padding: clamp(1.35rem, 3vw, 2rem);
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
   border-radius: ${({ theme }) => theme.radii.xl};
@@ -128,7 +129,7 @@ const CtaGrid = styled.div`
   align-items: center;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: minmax(0, 1fr) auto minmax(8rem, 0.45fr);
+    grid-template-columns: minmax(0, 1fr) minmax(13rem, auto) minmax(6.5rem, 0.32fr);
     gap: clamp(1rem, 2vw, 1.5rem);
   }
 `
@@ -137,6 +138,7 @@ const CtaCopy = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
+  min-width: 0;
   max-width: 28rem;
 `
 
@@ -170,6 +172,7 @@ const CtaAction = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  min-width: 0;
   text-align: center;
 `
 
@@ -217,6 +220,7 @@ const Visual = styled.figure`
   justify-content: center;
   margin: 0;
   min-height: clamp(8rem, 18vw, 10rem);
+  ${altMobileImageFrame}
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     justify-content: flex-end;
@@ -243,6 +247,7 @@ const Portrait = styled.img`
   height: auto;
   object-fit: contain;
   object-position: bottom center;
+  ${altMobileImage}
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     width: min(100%, 9.5rem);

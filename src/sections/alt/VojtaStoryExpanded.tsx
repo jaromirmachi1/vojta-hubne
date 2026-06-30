@@ -9,6 +9,7 @@ import {
   vojtaStoryTeaches,
   vojtaStoryTestimonials,
 } from '../../data/vojtaStoryExpanded'
+import { altMobileImage, altMobileImageFrame } from './shared'
 
 const mockPhotos = [mockPhotoA, mockPhotoB, mockPhotoA, mockPhotoB, mockPhotoA]
 
@@ -80,6 +81,7 @@ const JourneyFrame = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
   border-radius: ${({ theme }) => theme.radii.lg};
   background: ${({ theme }) => theme.colors.surfaceRaised};
+  ${altMobileImageFrame}
 `
 
 const JourneyImage = styled.img`
@@ -87,6 +89,7 @@ const JourneyImage = styled.img`
   height: 100%;
   object-fit: cover;
   object-position: top center;
+  ${altMobileImage}
 `
 
 const JourneyPhase = styled.p`
@@ -247,12 +250,14 @@ const ProofFrame = styled.div`
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
   border-radius: ${({ theme }) => theme.radii.lg};
+  ${altMobileImageFrame}
 `
 
 const ProofImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+  ${altMobileImage}
 `
 
 const ProofLabel = styled.figcaption`
