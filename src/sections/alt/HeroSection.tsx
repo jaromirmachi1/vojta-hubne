@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
-import heroProducts from '../../assets/ogimage.png'
+import heroImage from '../../assets/vojtazhubl.jpg'
 import { ALT_SECTION_IDS } from '../../data/altHomepage'
 import { scrollToSection } from '../../utils/scrollToSection'
 import { StaggerItem, StaggerReveal } from './motion'
@@ -176,24 +176,24 @@ const HeroImageWrap = styled.div`
 const HeroImage = styled.img`
   display: block;
   width: 100%;
-  max-width: min(100%, 28rem);
+  max-width: min(100%, 32rem);
   height: auto;
   max-height: clamp(16rem, 62vh, 30rem);
   margin-inline: auto;
   object-fit: contain;
-  object-position: bottom center;
+  object-position: center center;
   transform: none;
   ${altMobileImage}
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    max-width: min(100%, 32rem);
+    max-width: min(100%, 36rem);
     max-height: clamp(18rem, 68vh, 34rem);
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    max-width: min(100%, 36rem);
+    max-width: min(100%, 40rem);
     max-height: clamp(20rem, 72vh, 38rem);
-    transform: translateX(-12%);
+    transform: none;
   }
 `
 
@@ -247,10 +247,10 @@ export function HeroSection() {
 
           <HeroImageWrap>
             <HeroImage
-              src={heroProducts}
-              alt="Vojta Hubne — transformace 160 kg na 99 kg, GLP-1 Support a Lean Shake"
-              width={930}
-              height={984}
+              src={heroImage}
+              alt="Vojta Hubne — transformace před a po: cesta z 160 kg na 99 kg"
+              width={1942}
+              height={1924}
               fetchPriority="high"
               decoding="async"
             />

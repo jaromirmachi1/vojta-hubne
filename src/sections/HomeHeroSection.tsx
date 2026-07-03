@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { eyebrowText } from '../styles/eyebrow'
-import heroPortrait from '../assets/SzzEgtimTNU2uqEm_2g6w.JPG.webp'
+import heroImage from '../assets/vojtazhubl.jpg'
 import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
 import { HashLink } from '../components/HashLink'
 import { PageContainer } from '../components/PageContainer'
@@ -155,24 +155,11 @@ const Portrait = styled.figure`
 
 const PortraitFrame = styled.div`
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
   border-radius: ${({ theme }) => theme.radii.xl};
   background: ${({ theme }) => theme.colors.black};
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 0, 0, 0.08) 0%,
-      transparent 35%,
-      rgba(0, 0, 0, 0.45) 100%
-    );
-    pointer-events: none;
-  }
 `
 
 const PortraitImage = styled.img`
@@ -180,7 +167,7 @@ const PortraitImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
 `
 
 export function HomeHeroSection() {
@@ -216,10 +203,10 @@ export function HomeHeroSection() {
         <Portrait>
           <PortraitFrame>
             <PortraitImage
-              src={heroPortrait}
-              alt="Vojta Hubne — zakladatel značky, cesta z 160 kg na 99 kg"
-              width={960}
-              height={1200}
+              src={heroImage}
+              alt="Vojta Hubne — transformace před a po: cesta z 160 kg na 99 kg"
+              width={1942}
+              height={1924}
               fetchPriority="high"
               decoding="async"
             />
