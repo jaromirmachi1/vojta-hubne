@@ -51,6 +51,16 @@ export function getShopifyCatalogUrl(): string {
   return `${base}${normalized}`
 }
 
+/** Blog index — default handle is `blog`; override via VITE_SHOPIFY_BLOG_PATH */
+export function getShopifyBlogUrl(): string {
+  const base = getShopifyStoreUrl()
+
+  const path =
+    import.meta.env.VITE_SHOPIFY_BLOG_PATH?.trim() || '/blogs/blog'
+  const normalized = path.startsWith('/') ? path : `/${path}`
+  return `${base}${normalized}`
+}
+
 /** Collection by handle, e.g. "bestsellery" */
 export function getShopifyCollectionUrl(handle: string): string | null {
   const base = getShopifyStoreUrl()

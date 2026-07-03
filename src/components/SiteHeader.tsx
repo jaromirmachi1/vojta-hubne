@@ -5,7 +5,7 @@ import { BrandLogo } from './BrandLogo'
 import { HashLink } from './HashLink'
 import { MobileNavMenu } from './MobileNavMenu'
 import { PageContainer } from './PageContainer'
-import { getShopifyCartUrl, getShopifyCatalogUrl } from '../utils/shopify'
+import { getShopifyBlogUrl, getShopifyCartUrl, getShopifyCatalogUrl } from '../utils/shopify'
 
 const Header = styled.header`
   position: sticky;
@@ -135,10 +135,12 @@ const CartLink = styled.a`
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   const catalogUrl = getShopifyCatalogUrl()
+  const blogUrl = getShopifyBlogUrl()
   const cartUrl = getShopifyCartUrl()
 
   const mobileLinks = [
     { label: 'Produkty', href: catalogUrl, external: true },
+    { label: 'Blog', href: blogUrl, external: true },
     { label: 'Proč my', sectionId: 'porovnani' },
     { label: 'Kontakt', to: '/kontakt' },
   ] as const
@@ -152,6 +154,7 @@ export function SiteHeader() {
 
         <Nav aria-label="Hlavní navigace">
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
+          <ExternalNavLink href={blogUrl}>Blog</ExternalNavLink>
           <StyledHashLink sectionId="porovnani">Proč my</StyledHashLink>
           <StyledNavLink to="/kontakt">Kontakt</StyledNavLink>
         </Nav>

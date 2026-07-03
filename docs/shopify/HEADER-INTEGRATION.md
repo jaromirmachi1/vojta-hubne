@@ -111,7 +111,7 @@ If you keep Horizon’s menu for mobile drawer, set in **Navigation → Main men
 - **Domů** → `https://www.vojtahubne.cz/homepage` (custom URL)
 - **Katalog** → `/collections/all` (on shop domain)
 
-Custom snippet desktop nav already matches React: Produkty, Proč my, Příběh.
+Custom snippet desktop nav already matches React: Produkty, Blog, Proč my, Kontakt.
 
 ## 7. Shop homepage vs marketing homepage (recommended)
 
@@ -158,3 +158,4 @@ Checkout is separate from the theme. Theme CSS/Liquid does not control checkout 
 
 - **Domů** → `https://www.vojtahubne.cz/homepage`
 - **Katalog** → `/collections/all`
+- **Blog** → `/blogs/blog`

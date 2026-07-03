@@ -51,6 +51,7 @@ Add links (same as React):
 | Label | URL |
 |-------|-----|
 | Produkty | `https://vojtahubne.cz/homepage#produkty` |
+| Blog | `https://shop.vojtahubne.cz/blogs/blog` |
 | Proč my | `https://vojtahubne.cz/homepage#porovnani` |
 | Příběh | `https://vojtahubne.cz/homepage#pribeh` |
 
