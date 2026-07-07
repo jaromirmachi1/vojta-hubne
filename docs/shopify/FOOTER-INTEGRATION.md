@@ -97,6 +97,8 @@ Use premade blocks only — layout won’t match React exactly:
 | Důležité informace | Right column in snippet |
 | Newsletter jako 3. sloupec | Horizon Email signup block (styled by CSS) |
 | © Vojta Hubne · RM Solution | Footer utilities (CSS override) |
+| Socials + payment icons (bottom right) | Utilities: Social Links + Payment Icons blocks |
+| Country + © (bottom left) | Utilities: localization + copyright blocks |
 | Dark + gold styling | `vojta-hubne-horizon.css` |
 
 ---

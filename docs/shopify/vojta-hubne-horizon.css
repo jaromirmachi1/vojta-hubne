@@ -936,9 +936,76 @@ footer .utilities {
   margin-inline: auto !important;
   padding-block: 1.25rem 2rem !important;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  grid-template-rows: auto auto !important;
+  align-items: end !important;
+  gap: 0.55rem 1.5rem !important;
+}
+
+footer .policy-list-trigger,
+footer .localization-form,
+footer localization-form,
+footer .footer__localization,
+footer .footer-utilities__group:not(.footer-utilities__group-copyright) {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  justify-self: start !important;
+  align-self: start !important;
+}
+
+footer .footer-utilities__group-copyright {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  justify-self: start !important;
+  align-self: start !important;
+}
+
+footer .social-icons__wrapper {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+  align-self: start !important;
+}
+
+footer .list-payment,
+footer .payment-icons,
+footer .footer-utilities__group:has(.list-payment),
+footer .footer-utilities__group:has(.payment-icons) {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  justify-self: end !important;
+  align-self: start !important;
+}
+
+footer .list-payment,
+footer .payment-icons {
+  display: flex !important;
+  flex-wrap: wrap !important;
   align-items: center !important;
-  gap: 1.25rem !important;
+  justify-content: flex-end !important;
+  gap: 0.35rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+footer .list-payment__item,
+footer .payment-icons__item {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 2.15rem !important;
+  height: 1.35rem !important;
+  border-radius: 0.2rem !important;
+  background: #fff !important;
+  overflow: hidden !important;
+}
+
+footer .list-payment__item svg,
+footer .payment-icons__item svg {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
 }
 
 footer .footer-utilities__group-copyright,
@@ -988,7 +1055,9 @@ footer .policy_list {
 }
 
 footer .social-icons__wrapper {
-  justify-self: end !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.65rem !important;
 }
 
 @media (max-width: 899px) {
@@ -996,6 +1065,27 @@ footer .social-icons__wrapper {
   footer .utilities {
     grid-template-columns: minmax(0, 1fr) !important;
     align-items: start !important;
+  }
+
+  footer .policy-list-trigger,
+  footer .localization-form,
+  footer localization-form,
+  footer .footer__localization,
+  footer .footer-utilities__group:not(.footer-utilities__group-copyright),
+  footer .footer-utilities__group-copyright,
+  footer .social-icons__wrapper,
+  footer .list-payment,
+  footer .payment-icons,
+  footer .footer-utilities__group:has(.list-payment),
+  footer .footer-utilities__group:has(.payment-icons) {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+    justify-self: start !important;
+  }
+
+  footer .list-payment,
+  footer .payment-icons {
+    justify-content: flex-start !important;
   }
 
   .vh-footer-legal {

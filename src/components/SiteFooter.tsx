@@ -7,6 +7,7 @@ import { eyebrowText } from '../styles/eyebrow'
 import { HashLink } from './HashLink'
 import { PageContainer } from './PageContainer'
 import { getShopifyPolicyUrl } from '../utils/shopify'
+import { FooterPaymentIcons } from './FooterPaymentIcons'
 
 const Footer = styled.footer`
   margin-top: auto;
@@ -159,36 +160,94 @@ const NewsletterStatus = styled.p<{ $error?: boolean }>`
 
 const Bottom = styled(PageContainer)`
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 0.85rem 1.5rem;
+  gap: 1.5rem;
   padding-block: 1.25rem;
   font-size: 0.75rem;
   color: ${({ theme }) => theme.colors.text};
   border-top: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+`
+
+const BottomLeft = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.55rem;
+`
+
+const BottomRight = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.55rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    align-items: flex-start;
+  }
+`
+
+const SocialRow = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
 `
 
 const Locale = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  color: ${({ theme }) => theme.colors.text};
 `
 
-const BottomRight = styled.div`
+const Copyright = styled.p`
+  margin: 0;
+  color: ${({ theme }) => theme.colors.textMuted};
+  line-height: 1.45;
+`
+
+const SocialLink = styled.a`
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-`
-
-const BottomLink = styled.a`
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
   color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
+  transition: color 0.2s ease;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 
   &:hover {
     color: ${({ theme }) => theme.colors.gold};
   }
 `
+
+function FacebookIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M14 8.5h2.5l-.35 2.5H14v7.5h-3v-7.5H9V8.5h2V6.8c0-2.2 1.3-3.4 3.3-3.4.95 0 1.75.07 1.95.1v2.25h-1.35c-1 0-1.2.5-1.2 1.2V8.5Z" />
+    </svg>
+  )
+}
+
+function InstagramIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+      <rect x="4" y="4" width="16" height="16" rx="4" />
+      <circle cx="12" cy="12" r="3.5" />
+      <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
 
 type SiteFooterProps = {
   id?: string
@@ -239,9 +298,9 @@ export function SiteFooter({ id }: SiteFooterProps) {
           <CompanyName>{companyInfo.name}</CompanyName>
           <Text>{companyInfo.addressLine}</Text>
           <Text>IČO: {companyInfo.ico}</Text>
-          <Text>DIČ: CZ29615551</Text>
-          <Text>Nejsme plátci DPH.</Text>
-          <Text>ID datové schránky: cyauddd</Text>
+          <Text>DIČ: {companyInfo.dic}</Text>
+          <Text>{companyInfo.vatStatus}</Text>
+          <Text>ID datové schránky: {companyInfo.dataBoxId}</Text>
           <FooterExternalLink href={`mailto:${companyInfo.email}`}>
             {companyInfo.email}
           </FooterExternalLink>
@@ -309,15 +368,32 @@ export function SiteFooter({ id }: SiteFooterProps) {
         </NewsletterColumn>
       </Inner>
       <Bottom>
-        <Locale>🇨🇿 Česko (CZK Kč)</Locale>
-        <span>© {new Date().getFullYear()} Vojta Hubne · {companyInfo.name}</span>
+        <BottomLeft>
+          <Locale>🇨🇿 Česko (CZK Kč)</Locale>
+          <Copyright>
+            © {new Date().getFullYear()} Vojta Hubne · {companyInfo.name}
+          </Copyright>
+        </BottomLeft>
         <BottomRight>
-          <BottomLink href="https://www.facebook.com" aria-label="Facebook">
-            Fb
-          </BottomLink>
-          <BottomLink href="https://www.instagram.com/vojtahubne/" aria-label="Instagram">
-            Ig
-          </BottomLink>
+          <SocialRow>
+            <SocialLink
+              href="https://www.facebook.com/share/g/183Ks7Zm9S/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              <FacebookIcon />
+            </SocialLink>
+            <SocialLink
+              href="https://www.instagram.com/vojtahubne/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              <InstagramIcon />
+            </SocialLink>
+          </SocialRow>
+          <FooterPaymentIcons />
         </BottomRight>
       </Bottom>
     </Footer>

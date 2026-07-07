@@ -131,6 +131,18 @@ export function ContactPage() {
                 <DetailValue>{companyInfo.ico}</DetailValue>
               </DetailRow>
               <DetailRow>
+                <DetailLabel>DIČ</DetailLabel>
+                <DetailValue>{companyInfo.dic}</DetailValue>
+              </DetailRow>
+              <DetailRow>
+                <DetailLabel>DPH</DetailLabel>
+                <DetailValue>{companyInfo.vatStatus}</DetailValue>
+              </DetailRow>
+              <DetailRow>
+                <DetailLabel>ID datové schránky</DetailLabel>
+                <DetailValue>{companyInfo.dataBoxId}</DetailValue>
+              </DetailRow>
+              <DetailRow>
                 <DetailLabel>Adresa</DetailLabel>
                 <DetailValue>{companyInfo.addressLine}</DetailValue>
               </DetailRow>
