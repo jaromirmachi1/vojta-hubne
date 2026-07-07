@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { eyebrowText } from '../styles/eyebrow'
-import heroImage from '../assets/vojtazhubl.jpg'
+import heroImage from '../assets/vojtazhubl.png'
 import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
 import { HashLink } from '../components/HashLink'
 import { PageContainer } from '../components/PageContainer'

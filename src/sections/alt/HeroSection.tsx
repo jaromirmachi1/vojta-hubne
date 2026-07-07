@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components'
-import heroImage from '../../assets/vojtazhubl.jpg'
+import heroImage from '../../assets/vojtazhubl.png'
 import { ALT_SECTION_IDS } from '../../data/altHomepage'
 import { scrollToSection } from '../../utils/scrollToSection'
 import { StaggerItem, StaggerReveal } from './motion'

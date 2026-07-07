@@ -93,8 +93,9 @@ Use premade blocks only — layout won’t match React exactly:
 
 | React | Shopify |
 |-------|---------|
-| Kontaktní informace | Left column in snippet |
+| Kontaktní informace (vč. DIČ + nejsem plátce DPH) | Left column in snippet |
 | Důležité informace | Right column in snippet |
+| Newsletter jako 3. sloupec | Horizon Email signup block (styled by CSS) |
 | © Vojta Hubne · RM Solution | Footer utilities (CSS override) |
 | Dark + gold styling | `vojta-hubne-horizon.css` |
 

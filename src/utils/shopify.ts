@@ -86,6 +86,11 @@ export function getShopifyContactFormUrl(): string {
   return `${getShopifyStoreUrl()}/contact#contact_form`
 }
 
+/** Shopify newsletter/customer subscribe endpoint used by footer form. */
+export function getShopifyNewsletterSubscribeUrl(): string {
+  return `${getShopifyStoreUrl()}/contact`
+}
+
 /** Inbox configured for contact form notifications. */
 export function getContactFormRecipientEmail(): string {
   return contactFormRecipientEmail
