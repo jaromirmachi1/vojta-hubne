@@ -97,10 +97,6 @@ const NewsletterForm = styled.form`
   align-items: center;
   gap: 0.5rem;
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
-  border-radius: ${({ theme }) => theme.radii.pill};
-  background: ${({ theme }) => theme.colors.black};
-  padding: 0.3rem 0.35rem 0.3rem 0.9rem;
 `
 
 const NewsletterInput = styled.input`

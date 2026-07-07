@@ -739,11 +739,11 @@ footer .section.section--page-width {
 footer .footer-content {
   width: min(100%, var(--vh-page-max-width)) !important;
   margin-inline: auto !important;
-  padding-block: clamp(3rem, 6vw, 5.5rem) !important;
+  padding-block: 3rem !important;
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(18rem, 0.82fr) !important;
-  align-items: end !important;
-  gap: clamp(2rem, 5vw, 4rem) !important;
+  align-items: start !important;
+  gap: 2.5rem !important;
   border-top: 1px solid rgba(238, 220, 130, 0.16);
 }
 
@@ -840,26 +840,28 @@ footer .footer-content .group-block-content {
 }
 
 footer .footer-content h2:not(.vh-footer-legal__title) {
-  max-width: 9ch;
+  max-width: none !important;
   margin: 0 !important;
-  font-family: var(--vh-font-display) !important;
-  font-size: clamp(2.7rem, 8vw, 7.25rem) !important;
-  font-weight: 400 !important;
-  line-height: 0.82 !important;
-  letter-spacing: 0.035em !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  line-height: 1.4 !important;
+  letter-spacing: 0.18em !important;
   text-transform: uppercase !important;
-  color: var(--vh-gold) !important;
+  color: var(--vh-gold-muted) !important;
 }
 
 footer .footer-content rte-formatter,
 footer .footer-content .rte,
-footer .footer-content p:not(.vh-footer-legal__company):not(.vh-footer-legal__text) {
-  max-width: 30rem !important;
+footer
+  .footer-content
+  p:not(.vh-footer-legal__company):not(.vh-footer-legal__text) {
+  max-width: 32rem !important;
   margin: 0 !important;
   color: var(--vh-text) !important;
   font-family: var(--vh-font-sans) !important;
-  font-size: clamp(0.9rem, 1vw, 1rem) !important;
-  line-height: 1.7 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
 }
 
 footer .email-signup-block {
@@ -878,26 +880,24 @@ footer .email-signup__form {
 }
 
 footer .email-signup__input-group {
-  min-height: 2.85rem !important;
-  border: 1px solid rgba(238, 220, 130, 0.22) !important;
-  border-radius: var(--vh-radius-pill) !important;
-  background:
-    linear-gradient(135deg, rgba(238, 220, 130, 0.08), transparent 42%),
-    rgba(10, 10, 10, 0.82) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.055),
-    0 12px 32px rgba(0, 0, 0, 0.22) !important;
-  overflow: hidden !important;
+  min-height: 2.75rem !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+  gap: 0.5rem !important;
 }
 
 footer .email-signup__input {
-  min-height: 2.85rem !important;
-  padding-inline: 1rem !important;
+  min-height: 2.75rem !important;
+  padding-inline: 0.95rem !important;
   background: transparent !important;
   color: rgba(255, 255, 255, 0.88) !important;
-  border: 0 !important;
+  border: 1px solid var(--vh-gold-muted) !important;
+  border-radius: var(--vh-radius-pill) !important;
   font-family: var(--vh-font-sans) !important;
-  font-size: 0.82rem !important;
+  font-size: 0.875rem !important;
   letter-spacing: 0.02em !important;
 }
 
@@ -906,20 +906,20 @@ footer .email-signup__input::placeholder {
 }
 
 footer .email-signup__button {
-  width: 2.85rem !important;
-  min-width: 2.85rem !important;
-  min-height: 2.85rem !important;
-  background: var(--vh-gold) !important;
-  color: var(--vh-black) !important;
+  width: 2rem !important;
+  min-width: 2rem !important;
+  min-height: 2rem !important;
+  background: var(--vh-surface-raised) !important;
+  color: var(--vh-gold-muted) !important;
   border: 0 !important;
   border-radius: var(--vh-radius-pill) !important;
   transition:
-    background 0.2s ease,
+    color 0.2s ease,
     transform 0.2s ease !important;
 }
 
 footer .email-signup__button:hover {
-  background: #f5e799 !important;
+  color: var(--vh-gold) !important;
 }
 
 footer .email-signup__button-icon {
@@ -1006,10 +1006,6 @@ footer .social-icons__wrapper {
   footer .email-signup-block,
   footer .social-icons__wrapper {
     justify-self: stretch !important;
-  }
-
-  footer .footer-content h2:not(.vh-footer-legal__title) {
-    max-width: 8ch;
   }
 
   footer .footer-content .vh-footer-legal {
@@ -3472,7 +3468,11 @@ main .card-gallery a.contents slideshow-slides {
 .vh-contact-page__info {
   border: 1px solid var(--vh-border);
   background:
-    linear-gradient(145deg, rgba(238, 220, 130, 0.18), rgba(238, 220, 130, 0.04) 55%),
+    linear-gradient(
+      145deg,
+      rgba(238, 220, 130, 0.18),
+      rgba(238, 220, 130, 0.04) 55%
+    ),
     var(--vh-surface-raised);
 }
 
@@ -3892,8 +3892,13 @@ blog-posts-list,
 }
 
 /* Hide duplicate H1 when Shopify editor also puts title inside article body */
-.shopify-section:has(.blog-post-content) .blog-post-content.rte > rte-formatter > h1:first-child,
-.shopify-section:has(.blog-post-content) .blog-post-content.rte > h1:first-child {
+.shopify-section:has(.blog-post-content)
+  .blog-post-content.rte
+  > rte-formatter
+  > h1:first-child,
+.shopify-section:has(.blog-post-content)
+  .blog-post-content.rte
+  > h1:first-child {
   display: none !important;
 }
 

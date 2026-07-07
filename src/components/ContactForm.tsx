@@ -1,9 +1,7 @@
-import { useId } from 'react'
+import { useId, useState } from 'react'
+import type { FormEvent } from 'react'
 import styled from 'styled-components'
-import {
-  getShopifyContactFormUrl,
-  getShopifyPolicyUrl,
-} from '../utils/shopify'
+import { getShopifyPolicyUrl } from '../utils/shopify'
 
 const Form = styled.form`
   display: grid;
@@ -85,7 +83,12 @@ const SubmitButton = styled.button`
   cursor: pointer;
   transition: opacity 0.2s ease;
 
-  &:hover {
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
     opacity: 0.9;
   }
 `
@@ -107,31 +110,104 @@ const Hint = styled.p`
   }
 `
 
+const Status = styled.p<{ $error?: boolean }>`
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: ${({ theme, $error }) =>
+    $error ? '#ffb4b4' : theme.colors.goldMuted};
+`
+
+const Honeypot = styled.input`
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+`
+
 export function ContactForm() {
   const nameId = useId()
   const emailId = useId()
   const phoneId = useId()
   const messageId = useId()
+  const websiteId = useId()
+
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [message, setMessage] = useState('')
+  const [website, setWebsite] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
+    'idle',
+  )
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setStatus('loading')
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          message,
+          website,
+        }),
+      })
+
+      const data = (await response.json().catch(() => ({}))) as {
+        ok?: boolean
+        message?: string
+      }
+
+      if (!response.ok || !data.ok) {
+        throw new Error(data.message ?? 'Contact form failed')
+      }
+
+      setName('')
+      setEmail('')
+      setPhone('')
+      setMessage('')
+      setWebsite('')
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
+  }
 
   return (
-    <Form
-      action={getShopifyContactFormUrl()}
-      method="post"
-      acceptCharset="UTF-8"
-    >
-      <input type="hidden" name="form_type" value="contact" />
-      <input type="hidden" name="utf8" value="✓" />
-      <input type="hidden" name="contact[title]" value="Kontakt — Vojta Hubne" />
-      <input type="hidden" name="contact[tags]" value="vojtahubne-kontakt" />
+    <Form onSubmit={handleSubmit} noValidate>
+      <Honeypot
+        id={websiteId}
+        name="website"
+        type="text"
+        tabIndex={-1}
+        autoComplete="off"
+        value={website}
+        onChange={(event) => setWebsite(event.target.value)}
+        aria-hidden="true"
+      />
 
       <Field>
         <Label htmlFor={nameId}>Jméno</Label>
         <Input
           id={nameId}
-          name="contact[name]"
+          name="name"
           type="text"
           autoComplete="name"
           placeholder="Vaše jméno"
+          value={name}
+          onChange={(event) => {
+            setName(event.target.value)
+            if (status !== 'idle') setStatus('idle')
+          }}
         />
       </Field>
 
@@ -139,11 +215,16 @@ export function ContactForm() {
         <Label htmlFor={emailId}>E-mail *</Label>
         <Input
           id={emailId}
-          name="contact[email]"
+          name="email"
           type="email"
           autoComplete="email"
           required
           placeholder="vas@email.cz"
+          value={email}
+          onChange={(event) => {
+            setEmail(event.target.value)
+            if (status !== 'idle') setStatus('idle')
+          }}
         />
       </Field>
 
@@ -151,10 +232,15 @@ export function ContactForm() {
         <Label htmlFor={phoneId}>Telefon</Label>
         <Input
           id={phoneId}
-          name="contact[phone]"
+          name="phone"
           type="tel"
           autoComplete="tel"
           placeholder="+420 …"
+          value={phone}
+          onChange={(event) => {
+            setPhone(event.target.value)
+            if (status !== 'idle') setStatus('idle')
+          }}
         />
       </Field>
 
@@ -162,13 +248,34 @@ export function ContactForm() {
         <Label htmlFor={messageId}>Vaše zpráva *</Label>
         <Textarea
           id={messageId}
-          name="contact[body]"
+          name="message"
           required
           placeholder="Napište nám, s čím vám můžeme pomoci."
+          value={message}
+          onChange={(event) => {
+            setMessage(event.target.value)
+            if (status !== 'idle') setStatus('idle')
+          }}
         />
       </Field>
 
-      <SubmitButton type="submit">Odeslat formulář</SubmitButton>
+      <SubmitButton type="submit" disabled={status === 'loading'}>
+        {status === 'loading' ? 'Odesílám…' : 'Odeslat formulář'}
+      </SubmitButton>
+
+      {status === 'success' ? (
+        <Status role="status">
+          Děkujeme, zpráva byla odeslána. Ozveme se co nejdříve.
+        </Status>
+      ) : null}
+
+      {status === 'error' ? (
+        <Status $error role="alert">
+          Nepodařilo se odeslat zprávu. Zkuste to prosím znovu, nebo napište na
+          info@vojtahubne.cz.
+        </Status>
+      ) : null}
+
       <Hint>
         Odesláním souhlasíte se zpracováním údajů dle{' '}
         <a href={getShopifyPolicyUrl('privacy-policy')}>
