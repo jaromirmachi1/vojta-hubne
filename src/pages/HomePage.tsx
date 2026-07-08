@@ -10,6 +10,7 @@ import { StorySection } from '../sections/StorySection'
 import { ShopLayout } from '../layouts/ShopLayout'
 import { homePageMeta } from '../seo/homePageMeta'
 import { getHomePageSchema } from '../seo/homePageSchema'
+import { NewsletterPopup } from '../components/NewsletterPopup'
 
 export function HomePage() {
   useHashScroll()
@@ -24,6 +25,7 @@ export function HomePage() {
       <StorySection />
       <ProductComparisonSection />
       <BenefitsSection />
+      <NewsletterPopup />
     </ShopLayout>
   )
 }
