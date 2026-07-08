@@ -1,10 +1,20 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 
 const SHOPIFY_API_VERSION = '2025-10'
-const NEWSLETTER_TAGS = ['newsletter', 'website-footer']
+const BASE_TAG = 'newsletter'
+const SOURCE_FOOTER_TAG = 'website-footer'
+const SOURCE_POPUP_TAG = 'popup-signup'
+const OFFER_DISCOUNT_TAG = 'offer-200kc'
+const OFFER_HEROHERO_TAG = 'offer-herohero'
+const OFFER_TAGS = [OFFER_DISCOUNT_TAG, OFFER_HEROHERO_TAG] as const
+
+type NewsletterOffer = 'discount' | 'herohero'
+type NewsletterSource = 'popup' | 'footer'
 
 type NewsletterRequestBody = {
   email?: unknown
+  offer?: unknown
+  source?: unknown
 }
 
 type ShopifyCustomer = {
@@ -162,6 +172,39 @@ function normalizeEmail(value: unknown): string | null {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : null
 }
 
+function normalizeOffer(value: unknown): NewsletterOffer | null {
+  if (value === 'discount' || value === 'herohero') return value
+  return null
+}
+
+function normalizeSource(value: unknown): NewsletterSource {
+  if (value === 'popup') return 'popup'
+  return 'footer'
+}
+
+function offerToTag(offer: NewsletterOffer): string {
+  return offer === 'herohero' ? OFFER_HEROHERO_TAG : OFFER_DISCOUNT_TAG
+}
+
+function customerHasOfferTag(tags: string[]): boolean {
+  return OFFER_TAGS.some((tag) => tags.includes(tag))
+}
+
+function buildCustomerTags(
+  existingTags: string[],
+  options: { offer?: NewsletterOffer | null; source: NewsletterSource },
+): string[] {
+  const tags = new Set(existingTags)
+  tags.add(BASE_TAG)
+  tags.add(options.source === 'popup' ? SOURCE_POPUP_TAG : SOURCE_FOOTER_TAG)
+
+  if (options.offer && !customerHasOfferTag([...tags])) {
+    tags.add(offerToTag(options.offer))
+  }
+
+  return [...tags]
+}
+
 async function findCustomerByEmail(email: string): Promise<ShopifyCustomer | null> {
   const data = await shopifyGraphQl<{
     customers: { edges: Array<{ node: ShopifyCustomer }> }
@@ -184,11 +227,12 @@ async function findCustomerByEmail(email: string): Promise<ShopifyCustomer | nul
   return data.customers.edges[0]?.node ?? null
 }
 
-async function subscribeCustomer(email: string) {
+async function subscribeCustomer(
+  email: string,
+  options: { offer?: NewsletterOffer | null; source: NewsletterSource },
+) {
   const existingCustomer = await findCustomerByEmail(email)
-  const tags = Array.from(
-    new Set([...(existingCustomer?.tags ?? []), ...NEWSLETTER_TAGS]),
-  )
+  const tags = buildCustomerTags(existingCustomer?.tags ?? [], options)
 
   if (existingCustomer) {
     const data = await shopifyGraphQl<{
@@ -260,13 +304,20 @@ export default async function handler(
   try {
     const body = await getRequestBody(request)
     const email = normalizeEmail(body.email)
+    const source = normalizeSource(body.source)
+    const offer = normalizeOffer(body.offer)
 
     if (!email) {
       sendJson(response, 400, { ok: false, message: 'Enter a valid email' })
       return
     }
 
-    await subscribeCustomer(email)
+    if (body.offer !== undefined && body.offer !== null && !offer) {
+      sendJson(response, 400, { ok: false, message: 'Invalid offer' })
+      return
+    }
+
+    await subscribeCustomer(email, { offer, source })
     sendJson(response, 200, { ok: true })
   } catch (error) {
     const message =

@@ -7,6 +7,7 @@ import { eyebrowText } from '../styles/eyebrow'
 import { HashLink } from './HashLink'
 import { PageContainer } from './PageContainer'
 import { getShopifyPolicyUrl } from '../utils/shopify'
+import { subscribeToNewsletter } from '../utils/subscribeToNewsletter'
 import { FooterPaymentIcons } from './FooterPaymentIcons'
 
 const Footer = styled.footer`
@@ -271,17 +272,7 @@ export function SiteFooter({ id }: SiteFooterProps) {
     setNewsletterStatus('loading')
 
     try {
-      const response = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      })
-
-      if (!response.ok) {
-        throw new Error('Newsletter signup failed')
-      }
+      await subscribeToNewsletter(email, { source: 'footer' })
 
       setNewsletterEmail('')
       setNewsletterStatus('success')

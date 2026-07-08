@@ -1,6 +1,7 @@
 import { usePageMeta } from '../hooks/usePageMeta'
 import { useHashScroll } from '../hooks/useHashScroll'
 import { AltShopLayout } from '../layouts/AltShopLayout'
+import { NewsletterPopup } from '../components/NewsletterPopup'
 import { ALT_HOME_PATH } from '../data/altHomepage'
 import { altHomePageMeta } from '../seo/altHomePageMeta'
 import { AltShopCatalog } from '../sections/alt/AltShopCatalog'
@@ -32,6 +33,7 @@ export function AlternativeHomePage() {
       <FAQ />
       <ContactChannelsSection />
       <Reviews />
+      <NewsletterPopup />
     </AltShopLayout>
   )
 }
