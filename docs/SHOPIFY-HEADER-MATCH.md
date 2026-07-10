@@ -15,23 +15,23 @@ React source of truth:
 
 ### 1. Gold promo bar (= `PromoBar`)
 
-React source: `src/components/PromoBar.tsx`  
+React source: `src/components/PromoBar.tsx` + `src/data/promoBar.ts`  
 CSS: `vojta-hubne-horizon.css` → **Promo bar** block (gold bg, Montserrat 0.7rem, weight 600, uppercase).
 
 1. **Customize → Header** → **Announcement bar** (or **Header announcements**)
 2. Enable the bar
-3. **Text** (copy exactly):
+3. **Text** (copy exactly from `src/data/promoBar.ts`):
 
    ```
-   Objednávky přijaté do 18. 6. 2026 byly expedovány a jsou na cestě k vám
+   (re)START je zpět · kód 30STARTSVOJTOU
    ```
 
-4. **Link:** `/collections/all` (same catalog as homepage promo bar)
+4. **Link:** `https://www.vojtahubne.cz/` (marketing homepage — same as React promo bar)
 5. In **announcement block** settings (Horizon), if typography options appear:
    - Prefer **Montserrat** / body font
    - CSS overrides thin weight — but you can set **Semibold (600)** if available
    - Auto-rotate: **Off** (single message like React)
-6. **Link** (optional): `/collections/all` — if the block supports a URL
+6. **Link:** `https://www.vojtahubne.cz/` — must point to marketing homepage (hero banner + copy code button)
 7. Re-upload **`vojta-hubne-horizon.css`** and hard refresh (Cmd+Shift+R)
 
 Horizon ships inline `font-weight: 100` and `0.625rem` on the slide — the CSS file forces homepage parity (`0.7rem`, weight `600`, gold bar, `0.14em` tracking).

@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import { getShopifyCatalogUrl } from "../utils/shopify";
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import { PROMO_BAR_HOME_PATH, PROMO_BAR_TEXT } from '../data/promoBar'
 
-const Bar = styled.a`
+const Bar = styled(Link)`
   display: block;
   padding: 0.6rem 1rem;
   text-align: center;
@@ -24,12 +25,10 @@ const Bar = styled.a`
   }
 `;
 
-const catalogUrl = getShopifyCatalogUrl();
-
 export function PromoBar() {
   return (
-    <Bar href={catalogUrl}>
-      Objednávky přijaté v pracovní dny do 12:00 expedujeme ještě tentýž den
+    <Bar to={PROMO_BAR_HOME_PATH}>
+      {PROMO_BAR_TEXT}
     </Bar>
   );
 }
