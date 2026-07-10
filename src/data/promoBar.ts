@@ -1,7 +1,7 @@
 import { getAbsoluteUrl } from '../seo/site'
 
 /** Shared copy for React PromoBar and Shopify announcement bar. */
-export const PROMO_BAR_TEXT = '(re)START je zpět · kód 30STARTSVOJTOU'
+export const PROMO_BAR_TEXT = 'Restart je zpet ! Sleva 30%'
 
 export const PROMO_BAR_CODE = '30STARTSVOJTOU'
 

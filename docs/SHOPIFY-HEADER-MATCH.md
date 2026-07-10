@@ -23,7 +23,7 @@ CSS: `vojta-hubne-horizon.css` → **Promo bar** block (gold bg, Montserrat 0.7r
 3. **Text** (copy exactly from `src/data/promoBar.ts`):
 
    ```
-   (re)START je zpět · kód 30STARTSVOJTOU
+   Restart je zpet ! Sleva 30%
    ```
 
 4. **Link:** `https://www.vojtahubne.cz/` (marketing homepage — same as React promo bar)
