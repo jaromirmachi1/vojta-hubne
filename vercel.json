@@ -1,9 +1,4 @@
 {
-  "functions": {
-    "api/judgeme-reviews.ts": {
-      "includeFiles": "api/_lib/**"
-    }
-  },
   "redirects": [
     {
       "source": "/homepage",
