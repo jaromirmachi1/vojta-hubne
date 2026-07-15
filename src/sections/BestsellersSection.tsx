@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { eyebrowText } from '../styles/eyebrow'
 import { BestsellersPagination } from '../components/BestsellersPagination'
@@ -47,6 +47,39 @@ const Grid = styled.div<{ $columns: number }>`
   }
 `
 
+const MobileViewport = styled.div`
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-inline: calc(-1 * ${({ theme }) => theme.layout.contentPadding});
+  padding-inline: ${({ theme }) => theme.layout.contentPadding};
+  padding-bottom: 0.35rem;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: ${({ theme }) => theme.layout.contentPadding};
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+const MobileTrack = styled.div`
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+`
+
+const MobileSlide = styled.div`
+  flex: 0 0 clamp(16rem, 82vw, 20rem);
+  scroll-snap-align: start;
+
+  & > a,
+  & > article {
+    height: 100%;
+  }
+`
+
 const Status = styled.p`
   margin: 0 0 1.5rem;
   font-size: 0.8rem;
@@ -57,13 +90,85 @@ export function BestsellersSection() {
   const { products, loading } = useShopifyProducts()
   const itemsPerPage = useItemsPerPage()
   const [page, setPage] = useState(0)
+  const mobileViewportRef = useRef<HTMLDivElement>(null)
+  const scrollSyncFrame = useRef<number | null>(null)
+  const isProgrammaticScroll = useRef(false)
+  const isMobileCarousel = itemsPerPage === 1
 
-  const totalPages = Math.max(1, Math.ceil(products.length / itemsPerPage))
+  const totalPages = isMobileCarousel
+    ? Math.max(1, products.length)
+    : Math.max(1, Math.ceil(products.length / itemsPerPage))
 
   const visibleProducts = useMemo(() => {
+    if (isMobileCarousel) return products
+
     const start = page * itemsPerPage
     return products.slice(start, start + itemsPerPage)
-  }, [page, itemsPerPage, products])
+  }, [isMobileCarousel, page, itemsPerPage, products])
+
+  const updatePageFromScroll = useCallback(() => {
+    const viewport = mobileViewportRef.current
+    if (!viewport || !isMobileCarousel) return
+
+    const slides = viewport.querySelectorAll('[data-slide-index]')
+    if (!slides.length) return
+
+    const viewportCenter = viewport.scrollLeft + viewport.clientWidth / 2
+    let closestIndex = 0
+    let closestDistance = Infinity
+
+    slides.forEach((slide, index) => {
+      const element = slide as HTMLElement
+      const slideCenter = element.offsetLeft + element.offsetWidth / 2
+      const distance = Math.abs(viewportCenter - slideCenter)
+
+      if (distance < closestDistance) {
+        closestDistance = distance
+        closestIndex = index
+      }
+    })
+
+    setPage((current) => (current === closestIndex ? current : closestIndex))
+  }, [isMobileCarousel])
+
+  const handleMobileScroll = useCallback(() => {
+    if (isProgrammaticScroll.current) return
+
+    if (scrollSyncFrame.current !== null) {
+      cancelAnimationFrame(scrollSyncFrame.current)
+    }
+
+    scrollSyncFrame.current = requestAnimationFrame(() => {
+      updatePageFromScroll()
+      scrollSyncFrame.current = null
+    })
+  }, [updatePageFromScroll])
+
+  const handlePageChange = useCallback(
+    (nextPage: number) => {
+      if (isMobileCarousel && mobileViewportRef.current) {
+        const slide = mobileViewportRef.current.querySelector(
+          `[data-slide-index="${nextPage}"]`,
+        ) as HTMLElement | null
+
+        isProgrammaticScroll.current = true
+        setPage(nextPage)
+        slide?.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'start',
+          block: 'nearest',
+        })
+
+        window.setTimeout(() => {
+          isProgrammaticScroll.current = false
+        }, 450)
+        return
+      }
+
+      setPage(nextPage)
+    },
+    [isMobileCarousel],
+  )
 
   useEffect(() => {
     if (page > totalPages - 1) {
@@ -73,7 +178,16 @@ export function BestsellersSection() {
 
   useEffect(() => {
     setPage(0)
+    mobileViewportRef.current?.scrollTo({ left: 0 })
   }, [itemsPerPage])
+
+  useEffect(() => {
+    return () => {
+      if (scrollSyncFrame.current !== null) {
+        cancelAnimationFrame(scrollSyncFrame.current)
+      }
+    }
+  }, [])
 
   return (
     <Section id="produkty">
@@ -85,16 +199,28 @@ export function BestsellersSection() {
 
         {loading ? <Status>Načítám produkty z e-shopu…</Status> : null}
 
-        <Grid $columns={Math.min(itemsPerPage, Math.max(visibleProducts.length, 1))}>
-          {visibleProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </Grid>
+        {isMobileCarousel ? (
+          <MobileViewport ref={mobileViewportRef} onScroll={handleMobileScroll}>
+            <MobileTrack>
+              {products.map((product, index) => (
+                <MobileSlide key={product.id} data-slide-index={index}>
+                  <ProductCard product={product} />
+                </MobileSlide>
+              ))}
+            </MobileTrack>
+          </MobileViewport>
+        ) : (
+          <Grid $columns={Math.min(itemsPerPage, Math.max(visibleProducts.length, 1))}>
+            {visibleProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </Grid>
+        )}
 
         <BestsellersPagination
           page={page}
           totalPages={totalPages}
-          onPageChange={setPage}
+          onPageChange={handlePageChange}
         />
       </Inner>
     </Section>

@@ -92,18 +92,39 @@ const SummaryCopy = styled.span`
 
 const Viewport = styled.div`
   width: 100%;
-  overflow: hidden;
-  mask-image: linear-gradient(
-    to right,
-    transparent,
-    black 4%,
-    black 96%,
-    transparent
-  );
 
-  &:hover > div,
-  &:focus-within > div {
-    animation-play-state: paused;
+  @media (max-width: calc(${({ theme }) => theme.breakpoints.tablet} - 1px)) {
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-inline: calc(-1 * ${({ theme }) => theme.layout.contentPadding});
+    padding-inline: ${({ theme }) => theme.layout.contentPadding};
+    padding-bottom: 0.35rem;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: ${({ theme }) => theme.layout.contentPadding};
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    mask-image: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 4%,
+      black 96%,
+      transparent
+    );
+
+    &:hover > div,
+    &:focus-within > div {
+      animation-play-state: paused;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -127,8 +148,17 @@ const Rail = styled.div`
   display: flex;
   width: max-content;
   gap: 1rem;
-  animation: ${marquee} 54s linear infinite;
-  will-change: transform;
+
+  @media (max-width: calc(${({ theme }) => theme.breakpoints.tablet} - 1px)) {
+    animation: none;
+    transform: none;
+    will-change: auto;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    animation: ${marquee} 80s linear infinite;
+    will-change: transform;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
@@ -139,6 +169,12 @@ const Rail = styled.div`
 const ReviewGroup = styled.div`
   display: flex;
   gap: 1rem;
+`
+
+const DesktopReviewGroup = styled(ReviewGroup)`
+  @media (max-width: calc(${({ theme }) => theme.breakpoints.tablet} - 1px)) {
+    display: none;
+  }
 `
 
 const Card = styled.article`
@@ -447,7 +483,7 @@ export function ProductReviewsSection() {
                   <ReviewCard key={review.id} review={review} />
                 ))}
               </ReviewGroup>
-              <ReviewGroup aria-hidden="true">
+              <DesktopReviewGroup aria-hidden="true">
                 {reviews.map((review) => (
                   <ReviewCard
                     key={`duplicate-${review.id}`}
@@ -455,7 +491,7 @@ export function ProductReviewsSection() {
                     duplicate
                   />
                 ))}
-              </ReviewGroup>
+              </DesktopReviewGroup>
             </Rail>
           </Viewport>
         )}
