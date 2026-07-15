@@ -3,7 +3,7 @@ import { defineConfig, loadEnv } from 'vite'
 import {
   fetchJudgeMeReviews,
   getJudgeMeConfigFromEnv,
-} from './api/lib/judgemeReviews.js'
+} from './api/_lib/judgemeReviews'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {

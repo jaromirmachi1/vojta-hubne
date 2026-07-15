@@ -2,7 +2,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http'
 import {
   fetchJudgeMeReviews,
   getJudgeMeConfigFromEnv,
-} from './lib/judgemeReviews.js'
+} from './_lib/judgemeReviews'
 
 function sendJson(
   response: ServerResponse,
