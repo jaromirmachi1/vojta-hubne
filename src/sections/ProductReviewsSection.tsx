@@ -121,8 +121,8 @@ const Viewport = styled.div`
       transparent
     );
 
-    &:hover > div,
-    &:focus-within > div {
+    &:hover .desktop-marquee-track,
+    &:focus-within .desktop-marquee-track {
       animation-play-state: paused;
     }
   }
@@ -136,28 +136,32 @@ const Viewport = styled.div`
 
 const marquee = keyframes`
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   to {
-    transform: translateX(calc(-50% - 0.5rem));
+    transform: translate3d(-50%, 0, 0);
   }
 `
 
-const Rail = styled.div`
+const MobileTrack = styled.div`
   display: flex;
-  width: max-content;
   gap: 1rem;
-
-  @media (max-width: calc(${({ theme }) => theme.breakpoints.tablet} - 1px)) {
-    animation: none;
-    transform: none;
-    will-change: auto;
-  }
+  width: max-content;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    animation: ${marquee} 80s linear infinite;
-    will-change: transform;
+    display: none;
+  }
+`
+
+const DesktopMarqueeTrack = styled.div`
+  display: none;
+  width: max-content;
+  will-change: transform;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: flex;
+    animation: ${marquee} 110s linear infinite;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -166,15 +170,12 @@ const Rail = styled.div`
   }
 `
 
-const ReviewGroup = styled.div`
+const MarqueeSet = styled.div`
   display: flex;
+  flex-shrink: 0;
   gap: 1rem;
-`
-
-const DesktopReviewGroup = styled(ReviewGroup)`
-  @media (max-width: calc(${({ theme }) => theme.breakpoints.tablet} - 1px)) {
-    display: none;
-  }
+  min-width: max-content;
+  padding-right: 1rem;
 `
 
 const Card = styled.article`
@@ -477,13 +478,19 @@ export function ProductReviewsSection() {
           </LoadingCards>
         ) : (
           <Viewport>
-            <Rail>
-              <ReviewGroup>
+            <MobileTrack>
+              {reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </MobileTrack>
+
+            <DesktopMarqueeTrack className="desktop-marquee-track">
+              <MarqueeSet>
                 {reviews.map((review) => (
                   <ReviewCard key={review.id} review={review} />
                 ))}
-              </ReviewGroup>
-              <DesktopReviewGroup aria-hidden="true">
+              </MarqueeSet>
+              <MarqueeSet aria-hidden="true">
                 {reviews.map((review) => (
                   <ReviewCard
                     key={`duplicate-${review.id}`}
@@ -491,8 +498,8 @@ export function ProductReviewsSection() {
                     duplicate
                   />
                 ))}
-              </DesktopReviewGroup>
-            </Rail>
+              </MarqueeSet>
+            </DesktopMarqueeTrack>
           </Viewport>
         )}
       </Inner>

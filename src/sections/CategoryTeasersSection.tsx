@@ -140,7 +140,11 @@ export function CategoryTeasersSection() {
                   <CardCta>Zobrazit produkty →</CardCta>
                 </CardContent>
                 <ImageWrap>
-                  <Image src={teaser.image} alt={teaser.imageAlt} loading="lazy" />
+                  <Image
+                    src={teaser.image}
+                    alt={teaser.imageAlt}
+                    loading="lazy"
+                  />
                 </ImageWrap>
               </CardBody>
             </Card>

@@ -6,11 +6,11 @@ For now, the offer popup is only mounted on the `/alt` page, so normal site traf
 
 ## Tags the site adds
 
-| Source | Tags |
-|--------|------|
-| Popup — **Chci 200 Kč** | `newsletter`, `popup-signup`, `offer-200kc` |
+| Source                           | Tags                                           |
+| -------------------------------- | ---------------------------------------------- |
+| Popup — **Chci 200 Kč**          | `newsletter`, `popup-signup`, `offer-200kc`    |
 | Popup — **Chci Herohero zdarma** | `newsletter`, `popup-signup`, `offer-herohero` |
-| Footer newsletter | `newsletter`, `website-footer` |
+| Footer newsletter                | `newsletter`, `website-footer`                 |
 
 **No duplicate offers:** if a customer already has `offer-200kc` or `offer-herohero`, a second signup does **not** add another offer tag (no second offer email).
 
@@ -66,9 +66,9 @@ In Shopify Admin → **Customers**, open the test customer and confirm tags.
 
 **Customers** → **Segments** → **Create segment**
 
-| Segment name | Condition |
-|--------------|-----------|
-| Offer 200 Kč | Customer tags contains `offer-200kc` |
+| Segment name   | Condition                               |
+| -------------- | --------------------------------------- |
+| Offer 200 Kč   | Customer tags contains `offer-200kc`    |
 | Offer Herohero | Customer tags contains `offer-herohero` |
 
 ---
@@ -129,9 +129,9 @@ Use **Shopify Email** and/or **Shopify Flow** (plan-dependent).
 
 ## Troubleshooting
 
-| Issue | Fix |
-|-------|-----|
-| Customer created, no tags | Check Vercel env + redeploy; test `/api/newsletter` with curl |
-| Tags OK, no email | Automation not published; check Flow/Email trigger matches exact tag |
+| Issue                             | Fix                                                                                                       |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| Customer created, no tags         | Check Vercel env + redeploy; test `/api/newsletter` with curl                                             |
+| Tags OK, no email                 | Automation not published; check Flow/Email trigger matches exact tag                                      |
 | Popup still shows after subscribe | Clear `localStorage` key `vh-newsletter-popup-subscribed` only for testing; production sets it on success |
-| Second offer email sent | Customer should already have offer tag — verify API not adding duplicate tags |
+| Second offer email sent           | Customer should already have offer tag — verify API not adding duplicate tags                             |

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import { eyebrowText } from '../styles/eyebrow'
+import transformationImage from '../assets/vojtazhubl.png'
 import { PageContainer } from '../components/PageContainer'
+import { eyebrowText } from '../styles/eyebrow'
 
 const Section = styled.section`
   padding-block: ${({ theme }) => theme.layout.sectionPaddingY};
@@ -84,6 +85,32 @@ const CommunityLink = styled.a`
   }
 `
 
+const VisualColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+`
+
+const TransformationFigure = styled.figure`
+  margin: 0;
+  width: 100%;
+`
+
+const TransformationFrame = styled.div`
+  overflow: hidden;
+  border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: ${({ theme }) => theme.radii.xl};
+  background: ${({ theme }) => theme.colors.black};
+`
+
+const TransformationImage = styled.img`
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center center;
+`
+
 const Quote = styled.blockquote`
   margin: 0;
   padding: 2rem;
@@ -135,13 +162,27 @@ export function StorySection() {
             Cesta z obezity
           </CommunityLink>
         </Content>
-        <Quote>
-          <p>
-            „Nechci prodávat zázrak za týden. Chci dát lidem nástroje, které mi
-            samotnému pomohly vydržet a dotáhnout to.“
-          </p>
-          <footer>— Vojta Hubne</footer>
-        </Quote>
+        <VisualColumn>
+          <TransformationFigure>
+            <TransformationFrame>
+              <TransformationImage
+                src={transformationImage}
+                alt="Vojta Hubne — transformace před a po: cesta z 160 kg na 99 kg"
+                width={1942}
+                height={1924}
+                loading="lazy"
+                decoding="async"
+              />
+            </TransformationFrame>
+          </TransformationFigure>
+          <Quote>
+            <p>
+              „Nechci prodávat zázrak za týden. Chci dát lidem nástroje, které mi
+              samotnému pomohly vydržet a dotáhnout to.“
+            </p>
+            <footer>— Vojta Hubne</footer>
+          </Quote>
+        </VisualColumn>
       </Inner>
     </Section>
   )
