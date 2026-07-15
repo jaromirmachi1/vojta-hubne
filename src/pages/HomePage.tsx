@@ -6,6 +6,7 @@ import { BestsellersSection } from '../sections/BestsellersSection'
 import { CategoryTeasersSection } from '../sections/CategoryTeasersSection'
 import { HomeHeroSection } from '../sections/HomeHeroSection'
 import { ProductComparisonSection } from '../sections/ProductComparisonSection'
+import { ProductReviewsSection } from '../sections/ProductReviewsSection'
 import { StorySection } from '../sections/StorySection'
 import { ShopLayout } from '../layouts/ShopLayout'
 import { homePageMeta } from '../seo/homePageMeta'
@@ -21,6 +22,7 @@ export function HomePage() {
     <ShopLayout>
       <HomeHeroSection />
       <BestsellersSection />
+      <ProductReviewsSection />
       <CategoryTeasersSection />
       <StorySection />
       <ProductComparisonSection />
