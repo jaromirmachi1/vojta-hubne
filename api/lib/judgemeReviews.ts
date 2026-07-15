@@ -1,4 +1,5 @@
 const JUDGEME_REVIEWS_URL = 'https://api.judge.me/api/v1/reviews'
+const DEFAULT_SHOP_DOMAIN = '9kihpp-rg.myshopify.com'
 export const JUDGEME_REVIEW_LIMIT = 12
 
 type JudgeMeReview = {
@@ -127,19 +128,22 @@ function normalizeReview(review: JudgeMeReview): PublicReview | null {
 export function getJudgeMeConfigFromEnv(
   env: Record<string, string | undefined>,
 ): JudgeMeReviewsConfig | null {
-  const apiToken =
+  const apiToken = (
     env.JUDGEME_PRIVATE_API_TOKEN ||
     env.JUDGEME_API_TOKEN ||
-    env.JUDGEME_PUBLIC_API_TOKEN
+    env.JUDGEME_PUBLIC_API_TOKEN ||
+    ''
+  ).trim()
 
   const shopDomain = (
     env.JUDGEME_SHOP_DOMAIN ||
     env.SHOPIFY_STORE_DOMAIN ||
     env.VITE_SHOPIFY_STORE_DOMAIN ||
-    ''
+    DEFAULT_SHOP_DOMAIN
   )
     .replace(/^https?:\/\//, '')
     .replace(/\/$/, '')
+    .trim()
 
   if (!apiToken || !shopDomain) return null
 
