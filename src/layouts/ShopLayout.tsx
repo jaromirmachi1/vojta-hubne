@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import styled from 'styled-components'
 import { PromoBar } from '../components/PromoBar'
+import { ReviewTickerBar } from '../components/ReviewTickerBar'
 import { SiteFooter } from '../components/SiteFooter'
 import { SiteHeader } from '../components/SiteHeader'
 
@@ -23,6 +24,7 @@ export function ShopLayout({ children }: ShopLayoutProps) {
   return (
     <Page>
       <PromoBar />
+      <ReviewTickerBar />
       <SiteHeader />
       <Main>{children}</Main>
       <SiteFooter />
