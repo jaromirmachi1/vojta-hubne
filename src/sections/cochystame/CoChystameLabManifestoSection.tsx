@@ -102,7 +102,7 @@ export function CoChystameLabManifestoSection({
             <Title>
               NEJLEPŠÍ PRODUKTY
               <br />
-              <TitleEm>NEVZNIKAJÍ V TICHO.</TitleEm>
+              <TitleEm>NEVZNIKAJÍ V TICHU.</TitleEm>
             </Title>
           </div>
           <div>

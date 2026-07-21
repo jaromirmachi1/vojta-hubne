@@ -163,7 +163,7 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
               Produkt je navržen jako prášková večerní směs rozmíchaná ve vodě.
             </CheckItem>
             <CheckItem>Doporučené užívání je jedna dávka večer.</CheckItem>
-            <CheckItem>Čisté množství a počet dávek zatím nejsou finálně doplněny.</CheckItem>
+            <CheckItem>Čistá hmotnost a počet dávek zatím nejsou finálně doplněny.</CheckItem>
           </CheckList>
           <Notice>
             <b>Transparentně:</b> složení vychází z aktuální pracovní etikety. Před výrobou se musí ověřit jeho shoda s
@@ -268,7 +268,7 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
               },
               {
                 q: 'Kolik bude v balení dávek?',
-                a: 'Počet dávek a čisté množství zatím nebyly finálně potvrzeny.',
+                a: 'Počet dávek a čistá hmotnost zatím nebyly finálně potvrzeny.',
               },
               {
                 q: 'Kdy bude dostupné?',
@@ -375,7 +375,7 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
               },
               {
                 q: 'Kolik bude obsahovat proteinu a kofeinu?',
-                a: 'Množství zatím nejsou potvrzená. Zveřejníme je až po schválení receptury.',
+                a: 'Množství zatím není potvrzeno. Zveřejníme ho až po schválení receptury.',
               },
               {
                 q: 'Půjde připravit s horkou vodou?',
@@ -627,7 +627,7 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
             Produkty, o kterých nerozhoduje jen interní tým
           </SectionHeading>
           <Lead>
-            VOJTA LAB má být menší tým nejaktivnějších zákazníků. Členové mohou navrhovat produkty a příchutě, hodnotit malé testovací vzorky a pomáhat rozhodnout, co má smysl poslat do výroby.
+            VOJTA LAB má být menší tým nejaktivnějších zákazníků. Členové mohou navrhovat produkty a příchutě, hodnotit malé testovací vzorky a pomáhat rozhodovat, co má smysl poslat do výroby.
           </Lead>
           <StyledBlockquote>
             Komunita přinese nápady. My zajistíme vývoj a proveditelnost. Skutečný test ukáže, čemu dát zelenou.
