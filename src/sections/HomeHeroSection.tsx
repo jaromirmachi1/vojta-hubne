@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { eyebrowText } from "../styles/eyebrow";
-import heroBannerImage from "../assets/159ede93-2c6a-47a5-ab52-1fac5d5e1c3c.JPG";
+import heroBannerImage from "../assets/159ede93-2c6a-47a5-ab52-1fac5d5e1c3c.jpg";
 import { LaunchBackground } from "../components/backgrounds/LaunchBackground";
 import { HashLink } from "../components/HashLink";
 import { PageContainer } from "../components/PageContainer";
