@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components'
-import { eyebrowText } from '../styles/eyebrow'
-import heroBannerImage from '../assets/vhbanner+.webp'
-import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
-import { HashLink } from '../components/HashLink'
-import { PageContainer } from '../components/PageContainer'
-import { getShopifyCatalogUrl } from '../utils/shopify'
+import { useCallback, useEffect, useState } from "react";
+import styled from "styled-components";
+import { eyebrowText } from "../styles/eyebrow";
+import heroBannerImage from "../assets/159ede93-2c6a-47a5-ab52-1fac5d5e1c3c.JPG";
+import { LaunchBackground } from "../components/backgrounds/LaunchBackground";
+import { HashLink } from "../components/HashLink";
+import { PageContainer } from "../components/PageContainer";
+import { getShopifyCatalogUrl } from "../utils/shopify";
 
-const RESTART_PROMO_CODE = '30STARTSVOJTOU'
+const RESTART_PROMO_CODE = "30STARTSVOJTOU";
 
 const Section = styled.section`
   position: relative;
@@ -19,7 +19,7 @@ const Section = styled.section`
   min-height: ${({ theme }) => theme.layout.heroMinHeightDvh};
   overflow: hidden;
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
-`
+`;
 
 const Inner = styled(PageContainer)`
   position: relative;
@@ -36,20 +36,20 @@ const Inner = styled(PageContainer)`
     gap: 4rem;
     padding-block: clamp(2.5rem, 6vh, 4rem);
   }
-`
+`;
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-`
+`;
 
 const Eyebrow = styled.p`
   margin: 0;
   font-size: 0.7rem;
   letter-spacing: 0.22em;
   ${eyebrowText}
-`
+`;
 
 const Title = styled.h1`
   font-family: ${({ theme }) => theme.fonts.display};
@@ -59,7 +59,7 @@ const Title = styled.h1`
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.gold};
-`
+`;
 
 const Lead = styled.p`
   margin: 0;
@@ -67,20 +67,20 @@ const Lead = styled.p`
   font-size: clamp(1rem, 2.5vw, 1.125rem);
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.text};
-`
+`;
 
 const Stats = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   margin-top: 0.5rem;
-`
+`;
 
 const Stat = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-`
+`;
 
 const StatValue = styled.span`
   font-family: ${({ theme }) => theme.fonts.display};
@@ -88,20 +88,20 @@ const StatValue = styled.span`
   line-height: 1;
   letter-spacing: 0.04em;
   color: ${({ theme }) => theme.colors.white};
-`
+`;
 
 const StatLabel = styled.span`
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   ${eyebrowText}
-`
+`;
 
 const Actions = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.5rem;
-`
+`;
 
 const PrimaryLink = styled(HashLink)`
   display: inline-flex;
@@ -121,7 +121,7 @@ const PrimaryLink = styled(HashLink)`
   &:hover {
     opacity: 0.9;
   }
-`
+`;
 
 const SecondaryLink = styled.a`
   display: inline-flex;
@@ -141,7 +141,7 @@ const SecondaryLink = styled.a`
   &:hover {
     background: rgba(238, 220, 130, 0.06);
   }
-`
+`;
 
 const Portrait = styled.figure`
   position: relative;
@@ -154,16 +154,16 @@ const Portrait = styled.figure`
     justify-self: end;
     max-width: none;
   }
-`
+`;
 
 const PortraitFrame = styled.div`
   position: relative;
-  aspect-ratio: 1573 / 1713;
+  aspect-ratio: 1448 / 1086;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
   border-radius: ${({ theme }) => theme.radii.xl};
-  background: ${({ theme }) => theme.colors.black};
-`
+  background: #e8dccb;
+`;
 
 const PortraitImage = styled.img`
   display: block;
@@ -171,7 +171,7 @@ const PortraitImage = styled.img`
   height: 100%;
   object-fit: contain;
   object-position: center center;
-`
+`;
 
 const CopyCodeButton = styled.button`
   display: inline-flex;
@@ -202,27 +202,27 @@ const CopyCodeButton = styled.button`
   &:active {
     transform: translateY(0);
   }
-`
+`;
 
 export function HomeHeroSection() {
-  const catalogUrl = getShopifyCatalogUrl()
-  const [codeCopied, setCodeCopied] = useState(false)
+  const catalogUrl = getShopifyCatalogUrl();
+  const [codeCopied, setCodeCopied] = useState(false);
 
   const copyPromoCode = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(RESTART_PROMO_CODE)
-      setCodeCopied(true)
+      await navigator.clipboard.writeText(RESTART_PROMO_CODE);
+      setCodeCopied(true);
     } catch {
-      setCodeCopied(false)
+      setCodeCopied(false);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    if (!codeCopied) return
+    if (!codeCopied) return;
 
-    const timer = window.setTimeout(() => setCodeCopied(false), 2200)
-    return () => window.clearTimeout(timer)
-  }, [codeCopied])
+    const timer = window.setTimeout(() => setCodeCopied(false), 2200);
+    return () => window.clearTimeout(timer);
+  }, [codeCopied]);
 
   return (
     <Section>
@@ -255,9 +255,9 @@ export function HomeHeroSection() {
           <PortraitFrame>
             <PortraitImage
               src={heroBannerImage}
-              alt="Balíček (re)START je zpět v prodeji — sleva 30 % s kódem 30STARTSVOJTOU"
-              width={1573}
-              height={1713}
+              alt="Balíček (re)START — zpět v prodeji se slevou 30 %. GLP-1 Support, Lean Shake a D3+K2+Vápník."
+              width={1448}
+              height={1086}
               fetchPriority="high"
               decoding="async"
             />
@@ -267,10 +267,10 @@ export function HomeHeroSection() {
             onClick={copyPromoCode}
             aria-label={`Zkopírovat slevový kód ${RESTART_PROMO_CODE}`}
           >
-            {codeCopied ? 'Kód zkopírován' : 'Zkopírovat kód 30STARTSVOJTOU'}
+            {codeCopied ? "Kód zkopírován" : "Zkopírovat kód 30STARTSVOJTOU"}
           </CopyCodeButton>
         </Portrait>
       </Inner>
     </Section>
-  )
+  );
 }

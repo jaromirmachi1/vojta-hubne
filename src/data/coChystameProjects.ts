@@ -1,0 +1,129 @@
+export type CoChystameCategory =
+  | 'Vše'
+  | 'Připravujeme'
+  | 'Vojta Lab'
+  | 'Komunita'
+  | 'Novinky'
+  | 'Průvodce'
+
+export type CoChystameProjectId =
+  | 'nevinatko'
+  | 'cafe'
+  | 'flavor'
+  | 'xxl'
+  | 'samples'
+  | 'affiliate'
+  | 'lab'
+  | 'active'
+
+export type CoChystameProject = {
+  id: CoChystameProjectId
+  category: Exclude<CoChystameCategory, 'Vše'>
+  status: string
+  title: string
+  kicker: string
+  excerpt: string
+  progress: number
+  phase: string
+}
+
+export const coChystameCategories: CoChystameCategory[] = [
+  'Vše',
+  'Připravujeme',
+  'Vojta Lab',
+  'Komunita',
+  'Novinky',
+  'Průvodce',
+]
+
+export const coChystameProjects: CoChystameProject[] = [
+  {
+    id: 'nevinatko',
+    category: 'Připravujeme',
+    status: 'Připravujeme',
+    title: 'Neviňátko',
+    kicker: 'Večerní směs',
+    excerpt:
+      'Jednoduchý večerní rituál s transparentním pracovním složením a jasně popsaným stavem vývoje.',
+    progress: 64,
+    phase: 'Pracovní etiketa připravena',
+  },
+  {
+    id: 'cafe',
+    category: 'Připravujeme',
+    status: 'Ve vývoji',
+    title: 'Cafe Lean Shake',
+    kicker: 'Pracovní název',
+    excerpt:
+      'Samostatný řídký ranní nápoj z pravé kávy s proteinovou složkou. Ne další příchuť LEAN SHAKE.',
+    progress: 36,
+    phase: 'Čeká na testovací recepturu',
+  },
+  {
+    id: 'flavor',
+    category: 'Komunita',
+    status: 'Hlasování komunity',
+    title: 'Nová příchuť Lean Shake',
+    kicker: 'Vyberete vy',
+    excerpt:
+      'Nápady od komunity, společné hlasování a čtyři nejlepší varianty v malém senzorickém testu.',
+    progress: 20,
+    phase: 'Připravujeme sběr návrhů',
+  },
+  {
+    id: 'xxl',
+    category: 'Novinky',
+    status: 'Prověřujeme',
+    title: 'XXL balení',
+    kicker: 'Více porcí, méně objednávek',
+    excerpt:
+      'Větší balení GLP-1 Support a LEAN SHAKE pro pravidelné zákazníky. Receptury zůstávají stejné.',
+    progress: 28,
+    phase: 'Ověřujeme obaly a výrobu',
+  },
+  {
+    id: 'samples',
+    category: 'Novinky',
+    status: 'Připravujeme',
+    title: 'Malá zkušební balení',
+    kicker: 'Nejdřív ochutnat',
+    excerpt:
+      'Placené testovací porce pro nové zákazníky, kteří nechtějí začínat nákupem celého balení.',
+    progress: 24,
+    phase: 'Řešíme formát a ekonomiku',
+  },
+  {
+    id: 'affiliate',
+    category: 'Komunita',
+    status: 'Připravujeme pravidla',
+    title: 'Affiliate program',
+    kicker: 'Doporučení ze zkušenosti',
+    excerpt:
+      'Tři úrovně spolupráce pro aktivní zákazníky a tvůrce, kteří značku znají a chtějí ji autenticky doporučovat.',
+    progress: 44,
+    phase: 'Finalizujeme podmínky',
+  },
+  {
+    id: 'lab',
+    category: 'Vojta Lab',
+    status: 'Vzniká komunita',
+    title: 'Vojta Lab',
+    kicker: 'Produkty tvořené společně',
+    excerpt:
+      'Menší tým aktivních zákazníků, který navrhuje, testuje a pomáhá rozhodovat o dalších produktech.',
+    progress: 52,
+    phase: 'Připravujeme první test',
+  },
+  {
+    id: 'active',
+    category: 'Vojta Lab',
+    status: 'Pracovní koncept',
+    title: 'Spalovač',
+    kicker: 'Pracovní označení',
+    excerpt:
+      'Koncept produktu pro energii, motivaci a aktivní režim. Finální název, receptura i forma zatím nejsou schválené.',
+    progress: 18,
+    phase: 'Vyhodnocujeme zadání',
+  },
+]
+

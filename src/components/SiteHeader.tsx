@@ -142,6 +142,7 @@ export function SiteHeader() {
     { label: 'Produkty', href: catalogUrl, external: true },
     { label: 'Blog', href: blogUrl, external: true },
     { label: 'Proč my', sectionId: 'porovnani' },
+    { label: 'Co chystáme', to: '/co-chystame' },
     { label: 'Kontakt', to: '/kontakt' },
   ] as const
 
@@ -156,6 +157,7 @@ export function SiteHeader() {
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
           <ExternalNavLink href={blogUrl}>Blog</ExternalNavLink>
           <StyledHashLink sectionId="porovnani">Proč my</StyledHashLink>
+          <StyledNavLink to="/co-chystame">Co chystáme</StyledNavLink>
           <StyledNavLink to="/kontakt">Kontakt</StyledNavLink>
         </Nav>
 
