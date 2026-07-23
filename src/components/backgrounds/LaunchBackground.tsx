@@ -49,6 +49,43 @@ const ParticlesHost = styled.div`
   }
 `
 
+/** CSS-only ambience when WebGL particles cannot start. */
+const StaticFallback = styled.div`
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 55% 45% at 50% 42%,
+      rgba(238, 220, 130, 0.14) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      circle at 18% 72%,
+      rgba(201, 181, 106, 0.1) 0%,
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 82% 28%,
+      rgba(238, 220, 130, 0.08) 0%,
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 70% 78%,
+      rgba(138, 125, 82, 0.12) 0%,
+      transparent 22%
+    );
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100dvh;
+    height: 100svh;
+    min-height: -webkit-fill-available;
+  }
+`
+
 const Vignette = styled.div`
   position: absolute;
   inset: 0;
@@ -86,6 +123,7 @@ const brandParticleColors = [
 export function LaunchBackground() {
   return (
     <BackgroundLayer>
+      <StaticFallback aria-hidden="true" />
       <ParticlesHost>
         <Particles
           particleColors={brandParticleColors}

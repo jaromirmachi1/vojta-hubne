@@ -1,6 +1,9 @@
 /**
  * Particles background — adapted from React Bits (MIT)
  * https://reactbits.dev/backgrounds/particles
+ *
+ * Safe without WebGL: init is feature-detected and try/caught so the page
+ * never crashes when GPU/WebGL is unavailable.
  */
 import { useEffect, useRef } from 'react'
 import { Camera, Geometry, Mesh, Program, Renderer } from 'ogl'
@@ -20,6 +23,19 @@ function hexToRgb(hex: string): [number, number, number] {
   const g = ((int >> 8) & 255) / 255
   const b = (int & 255) / 255
   return [r, g, b]
+}
+
+function isWebGLAvailable(): boolean {
+  if (typeof document === 'undefined') return false
+
+  try {
+    const canvas = document.createElement('canvas')
+    const context =
+      canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
+    return Boolean(context)
+  } catch {
+    return false
+  }
 }
 
 const vertex = /* glsl */ `
@@ -123,43 +139,16 @@ export function Particles({
 
   useEffect(() => {
     const container = containerRef.current
-    if (!container) return
+    if (!container || !isWebGLAvailable()) return
 
-    const renderer = new Renderer({
-      dpr: pixelRatio,
-      depth: false,
-      alpha: true,
-    })
-    const gl = renderer.gl
-    const canvas = gl.canvas
-    canvas.style.display = 'block'
-    canvas.style.width = '100%'
-    canvas.style.height = '100%'
-    container.appendChild(canvas)
-    gl.clearColor(0, 0, 0, 0)
-
-    const camera = new Camera(gl, { fov: 15 })
-    camera.position.set(0, 0, cameraDistance)
-
-    const resize = () => {
-      const width = container.clientWidth || window.innerWidth
-      const height = container.clientHeight || window.innerHeight
-      if (width === 0 || height === 0) return
-      renderer.setSize(width, height)
-      camera.perspective({ aspect: gl.canvas.width / gl.canvas.height })
-    }
-
-    const resizeObserver = new ResizeObserver(resize)
-    resizeObserver.observe(container)
-    window.addEventListener('resize', resize, false)
-
+    let renderer: Renderer | null = null
+    let canvas: HTMLCanvasElement | null = null
+    let animationFrameId = 0
+    let resizeObserver: ResizeObserver | null = null
+    let resize: (() => void) | null = null
+    let onViewportChange: (() => void) | null = null
     const viewport = window.visualViewport
-    const onViewportChange = () => resize()
-    viewport?.addEventListener('resize', onViewportChange)
-    viewport?.addEventListener('scroll', onViewportChange)
-
-    resize()
-    requestAnimationFrame(resize)
+    let hoverListening = false
 
     const handleMouseMove = (e: MouseEvent) => {
       const x = (e.clientX / window.innerWidth) * 2 - 1
@@ -167,103 +156,153 @@ export function Particles({
       mouseRef.current = { x, y }
     }
 
-    if (moveParticlesOnHover) {
-      window.addEventListener('mousemove', handleMouseMove)
-    }
-
-    const count = particleCount
-    const positions = new Float32Array(count * 3)
-    const randoms = new Float32Array(count * 4)
-    const colors = new Float32Array(count * 3)
-    const palette =
-      particleColors && particleColors.length > 0 ? particleColors : defaultColors
-
-    for (let i = 0; i < count; i++) {
-      let x: number
-      let y: number
-      let z: number
-      let len: number
-      do {
-        x = Math.random() * 2 - 1
-        y = Math.random() * 2 - 1
-        z = Math.random() * 2 - 1
-        len = x * x + y * y + z * z
-      } while (len > 1 || len === 0)
-      const r = Math.cbrt(Math.random())
-      positions.set([x * r, y * r, z * r], i * 3)
-      randoms.set(
-        [Math.random(), Math.random(), Math.random(), Math.random()],
-        i * 4,
-      )
-      const col = hexToRgb(palette[Math.floor(Math.random() * palette.length)]!)
-      colors.set(col, i * 3)
-    }
-
-    const geometry = new Geometry(gl, {
-      position: { size: 3, data: positions },
-      random: { size: 4, data: randoms },
-      color: { size: 3, data: colors },
-    })
-
-    const program = new Program(gl, {
-      vertex,
-      fragment,
-      uniforms: {
-        uTime: { value: 0 },
-        uSpread: { value: particleSpread },
-        uBaseSize: { value: particleBaseSize * pixelRatio },
-        uSizeRandomness: { value: sizeRandomness },
-        uAlphaParticles: { value: alphaParticles ? 1 : 0 },
-      },
-      transparent: true,
-      depthTest: false,
-    })
-
-    const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program })
-
-    let animationFrameId = 0
-    let lastTime = performance.now()
-    let elapsed = 0
-
-    const update = (t: number) => {
-      animationFrameId = requestAnimationFrame(update)
-      const delta = t - lastTime
-      lastTime = t
-      elapsed += delta * speed
-
-      program.uniforms.uTime.value = elapsed * 0.001
-
-      if (moveParticlesOnHover) {
-        particles.position.x = -mouseRef.current.x * particleHoverFactor
-        particles.position.y = -mouseRef.current.y * particleHoverFactor
-      } else {
-        particles.position.x = 0
-        particles.position.y = 0
+    const teardown = () => {
+      resizeObserver?.disconnect()
+      if (resize) window.removeEventListener('resize', resize)
+      if (onViewportChange) {
+        viewport?.removeEventListener('resize', onViewportChange)
+        viewport?.removeEventListener('scroll', onViewportChange)
       }
-
-      if (!disableRotation) {
-        particles.rotation.x = Math.sin(elapsed * 0.0002) * 0.1
-        particles.rotation.y = Math.cos(elapsed * 0.0005) * 0.15
-        particles.rotation.z += 0.01 * speed
-      }
-
-      renderer.render({ scene: particles, camera })
-    }
-
-    animationFrameId = requestAnimationFrame(update)
-
-    return () => {
-      resizeObserver.disconnect()
-      window.removeEventListener('resize', resize)
-      viewport?.removeEventListener('resize', onViewportChange)
-      viewport?.removeEventListener('scroll', onViewportChange)
-      if (moveParticlesOnHover) {
+      if (hoverListening) {
         window.removeEventListener('mousemove', handleMouseMove)
       }
       cancelAnimationFrame(animationFrameId)
-      if (container.contains(gl.canvas)) {
-        container.removeChild(gl.canvas)
+      if (canvas && container.contains(canvas)) {
+        container.removeChild(canvas)
       }
+    }
+
+    try {
+      renderer = new Renderer({
+        dpr: pixelRatio,
+        depth: false,
+        alpha: true,
+      })
+      const gl = renderer.gl
+      if (!gl) {
+        teardown()
+        return
+      }
+
+      canvas = gl.canvas
+      canvas.style.display = 'block'
+      canvas.style.width = '100%'
+      canvas.style.height = '100%'
+      container.appendChild(canvas)
+      gl.clearColor(0, 0, 0, 0)
+
+      const camera = new Camera(gl, { fov: 15 })
+      camera.position.set(0, 0, cameraDistance)
+
+      resize = () => {
+        if (!renderer) return
+        const width = container.clientWidth || window.innerWidth
+        const height = container.clientHeight || window.innerHeight
+        if (width === 0 || height === 0) return
+        renderer.setSize(width, height)
+        camera.perspective({ aspect: gl.canvas.width / gl.canvas.height })
+      }
+
+      resizeObserver = new ResizeObserver(resize)
+      resizeObserver.observe(container)
+      window.addEventListener('resize', resize, false)
+
+      onViewportChange = () => resize?.()
+      viewport?.addEventListener('resize', onViewportChange)
+      viewport?.addEventListener('scroll', onViewportChange)
+
+      resize()
+      requestAnimationFrame(resize)
+
+      if (moveParticlesOnHover) {
+        window.addEventListener('mousemove', handleMouseMove)
+        hoverListening = true
+      }
+
+      const count = particleCount
+      const positions = new Float32Array(count * 3)
+      const randoms = new Float32Array(count * 4)
+      const colors = new Float32Array(count * 3)
+      const palette =
+        particleColors && particleColors.length > 0 ? particleColors : defaultColors
+
+      for (let i = 0; i < count; i++) {
+        let x: number
+        let y: number
+        let z: number
+        let len: number
+        do {
+          x = Math.random() * 2 - 1
+          y = Math.random() * 2 - 1
+          z = Math.random() * 2 - 1
+          len = x * x + y * y + z * z
+        } while (len > 1 || len === 0)
+        const r = Math.cbrt(Math.random())
+        positions.set([x * r, y * r, z * r], i * 3)
+        randoms.set(
+          [Math.random(), Math.random(), Math.random(), Math.random()],
+          i * 4,
+        )
+        const col = hexToRgb(palette[Math.floor(Math.random() * palette.length)]!)
+        colors.set(col, i * 3)
+      }
+
+      const geometry = new Geometry(gl, {
+        position: { size: 3, data: positions },
+        random: { size: 4, data: randoms },
+        color: { size: 3, data: colors },
+      })
+
+      const program = new Program(gl, {
+        vertex,
+        fragment,
+        uniforms: {
+          uTime: { value: 0 },
+          uSpread: { value: particleSpread },
+          uBaseSize: { value: particleBaseSize * pixelRatio },
+          uSizeRandomness: { value: sizeRandomness },
+          uAlphaParticles: { value: alphaParticles ? 1 : 0 },
+        },
+        transparent: true,
+        depthTest: false,
+      })
+
+      const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program })
+
+      let lastTime = performance.now()
+      let elapsed = 0
+
+      const update = (t: number) => {
+        if (!renderer) return
+        animationFrameId = requestAnimationFrame(update)
+        const delta = t - lastTime
+        lastTime = t
+        elapsed += delta * speed
+
+        program.uniforms.uTime.value = elapsed * 0.001
+
+        if (moveParticlesOnHover) {
+          particles.position.x = -mouseRef.current.x * particleHoverFactor
+          particles.position.y = -mouseRef.current.y * particleHoverFactor
+        } else {
+          particles.position.x = 0
+          particles.position.y = 0
+        }
+
+        if (!disableRotation) {
+          particles.rotation.x = Math.sin(elapsed * 0.0002) * 0.1
+          particles.rotation.y = Math.cos(elapsed * 0.0005) * 0.15
+          particles.rotation.z += 0.01 * speed
+        }
+
+        renderer.render({ scene: particles, camera })
+      }
+
+      animationFrameId = requestAnimationFrame(update)
+
+      return teardown
+    } catch {
+      teardown()
     }
   }, [
     particleCount,
