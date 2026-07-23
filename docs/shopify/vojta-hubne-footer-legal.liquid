@@ -40,12 +40,18 @@
       {% else %}
         <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/terms-of-service">Obchodní podmínky</a>
       {% endif %}
+      {% if shop.refund_policy %}
+        <a class="vh-footer-legal__link" href="{{ shop.refund_policy.url }}">Reklamace</a>
+      {% else %}
+        <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/refund-policy">Reklamace</a>
+      {% endif %}
       {% if shop.privacy_policy %}
         <a class="vh-footer-legal__link" href="{{ shop.privacy_policy.url }}">Ochrana osobních údajů</a>
       {% else %}
         <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/privacy-policy">Ochrana osobních údajů</a>
       {% endif %}
       <a class="vh-footer-legal__link" href="{{ marketing }}/#produkty">Produkty</a>
+      <a class="vh-footer-legal__link" href="{{ marketing }}/co-chystame">Co chystáme</a>
     </nav>
   </div>
 </div>

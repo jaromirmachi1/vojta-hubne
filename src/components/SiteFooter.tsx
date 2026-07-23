@@ -307,6 +307,9 @@ export function SiteFooter({ id }: SiteFooterProps) {
           <FooterExternalLink href={getShopifyPolicyUrl('terms-of-service')}>
             Obchodní podmínky
           </FooterExternalLink>
+          <FooterExternalLink href={getShopifyPolicyUrl('refund-policy')}>
+            Reklamace
+          </FooterExternalLink>
           <FooterExternalLink href={getShopifyPolicyUrl('privacy-policy')}>
             Ochrana osobních údajů
           </FooterExternalLink>

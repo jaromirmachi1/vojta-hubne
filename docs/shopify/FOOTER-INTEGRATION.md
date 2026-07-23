@@ -74,6 +74,7 @@ Use premade blocks only — layout won’t match React exactly:
    - Kontakt → `https://www.vojtahubne.cz/kontakt`
    - Doprava a platba → Shopify shipping policy URL
    - Obchodní podmínky → terms policy URL
+   - Reklamace → Shopify refund policy URL
    - Ochrana osobních údajů → privacy policy URL
 3. Keep **Email signup** block for newsletter (React doesn’t have this — optional on shop)
 
@@ -85,6 +86,7 @@ Use premade blocks only — layout won’t match React exactly:
 
 - Zásady doručování
 - Obchodní podmínky / Podmínky služby
+- Zásady vrácení peněz (Reklamace)
 - Zásady ochrany osobních údajů
 
 ---

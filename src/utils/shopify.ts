@@ -72,6 +72,7 @@ type ShopifyPolicySlug =
   | 'shipping-policy'
   | 'terms-of-service'
   | 'privacy-policy'
+  | 'refund-policy'
 
 /** Shopify policy pages (Settings → Policies). */
 export function getShopifyPolicyUrl(slug: ShopifyPolicySlug): string {
