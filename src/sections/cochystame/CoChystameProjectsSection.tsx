@@ -108,7 +108,11 @@ const Card = styled.button`
   cursor: pointer;
   transition: transform 0.25s ease, border-color 0.25s ease,
     background 0.25s ease;
-  min-height: 28rem;
+  min-height: auto;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    min-height: 28rem;
+  }
 
   &:hover {
     transform: translateY(-4px);
@@ -126,8 +130,12 @@ const CardContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.05rem;
-  padding: clamp(1.75rem, 4vw, 3.25rem);
-  min-height: 28rem;
+  padding: clamp(1.35rem, 4vw, 3.25rem);
+  min-height: auto;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    min-height: 28rem;
+  }
 `
 
 const CardTop = styled.div`
@@ -173,17 +181,26 @@ const CardTitle = styled.h3`
 `
 
 const CardExcerpt = styled.p`
+  display: none;
   margin: 0;
   color: ${({ theme }) => theme.colors.textMuted};
   line-height: 1.8;
   font-size: 0.95rem;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: block;
+  }
 `
 
 const ProgressRow = styled.div`
+  display: none;
   margin-top: auto;
-  display: flex;
   flex-direction: column;
   gap: 0.8rem;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: flex;
+  }
 `
 
 const ProgressTop = styled.div`
@@ -266,8 +283,10 @@ export function CoChystameProjectsSection({
           </div>
 
           <Lead>
-            Nic neschováváme. Ukazujeme, co už je potvrzené, co se právě
-            testuje a co je zatím pouze pracovní koncept.
+            Neustále pracujeme na nových produktech, které mají přirozeně
+            doplnit cestu za zdravějším a lehčím životem. Některé jsou teprve
+            nápadem, jiné už aktivně testujeme a dokončujeme. Tady můžete
+            sledovat, co právě vzniká a jak daleko jsme se ve vývoji dostali.
           </Lead>
         </IntroRow>
 

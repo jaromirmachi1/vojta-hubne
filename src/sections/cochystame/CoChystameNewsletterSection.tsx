@@ -79,8 +79,9 @@ export function CoChystameNewsletterSection() {
             <TitleEm>JEN POTVRZENÉ NOVINKY.</TitleEm>
           </Title>
           <Text>
-            Jednou za čas pošleme skutečný posun: nový test, výsledek hlasování
-            nebo potvrzené spuštění produktu.
+            Produkty nevznikají za zavřenými dveřmi. Pravidelně sdílíme průběh
+            vývoje, testování i nové nápady — a vaše zpětná vazba nám pomáhá
+            vytvořit produkty, které budou mít skutečný přínos.
           </Text>
         </div>
 

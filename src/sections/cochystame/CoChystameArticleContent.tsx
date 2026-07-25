@@ -675,6 +675,197 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
     )
   }
 
+  if (id === 'odvodnovac') {
+    return (
+      <>
+        <ArticleBodySection>
+          <SectionHeading eyebrow="Proč vzniká">
+            Lehčí pocit. Méně zadržené vody.
+          </SectionHeading>
+          <Lead>
+            Ne každé kilo navíc znamená tuk. Během hubnutí může váha kolísat také
+            kvůli zadržování vody, vyššímu příjmu soli, změnám režimu nebo menšímu
+            pohybu. Proto připravujeme produkt zaměřený na podporu přirozeného
+            hospodaření organismu s vodou a na pocit větší lehkosti.
+          </Lead>
+          <Lead>
+            Recepturu už aktivně ladíme a testujeme tak, aby dobře zapadla do
+            systému Vojta Hubne a byla vhodná pro jednoduché každodenní použití.
+          </Lead>
+          <Notice>
+            <b>Bez léčebných slibů:</b> neuvádíme finální složení, cenu ani termín
+            uvedení, dokud nebudou schválené. Texty budou před spuštěním
+            zkontrolovány podle finální receptury.
+          </Notice>
+        </ArticleBodySection>
+
+        <ArticleBodySection>
+          <SectionHeading eyebrow="Vývoj">Kde se právě nacházíme</SectionHeading>
+          <Timeline
+            steps={[
+              { title: 'Zadání produktu', text: 'Podpora lehkosti a hospodaření s vodou', done: true },
+              { title: 'Ladění receptury', text: 'Aktivní testování finální podoby', done: true },
+              { title: 'Schválení a etiketa', text: 'Po uzavření receptury' },
+              { title: 'Výroba a spuštění', text: 'Až po finálním potvrzení' },
+            ]}
+          />
+          <FinePrint>
+            Aktuální stav vývoje je přibližně 60 %. Průběh budeme průběžně
+            aktualizovat.
+          </FinePrint>
+        </ArticleBodySection>
+
+        <ArticleBodySection>
+          <SectionHeading eyebrow="FAQ">Časté otázky</SectionHeading>
+          <FAQList
+            items={[
+              {
+                q: 'Je složení už finální?',
+                a: 'Ne. Recepturu ještě ladíme. Finální složení zveřejníme až po schválení.',
+              },
+              {
+                q: 'Kdy bude produkt dostupný?',
+                a: 'Konkrétní termín zatím neuvádíme. Ozveme se, až bude potvrzený.',
+              },
+              {
+                q: 'Nahradí pohyb nebo změnu jídelníčku?',
+                a: 'Ne. Má doplnit cestu Vojta Hubne, ne nahradit režim, stravu ani pohyb.',
+              },
+            ]}
+          />
+        </ArticleBodySection>
+      </>
+    )
+  }
+
+  if (id === 'kreatin') {
+    return (
+      <>
+        <ArticleBodySection>
+          <SectionHeading eyebrow="Proč vzniká">
+            Síla. Výkon. Udržení aktivního režimu.
+          </SectionHeading>
+          <Lead>
+            Kreatin není jen pro kulturisty. Při redukci hmotnosti může být
+            důležité udržet pravidelný pohyb, kvalitní trénink a dostatek síly pro
+            každodenní aktivitu. Připravujeme proto vlastní produkt s kreatinem,
+            který nebude působit jako běžný sportovní doplněk, ale jako přirozená
+            součást programu Vojta Hubne.
+          </Lead>
+          <Lead>
+            Zaměřujeme se na jednoduché dávkování, dobrou rozpustnost a použití,
+            které zvládne opravdu každý.
+          </Lead>
+          <Notice>
+            <b>Bez přehnaných slibů:</b> produkt nemá garantovat výkon ani
+            nahrazovat trénink. Finální složení, cenu a termín zveřejníme až po
+            schválení.
+          </Notice>
+        </ArticleBodySection>
+
+        <ArticleBodySection>
+          <SectionHeading eyebrow="Vývoj">Kde se právě nacházíme</SectionHeading>
+          <Timeline
+            steps={[
+              { title: 'Zadání produktu', text: 'Kreatin jako součást programu Vojta Hubne', done: true },
+              { title: 'Ladění receptury', text: 'Dávkování, rozpustnost a praktické použití', done: true },
+              { title: 'Schválení a etiketa', text: 'Po uzavření receptury' },
+              { title: 'Výroba a spuštění', text: 'Až po finálním potvrzení' },
+            ]}
+          />
+          <FinePrint>
+            Aktuální stav vývoje je přibližně 60 %. Průběh budeme průběžně
+            aktualizovat.
+          </FinePrint>
+        </ArticleBodySection>
+
+        <ArticleBodySection>
+          <SectionHeading eyebrow="FAQ">Časté otázky</SectionHeading>
+          <FAQList
+            items={[
+              {
+                q: 'Je to klasický sportovní kreatin?',
+                a: 'Cílem je produkt, který zapadne do programu Vojta Hubne — jednoduchý, srozumitelný a použitelný i mimo tvrdé tréninky.',
+              },
+              {
+                q: 'Je složení už finální?',
+                a: 'Ne. Stále ladíme finální podobu. Detaily zveřejníme po schválení.',
+              },
+              {
+                q: 'Kdy bude dostupný?',
+                a: 'Termín zatím neuvádíme. Přihlaste se k novinkám a dáme vědět jako první.',
+              },
+            ]}
+          />
+        </ArticleBodySection>
+      </>
+    )
+  }
+
+  if (id === 'probiotika') {
+    return (
+      <>
+        <ArticleBodySection>
+          <SectionHeading eyebrow="Proč vzniká">
+            Každodenní podpora trávení a střevního mikrobiomu
+          </SectionHeading>
+          <Lead>
+            Trávení a střevní mikrobiom mohou výrazně ovlivňovat každodenní
+            komfort, pravidelnost i celkový pocit při změně jídelníčku. Proto
+            připravujeme vlastní probiotický produkt jako doplněk k ostatním
+            produktům Vojta Hubne.
+          </Lead>
+          <Lead>
+            Aktuálně ladíme výběr kmenů, jejich množství, stabilitu a vhodnou formu
+            tak, aby výsledný produkt byl praktický, kvalitní a dlouhodobě
+            použitelný.
+          </Lead>
+          <Notice>
+            <b>Bez léčebných tvrzení:</b> neuvádíme finální kmeny, dávkování, cenu
+            ani termín, dokud nebudou schválené. Texty projdou kontrolou před
+            spuštěním.
+          </Notice>
+        </ArticleBodySection>
+
+        <ArticleBodySection>
+          <SectionHeading eyebrow="Vývoj">Kde se právě nacházíme</SectionHeading>
+          <Timeline
+            steps={[
+              { title: 'Zadání produktu', text: 'Probiotika jako doplněk systému Vojta Hubne', done: true },
+              { title: 'Ladění receptury', text: 'Kmeny, množství, stabilita a forma', done: true },
+              { title: 'Schválení a etiketa', text: 'Po uzavření receptury' },
+              { title: 'Výroba a spuštění', text: 'Až po finálním potvrzení' },
+            ]}
+          />
+          <FinePrint>
+            Aktuální stav vývoje je přibližně 60 %. Průběh budeme průběžně
+            aktualizovat.
+          </FinePrint>
+        </ArticleBodySection>
+
+        <ArticleBodySection>
+          <SectionHeading eyebrow="FAQ">Časté otázky</SectionHeading>
+          <FAQList
+            items={[
+              {
+                q: 'Jaké kmeny budete používat?',
+                a: 'Výběr kmenů ještě finalizujeme. Seznam zveřejníme až po schválení receptury.',
+              },
+              {
+                q: 'Nahradí to změnu jídelníčku?',
+                a: 'Ne. Má doplnit každodenní komfort v rámci programu, ne nahradit stravu ani režim.',
+              },
+              {
+                q: 'Kdy bude produkt dostupný?',
+                a: 'Termín zatím neuvádíme. Pošleme potvrzené novinky, až bude produkt připravený.',
+              },
+            ]}
+          />
+        </ArticleBodySection>
+      </>
+    )
+  }
+
   // active
   return (
     <>

@@ -4,6 +4,7 @@ import { usePageMeta } from '../hooks/usePageMeta'
 import { BenefitsSection } from '../sections/BenefitsSection'
 import { BestsellersSection } from '../sections/BestsellersSection'
 import { CategoryTeasersSection } from '../sections/CategoryTeasersSection'
+import { CoChystameTeaserSection } from '../sections/CoChystameTeaserSection'
 import { HomeHeroSection } from '../sections/HomeHeroSection'
 import { ProductComparisonSection } from '../sections/ProductComparisonSection'
 import { ProductReviewsSection } from '../sections/ProductReviewsSection'
@@ -22,6 +23,7 @@ export function HomePage() {
     <ShopLayout>
       <HomeHeroSection />
       <BestsellersSection />
+      <CoChystameTeaserSection />
       <ProductReviewsSection />
       <CategoryTeasersSection />
       <StorySection />

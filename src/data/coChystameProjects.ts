@@ -7,6 +7,9 @@ export type CoChystameCategory =
   | 'Průvodce'
 
 export type CoChystameProjectId =
+  | 'odvodnovac'
+  | 'kreatin'
+  | 'probiotika'
   | 'nevinatko'
   | 'cafe'
   | 'flavor'
@@ -58,6 +61,39 @@ export const coChystameProjects: CoChystameProject[] = [
       'Samostatný řídký ranní nápoj z pravé kávy s proteinovou složkou. Ne další příchuť LEAN SHAKE.',
     progress: 36,
     phase: 'Čeká na testovací recepturu',
+  },
+  {
+    id: 'odvodnovac',
+    category: 'Připravujeme',
+    status: 'Ve vývoji – ladíme finální podobu',
+    title: 'Odvodňovač',
+    kicker: 'Lehčí pocit. Méně zadržené vody.',
+    excerpt:
+      'Produkt zaměřený na podporu přirozeného hospodaření organismu s vodou a na pocit větší lehkosti při hubnutí.',
+    progress: 60,
+    phase: 'Aktivně ladíme a testujeme recepturu',
+  },
+  {
+    id: 'kreatin',
+    category: 'Připravujeme',
+    status: 'Ve vývoji – ladíme finální podobu',
+    title: 'Kreatin',
+    kicker: 'Síla. Výkon. Udržení aktivního režimu.',
+    excerpt:
+      'Vlastní kreatin jako přirozená součást programu Vojta Hubne — jednoduché dávkování, dobrá rozpustnost a použití pro každého.',
+    progress: 60,
+    phase: 'Aktivně ladíme a testujeme recepturu',
+  },
+  {
+    id: 'probiotika',
+    category: 'Připravujeme',
+    status: 'Ve vývoji – ladíme finální podobu',
+    title: 'Probiotika',
+    kicker: 'Podpora trávení a střevního mikrobiomu',
+    excerpt:
+      'Probiotický produkt jako doplněk k ostatním produktům Vojta Hubne. Ladíme kmeny, množství, stabilitu a vhodnou formu.',
+    progress: 60,
+    phase: 'Aktivně ladíme a testujeme recepturu',
   },
   {
     id: 'flavor',

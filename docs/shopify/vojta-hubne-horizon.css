@@ -2895,10 +2895,46 @@ main form[action*="/cart"] [class*="checkout"] button {
   border-radius: var(--vh-radius-pill) !important;
   color: var(--vh-black) !important;
   font-family: var(--vh-font-sans) !important;
-  font-size: 0.75rem !important;
+  font-size: 0 !important;
   font-weight: 600 !important;
-  letter-spacing: 0.14em !important;
+  letter-spacing: 0 !important;
   text-transform: uppercase !important;
+}
+
+/* Cart CTA label: Zaplatit → Pokračovat (CSS override; prefer theme translation when possible) */
+main .cart__checkout-button::after,
+main .cart__footer button[name="checkout"]::after,
+main .cart__blocks button[name="checkout"]::after,
+main button[name="checkout"]::after {
+  content: "Pokračovat";
+  font-size: 0.75rem !important;
+  letter-spacing: 0.14em !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  color: var(--vh-black) !important;
+}
+
+/* Cart discount — always show code input (no accordion click) */
+main accordion-custom.cart-discount details .details-content,
+main accordion-custom.cart-discount details::details-content,
+main .cart-discount details .details-content,
+main .cart-discount details::details-content {
+  display: block !important;
+  block-size: auto !important;
+  opacity: 1 !important;
+  overflow: visible !important;
+  content-visibility: visible !important;
+  padding-block: var(--padding-2xs, 0.25rem) var(--padding-sm, 0.75rem) !important;
+}
+
+main .cart-discount__summary {
+  pointer-events: none !important;
+  cursor: default !important;
+}
+
+main .cart-discount__summary .cart-totals__icon,
+main .cart-discount__summary svg {
+  display: none !important;
 }
 
 /* Cart discount — override summary inherit so apply button and input read correctly */
