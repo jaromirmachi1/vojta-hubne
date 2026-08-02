@@ -240,12 +240,6 @@ const SubmitButton = styled.button`
   }
 `;
 
-const OfferButtons = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.55rem;
-`;
-
 const Status = styled.p<{ $error?: boolean }>`
   margin: 0;
   font-size: 0.8rem;
@@ -288,9 +282,6 @@ export function NewsletterPopup() {
   const titleId = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
-  const [selectedOffer, setSelectedOffer] = useState<
-    "discount" | "herohero" | null
-  >(null);
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -359,10 +350,6 @@ export function NewsletterPopup() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const submitter = (event.nativeEvent as SubmitEvent)
-      .submitter as HTMLButtonElement | null;
-    const offer = submitter?.value === "herohero" ? "herohero" : "discount";
-    setSelectedOffer(offer);
     const value = email.trim();
 
     if (!value) {
@@ -374,7 +361,7 @@ export function NewsletterPopup() {
 
     try {
       await subscribeToNewsletter(value, {
-        offer,
+        offer: "discount",
         source: "popup",
       });
       setEmail("");
@@ -414,9 +401,7 @@ export function NewsletterPopup() {
             <Eyebrow>Vojta Hubne</Eyebrow>
           </BrandRow>
           <Title id={titleId}>
-            Získejte <Highlight>200Kč</Highlight> na první nákup nebo{" "}
-            <Highlight>Herohero</Highlight> na měsíc zdarma +{" "}
-            <Highlight>15%</Highlight> slevu na nákup
+            Získejte <Highlight>200 Kč</Highlight> na první nákup
           </Title>
           <BenefitList>
             <li>Novinky a tipy jako první</li>
@@ -430,7 +415,7 @@ export function NewsletterPopup() {
                 name="email"
                 autoComplete="email"
                 placeholder="E-mail"
-                aria-label="E-mail pro vstup do Vojta Hubne Clubu"
+                aria-label="E-mail pro slevu 200 Kč"
                 value={email}
                 onChange={(event) => {
                   setEmail(event.target.value);
@@ -440,35 +425,17 @@ export function NewsletterPopup() {
               />
             </InputRow>
 
-            <OfferButtons>
-              <SubmitButton
-                type="submit"
-                value="discount"
-                aria-label="Vybrat 200 Kč na první objednávku"
-                disabled={status === "loading" || status === "success"}
-              >
-                {status === "loading" && selectedOffer === "discount"
-                  ? "Odesílám…"
-                  : "Chci 200 Kč"}
-              </SubmitButton>
-              <SubmitButton
-                type="submit"
-                value="herohero"
-                aria-label="Vybrat první měsíc Herohero zdarma"
-                disabled={status === "loading" || status === "success"}
-              >
-                {status === "loading" && selectedOffer === "herohero"
-                  ? "Odesílám…"
-                  : "Chci Herohero zdarma"}
-              </SubmitButton>
-            </OfferButtons>
+            <SubmitButton
+              type="submit"
+              aria-label="Získat 200 Kč na první objednávku"
+              disabled={status === "loading" || status === "success"}
+            >
+              {status === "loading" ? "Odesílám…" : "Chci 200 Kč"}
+            </SubmitButton>
 
             {status === "success" ? (
               <Status role="status">
-                Děkujeme, jste v naší komunitě.
-                {selectedOffer === "herohero"
-                  ? " Ozveme se s aktivací Herohero."
-                  : " Sleva 200 Kč je vaše."}
+                Děkujeme, jste v naší komunitě. Sleva 200 Kč je vaše.
               </Status>
             ) : null}
 
@@ -484,8 +451,7 @@ export function NewsletterPopup() {
             <a href={getShopifyPolicyUrl("privacy-policy")}>
               zpracováním osobních údajů
             </a>
-            . Na uvedený e-mail obdržíte kupón se slevou 200 Kč nebo kód na
-            HeroHero.
+            . Na uvedený e-mail obdržíte kupón se slevou 200 Kč.
           </Hint>
         </ContentPanel>
       </Dialog>

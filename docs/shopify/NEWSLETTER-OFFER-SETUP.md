@@ -1,18 +1,15 @@
 # Newsletter popup — Shopify offer emails
 
-Popup signups tag customers in Shopify. Two automations send different offer emails based on which button was clicked.
-
-For now, the offer popup is only mounted on the `/alt` page, so normal site traffic (home/footer signups) should stay unaffected.
+Popup signups tag customers in Shopify. The homepage popup offers **200 Kč** only (`offer-200kc`).
 
 ## Tags the site adds
 
-| Source                           | Tags                                           |
-| -------------------------------- | ---------------------------------------------- |
-| Popup — **Chci 200 Kč**          | `newsletter`, `popup-signup`, `offer-200kc`    |
-| Popup — **Chci Herohero zdarma** | `newsletter`, `popup-signup`, `offer-herohero` |
-| Footer newsletter                | `newsletter`, `website-footer`                 |
+| Source            | Tags                                        |
+| ----------------- | ------------------------------------------- |
+| Popup — **200 Kč** | `newsletter`, `popup-signup`, `offer-200kc` |
+| Footer newsletter | `newsletter`, `website-footer`              |
 
-**No duplicate offers:** if a customer already has `offer-200kc` or `offer-herohero`, a second signup does **not** add another offer tag (no second offer email).
+**No duplicate offers:** if a customer already has `offer-200kc` (or the older `offer-herohero` tag), a second signup does **not** add another offer tag.
 
 **Popup hidden after subscribe:** browser stores `vh-newsletter-popup-subscribed=true` permanently.
 
