@@ -159,6 +159,9 @@
       }
     };
 
+    // Always start closed — prevents black overlay after FB in-app bfcache / navigation
+    setOpen(false);
+
     toggle.addEventListener('click', () => {
       setOpen(!overlay.classList.contains('is-open'));
     });
@@ -176,5 +179,8 @@
         setOpen(false);
       }
     });
+
+    window.addEventListener('pagehide', () => setOpen(false));
+    window.addEventListener('pageshow', () => setOpen(false));
   })();
 </script>

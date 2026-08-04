@@ -194,7 +194,7 @@ export function CoChystameArticleSection({
             <Lead>{project.excerpt}</Lead>
 
             <MetaRow>
-              <span>Aktualizováno 20. 7. 2026</span>
+              <span>Aktualizováno {project.updatedAt}</span>
               <span>{project.phase}</span>
             </MetaRow>
           </div>

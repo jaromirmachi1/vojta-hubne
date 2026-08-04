@@ -28,6 +28,7 @@ export type CoChystameProject = {
   excerpt: string
   progress: number
   phase: string
+  updatedAt: string
 }
 
 export const coChystameCategories: CoChystameCategory[] = [
@@ -50,6 +51,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Jednoduchý večerní rituál s transparentním pracovním složením a jasně popsaným stavem vývoje.',
     progress: 64,
     phase: 'Pracovní etiketa připravena',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'cafe',
@@ -61,6 +63,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Samostatný řídký ranní nápoj z pravé kávy s proteinovou složkou. Ne další příchuť LEAN SHAKE.',
     progress: 36,
     phase: 'Čeká na testovací recepturu',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'odvodnovac',
@@ -72,6 +75,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Produkt zaměřený na podporu přirozeného hospodaření organismu s vodou a na pocit větší lehkosti při hubnutí.',
     progress: 60,
     phase: 'Aktivně ladíme a testujeme recepturu',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'kreatin',
@@ -83,6 +87,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Vlastní kreatin jako přirozená součást programu Vojta Hubne — jednoduché dávkování, dobrá rozpustnost a použití pro každého.',
     progress: 60,
     phase: 'Aktivně ladíme a testujeme recepturu',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'probiotika',
@@ -94,17 +99,19 @@ export const coChystameProjects: CoChystameProject[] = [
       'Probiotický produkt jako doplněk k ostatním produktům Vojta Hubne. Ladíme kmeny, množství, stabilitu a vhodnou formu.',
     progress: 60,
     phase: 'Aktivně ladíme a testujeme recepturu',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'flavor',
     category: 'Komunita',
-    status: 'Hlasování komunity',
+    status: 'Ve vývoji',
     title: 'Nová příchuť Lean Shake',
-    kicker: 'Vyberete vy',
+    kicker: 'Komunita rozhodla',
     excerpt:
-      'Nápady od komunity, společné hlasování a čtyři nejlepší varianty v malém senzorickém testu.',
-    progress: 20,
-    phase: 'Připravujeme sběr návrhů',
+      'Hlasování skončilo. Do výroby jdou Višeň v čokoládě a Čokoláda — dvě příchutě, které získaly nejvíc hlasů.',
+    progress: 90,
+    phase: 'Ladíme finální recepturu a výrobu',
+    updatedAt: '4. 8. 2026',
   },
   {
     id: 'xxl',
@@ -116,6 +123,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Větší balení GLP-1 Support a LEAN SHAKE pro pravidelné zákazníky. Receptury zůstávají stejné.',
     progress: 28,
     phase: 'Ověřujeme obaly a výrobu',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'samples',
@@ -127,6 +135,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Placené testovací porce pro nové zákazníky, kteří nechtějí začínat nákupem celého balení.',
     progress: 24,
     phase: 'Řešíme formát a ekonomiku',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'affiliate',
@@ -138,6 +147,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Tři úrovně spolupráce pro aktivní zákazníky a tvůrce, kteří značku znají a chtějí ji autenticky doporučovat.',
     progress: 44,
     phase: 'Finalizujeme podmínky',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'lab',
@@ -149,6 +159,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Menší tým aktivních zákazníků, který navrhuje, testuje a pomáhá rozhodovat o dalších produktech.',
     progress: 52,
     phase: 'Připravujeme první test',
+    updatedAt: '20. 7. 2026',
   },
   {
     id: 'active',
@@ -160,6 +171,7 @@ export const coChystameProjects: CoChystameProject[] = [
       'Koncept produktu pro energii, motivaci a aktivní režim. Finální název, receptura i forma zatím nejsou schválené.',
     progress: 18,
     phase: 'Vyhodnocujeme zadání',
+    updatedAt: '20. 7. 2026',
   },
 ]
 

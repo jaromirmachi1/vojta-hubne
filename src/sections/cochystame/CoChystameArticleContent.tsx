@@ -398,41 +398,57 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
     return (
       <>
         <ArticleBodySection>
-          <SectionHeading eyebrow="Rozhodne komunita">
-            Příchuť, kterou nevybereme za zavřenými dveřmi
+          <SectionHeading eyebrow="Hlasování ukončeno">
+            Dvě nové příchutě jdou do výroby
           </SectionHeading>
           <Lead>
-            Dnes nabízíme příchutě Jahoda, Slaný karamel a Piškotový dort. Další nechceme vybrat jen podle interního pocitu. Nejprve sesbíráme návrhy od komunity, potom proběhne hlasování a čtyři nejsilnější varianty postoupí do malého testu.
+            Děkujeme všem, kdo se zapojili do hlasování o nové příchutě Lean Shake GLP-1. Máme jasno: do výroby zařadíme{' '}
+            <strong>Višeň v čokoládě</strong> a <strong>Čokoládu</strong> — dvě varianty, které získaly nejvíc hlasů.
           </Lead>
           <StyledBlockquote>
-            Nejdřív nápady. Potom hlasování. A nakonec skutečná ochutnávka, která rozhodne.
+            Nejvíce hlasů získala Višeň v čokoládě. Hned za ní skončila Čokoláda. Obě příchutě teď ladíme do finální podoby.
           </StyledBlockquote>
         </ArticleBodySection>
 
         <ArticleBodySection>
-          <SectionHeading eyebrow="Postup">Jak výběr proběhne</SectionHeading>
-          <Timeline
-            steps={[
-              { title: 'Sběr návrhů', text: 'Komunita navrhne nové příchutě' },
-              { title: 'Veřejné hlasování', text: 'Vybereme čtyři nejsilnější nápady' },
-              { title: 'Testovací vzorky', text: 'Malá balení projdou ochutnávkou' },
-              { title: 'Rozhodnutí', text: 'Výsledek určí zájem a hodnocení testerů' },
+          <SectionHeading eyebrow="Vítězné příchutě">Co připravujeme</SectionHeading>
+          <FactsGrid
+            items={[
+              {
+                title: 'Višeň v čokoládě',
+                text: 'Nejsilnější hlas komunity. Sladká višeň v bohaté čokoládové vrstvě.',
+              },
+              {
+                title: 'Čokoláda',
+                text: 'Druhé místo v hlasování. Klasická, plná chuť pro každodenní pití.',
+              },
+              {
+                title: 'Stávající nabídka',
+                text: 'Jahoda, Slaný karamel a Piškotový dort zůstávají v prodeji.',
+              },
+              {
+                title: 'Co teď',
+                text: 'Doladíme recepturu, chuť, konzistenci a připravíme výrobu.',
+              },
             ]}
           />
         </ArticleBodySection>
 
         <ArticleBodySection>
-          <SectionHeading eyebrow="Senzorický test">Co budeme hodnotit</SectionHeading>
-          <FactsGrid
-            items={[
-              { title: 'Chuť a vůně', text: 'První dojem i doznívání příchuti.' },
-              { title: 'Sladkost', text: 'Zda je vyvážená a funguje při opakovaném pití.' },
-              { title: 'Konzistence', text: 'Textura, rozpustnost a případné hrudky.' },
-              { title: 'Celkový dojem', text: 'Sytost, ochota koupit a znovu zařadit.' },
+          <SectionHeading eyebrow="Postup">Kde jsme teď</SectionHeading>
+          <Timeline
+            steps={[
+              { title: 'Sběr návrhů', text: 'Komunita navrhla nové příchutě', done: true },
+              { title: 'Veřejné hlasování', text: 'Rozhodlo se o vítězných variantách', done: true },
+              { title: 'Finální receptura', text: 'Ladíme chuť, vůni a konzistenci' },
+              { title: 'Výroba a uvedení', text: 'Potvrdíme termín, až bude vše připravené' },
             ]}
           />
+        </ArticleBodySection>
+
+        <ArticleBodySection>
           <Notice>
-            Termín výroby vítězné příchuti potvrdíme až po testu, finální receptuře a ověření výrobních možností.
+            Přesný termín uvedení na prodej oznámíme po dokončení receptury, testování a ověření výrobních možností. Už teď se těšíme, až společně ochutnáme Višeň v čokoládě a Čokoládu.
           </Notice>
         </ArticleBodySection>
 
@@ -440,9 +456,18 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
           <SectionHeading eyebrow="FAQ">Časté otázky</SectionHeading>
           <FAQList
             items={[
-              { q: 'Může návrh poslat každý?', a: 'Ano, sběr nápadů bude otevřený komunitě. Přesný způsob zveřejníme před hlasováním.' },
-              { q: 'Budou testovací vzorky zdarma?', a: 'Podmínky komunitního testování zveřejníme předem; malá prodejní balení jsou samostatný projekt.' },
-              { q: 'Je vítězná příchuť automaticky ve výrobě?', a: 'Nejdříve musí projít testem, kontrolou receptury a výrobní proveditelností.' },
+              {
+                q: 'Které příchutě vyhrály?',
+                a: 'Nejvíc hlasů získala Višeň v čokoládě, druhá skončila Čokoláda. Obě jdou do výroby.',
+              },
+              {
+                q: 'Zůstanou stávající příchutě?',
+                a: 'Ano. Jahoda, Slaný karamel a Piškotový dort zůstávají součástí nabídky.',
+              },
+              {
+                q: 'Kdy budou nové příchutě v prodeji?',
+                a: 'Termín potvrdíme po dokončení finální receptury a výroby. Sledujte tuto stránku nebo newsletter.',
+              },
             ]}
           />
         </ArticleBodySection>

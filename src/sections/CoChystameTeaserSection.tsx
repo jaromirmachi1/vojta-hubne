@@ -5,12 +5,11 @@ import { ArrowIcon } from '../components/cochystame/ArrowIcon'
 import { coChystameProjects } from '../data/coChystameProjects'
 import { eyebrowText } from '../styles/eyebrow'
 
-const teaserProjects = coChystameProjects.filter(
-  (project) =>
-    project.id === 'odvodnovac' ||
-    project.id === 'kreatin' ||
-    project.id === 'probiotika',
-)
+const teaserIds = ['flavor', 'odvodnovac', 'kreatin'] as const
+
+const teaserProjects = teaserIds
+  .map((id) => coChystameProjects.find((project) => project.id === id))
+  .filter((project): project is (typeof coChystameProjects)[number] => Boolean(project))
 
 const pulse = keyframes`
   0%, 100% { opacity: 1; }
