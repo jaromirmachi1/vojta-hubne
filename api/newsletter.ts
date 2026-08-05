@@ -227,6 +227,64 @@ async function findCustomerByEmail(email: string): Promise<ShopifyCustomer | nul
   return data.customers.edges[0]?.node ?? null
 }
 
+async function updateCustomerTags(customerId: string, tags: string[]) {
+  const data = await shopifyGraphQl<{
+    customerUpdate: { userErrors: Array<{ message: string }> }
+  }>(
+    `#graphql
+      mutation UpdateNewsletterCustomerTags($input: CustomerInput!) {
+        customerUpdate(input: $input) {
+          userErrors {
+            message
+          }
+        }
+      }
+    `,
+    {
+      input: {
+        id: customerId,
+        tags,
+      },
+    },
+  )
+
+  const error = data.customerUpdate.userErrors[0]?.message
+  if (error) throw new Error(error)
+}
+
+async function subscribeCustomerMarketing(customerId: string) {
+  const data = await shopifyGraphQl<{
+    customerEmailMarketingConsentUpdate: {
+      userErrors: Array<{ message: string }>
+    }
+  }>(
+    `#graphql
+      mutation SubscribeNewsletterConsent(
+        $input: CustomerEmailMarketingConsentUpdateInput!
+      ) {
+        customerEmailMarketingConsentUpdate(input: $input) {
+          userErrors {
+            message
+          }
+        }
+      }
+    `,
+    {
+      input: {
+        customerId,
+        emailMarketingConsent: {
+          marketingState: 'SUBSCRIBED',
+          marketingOptInLevel: 'SINGLE_OPT_IN',
+          consentUpdatedAt: new Date().toISOString(),
+        },
+      },
+    },
+  )
+
+  const error = data.customerEmailMarketingConsentUpdate.userErrors[0]?.message
+  if (error) throw new Error(error)
+}
+
 async function subscribeCustomer(
   email: string,
   options: { offer?: NewsletterOffer | null; source: NewsletterSource },
@@ -235,32 +293,8 @@ async function subscribeCustomer(
   const tags = buildCustomerTags(existingCustomer?.tags ?? [], options)
 
   if (existingCustomer) {
-    const data = await shopifyGraphQl<{
-      customerUpdate: { userErrors: Array<{ message: string }> }
-    }>(
-      `#graphql
-        mutation UpdateNewsletterCustomer($input: CustomerInput!) {
-          customerUpdate(input: $input) {
-            userErrors {
-              message
-            }
-          }
-        }
-      `,
-      {
-        input: {
-          id: existingCustomer.id,
-          tags,
-          emailMarketingConsent: {
-            marketingState: 'SUBSCRIBED',
-            marketingOptInLevel: 'SINGLE_OPT_IN',
-          },
-        },
-      },
-    )
-
-    const error = data.customerUpdate.userErrors[0]?.message
-    if (error) throw new Error(error)
+    await updateCustomerTags(existingCustomer.id, tags)
+    await subscribeCustomerMarketing(existingCustomer.id)
     return
   }
 

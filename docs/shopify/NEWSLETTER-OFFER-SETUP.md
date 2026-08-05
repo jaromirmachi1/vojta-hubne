@@ -7,7 +7,7 @@ Popup signups tag customers in Shopify. The homepage popup offers **200 Kč** on
 | Source            | Tags                                        |
 | ----------------- | ------------------------------------------- |
 | Popup — **200 Kč** | `newsletter`, `popup-signup`, `offer-200kc` |
-| Footer newsletter | `newsletter`, `website-footer`              |
+| Footer newsletter | `newsletter`, `website-footer`, `offer-200kc` (first signup only) |
 
 **No duplicate offers:** if a customer already has `offer-200kc` (or the older `offer-herohero` tag), a second signup does **not** add another offer tag.
 

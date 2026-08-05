@@ -8,6 +8,7 @@ import { HashLink } from './HashLink'
 import { PageContainer } from './PageContainer'
 import { getShopifyPolicyUrl } from '../utils/shopify'
 import { subscribeToNewsletter } from '../utils/subscribeToNewsletter'
+import { markNewsletterPopupSubscribed } from '../utils/newsletterPopup'
 import { FooterPaymentIcons } from './FooterPaymentIcons'
 
 const Footer = styled.footer`
@@ -126,29 +127,57 @@ const NewsletterButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border: 0;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid ${({ theme }) => theme.colors.gold};
   border-radius: ${({ theme }) => theme.radii.pill};
-  background: ${({ theme }) => theme.colors.surfaceRaised};
-  color: ${({ theme }) => theme.colors.goldMuted};
+  background: ${({ theme }) => theme.colors.gold};
+  color: ${({ theme }) => theme.colors.black};
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
   cursor: pointer;
+  box-shadow: 0 0 18px rgba(238, 220, 130, 0.28);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:hover:not(:disabled) {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    box-shadow: 0 0 26px rgba(238, 220, 130, 0.4);
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.gold};
+    outline-offset: 3px;
+  }
 
   &:disabled {
     opacity: 0.55;
     cursor: not-allowed;
+    box-shadow: none;
   }
 `
 
-const ConsentText = styled.p`
+const ConsentLine = styled.p`
   margin: 0;
   font-size: 0.75rem;
   line-height: 1.45;
   color: ${({ theme }) => theme.colors.textMuted};
+  white-space: nowrap;
 `
 
 const ConsentLink = styled(FooterExternalLink)`
-  font-size: 0.75rem;
+  display: inline;
+  font-size: inherit;
+  color: ${({ theme }) => theme.colors.goldMuted};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.gold};
+  }
 `
 
 const NewsletterStatus = styled.p<{ $error?: boolean }>`
@@ -272,10 +301,14 @@ export function SiteFooter({ id }: SiteFooterProps) {
     setNewsletterStatus('loading')
 
     try {
-      await subscribeToNewsletter(email, { source: 'footer' })
+      await subscribeToNewsletter(email, {
+        offer: 'discount',
+        source: 'footer',
+      })
 
       setNewsletterEmail('')
       setNewsletterStatus('success')
+      markNewsletterPopupSubscribed()
     } catch {
       setNewsletterStatus('error')
     }
@@ -355,10 +388,12 @@ export function SiteFooter({ id }: SiteFooterProps) {
               Nepodařilo se e-mail přihlásit. Zkuste to prosím znovu.
             </NewsletterStatus>
           ) : null}
-          <ConsentText>Odesláním souhlasíte se </ConsentText>
-          <ConsentLink href={getShopifyPolicyUrl('privacy-policy')}>
-            zpracováním osobních údajů.
-          </ConsentLink>
+          <ConsentLine>
+            Odesláním souhlasíte se{' '}
+            <ConsentLink href={getShopifyPolicyUrl('privacy-policy')}>
+              zpracováním osobních údajů.
+            </ConsentLink>
+          </ConsentLine>
         </NewsletterColumn>
       </Inner>
       <Bottom>
