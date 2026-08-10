@@ -75,7 +75,8 @@ Use premade blocks only — layout won’t match React exactly:
    - Doprava a platba → Shopify shipping policy URL
    - Obchodní podmínky → terms policy URL
    - Reklamace → Shopify refund policy URL
-   - Ochrana osobních údajů → privacy policy URL
+   - Zásady ochrany osobních údajů → `/pages/zasady-ochrany-osobnich-udaju`
+   - Zásady používání cookies → `/pages/zasady-pouzivani-cookies`
 3. Keep **Email signup** block for newsletter (React doesn’t have this — optional on shop)
 
 ---

@@ -10,7 +10,7 @@ import {
   markNewsletterPopupSubscribed,
   shouldShowNewsletterPopup,
 } from "../utils/newsletterPopup";
-import { getShopifyPolicyUrl } from "../utils/shopify";
+import { getPrivacyPolicyPageUrl } from "../utils/shopify";
 import { subscribeToNewsletter } from "../utils/subscribeToNewsletter";
 
 const OPEN_DELAY_MS = 8000;
@@ -448,7 +448,7 @@ export function NewsletterPopup() {
 
           <Hint>
             Odesláním souhlasíte se{" "}
-            <a href={getShopifyPolicyUrl("privacy-policy")}>
+            <a href={getPrivacyPolicyPageUrl()}>
               zpracováním osobních údajů
             </a>
             . Na uvedený e-mail obdržíte kupón se slevou 200 Kč.

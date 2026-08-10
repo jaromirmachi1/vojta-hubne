@@ -1,8 +1,8 @@
 import { useId } from 'react'
 import styled from 'styled-components'
 import {
+  getPrivacyPolicyPageUrl,
   getShopifyContactFormUrl,
-  getShopifyPolicyUrl,
 } from '../utils/shopify'
 
 const Form = styled.form`
@@ -134,7 +134,7 @@ export function KlubNewsletterForm() {
       <Hint>
         Po spuštění klubu vám napíšeme s pozvánkou. Odesláním souhlasíte se
         zpracováním údajů dle{' '}
-        <a href={getShopifyPolicyUrl('privacy-policy')}>
+        <a href={getPrivacyPolicyPageUrl()}>
           zásad ochrany osobních údajů
         </a>
         .

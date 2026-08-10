@@ -45,13 +45,8 @@
       {% else %}
         <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/refund-policy">Reklamace</a>
       {% endif %}
-      {% if shop.privacy_policy %}
-        <a class="vh-footer-legal__link" href="{{ shop.privacy_policy.url }}">Ochrana osobních údajů</a>
-      {% else %}
-        <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/privacy-policy">Ochrana osobních údajů</a>
-      {% endif %}
-      <a class="vh-footer-legal__link" href="{{ marketing }}/#produkty">Produkty</a>
-      <a class="vh-footer-legal__link" href="{{ marketing }}/co-chystame">Co chystáme</a>
+      <a class="vh-footer-legal__link" href="{{ routes.root_url }}pages/zasady-ochrany-osobnich-udaju">Zásady ochrany osobních údajů</a>
+      <a class="vh-footer-legal__link" href="{{ routes.root_url }}pages/zasady-pouzivani-cookies">Zásady používání cookies</a>
     </nav>
   </div>
 </div>

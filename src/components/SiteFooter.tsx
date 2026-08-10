@@ -6,7 +6,7 @@ import { companyInfo } from '../data/company'
 import { eyebrowText } from '../styles/eyebrow'
 import { HashLink } from './HashLink'
 import { PageContainer } from './PageContainer'
-import { getShopifyPolicyUrl } from '../utils/shopify'
+import { getCookiesPolicyPageUrl, getPrivacyPolicyPageUrl, getShopifyPolicyUrl } from '../utils/shopify'
 import { subscribeToNewsletter } from '../utils/subscribeToNewsletter'
 import { markNewsletterPopupSubscribed } from '../utils/newsletterPopup'
 import { FooterPaymentIcons } from './FooterPaymentIcons'
@@ -343,10 +343,12 @@ export function SiteFooter({ id }: SiteFooterProps) {
           <FooterExternalLink href={getShopifyPolicyUrl('refund-policy')}>
             Reklamace
           </FooterExternalLink>
-          <FooterExternalLink href={getShopifyPolicyUrl('privacy-policy')}>
-            Ochrana osobních údajů
+          <FooterExternalLink href={getPrivacyPolicyPageUrl()}>
+            Zásady ochrany osobních údajů
           </FooterExternalLink>
-          <FooterHashLink sectionId="produkty">Produkty</FooterHashLink>
+          <FooterExternalLink href={getCookiesPolicyPageUrl()}>
+            Zásady používání cookies
+          </FooterExternalLink>
         </Column>
 
         <NewsletterColumn>
@@ -390,7 +392,7 @@ export function SiteFooter({ id }: SiteFooterProps) {
           ) : null}
           <ConsentLine>
             Odesláním souhlasíte se{' '}
-            <ConsentLink href={getShopifyPolicyUrl('privacy-policy')}>
+            <ConsentLink href={getPrivacyPolicyPageUrl()}>
               zpracováním osobních údajů.
             </ConsentLink>
           </ConsentLine>

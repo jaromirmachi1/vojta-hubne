@@ -79,6 +79,19 @@ export function getShopifyPolicyUrl(slug: ShopifyPolicySlug): string {
   return `${getShopifyStoreUrl()}/policies/${slug}`
 }
 
+/** Custom legal pages on the shop (Online Store → Pages). */
+export function getShopifyPageUrl(handle: string): string {
+  return `${getShopifyStoreUrl()}/pages/${handle}`
+}
+
+export function getPrivacyPolicyPageUrl(): string {
+  return getShopifyPageUrl('zasady-ochrany-osobnich-udaju')
+}
+
+export function getCookiesPolicyPageUrl(): string {
+  return getShopifyPageUrl('zasady-pouzivani-cookies')
+}
+
 /**
  * Shopify native contact form endpoint.
  * Deliveries go to the store contact email in Shopify Admin (see contactFormRecipientEmail).

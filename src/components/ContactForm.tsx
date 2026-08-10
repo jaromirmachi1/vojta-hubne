@@ -1,7 +1,7 @@
 import { useId, useState } from 'react'
 import type { FormEvent } from 'react'
 import styled from 'styled-components'
-import { getShopifyPolicyUrl } from '../utils/shopify'
+import { getPrivacyPolicyPageUrl } from '../utils/shopify'
 
 const Form = styled.form`
   display: grid;
@@ -278,7 +278,7 @@ export function ContactForm() {
 
       <Hint>
         Odesláním souhlasíte se zpracováním údajů dle{' '}
-        <a href={getShopifyPolicyUrl('privacy-policy')}>
+        <a href={getPrivacyPolicyPageUrl()}>
           zásad ochrany osobních údajů
         </a>
         .
