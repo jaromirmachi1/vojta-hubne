@@ -752,26 +752,52 @@ footer .footer-content {
 }
 
 footer .footer-content:has(.vh-footer-legal) {
+  display: grid !important;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(18rem, 0.82fr) !important;
+  grid-template-rows: auto !important;
   align-items: start !important;
+  column-gap: 2.5rem !important;
+  row-gap: 0.85rem !important;
 }
 
-/* Newsletter + email signup stack in column 3 (legal spans cols 1–2) */
+.vh-footer-legal {
+  grid-column: 1 / 3 !important;
+  grid-row: 1 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  gap: clamp(1.5rem, 4vw, 3rem) !important;
+  align-self: start !important;
+  height: auto !important;
+}
+
+/* Newsletter column — keep at top of col 3, never stretch to legal height */
 footer .footer-content:has(.vh-footer-legal) > *:not(.vh-footer-legal) {
   grid-column: 3 !important;
+  grid-row: 1 !important;
   justify-self: stretch !important;
   align-self: start !important;
   width: 100% !important;
   max-width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  position: relative !important;
 }
 
-/* Footer legal columns — RM Solution Group + policy links */
-.vh-footer-legal {
-  grid-column: 1 / 3;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 3rem);
-  align-self: start;
+/* If Horizon splits heading + form into 2 blocks, stack the 2nd under the 1st */
+footer .footer-content:has(.vh-footer-legal)
+  > *:not(.vh-footer-legal)
+  ~ *:not(.vh-footer-legal) {
+  grid-row: 2 !important;
+  align-self: start !important;
+}
+
+/* When a 2nd newsletter block exists, legal should span both short rows */
+footer .footer-content:has(.vh-footer-legal):has(
+    > *:not(.vh-footer-legal) ~ *:not(.vh-footer-legal)
+  )
+  > .vh-footer-legal {
+  grid-row: 1 / 3 !important;
 }
 
 .vh-footer-legal__column {
@@ -872,15 +898,43 @@ footer .email-signup-block {
   width: 100% !important;
   max-width: 42rem !important;
   justify-self: end !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  gap: 0.85rem !important;
+  align-content: flex-start !important;
 }
 
 footer .footer-content:has(.vh-footer-legal) .email-signup-block {
   max-width: 100% !important;
-  margin-block-start: 0.35rem !important;
+  margin-block-start: 0 !important;
+  margin-block-end: 0 !important;
+}
+
+footer .email-signup-block .group-block-content,
+footer .email-signup-block > *,
+footer .email-signup-block .email-signup {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+  justify-content: flex-start !important;
+  align-content: flex-start !important;
 }
 
 footer .email-signup__form {
   width: 100% !important;
+  margin-top: 0.35rem !important;
+  margin-bottom: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+footer .email-signup__input-group {
+  margin-top: 0 !important;
 }
 
 footer .email-signup__input-group {
@@ -1094,6 +1148,7 @@ footer .social-icons__wrapper {
 
   .vh-footer-legal {
     grid-column: 1 / -1 !important;
+    grid-row: auto !important;
     grid-template-columns: minmax(0, 1fr) !important;
   }
 
@@ -1104,10 +1159,19 @@ footer .social-icons__wrapper {
 
   footer .footer-content .vh-footer-legal {
     grid-column: 1 / -1 !important;
+    grid-row: auto !important;
   }
 
   footer .footer-content:has(.vh-footer-legal) > *:not(.vh-footer-legal) {
     grid-column: 1 / -1 !important;
+    grid-row: auto !important;
+    position: static !important;
+  }
+
+  footer .footer-content:has(.vh-footer-legal)
+    > *:not(.vh-footer-legal)
+    ~ *:not(.vh-footer-legal) {
+    grid-row: auto !important;
   }
 }
 

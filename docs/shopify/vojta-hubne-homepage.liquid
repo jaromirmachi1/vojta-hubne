@@ -1,0 +1,1029 @@
+{% comment %}
+  Vojta Hubne — React-matching homepage experiment (Shopify Horizon).
+
+  PRIVATE PREVIEW (recommended):
+  1. Upload this as sections/vh-homepage.liquid
+  2. Upload hero + story images as theme Assets (see HOMEPAGE-PREVIEW.md)
+  3. Create Page "Homepage preview", handle: homepage-preview
+  4. Theme editor → that page → add Custom Liquid OR assign a page template
+     that only contains this section
+  5. Open /pages/homepage-preview (keep page unpublished / password theme)
+
+  Do NOT assign this to the live index while shop-home-redirect is active
+  unless you intentionally remove the / → /collections/all redirect.
+
+  Assets expected in theme Files/Assets:
+  - vh-hero.jpg   (from src/assets/159ede93-….jpg)
+  - vh-story.png  (from src/assets/vojtazhubl.png)
+{% endcomment %}
+
+{% assign marketing_url = 'https://www.vojtahubne.cz' %}
+{% assign promo_code = '30STARTSVOJTOU' %}
+{% assign hero_img = 'vh-hero.jpg' | asset_url %}
+{% assign story_img = 'vh-story.png' | asset_url %}
+
+{% assign p_glp = all_products['glp1-support'] %}
+{% assign p_lean = all_products['lean-shake-glp-1'] %}
+{% assign p_cream = all_products['ghk-cu-cream'] %}
+{% assign p_emul = all_products['antiage-cream-emulfeel®'] %}
+
+<section class="vh-home" data-vh-home>
+  {% comment %} —— HERO —— {% endcomment %}
+  <section class="vh-home-hero" aria-labelledby="vh-home-hero-title">
+    <div class="vh-home__glow" aria-hidden="true"></div>
+    <div class="vh-home__inner vh-home-hero__grid">
+      <div class="vh-home-hero__content">
+        <p class="vh-home__eyebrow">Prémiová řada GLP-1</p>
+        <h1 class="vh-home-hero__title" id="vh-home-hero-title">
+          Transformace, která má váhu
+        </h1>
+        <p class="vh-home-hero__lead">
+          Vojta Hubne — značka postavená na reálné cestě z 160&nbsp;kg na 99&nbsp;kg.
+          Doplňky stravy a regenerační péče navržené pro každodenní disciplínu.
+        </p>
+
+        <div class="vh-home-hero__stats">
+          <div>
+            <span class="vh-home-hero__stat-value">160→99</span>
+            <span class="vh-home__eyebrow">Kilogramů pryč</span>
+          </div>
+          <div>
+            <span class="vh-home-hero__stat-value">4</span>
+            <span class="vh-home__eyebrow">Flagship produkty</span>
+          </div>
+        </div>
+
+        <div class="vh-home-hero__actions">
+          <a class="vh-home__btn vh-home__btn--solid" href="#vh-home-produkty">Nejprodávanější</a>
+          <a class="vh-home__btn vh-home__btn--outline" href="{{ routes.all_products_collection_url }}">Nakupovat v e-shopu</a>
+        </div>
+
+        <button
+          type="button"
+          class="vh-home-hero__code"
+          data-vh-copy-code="{{ promo_code }}"
+          aria-label="Zkopírovat promo kód {{ promo_code }}"
+        >
+          Zkopírovat kód {{ promo_code }}
+        </button>
+      </div>
+
+      <figure class="vh-home-hero__portrait">
+        <div class="vh-home-hero__frame">
+          <img
+            src="{{ hero_img }}"
+            alt="Balíček (re)START — zpět v prodeji se slevou 30 %. GLP-1 Support, Lean Shake a D3+K2+Vápník."
+            width="1448"
+            height="1086"
+            loading="eager"
+            decoding="async"
+          >
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  {% comment %} —— BESTSELLERS —— {% endcomment %}
+  <section class="vh-home-products" id="vh-home-produkty" aria-labelledby="vh-home-products-title">
+    <div class="vh-home__inner">
+      <header class="vh-home__header">
+        <p class="vh-home__eyebrow">Nejprodávanější</p>
+        <h2 class="vh-home__title" id="vh-home-products-title">Trendy bestsellery</h2>
+      </header>
+
+      <div class="vh-home-products__grid">
+        {% for item in (1..4) %}
+          {% case item %}
+            {% when 1 %}
+              {% assign product = p_glp %}
+              {% assign fallback_name = 'GLP-1 Support' %}
+              {% assign fallback_handle = 'glp1-support' %}
+              {% assign fallback_tagline = 'Energie · Spalování · Kontrola chuti' %}
+              {% assign fallback_desc = 'Komplex s Carolean®, berberinem, gymnemou a kreatinem pro podporu sytosti, metabolismu a energie.' %}
+              {% assign fallback_cat = 'Doplňky stravy' %}
+            {% when 2 %}
+              {% assign product = p_lean %}
+              {% assign fallback_name = 'Lean Shake GLP-1' %}
+              {% assign fallback_handle = 'lean-shake-glp-1' %}
+              {% assign fallback_tagline = 'Sytost · Kontrola · Výsledky' %}
+              {% assign fallback_desc = 'Proteinový shake s CaroLean®, VinOgrape® a vitamíny. 22 g bílkovin v jedné dávce.' %}
+              {% assign fallback_cat = 'Proteiny & shaky' %}
+            {% when 3 %}
+              {% assign product = p_cream %}
+              {% assign fallback_name = 'Cream GLP-1 GHK-Cu' %}
+              {% assign fallback_handle = 'ghk-cu-cream' %}
+              {% assign fallback_tagline = 'Pocit sytosti · Ochrana · Regenerace' %}
+              {% assign fallback_desc = 'Hřejivý regenerační krém s GHK-Cu pro suchou a namáhanou pokožku.' %}
+              {% assign fallback_cat = 'Péče o tělo' %}
+            {% when 4 %}
+              {% assign product = p_emul %}
+              {% assign fallback_name = 'Regenerační krém Emulfeel®' %}
+              {% assign fallback_handle = 'antiage-cream-emulfeel®' %}
+              {% assign fallback_tagline = 'Hydratace · Zklidnění · Regenerace' %}
+              {% assign fallback_desc = 'Lehký hydratační krém s GHK-Cu, panthenolem a bisabololem.' %}
+              {% assign fallback_cat = 'Péče o pleť' %}
+          {% endcase %}
+
+          {% if product != blank %}
+            {% assign card_url = product.url %}
+            {% assign card_name = product.title %}
+            {% assign card_price = product.price | money %}
+            {% assign card_img = product.featured_media.preview_image | image_url: width: 800 %}
+            {% assign card_img_alt = product.featured_media.alt | default: product.title %}
+          {% else %}
+            {% assign card_url = '/products/' | append: fallback_handle %}
+            {% assign card_name = fallback_name %}
+            {% assign card_price = '' %}
+            {% assign card_img = '' %}
+            {% assign card_img_alt = fallback_name %}
+          {% endif %}
+
+          <a class="vh-home-card" href="{{ card_url }}">
+            <span class="vh-home-card__badge">Nejprodávanější</span>
+            <div class="vh-home-card__media">
+              {% if card_img != blank %}
+                <img src="{{ card_img }}" alt="{{ card_img_alt | escape }}" width="400" height="400" loading="lazy">
+              {% else %}
+                <span class="vh-home-card__placeholder">{{ fallback_name | slice: 0, 1 }}</span>
+              {% endif %}
+            </div>
+            <p class="vh-home-card__cat">{{ fallback_cat }}</p>
+            <h3 class="vh-home-card__name">{{ card_name }}</h3>
+            {% if card_price != blank %}
+              <p class="vh-home-card__price">{{ card_price }}</p>
+            {% endif %}
+            <p class="vh-home-card__tagline">{{ fallback_tagline }}</p>
+            <p class="vh-home-card__desc">{{ fallback_desc }}</p>
+            <span class="vh-home-card__cta">Zobrazit v e-shopu →</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  {% comment %} —— CO CHYSTÁME —— {% endcomment %}
+  <section class="vh-home-lab" aria-labelledby="vh-home-lab-title">
+    <div class="vh-home__inner">
+      <header class="vh-home-lab__header">
+        <div>
+          <div class="vh-home-lab__badge-row">
+            <span class="vh-home-lab__new"><span class="vh-home-lab__dot" aria-hidden="true"></span> Nové</span>
+            <p class="vh-home__eyebrow">Právě spuštěno</p>
+          </div>
+          <h2 class="vh-home__title" id="vh-home-lab-title">Co chystáme</h2>
+        </div>
+        <p class="vh-home-lab__lead">
+          Transparentní pohled do vývoje: nové produkty, testování a komunita.
+          Nic neschováváme — ukážeme, co je potvrzené a co teprve vzniká.
+        </p>
+      </header>
+
+      <div class="vh-home-lab__grid">
+        <a class="vh-home-lab-card" href="{{ marketing_url }}/co-chystame">
+          <span class="vh-home-lab-card__status">Ve vývoji</span>
+          <p class="vh-home-lab-card__kicker">Komunita rozhodla</p>
+          <h3 class="vh-home-lab-card__title">Nová příchuť Lean Shake</h3>
+          <p class="vh-home-lab-card__excerpt">
+            Hlasování skončilo. Do výroby jdou Višeň v čokoládě a Čokoláda — dvě příchutě, které získaly nejvíc hlasů.
+          </p>
+          <div class="vh-home-lab-card__progress">
+            <div class="vh-home-lab-card__progress-top">
+              <span>Stav vývoje</span>
+              <span>90 %</span>
+            </div>
+            <div class="vh-home-lab-card__bar"><span style="width:90%"></span></div>
+          </div>
+        </a>
+
+        <a class="vh-home-lab-card" href="{{ marketing_url }}/co-chystame">
+          <span class="vh-home-lab-card__status">Ve vývoji – ladíme finální podobu</span>
+          <p class="vh-home-lab-card__kicker">Lehčí pocit. Méně zadržené vody.</p>
+          <h3 class="vh-home-lab-card__title">Odvodňovač</h3>
+          <p class="vh-home-lab-card__excerpt">
+            Produkt zaměřený na podporu přirozeného hospodaření organismu s vodou a na pocit větší lehkosti při hubnutí.
+          </p>
+          <div class="vh-home-lab-card__progress">
+            <div class="vh-home-lab-card__progress-top">
+              <span>Stav vývoje</span>
+              <span>60 %</span>
+            </div>
+            <div class="vh-home-lab-card__bar"><span style="width:60%"></span></div>
+          </div>
+        </a>
+
+        <a class="vh-home-lab-card vh-home-lab-card--desktop" href="{{ marketing_url }}/co-chystame">
+          <span class="vh-home-lab-card__status">Ve vývoji – ladíme finální podobu</span>
+          <p class="vh-home-lab-card__kicker">Síla. Výkon. Udržení aktivního režimu.</p>
+          <h3 class="vh-home-lab-card__title">Kreatin</h3>
+          <p class="vh-home-lab-card__excerpt">
+            Vlastní kreatin jako přirozená součást programu Vojta Hubne — jednoduché dávkování a dobrá rozpustnost.
+          </p>
+          <div class="vh-home-lab-card__progress">
+            <div class="vh-home-lab-card__progress-top">
+              <span>Stav vývoje</span>
+              <span>60 %</span>
+            </div>
+            <div class="vh-home-lab-card__bar"><span style="width:60%"></span></div>
+          </div>
+        </a>
+      </div>
+
+      <div class="vh-home-lab__cta-row">
+        <a class="vh-home__btn vh-home__btn--solid" href="{{ marketing_url }}/co-chystame">
+          Co dalšího chystáme →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} —— STORY —— {% endcomment %}
+  <section class="vh-home-story" id="vh-home-pribeh" aria-labelledby="vh-home-story-title">
+    <div class="vh-home__inner vh-home-story__grid">
+      <div class="vh-home-story__content">
+        <p class="vh-home__eyebrow">Příběh značky</p>
+        <h2 class="vh-home__title" id="vh-home-story-title">Od 160 kg k novému životu</h2>
+        <p class="vh-home-story__text">
+          Vojta si prošel celoživotním bojem s obezitou. Po letech neúspěšných pokusů,
+          zdravotních komplikacích a váze 160&nbsp;kg se v roce 2024 rozhodl převzít kontrolu
+          nad svým zdravím. Díky kombinaci změny životního stylu, disciplíny a moderní léčby
+          dokázal zhubnout 61 kilogramů a zásadně zlepšit kvalitu svého života.
+        </p>
+        <p class="vh-home-story__text">
+          Dnes otevřeně sdílí své zkušenosti, boří mýty o obezitě a pomáhá lidem pochopit,
+          že obezita není selhání charakteru, ale komplexní onemocnění. Je zakladatelem
+          komunity Cesta z obezity, kde podporuje tisíce lidí na jejich vlastní cestě
+          ke zdravějšímu životu.
+        </p>
+        <a
+          class="vh-home__btn vh-home__btn--outline"
+          href="https://www.cestazobezity.cz"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Cesta z obezity →
+        </a>
+      </div>
+
+      <div class="vh-home-story__visual">
+        <figure class="vh-home-story__figure">
+          <img
+            src="{{ story_img }}"
+            alt="Vojta Hubne — transformace před a po: cesta z 160 kg na 99 kg"
+            width="970"
+            height="962"
+            loading="lazy"
+            decoding="async"
+          >
+        </figure>
+        <blockquote class="vh-home-story__quote">
+          <p>
+            „Nechci prodávat zázrak za týden. Chci dát lidem nástroje, které mi
+            samotnému pomohly vydržet a dotáhnout to.“
+          </p>
+          <footer>— Vojta Hubne</footer>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  {% comment %} —— BENEFITS —— {% endcomment %}
+  <section class="vh-home-benefits" aria-labelledby="vh-home-benefits-title">
+    <div class="vh-home__inner">
+      <header class="vh-home__header vh-home__header--center">
+        <p class="vh-home__eyebrow">Proč Vojta Hubne</p>
+        <h2 class="vh-home__title" id="vh-home-benefits-title">Základ pro každý den</h2>
+      </header>
+      <div class="vh-home-benefits__grid">
+        <article class="vh-home-benefits__card">
+          <h3>Čisté složení</h3>
+          <p>Transparentní etikety bez zbytečných výplní — víte přesně, co užíváte.</p>
+        </article>
+        <article class="vh-home-benefits__card">
+          <h3>GLP-1 řada</h3>
+          <p>Produkty navržené pro podporu sytosti, metabolismu a každodenní kontrolu.</p>
+        </article>
+        <article class="vh-home-benefits__card">
+          <h3>Regenerace</h3>
+          <p>Krémy s GHK-Cu a Emulfeel® pro pokožku po tréninku i každodenní péči.</p>
+        </article>
+        <article class="vh-home-benefits__card">
+          <h3>Rychlý nákup</h3>
+          <p>Produktové stránky, košík a checkout běží přímo na Shopify.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</section>
+
+<style>
+  .vh-home {
+    --vh-gold: #eedc82;
+    --vh-gold-muted: #c9b56a;
+    --vh-black: #000;
+    --vh-surface: #0a0a0a;
+    --vh-raised: #111;
+    --vh-text: #fff;
+    --vh-muted: rgba(255, 255, 255, 0.72);
+    --vh-border: rgba(238, 220, 130, 0.35);
+    --vh-border-subtle: rgba(255, 255, 255, 0.08);
+    --vh-display: "Bebas Neue", Impact, Haettenschweiler, sans-serif;
+    --vh-sans: Montserrat, system-ui, sans-serif;
+    --vh-max: 1600px;
+    --vh-pad: clamp(1.25rem, 5vw, 3.5rem);
+    color: var(--vh-text);
+    font-family: var(--vh-sans);
+    background: var(--vh-black);
+  }
+
+  .vh-home *,
+  .vh-home *::before,
+  .vh-home *::after {
+    box-sizing: border-box;
+  }
+
+  .vh-home a {
+    color: inherit;
+  }
+
+  .vh-home__inner {
+    width: min(100%, var(--vh-max));
+    margin-inline: auto;
+    padding-inline: var(--vh-pad);
+  }
+
+  .vh-home__eyebrow {
+    margin: 0;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--vh-gold);
+  }
+
+  .vh-home__title {
+    margin: 0.5rem 0 0;
+    font-family: var(--vh-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--vh-gold);
+    line-height: 0.95;
+  }
+
+  .vh-home__header {
+    margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  }
+
+  .vh-home__header--center {
+    text-align: center;
+  }
+
+  .vh-home__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 1rem 1.75rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+
+  .vh-home__btn--solid {
+    background: var(--vh-gold);
+    color: var(--vh-black);
+    border: 1px solid var(--vh-gold);
+  }
+
+  .vh-home__btn--solid:hover {
+    opacity: 0.92;
+  }
+
+  .vh-home__btn--outline {
+    background: transparent;
+    color: var(--vh-gold);
+    border: 1px solid var(--vh-border);
+  }
+
+  .vh-home__btn--outline:hover {
+    background: rgba(238, 220, 130, 0.06);
+  }
+
+  /* Hero */
+  .vh-home-hero {
+    position: relative;
+    isolation: isolate;
+    min-height: calc(100dvh - 6rem);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--vh-border-subtle);
+    background:
+      radial-gradient(ellipse 55% 45% at 70% 40%, rgba(238, 220, 130, 0.08), transparent 55%),
+      #000;
+  }
+
+  .vh-home__glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at 20% 80%, rgba(238, 220, 130, 0.05), transparent 40%);
+  }
+
+  .vh-home-hero__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    gap: 2rem;
+    padding-block: clamp(2rem, 5vh, 3.5rem);
+    width: min(100%, var(--vh-max));
+    margin-inline: auto;
+    padding-inline: var(--vh-pad);
+  }
+
+  @media (min-width: 990px) {
+    .vh-home-hero__grid {
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 4rem;
+    }
+  }
+
+  .vh-home-hero__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .vh-home-hero__title {
+    margin: 0;
+    font-family: var(--vh-display);
+    font-size: clamp(2.75rem, 8vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--vh-gold);
+  }
+
+  .vh-home-hero__lead {
+    margin: 0;
+    max-width: 32rem;
+    font-size: clamp(1rem, 2.5vw, 1.125rem);
+    line-height: 1.7;
+    color: var(--vh-text);
+  }
+
+  .vh-home-hero__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 0.35rem;
+  }
+
+  .vh-home-hero__stats > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .vh-home-hero__stat-value {
+    font-family: var(--vh-display);
+    font-size: 2.5rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+  }
+
+  .vh-home-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .vh-home-hero__code {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 28rem;
+    margin-top: 0.35rem;
+    padding: 0.85rem 1.25rem;
+    border: 0;
+    border-radius: 999px;
+    background: var(--vh-gold);
+    color: var(--vh-black);
+    font: inherit;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .vh-home-hero__code:hover {
+    opacity: 0.92;
+  }
+
+  .vh-home-hero__portrait {
+    margin: 0;
+    width: 100%;
+    max-width: 28rem;
+    justify-self: center;
+  }
+
+  @media (min-width: 990px) {
+    .vh-home-hero__portrait {
+      max-width: none;
+      justify-self: end;
+    }
+  }
+
+  .vh-home-hero__frame {
+    aspect-ratio: 1448 / 1086;
+    overflow: hidden;
+    border: 1px solid var(--vh-border-subtle);
+    border-radius: 1.25rem;
+    background: #e8dccb;
+  }
+
+  .vh-home-hero__frame img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  /* Products */
+  .vh-home-products {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    background: var(--vh-surface);
+    border-bottom: 1px solid var(--vh-border-subtle);
+  }
+
+  .vh-home-products__grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 750px) {
+    .vh-home-products__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 990px) {
+    .vh-home-products__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .vh-home-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1.25rem;
+    text-decoration: none;
+    border: 1px solid var(--vh-border-subtle);
+    border-radius: 1.1rem;
+    background: var(--vh-raised);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .vh-home-card:hover {
+    border-color: var(--vh-border);
+    transform: translateY(-3px);
+  }
+
+  .vh-home-card__badge {
+    align-self: start;
+    padding: 0.4rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid rgba(238, 220, 130, 0.45);
+    color: var(--vh-gold-muted);
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .vh-home-card__media {
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    margin: 0.35rem 0 0.5rem;
+    border-radius: 0.85rem;
+    background: #000;
+    overflow: hidden;
+  }
+
+  .vh-home-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .vh-home-card__placeholder {
+    font-family: var(--vh-display);
+    font-size: 3rem;
+    color: var(--vh-gold);
+  }
+
+  .vh-home-card__cat,
+  .vh-home-card__tagline {
+    margin: 0;
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--vh-muted);
+  }
+
+  .vh-home-card__name {
+    margin: 0;
+    font-family: var(--vh-display);
+    font-size: 1.55rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 0.95;
+  }
+
+  .vh-home-card__price {
+    margin: 0;
+    color: var(--vh-gold);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .vh-home-card__desc {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--vh-muted);
+  }
+
+  .vh-home-card__cta {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--vh-gold);
+  }
+
+  /* Co chystáme */
+  .vh-home-lab {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    border-block: 1px solid rgba(238, 220, 130, 0.35);
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 0%, rgba(238, 220, 130, 0.16), transparent 58%),
+      linear-gradient(180deg, #0c0b08 0%, #000 55%, #050505 100%);
+  }
+
+  .vh-home-lab__header {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  }
+
+  @media (min-width: 990px) {
+    .vh-home-lab__header {
+      grid-template-columns: 1.4fr 0.8fr;
+      align-items: end;
+      gap: 3rem;
+    }
+  }
+
+  .vh-home-lab__badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .vh-home-lab__new {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    background: var(--vh-gold);
+    color: var(--vh-black);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .vh-home-lab__dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: #000;
+    animation: vh-home-pulse 1.6s ease-in-out infinite;
+  }
+
+  @keyframes vh-home-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+
+  .vh-home-lab__lead {
+    margin: 0;
+    max-width: 42ch;
+    padding: 1rem 1.15rem;
+    border-left: 2px solid var(--vh-gold);
+    background: rgba(238, 220, 130, 0.05);
+    color: var(--vh-muted);
+    line-height: 1.75;
+    font-size: 0.98rem;
+  }
+
+  .vh-home-lab__grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+
+  .vh-home-lab-card--desktop {
+    display: none;
+  }
+
+  @media (min-width: 750px) {
+    .vh-home-lab__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .vh-home-lab-card--desktop {
+      display: flex;
+    }
+  }
+
+  @media (min-width: 990px) {
+    .vh-home-lab__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .vh-home-lab-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-height: 100%;
+    padding: 1.5rem 1.35rem;
+    text-decoration: none;
+    border: 1px solid rgba(238, 220, 130, 0.28);
+    border-radius: 1.25rem;
+    background:
+      linear-gradient(165deg, rgba(238, 220, 130, 0.08), transparent 42%),
+      var(--vh-raised);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .vh-home-lab-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(238, 220, 130, 0.55);
+  }
+
+  .vh-home-lab-card__status {
+    align-self: start;
+    padding: 0.5rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid rgba(238, 220, 130, 0.45);
+    color: var(--vh-gold-muted);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: rgba(238, 220, 130, 0.08);
+  }
+
+  .vh-home-lab-card__kicker {
+    margin: 0;
+    color: var(--vh-muted);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .vh-home-lab-card__title {
+    margin: 0;
+    font-family: var(--vh-display);
+    font-size: clamp(1.55rem, 3vw, 2rem);
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    line-height: 0.95;
+  }
+
+  .vh-home-lab-card__excerpt {
+    margin: 0;
+    color: var(--vh-muted);
+    line-height: 1.7;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 749px) {
+    .vh-home-lab-card__excerpt,
+    .vh-home-lab-card__progress {
+      display: none;
+    }
+  }
+
+  .vh-home-lab-card__progress {
+    margin-top: auto;
+    display: grid;
+    gap: 0.55rem;
+    padding-top: 0.5rem;
+  }
+
+  .vh-home-lab-card__progress-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .vh-home-lab-card__progress-top span:last-child {
+    color: var(--vh-gold);
+  }
+
+  .vh-home-lab-card__bar {
+    height: 2px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .vh-home-lab-card__bar span {
+    display: block;
+    height: 100%;
+    background: var(--vh-gold);
+  }
+
+  .vh-home-lab__cta-row {
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  /* Story */
+  .vh-home-story {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    border-block: 1px solid var(--vh-border-subtle);
+  }
+
+  .vh-home-story__grid {
+    display: grid;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: 990px) {
+    .vh-home-story__grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+    }
+  }
+
+  .vh-home-story__content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .vh-home-story__text {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--vh-text);
+  }
+
+  .vh-home-story__visual {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .vh-home-story__figure {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--vh-border-subtle);
+    border-radius: 1.25rem;
+    background: #000;
+  }
+
+  .vh-home-story__figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .vh-home-story__quote {
+    margin: 0;
+    padding: 2rem;
+    border-left: 2px solid var(--vh-gold);
+    border-radius: 1.25rem;
+    background: var(--vh-raised);
+  }
+
+  .vh-home-story__quote p {
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .vh-home-story__quote footer {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--vh-gold);
+    font-weight: 600;
+  }
+
+  /* Benefits */
+  .vh-home-benefits {
+    padding-block: clamp(3.5rem, 8vw, 6rem);
+    background: var(--vh-surface);
+  }
+
+  .vh-home-benefits__grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 750px) {
+    .vh-home-benefits__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 990px) {
+    .vh-home-benefits__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .vh-home-benefits__card {
+    padding: 1.5rem;
+    border: 1px solid var(--vh-border-subtle);
+    border-radius: 1rem;
+    background: var(--vh-raised);
+  }
+
+  .vh-home-benefits__card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--vh-gold);
+  }
+
+  .vh-home-benefits__card p {
+    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--vh-text);
+  }
+</style>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-vh-home]');
+    if (!root) return;
+    var btn = root.querySelector('[data-vh-copy-code]');
+    if (!btn) return;
+    var code = btn.getAttribute('data-vh-copy-code') || '';
+    var idle = btn.textContent;
+    btn.addEventListener('click', function () {
+      var done = function () {
+        btn.textContent = 'Kód zkopírován';
+        window.setTimeout(function () {
+          btn.textContent = idle;
+        }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(code).then(done).catch(function () {
+          btn.textContent = code;
+        });
+      } else {
+        btn.textContent = code;
+      }
+    });
+  })();
+</script>
