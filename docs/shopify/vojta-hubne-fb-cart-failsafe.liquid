@@ -1,0 +1,69 @@
+{% comment %}
+  Facebook / Instagram in-app browser — blank black cart screen failsafe.
+
+  Symptom: blue loading bar at top → then full black screen on /cart.
+  Cause: mobile nav overlay and/or body scroll-lock styles restored via bfcache.
+
+  Setup — layout/theme.liquid inside <head> (as early as practical):
+    {% render 'vojta-hubne-fb-cart-failsafe' %}
+
+  Also re-upload:
+    - snippets/vojta-hubne-header-nav.liquid
+    - assets/vojta-hubne-horizon.css
+{% endcomment %}
+
+<style id="vh-fb-cart-failsafe-css">
+  /* Hard hide closed mobile nav before any deferred CSS loads */
+  .vh-mobile-nav:not(.is-open),
+  .vh-mobile-nav[hidden] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+</style>
+
+<script>
+  (function () {
+    function clearVhFbCartTrap() {
+      try {
+        document.documentElement.classList.remove('vh-mobile-nav-open');
+        if (document.body) {
+          document.body.classList.remove('vh-mobile-nav-open');
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.left = '';
+          document.body.style.right = '';
+          document.body.style.width = '';
+          document.body.style.overflow = '';
+          document.body.style.touchAction = '';
+        }
+        document.documentElement.style.overflow = '';
+
+        var navs = document.querySelectorAll('.vh-mobile-nav');
+        for (var i = 0; i < navs.length; i++) {
+          navs[i].hidden = true;
+          navs[i].classList.remove('is-open');
+          navs[i].setAttribute('aria-hidden', 'true');
+        }
+      } catch (e) {}
+    }
+
+    clearVhFbCartTrap();
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', clearVhFbCartTrap);
+    }
+
+    window.addEventListener('pageshow', clearVhFbCartTrap);
+    window.addEventListener('pagehide', clearVhFbCartTrap);
+    document.addEventListener('visibilitychange', clearVhFbCartTrap);
+
+    // Cart-only: run again after paint in FB WebView
+    var path = window.location.pathname || '';
+    if (path === '/cart' || path.indexOf('/cart') === 0) {
+      window.setTimeout(clearVhFbCartTrap, 0);
+      window.setTimeout(clearVhFbCartTrap, 300);
+    }
+  })();
+</script>

@@ -1,0 +1,239 @@
+{% comment %}
+  Fix: Horizon variant race + dual-selected look / wrong add-to-cart ID.
+
+  Problem:
+  - Customer taps a flavor, then quickly taps Přidat do košíku
+  - Horizon updates the radio immediately, but URL + hidden input[name="id"]
+    update only after an async fetch/morph
+  - Add-to-cart can submit the OLD (default) variant, then later the new one
+  - Animated previous/current pill can also look like 2 flavors are selected
+
+  Fix:
+  1. Sync hidden variant id + URL immediately on radio change
+  2. Re-sync on submit (capture) so FormData always matches checked radio
+  3. Disable add buttons until Horizon finishes variantUpdate (with timeout)
+  4. Re-sync on pageshow / bfcache restore
+
+  Setup — layout/theme.liquid before </body>:
+    {% render 'vojta-hubne-variant-sync' %}
+
+  Also re-upload assets/vojta-hubne-horizon.css (variant pill CSS update).
+{% endcomment %}
+
+{% if template.name == 'product' %}
+<script>
+  (function () {
+    if (window.__vhVariantSyncInstalled) return;
+    window.__vhVariantSyncInstalled = true;
+
+    var UNLOCK_MS = 2500;
+
+    function qs(root, sel) {
+      return (root || document).querySelector(sel);
+    }
+
+    function qsa(root, sel) {
+      return Array.prototype.slice.call((root || document).querySelectorAll(sel));
+    }
+
+    function getCheckedRadio(picker) {
+      return qs(picker, 'fieldset input[type="radio"]:checked');
+    }
+
+    function setAddButtonsDisabled(productId, disabled) {
+      qsa(document, 'product-form-component').forEach(function (form) {
+        if (productId && form.dataset.productId && form.dataset.productId !== productId) return;
+        qsa(form, 'button[name="add"], .add-to-cart-button, [ref="addToCartButton"]').forEach(function (btn) {
+          if (disabled) {
+            btn.setAttribute('data-vh-variant-locking', 'true');
+            btn.disabled = true;
+          } else if (btn.getAttribute('data-vh-variant-locking') === 'true') {
+            btn.removeAttribute('data-vh-variant-locking');
+            btn.disabled = false;
+          }
+        });
+      });
+
+      qsa(document, 'sticky-add-to-cart').forEach(function (sticky) {
+        if (productId && sticky.dataset.productId && sticky.dataset.productId !== productId) return;
+        qsa(sticky, '[ref="addToCartButton"], button.add-to-cart-button, button[name="add"]').forEach(
+          function (btn) {
+            if (disabled) {
+              btn.setAttribute('data-vh-variant-locking', 'true');
+              btn.disabled = true;
+            } else if (btn.getAttribute('data-vh-variant-locking') === 'true') {
+              btn.removeAttribute('data-vh-variant-locking');
+              btn.disabled = false;
+            }
+          }
+        );
+      });
+    }
+
+    function clearPreviousChecked(picker) {
+      qsa(picker, 'input[type="radio"][data-previous-checked="true"]').forEach(function (radio) {
+        radio.dataset.previousChecked = 'false';
+      });
+    }
+
+    function syncFromRadio(picker, options) {
+      options = options || {};
+      var radio = getCheckedRadio(picker);
+      if (!radio) return null;
+
+      var variantId = radio.dataset.variantId || '';
+      if (!variantId) return null;
+
+      var productId = picker.dataset.productId || '';
+
+      qsa(document, 'product-form-component').forEach(function (form) {
+        if (productId && form.dataset.productId && form.dataset.productId !== productId) return;
+        var idInput = qs(form, 'input[name="id"]');
+        if (idInput) idInput.value = variantId;
+      });
+
+      qsa(document, 'form.shopify-product-form input[name="id"]').forEach(function (idInput) {
+        var form = idInput.closest('product-form-component') || idInput.closest('form');
+        var formProduct = form && form.closest('product-form-component');
+        if (formProduct && productId && formProduct.dataset.productId !== productId) return;
+        idInput.value = variantId;
+      });
+
+      var sticky = productId
+        ? qs(document, 'sticky-add-to-cart[data-product-id="' + productId + '"]')
+        : qs(document, 'sticky-add-to-cart');
+      if (sticky) {
+        sticky.dataset.currentVariantId = variantId;
+        var stickyTitle = qs(sticky, '.sticky-add-to-cart__variant');
+        if (stickyTitle && radio.value) stickyTitle.textContent = radio.value;
+      }
+
+      if (options.updateUrl !== false && picker.dataset.templateProductMatch === 'true') {
+        try {
+          var url = new URL(window.location.href);
+          url.searchParams.set('variant', variantId);
+          if (url.href !== window.location.href) {
+            history.replaceState({}, '', url.toString());
+          }
+        } catch (e) {}
+      }
+
+      if (options.clearPrevious !== false) {
+        window.setTimeout(function () {
+          clearPreviousChecked(picker);
+        }, 320);
+      }
+
+      return variantId;
+    }
+
+    function syncFromUrl() {
+      var params = new URLSearchParams(window.location.search);
+      var urlVariant = params.get('variant');
+      qsa(document, 'variant-picker').forEach(function (picker) {
+        if (urlVariant) {
+          var match = null;
+          qsa(picker, 'input[type="radio"][data-variant-id]').forEach(function (radio) {
+            if (radio.dataset.variantId === urlVariant) match = radio;
+          });
+          if (match && !match.checked) {
+            match.checked = true;
+            match.dataset.currentChecked = 'true';
+            qsa(picker, 'input[type="radio"]').forEach(function (radio) {
+              if (radio !== match) {
+                radio.dataset.currentChecked = 'false';
+                radio.dataset.previousChecked = 'false';
+              }
+            });
+          }
+        }
+        syncFromRadio(picker, { updateUrl: false, clearPrevious: true });
+      });
+    }
+
+    var unlockTimers = {};
+
+    function lockUntilUpdate(productId) {
+      var key = productId || 'default';
+      setAddButtonsDisabled(productId, true);
+      if (unlockTimers[key]) window.clearTimeout(unlockTimers[key]);
+      unlockTimers[key] = window.setTimeout(function () {
+        setAddButtonsDisabled(productId, false);
+      }, UNLOCK_MS);
+    }
+
+    function unlock(productId) {
+      var key = productId || 'default';
+      if (unlockTimers[key]) {
+        window.clearTimeout(unlockTimers[key]);
+        delete unlockTimers[key];
+      }
+      setAddButtonsDisabled(productId, false);
+    }
+
+    function onPickerChange(event) {
+      var target = event.target;
+      if (!(target instanceof HTMLInputElement) || target.type !== 'radio') return;
+      var picker = target.closest('variant-picker');
+      if (!picker) return;
+
+      syncFromRadio(picker, { updateUrl: true, clearPrevious: true });
+      lockUntilUpdate(picker.dataset.productId || '');
+    }
+
+    function onSubmitCapture(event) {
+      var form = event.target;
+      if (!(form instanceof HTMLFormElement)) return;
+      if (!/\/cart\/add/.test(form.action || '')) return;
+
+      var picker =
+        qs(document, 'variant-picker[data-template-product-match="true"]') ||
+        qs(document, 'variant-picker');
+      if (!picker) return;
+
+      var variantId = syncFromRadio(picker, { updateUrl: true, clearPrevious: true });
+      if (!variantId) return;
+
+      var idInput = qs(form, 'input[name="id"]');
+      if (idInput) idInput.value = variantId;
+    }
+
+    function onThemeVariantSelected(event) {
+      var productId = event?.detail?.data?.productId || event?.target?.dataset?.productId || '';
+      var picker = productId
+        ? qs(document, 'variant-picker[data-product-id="' + productId + '"]')
+        : qs(document, 'variant-picker');
+      if (picker) syncFromRadio(picker, { updateUrl: true, clearPrevious: true });
+      lockUntilUpdate(productId);
+    }
+
+    function onThemeVariantUpdate(event) {
+      var productId = event?.detail?.data?.productId || '';
+      var picker = productId
+        ? qs(document, 'variant-picker[data-product-id="' + productId + '"]')
+        : qs(document, 'variant-picker');
+      if (picker) syncFromRadio(picker, { updateUrl: true, clearPrevious: true });
+      unlock(productId);
+    }
+
+    document.addEventListener('change', onPickerChange, true);
+    document.addEventListener('submit', onSubmitCapture, true);
+    document.addEventListener('variant:selected', onThemeVariantSelected, true);
+    document.addEventListener('variant:update', onThemeVariantUpdate, true);
+
+    // Horizon custom event names (ThemeEvents)
+    document.addEventListener('variantSelected', onThemeVariantSelected, true);
+    document.addEventListener('variantUpdate', onThemeVariantUpdate, true);
+
+    window.addEventListener('pageshow', function () {
+      syncFromUrl();
+    });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', syncFromUrl);
+    } else {
+      syncFromUrl();
+    }
+  })();
+</script>
+{% endif %}

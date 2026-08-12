@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
-import styled from "styled-components";
-import { eyebrowText } from "../styles/eyebrow";
-import heroBannerImage from "../assets/159ede93-2c6a-47a5-ab52-1fac5d5e1c3c.jpg";
-import { LaunchBackground } from "../components/backgrounds/LaunchBackground";
-import { HashLink } from "../components/HashLink";
-import { PageContainer } from "../components/PageContainer";
-import { getShopifyCatalogUrl } from "../utils/shopify";
+import styled from 'styled-components'
+import tisicataHeroPromoImage from '../assets/tisicata-hero-promo.png'
+import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
+import { HashLink } from '../components/HashLink'
+import { PageContainer } from '../components/PageContainer'
+import { eyebrowText } from '../styles/eyebrow'
+import { getShopifyCatalogUrl, getShopifyProductUrl } from '../utils/shopify'
 
-const RESTART_PROMO_CODE = "30STARTSVOJTOU";
+const TISICATA_PRODUCT_URL =
+  `${getShopifyProductUrl('lean-shake-slany-karamel-aquamin-mg')}?variant=60361804480846`
 
 const Section = styled.section`
   position: relative;
@@ -19,7 +19,7 @@ const Section = styled.section`
   min-height: ${({ theme }) => theme.layout.heroMinHeightDvh};
   overflow: hidden;
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
-`;
+`
 
 const Inner = styled(PageContainer)`
   position: relative;
@@ -31,25 +31,25 @@ const Inner = styled(PageContainer)`
   padding-block: clamp(2rem, 5vh, 3rem);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     align-items: center;
     gap: 4rem;
     padding-block: clamp(2.5rem, 6vh, 4rem);
   }
-`;
+`
 
 const Content = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-`;
+`
 
 const Eyebrow = styled.p`
   margin: 0;
   font-size: 0.7rem;
   letter-spacing: 0.22em;
   ${eyebrowText}
-`;
+`
 
 const Title = styled.h1`
   font-family: ${({ theme }) => theme.fonts.display};
@@ -59,7 +59,7 @@ const Title = styled.h1`
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.gold};
-`;
+`
 
 const Lead = styled.p`
   margin: 0;
@@ -67,20 +67,20 @@ const Lead = styled.p`
   font-size: clamp(1rem, 2.5vw, 1.125rem);
   line-height: 1.7;
   color: ${({ theme }) => theme.colors.text};
-`;
+`
 
 const Stats = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
   margin-top: 0.5rem;
-`;
+`
 
 const Stat = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-`;
+`
 
 const StatValue = styled.span`
   font-family: ${({ theme }) => theme.fonts.display};
@@ -88,20 +88,20 @@ const StatValue = styled.span`
   line-height: 1;
   letter-spacing: 0.04em;
   color: ${({ theme }) => theme.colors.white};
-`;
+`
 
 const StatLabel = styled.span`
   font-size: 0.7rem;
   letter-spacing: 0.16em;
   ${eyebrowText}
-`;
+`
 
 const Actions = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 0.5rem;
-`;
+`
 
 const PrimaryLink = styled(HashLink)`
   display: inline-flex;
@@ -121,7 +121,7 @@ const PrimaryLink = styled(HashLink)`
   &:hover {
     opacity: 0.9;
   }
-`;
+`
 
 const SecondaryLink = styled.a`
   display: inline-flex;
@@ -141,88 +141,58 @@ const SecondaryLink = styled.a`
   &:hover {
     background: rgba(238, 220, 130, 0.06);
   }
-`;
+`
 
 const Portrait = styled.figure`
   position: relative;
   margin: 0;
   width: 100%;
-  max-width: 28rem;
-  justify-self: center;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    justify-self: end;
-    max-width: none;
-  }
-`;
+  min-width: 0;
+  justify-self: stretch;
+`
 
 const PortraitFrame = styled.div`
-  position: relative;
-  aspect-ratio: 1448 / 1086;
+  width: 100%;
   overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
   border-radius: ${({ theme }) => theme.radii.xl};
   background: #e8dccb;
-`;
+  line-height: 0;
+`
 
 const PortraitImage = styled.img`
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
-`;
+  height: auto;
+`
 
-const CopyCodeButton = styled.button`
+const BundleCta = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   margin-top: 0.85rem;
-  padding: 0.85rem 1.25rem;
+  padding: 1rem 1.75rem;
   border: 0;
-  border-radius: ${({ theme }) => theme.radii.pill};
-  background: ${({ theme }) => theme.colors.gold};
-  color: ${({ theme }) => theme.colors.black};
   font: inherit;
   font-size: 0.7rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
+  text-decoration: none;
+  color: ${({ theme }) => theme.colors.black};
+  background: ${({ theme }) => theme.colors.gold};
+  border-radius: ${({ theme }) => theme.radii.pill};
   cursor: pointer;
-  transition:
-    opacity 0.2s ease,
-    transform 0.2s ease;
+  transition: opacity 0.2s ease;
 
   &:hover {
-    opacity: 0.92;
-    transform: translateY(-1px);
+    opacity: 0.9;
   }
-
-  &:active {
-    transform: translateY(0);
-  }
-`;
+`
 
 export function HomeHeroSection() {
-  const catalogUrl = getShopifyCatalogUrl();
-  const [codeCopied, setCodeCopied] = useState(false);
-
-  const copyPromoCode = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(RESTART_PROMO_CODE);
-      setCodeCopied(true);
-    } catch {
-      setCodeCopied(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!codeCopied) return;
-
-    const timer = window.setTimeout(() => setCodeCopied(false), 2200);
-    return () => window.clearTimeout(timer);
-  }, [codeCopied]);
+  const catalogUrl = getShopifyCatalogUrl()
 
   return (
     <Section>
@@ -254,23 +224,17 @@ export function HomeHeroSection() {
         <Portrait>
           <PortraitFrame>
             <PortraitImage
-              src={heroBannerImage}
-              alt="Balíček (re)START — zpět v prodeji se slevou 30 %. GLP-1 Support, Lean Shake a D3+K2+Vápník."
-              width={1448}
-              height={1086}
+              src={tisicataHeroPromoImage}
+              alt="Tisící objednávka — děkovný set Slaný karamel + Aquamin Mg, jen 50 ks za 949 Kč."
+              width={1024}
+              height={768}
               fetchPriority="high"
               decoding="async"
             />
           </PortraitFrame>
-          <CopyCodeButton
-            type="button"
-            onClick={copyPromoCode}
-            aria-label={`Zkopírovat slevový kód ${RESTART_PROMO_CODE}`}
-          >
-            {codeCopied ? "Kód zkopírován" : "Zkopírovat kód 30STARTSVOJTOU"}
-          </CopyCodeButton>
+          <BundleCta href={TISICATA_PRODUCT_URL}>Nakoupit balíček</BundleCta>
         </Portrait>
       </Inner>
     </Section>
-  );
+  )
 }

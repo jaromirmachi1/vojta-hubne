@@ -18,7 +18,7 @@ const Inner = styled(PageContainer)`
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  min-height: ${({ theme }) => theme.layout.altSubNavHeight};
+  min-height: 2.75rem;
   padding-block: 0.7rem;
 `
 

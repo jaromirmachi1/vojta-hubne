@@ -1,0 +1,38 @@
+{% comment %}
+  Force collection product order = most ordered (best-selling).
+
+  Horizon often ignores Admin "Default sort". This redirects once when
+  the URL has no sort_by, so the grid loads with best-selling.
+
+  Setup — layout/theme.liquid inside <head> (with shop-home-redirect):
+    {% render 'vojta-hubne-collection-default-sort' %}
+
+  Customers can still change sort in the theme dropdown; that sets sort_by
+  in the URL and this snippet will not redirect again.
+{% endcomment %}
+
+{% if template.name == 'collection' %}
+  {% assign vh_has_sort = false %}
+  {% if request.query_string contains 'sort_by=' %}
+    {% assign vh_has_sort = true %}
+  {% endif %}
+
+  {% unless vh_has_sort %}
+    {% assign vh_sort_url = collection.url | default: request.path %}
+    {% if request.query_string != blank %}
+      {% assign vh_sort_url = vh_sort_url | append: '?' | append: request.query_string | append: '&sort_by=best-selling' %}
+    {% else %}
+      {% assign vh_sort_url = vh_sort_url | append: '?sort_by=best-selling' %}
+    {% endif %}
+
+    <meta http-equiv="refresh" content="0; url={{ vh_sort_url }}">
+    <script>
+      (function () {
+        var target = {{ vh_sort_url | json }};
+        if (window.location.search.indexOf('sort_by=') === -1) {
+          window.location.replace(target);
+        }
+      })();
+    </script>
+  {% endunless %}
+{% endif %}

@@ -438,12 +438,16 @@ header,
 }
 
 /* Mobile full-screen nav — mirrors React MobileNavMenu
-   CRITICAL: closed state must be display:none (not opacity:0).
-   display:flex !important was overriding [hidden] and left a fullscreen
-   black layer in Facebook in-app browsers → black screen on cart. */
+   CRITICAL for Facebook / Instagram in-app browsers:
+   1) closed state must be display:none (not opacity:0) — otherwise a
+      fullscreen black layer covers /cart after the blue load bar
+   2) do NOT rely on body position:fixed for scroll lock (bfcache leaves
+      content off-screen → blank black cart page) */
+html.vh-mobile-nav-open,
 body.vh-mobile-nav-open {
   overflow: hidden !important;
   touch-action: none !important;
+  overscroll-behavior: none !important;
 }
 
 body > .vh-mobile-nav,
@@ -468,6 +472,8 @@ body > .vh-mobile-nav,
   overscroll-behavior: none !important;
   background: #000000 !important;
   background-color: #000000 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
   pointer-events: none !important;
 }
 
@@ -475,6 +481,8 @@ body > .vh-mobile-nav[hidden],
 #header-component .vh-shop-header .vh-mobile-nav[hidden],
 .vh-mobile-nav[hidden] {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
   pointer-events: none !important;
 }
 
@@ -482,9 +490,21 @@ body > .vh-mobile-nav.is-open,
 #header-component .vh-shop-header .vh-mobile-nav.is-open,
 .vh-mobile-nav.is-open {
   display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
   pointer-events: auto !important;
   background: #000000 !important;
   background-color: #000000 !important;
+}
+
+/* Cart page failsafe: never paint mobile nav overlay on /cart */
+body:has(main cart-items) .vh-mobile-nav:not(.is-open),
+body:has(main .cart-page) .vh-mobile-nav:not(.is-open),
+body:has(main cart-items-component) .vh-mobile-nav:not(.is-open) {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 
 .vh-mobile-nav__close {
@@ -1651,7 +1671,9 @@ media-gallery.media-gallery--grid,
   line-height: 1.45 !important;
 }
 
-/* Variant / taste pills — gold default, dark fill when selected (Horizon variant-picker) */
+/* Variant / taste pills — gold default, black fill when selected (Horizon variant-picker)
+   Deterministic :checked styling only — hide Horizon sliding pill so previous+current
+   never both look selected (common intermittent bug on Android / Samsung). */
 .product-details .variant-option--buttons,
 .product-details variant-picker,
 .product-details .variant-picker {
@@ -1695,34 +1717,44 @@ media-gallery.media-gallery--grid,
 .product-details
   .variant-option__button-label:hover:not(
     :has([data-option-available="false"])
-  ) {
+  ):not(:has(:checked)) {
   background-color: rgba(238, 220, 130, 0.9) !important;
   border-color: var(--vh-gold) !important;
   color: var(--vh-black) !important;
 }
 
 .product-details .variant-option__button-label:has(:checked) {
+  background-color: #000000 !important;
   border-color: var(--vh-gold) !important;
   color: #ffffff !important;
 }
 
 .product-details .variant-option__button-label:has(:checked):hover {
+  background-color: #111111 !important;
   border-color: var(--vh-gold) !important;
   color: #ffffff !important;
 }
 
+/* Previous selection during Horizon animation must not look selected */
+.product-details
+  .variant-option__button-label:has([data-previous-checked='true']):not(
+    :has(:checked)
+  ) {
+  background-color: var(--vh-gold) !important;
+  border-color: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+}
+
+/* Disable sliding pill overlay — source of dual-selected appearance */
 .product-details .variant-option__button-label__pill {
-  background: #000000 !important;
+  display: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+  background: transparent !important;
 }
 
 .product-details
-  .variant-option__button-label:has(:checked):hover
-  .variant-option__button-label__pill {
-  background: #111111 !important;
-}
-
-.product-details
-  .variant-option__button-label:has([data-option-available="false"]):not(
+  .variant-option__button-label:has([data-option-available='false']):not(
     .variant-option__button-label--has-swatch
   ) {
   opacity: 0.45 !important;

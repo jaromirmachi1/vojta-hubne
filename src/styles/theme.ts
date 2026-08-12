@@ -1,6 +1,5 @@
 const headerHeight = '4.5rem'
 const promoBarHeight = '2.25rem'
-const altSubNavHeight = '2.75rem'
 
 export const theme = {
   colors: {
@@ -34,11 +33,10 @@ export const theme = {
     sectionPaddingY: 'clamp(3rem, 7vw, 5rem)',
     headerHeight,
     promoBarHeight,
-    altSubNavHeight,
-    altStickyScrollMargin: `calc(${headerHeight} + ${altSubNavHeight} + 1rem)`,
-    /** Alt homepage hero — below promo + main header + sub nav */
-    altHeroMinHeight: `calc(100svh - ${headerHeight} - ${altSubNavHeight} - ${promoBarHeight})`,
-    altHeroMinHeightDvh: `calc(100dvh - ${headerHeight} - ${altSubNavHeight} - ${promoBarHeight})`,
+    altStickyScrollMargin: `calc(${headerHeight} + 1rem)`,
+    /** Alt homepage hero — below promo + main header */
+    altHeroMinHeight: `calc(100svh - ${headerHeight} - ${promoBarHeight})`,
+    altHeroMinHeightDvh: `calc(100dvh - ${headerHeight} - ${promoBarHeight})`,
     /** Homepage hero: full viewport below promo + header */
     heroMinHeight: `calc(100svh - ${headerHeight} - ${promoBarHeight})`,
     heroMinHeightDvh: `calc(100dvh - ${headerHeight} - ${promoBarHeight})`,

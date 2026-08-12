@@ -122,7 +122,26 @@ Use two different “home” targets:
 | User intent | URL |
 |-------------|-----|
 | Brand / story (logo, “Domů”) | `https://www.vojtahubne.cz/homepage` |
-| Shopping / catalog (shop root, “Pokračovat v nákupu”) | `https://shop.vojtahubne.cz/collections/all` |
+| Shopping / catalog (shop root, “Pokračovat v nákupu”) | `https://shop.vojtahubne.cz/collections/all?sort_by=best-selling` |
+
+### Default catalog sort = most ordered (best-selling)
+
+Admin **Default sort → Best selling** alone often does **nothing** in Horizon.
+Use this Liquid snippet (required):
+
+1. **Snippets → Add** → `vojta-hubne-collection-default-sort.liquid`  
+   Paste from `docs/shopify/vojta-hubne-collection-default-sort.liquid`
+2. **layout/theme.liquid** inside `<head>`:
+
+```liquid
+{% render 'vojta-hubne-shop-home-redirect' %}
+{% render 'vojta-hubne-collection-default-sort' %}
+```
+
+On any collection URL **without** `sort_by`, it redirects once to `?sort_by=best-selling`.
+If the customer picks another sort in the dropdown, that URL keeps their choice.
+
+Also keep header / home-redirect links with `?sort_by=best-selling` (already in the snippets).
 
 ### A. Shop root → catalog (best fix for accidental `shop.vojtahubne.cz/`)
 
@@ -132,7 +151,7 @@ Shopify Admin → **Online Store → Navigation → URL redirects** → Add:
 
 | From | To |
 |------|-----|
-| `/` | `/collections/all` |
+| `/` | `/collections/all?sort_by=best-selling` |
 
 **Option 2 — Theme snippet**
 
@@ -159,3 +178,19 @@ Checkout is separate from the theme. Theme CSS/Liquid does not control checkout 
 - **Domů** → `https://www.vojtahubne.cz/homepage`
 - **Katalog** → `/collections/all`
 - **Blog** → `/blogs/blog`
+
+### D. Facebook in-app browser — blue bar then blank black cart
+
+Symptom: open Košík in Facebook / Instagram browser → blue loading strip → full black screen.
+
+Fix (re-apply all 3):
+
+1. Re-paste `snippets/vojta-hubne-header-nav.liquid` (no more `body { position: fixed }` scroll lock)
+2. Re-upload `assets/vojta-hubne-horizon.css`
+3. Add early failsafe in `layout/theme.liquid` inside `<head>`:
+
+```liquid
+{% render 'vojta-hubne-fb-cart-failsafe' %}
+```
+
+Snippet file: `docs/shopify/vojta-hubne-fb-cart-failsafe.liquid` → save as `snippets/vojta-hubne-fb-cart-failsafe.liquid`

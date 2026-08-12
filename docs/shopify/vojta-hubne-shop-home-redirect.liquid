@@ -10,6 +10,13 @@
 
 {% if template.name == 'index' and request.path == '/' %}
   {% assign shop_home = routes.all_products_collection_url | default: '/collections/all' %}
+  {% unless shop_home contains 'sort_by=' %}
+    {% if shop_home contains '?' %}
+      {% assign shop_home = shop_home | append: '&sort_by=best-selling' %}
+    {% else %}
+      {% assign shop_home = shop_home | append: '?sort_by=best-selling' %}
+    {% endif %}
+  {% endunless %}
   <meta http-equiv="refresh" content="0; url={{ shop_home }}">
   <script>
     window.location.replace({{ shop_home | json }});

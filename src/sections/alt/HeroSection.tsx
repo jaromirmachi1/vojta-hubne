@@ -5,8 +5,6 @@ import { scrollToSection } from '../../utils/scrollToSection'
 import { StaggerItem, StaggerReveal } from './motion'
 import {
   AltInner,
-  altMobileImage,
-  altMobileImageFrame,
   PrimaryButton,
   ScrollGhostButton,
 } from './shared'
@@ -40,7 +38,7 @@ const Inner = styled(AltInner)`
   padding-block: clamp(1rem, 2.5vh, 1.75rem);
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
     align-items: stretch;
     gap: clamp(1rem, 2vw, 1.75rem);
     height: 100%;
@@ -91,33 +89,71 @@ const Actions = styled.div`
 `
 
 const VisualColumn = styled.figure`
+  position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  gap: clamp(0.75rem, 2vh, 1.25rem);
+  justify-content: center;
   margin: 0;
   width: 100%;
-  min-height: 0;
+  min-height: clamp(20rem, 52vh, 30rem);
+  overflow: visible;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    align-items: flex-end;
     height: 100%;
+    min-height: 0;
   }
 `
 
 const StatsBlock = styled.div`
-  width: 100%;
-  max-width: 20rem;
+  position: absolute;
+  z-index: 2;
+  top: 0.35rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 0.5rem);
+  padding: 0.35rem 0.5rem;
   text-align: center;
-  flex-shrink: 0;
+  pointer-events: none;
+  overflow: visible;
+
+  &::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: 45%;
+    width: 145%;
+    height: 220%;
+    transform: translate(-50%, -45%);
+    background: radial-gradient(
+      ellipse at center,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.45) 35%,
+      rgba(0, 0, 0, 0.15) 58%,
+      transparent 72%
+    );
+    filter: blur(22px);
+    pointer-events: none;
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    left: auto;
+    right: 0.25rem;
+    transform: none;
     text-align: right;
+
+    &::before {
+      left: 70%;
+      transform: translate(-70%, -45%);
+      width: 160%;
+      height: 240%;
+    }
   }
 `
 
 const WeightLine = styled.p`
+  position: relative;
   margin: 0;
   font-family: 'Italianno', 'Brush Script MT', cursive;
   font-size: clamp(2.25rem, 5vw, 3.5rem);
@@ -125,18 +161,32 @@ const WeightLine = styled.p`
   line-height: 0.95;
   letter-spacing: 0.01em;
   color: ${({ theme }) => theme.colors.gold};
+  white-space: nowrap;
+  text-shadow:
+    0 0 8px rgba(0, 0, 0, 0.85),
+    0 0 20px rgba(0, 0, 0, 0.7),
+    0 0 36px rgba(0, 0, 0, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.55);
 `
 
 const Taglines = styled.p`
+  position: relative;
   margin: 0.35rem 0 0;
   font-family: ${({ theme }) => theme.fonts.sans};
   font-size: clamp(0.88rem, 1.6vw, 1.05rem);
   font-weight: 300;
   line-height: 1.55;
   color: ${({ theme }) => theme.colors.white};
+  white-space: nowrap;
+  text-shadow:
+    0 0 8px rgba(0, 0, 0, 0.9),
+    0 0 18px rgba(0, 0, 0, 0.65),
+    0 0 32px rgba(0, 0, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.6);
 `
 
 const GoldRule = styled.div`
+  position: relative;
   width: min(100%, 10rem);
   height: 2px;
   margin-top: 0.9rem;
@@ -158,42 +208,37 @@ const GoldRule = styled.div`
 
 const HeroImageWrap = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   width: 100%;
-  flex: 1 1 auto;
-  min-height: 0;
-  margin-top: auto;
+  height: 100%;
+  min-height: inherit;
   padding-inline: 0;
   overflow: hidden;
-  ${altMobileImageFrame}
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    padding-inline: clamp(0.75rem, 3vw, 2rem);
-  }
 `
 
 const HeroImage = styled.img`
   display: block;
   width: 100%;
-  max-width: min(100%, 32rem);
+  max-width: min(100%, 42rem);
   height: auto;
-  max-height: clamp(16rem, 62vh, 30rem);
-  margin-inline: auto;
+  max-height: clamp(18rem, 52vh, 28rem);
+  margin: 0 auto;
   object-fit: contain;
   object-position: center center;
-  transform: none;
-  ${altMobileImage}
+
+  @media (max-width: calc(${({ theme }) => theme.breakpoints.tablet} - 1px)) {
+    max-height: clamp(18rem, 48vh, 26rem);
+  }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    max-width: min(100%, 36rem);
-    max-height: clamp(18rem, 68vh, 34rem);
+    max-width: min(100%, 46rem);
+    max-height: clamp(22rem, 58vh, 36rem);
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    max-width: min(100%, 40rem);
-    max-height: clamp(20rem, 72vh, 38rem);
-    transform: none;
+    max-width: min(100%, 52rem);
+    max-height: clamp(28rem, 72vh, 46rem);
   }
 `
 
@@ -236,12 +281,8 @@ export function HeroSection() {
 
         <VisualColumn aria-label="Transformace a produkty Vojta Hubne">
           <StatsBlock>
-            <WeightLine>160 kg → 99 kg</WeightLine>
-            <Taglines>
-              Reálná cesta.
-              <br />
-              Reálný režim.
-            </Taglines>
+            <WeightLine>160&nbsp;kg → 99&nbsp;kg</WeightLine>
+            <Taglines>Reálná cesta. Reálný režim.</Taglines>
             <GoldRule aria-hidden />
           </StatsBlock>
 

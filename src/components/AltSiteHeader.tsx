@@ -11,7 +11,7 @@ import {
 import { useRegimeQuiz } from '../contexts/RegimeQuizContext'
 import { getShopifyBlogUrl } from '../utils/shopify'
 import { BrandLogo } from './BrandLogo'
-import { AltSubNav, openRegimeCategory } from './AltSubNav'
+import { openRegimeCategory } from './AltSubNav'
 import { HashLink } from './HashLink'
 import { MobileNavMenu, type MobileNavLink } from './MobileNavMenu'
 import { PageContainer } from './PageContainer'
@@ -206,8 +206,6 @@ export function AltSiteHeader() {
       </Inner>
 
       </Header>
-
-      <AltSubNav />
 
       <MobileNavMenu
         isOpen={menuOpen}
