@@ -5,7 +5,12 @@ import { BrandLogo } from './BrandLogo'
 import { HashLink } from './HashLink'
 import { MobileNavMenu } from './MobileNavMenu'
 import { PageContainer } from './PageContainer'
-import { getShopifyBlogUrl, getShopifyCartUrl, getShopifyCatalogUrl } from '../utils/shopify'
+import {
+  getShopifyAccountUrl,
+  getShopifyBlogUrl,
+  getShopifyCartUrl,
+  getShopifyCatalogUrl,
+} from '../utils/shopify'
 
 const Header = styled.header`
   position: sticky;
@@ -122,7 +127,7 @@ const MenuToggle = styled.button`
   }
 `
 
-const CartLink = styled.a`
+const IconLink = styled.a`
   ${iconButtonStyles}
   text-decoration: none;
 
@@ -137,6 +142,7 @@ export function SiteHeader() {
   const catalogUrl = getShopifyCatalogUrl()
   const blogUrl = getShopifyBlogUrl()
   const cartUrl = getShopifyCartUrl()
+  const accountUrl = getShopifyAccountUrl()
 
   const mobileLinks = [
     { label: 'Produkty', href: catalogUrl, external: true },
@@ -162,14 +168,21 @@ export function SiteHeader() {
         </Nav>
 
         <Actions>
-          <CartLink href={cartUrl} aria-label="Košík">
+          <IconLink href={accountUrl} aria-label="Přihlásit se / účet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+              <circle cx="12" cy="8" r="3.25" />
+              <path d="M5.5 19.5c1.6-3.2 4-4.75 6.5-4.75s4.9 1.55 6.5 4.75" />
+            </svg>
+          </IconLink>
+
+          <IconLink href={cartUrl} aria-label="Košík">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
               <path d="M6 6h15l-1.5 9h-12L6 6z" />
               <path d="M6 6L5 3H2" />
               <circle cx="9" cy="20" r="1" />
               <circle cx="18" cy="20" r="1" />
             </svg>
-          </CartLink>
+          </IconLink>
 
           <MenuToggle
             type="button"

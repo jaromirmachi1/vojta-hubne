@@ -9,7 +9,7 @@ import {
   ALT_SUB_NAV_LINKS,
 } from '../data/altHomepage'
 import { useRegimeQuiz } from '../contexts/RegimeQuizContext'
-import { getShopifyBlogUrl } from '../utils/shopify'
+import { getShopifyAccountUrl, getShopifyBlogUrl } from '../utils/shopify'
 import { BrandLogo } from './BrandLogo'
 import { openRegimeCategory } from './AltSubNav'
 import { HashLink } from './HashLink'
@@ -114,6 +114,30 @@ const CtaLink = styled(HashLink)`
   }
 `
 
+const IconLink = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: ${({ theme }) => theme.radii.pill};
+  background: transparent;
+  color: ${({ theme }) => theme.colors.gold};
+  text-decoration: none;
+  transition: background 0.2s ease;
+
+  &:hover {
+    background: rgba(238, 220, 130, 0.08);
+  }
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+`
+
 const MenuToggle = styled.button`
   display: flex;
   align-items: center;
@@ -143,6 +167,7 @@ const MenuToggle = styled.button`
 `
 
 const blogUrl = getShopifyBlogUrl()
+const accountUrl = getShopifyAccountUrl()
 
 const mobileLinks: MobileNavLink[] = [
   { label: ALT_NAV_CTA.label, sectionId: ALT_NAV_CTA.sectionId },
@@ -184,6 +209,13 @@ export function AltSiteHeader() {
         </Nav>
 
         <Actions>
+          <IconLink href={accountUrl} aria-label="Přihlásit se / účet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+              <circle cx="12" cy="8" r="3.25" />
+              <path d="M5.5 19.5c1.6-3.2 4-4.75 6.5-4.75s4.9 1.55 6.5 4.75" />
+            </svg>
+          </IconLink>
+
           <CtaLink
             sectionId={ALT_NAV_CTA.sectionId}
             pathname={ALT_HOME_PATH}

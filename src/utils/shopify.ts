@@ -45,6 +45,12 @@ export function getShopifyCartUrl(): string {
   return `${base}/cart`;
 }
 
+/** Customer account — login if logged out, account hub if logged in */
+export function getShopifyAccountUrl(): string {
+  const base = getShopifyStoreUrl();
+  return `${base}/account`;
+}
+
 /** Shop catalog — all products, default sort = most ordered (best-selling). */
 export function getShopifyCatalogUrl(): string {
   const base = getShopifyStoreUrl();

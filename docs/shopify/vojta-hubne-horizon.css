@@ -46,6 +46,25 @@ body {
   overflow-x: clip !important;
 }
 
+/*
+ * Black gap above the gold announcement bar (FB / Meta IAB debugging artifact):
+ * Horizon uses body { display:flex; flex-direction:column }. A stray "\" text
+ * node in the rendered HTML (sits between favicon and <meta charset>, in the
+ * same head zone as the Meta in-app-browser detect block) becomes an anonymous
+ * flex item ≈ body line-height (22px) → thin black strip above the promo.
+ *
+ * CSS fix: anonymous text flex-items inherit body line-height; real children
+ * restore a normal line-height so typography is unchanged.
+ * Also re-paste snippets/vojta-hubne-fb-cart-failsafe.liquid (strips the node).
+ */
+body {
+  line-height: 0 !important;
+}
+
+body > * {
+  line-height: 1.6 !important;
+}
+
 h1,
 h2,
 h3,
@@ -310,7 +329,8 @@ header,
   stroke: currentColor !important;
 }
 
-#header-component .vh-shop-header__cart-link {
+#header-component .vh-shop-header__cart-link,
+#header-component .vh-shop-header__account-link {
   text-decoration: none !important;
 }
 
@@ -335,7 +355,8 @@ header,
   color: #ffffff !important;
 }
 
-#header-component .vh-shop-header__cart-link {
+#header-component .vh-shop-header__cart-link,
+#header-component .vh-shop-header__account-link {
   position: relative !important;
   display: inline-flex !important;
   align-items: center !important;
@@ -352,11 +373,13 @@ header,
   transition: background 0.2s ease !important;
 }
 
-#header-component .vh-shop-header__cart-link:hover {
+#header-component .vh-shop-header__cart-link:hover,
+#header-component .vh-shop-header__account-link:hover {
   background: rgba(238, 220, 130, 0.08) !important;
 }
 
-#header-component .vh-shop-header__cart-link svg {
+#header-component .vh-shop-header__cart-link svg,
+#header-component .vh-shop-header__account-link svg {
   width: 1.1rem !important;
   height: 1.1rem !important;
   color: currentColor !important;
@@ -429,7 +452,8 @@ header,
     height: 2rem !important;
   }
 
-  #header-component .vh-shop-header__cart-link {
+  #header-component .vh-shop-header__cart-link,
+  #header-component .vh-shop-header__account-link {
     width: 2.25rem !important;
     height: 2.25rem !important;
     min-width: 2.25rem !important;
@@ -805,7 +829,8 @@ footer .footer-content:has(.vh-footer-legal) > *:not(.vh-footer-legal) {
 }
 
 /* If Horizon splits heading + form into 2 blocks, stack the 2nd under the 1st */
-footer .footer-content:has(.vh-footer-legal)
+footer
+  .footer-content:has(.vh-footer-legal)
   > *:not(.vh-footer-legal)
   ~ *:not(.vh-footer-legal) {
   grid-row: 2 !important;
@@ -813,7 +838,8 @@ footer .footer-content:has(.vh-footer-legal)
 }
 
 /* When a 2nd newsletter block exists, legal should span both short rows */
-footer .footer-content:has(.vh-footer-legal):has(
+footer
+  .footer-content:has(.vh-footer-legal):has(
     > *:not(.vh-footer-legal) ~ *:not(.vh-footer-legal)
   )
   > .vh-footer-legal {
@@ -1188,7 +1214,8 @@ footer .social-icons__wrapper {
     position: static !important;
   }
 
-  footer .footer-content:has(.vh-footer-legal)
+  footer
+    .footer-content:has(.vh-footer-legal)
     > *:not(.vh-footer-legal)
     ~ *:not(.vh-footer-legal) {
     grid-row: auto !important;
@@ -1737,7 +1764,7 @@ media-gallery.media-gallery--grid,
 
 /* Previous selection during Horizon animation must not look selected */
 .product-details
-  .variant-option__button-label:has([data-previous-checked='true']):not(
+  .variant-option__button-label:has([data-previous-checked="true"]):not(
     :has(:checked)
   ) {
   background-color: var(--vh-gold) !important;
@@ -1754,7 +1781,7 @@ media-gallery.media-gallery--grid,
 }
 
 .product-details
-  .variant-option__button-label:has([data-option-available='false']):not(
+  .variant-option__button-label:has([data-option-available="false"]):not(
     .variant-option__button-label--has-swatch
   ) {
   opacity: 0.45 !important;

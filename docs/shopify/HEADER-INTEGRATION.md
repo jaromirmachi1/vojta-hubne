@@ -96,6 +96,7 @@ Horizon menu blocks are hidden by CSS; nav comes from the snippet.
 
 | Issue | Fix |
 |-------|-----|
+| **Thin black bar above gold promo** | Side effect of the Meta/FB in-app-browser head block. Rendered HTML has a stray `\` between favicon and `<meta charset>` (easy to miss in the editor). Re-upload latest `vojta-hubne-horizon.css` (CSS kills the gap) and re-paste `vojta-hubne-fb-cart-failsafe.liquid`. Optionally replace the whole Meta IAB `{%- liquid ... %}` / `{% unless is_meta_iab %}` block with a clean re-paste. |
 | **Blank / empty header bar** | Horizon hides `.header[data-sticky-state='idle']` with `opacity: 0`. Re-upload latest `vojta-hubne-horizon.css` (includes fix). |
 | **Red outline in theme editor** | Usually missing snippet, missing `VojtHLogo.png` asset, or render line outside `<header-component>`. Not normal when setup is correct. |
 | Two headers visible | Snippet must be **inside** `<header-component>`, not outside. |
