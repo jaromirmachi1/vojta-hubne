@@ -25,6 +25,7 @@
 {% assign cart_url = routes.cart_url %}
 {% assign account_url = routes.account_url | default: '/account' %}
 {% assign blog_url = '/blogs/blog' %}
+{% assign novinky_url = '/blogs/novinky' %}
 
 <div class="vh-shop-header">
   <div class="vh-shop-header__inner">
@@ -40,6 +41,7 @@
     </a>
 
     <nav class="vh-shop-header__nav" aria-label="Hlavní navigace">
+      <a class="vh-shop-header__novinky-link" href="{{ novinky_url }}">Novinky</a>
       <a class="vh-shop-header__nav-link" href="{{ catalog_url }}">Produkty</a>
       <a class="vh-shop-header__nav-link" href="{{ blog_url }}">Blog</a>
       <a class="vh-shop-header__nav-link" href="{{ marketing }}/#porovnani">Proč my</a>
@@ -100,6 +102,7 @@
     </button>
 
     <nav class="vh-mobile-nav__links" aria-label="Hlavní navigace">
+      <a class="vh-mobile-nav__link vh-mobile-nav__link--novinky" href="{{ novinky_url }}">Novinky</a>
       <a class="vh-mobile-nav__link" href="{{ catalog_url }}">Produkty</a>
       <a class="vh-mobile-nav__link" href="{{ blog_url }}">Blog</a>
       <a class="vh-mobile-nav__link" href="{{ marketing }}/#porovnani">Proč my</a>

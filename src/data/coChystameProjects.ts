@@ -85,7 +85,7 @@ export const coChystameProjects: CoChystameProject[] = [
     kicker: 'Síla. Výkon. Udržení aktivního režimu.',
     excerpt:
       'Vlastní kreatin jako přirozená součást programu Vojta Hubne — jednoduché dávkování, dobrá rozpustnost a použití pro každého.',
-    progress: 60,
+    progress: 95,
     phase: 'Aktivně ladíme a testujeme recepturu',
     updatedAt: '20. 7. 2026',
   },
@@ -109,7 +109,7 @@ export const coChystameProjects: CoChystameProject[] = [
     kicker: 'Komunita rozhodla',
     excerpt:
       'Hlasování skončilo. Do výroby jdou Višeň v čokoládě a Čokoláda — dvě příchutě, které získaly nejvíc hlasů.',
-    progress: 90,
+    progress: 95,
     phase: 'Ladíme finální recepturu a výrobu',
     updatedAt: '4. 8. 2026',
   },
@@ -145,7 +145,7 @@ export const coChystameProjects: CoChystameProject[] = [
     kicker: 'Doporučení ze zkušenosti',
     excerpt:
       'Tři úrovně spolupráce pro aktivní zákazníky a tvůrce, kteří značku znají a chtějí ji autenticky doporučovat.',
-    progress: 44,
+    progress: 95,
     phase: 'Finalizujeme podmínky',
     updatedAt: '20. 7. 2026',
   },

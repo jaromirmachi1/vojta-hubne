@@ -23,8 +23,12 @@ export function CoChystamePage() {
   const [selected, setSelected] = useState<CoChystameProjectId | null>(null)
 
   const visibleProjects = useMemo(() => {
-    if (activeCategory === 'Vše') return coChystameProjects
-    return coChystameProjects.filter((p) => p.category === activeCategory)
+    const projects =
+      activeCategory === 'Vše'
+        ? [...coChystameProjects]
+        : coChystameProjects.filter((p) => p.category === activeCategory)
+
+    return projects.sort((a, b) => b.progress - a.progress)
   }, [activeCategory])
 
   const selectedProject: CoChystameProject | null = useMemo(() => {

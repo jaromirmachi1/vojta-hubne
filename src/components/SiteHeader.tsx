@@ -10,6 +10,7 @@ import {
   getShopifyBlogUrl,
   getShopifyCartUrl,
   getShopifyCatalogUrl,
+  getShopifyNovinkyUrl,
 } from '../utils/shopify'
 
 const Header = styled.header`
@@ -83,6 +84,22 @@ const ExternalNavLink = styled.a`
   }
 `
 
+const NovinkyLink = styled.a`
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: ${({ theme }) => theme.colors.white};
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.85;
+    color: ${({ theme }) => theme.colors.white};
+  }
+`
+
 const Actions = styled.div`
   display: flex;
   align-items: center;
@@ -141,10 +158,12 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   const catalogUrl = getShopifyCatalogUrl()
   const blogUrl = getShopifyBlogUrl()
+  const novinkyUrl = getShopifyNovinkyUrl()
   const cartUrl = getShopifyCartUrl()
   const accountUrl = getShopifyAccountUrl()
 
   const mobileLinks = [
+    { label: 'Novinky', href: novinkyUrl, external: true },
     { label: 'Produkty', href: catalogUrl, external: true },
     { label: 'Blog', href: blogUrl, external: true },
     { label: 'Proč my', sectionId: 'porovnani' },
@@ -160,6 +179,7 @@ export function SiteHeader() {
         </LogoLink>
 
         <Nav aria-label="Hlavní navigace">
+          <NovinkyLink href={novinkyUrl}>Novinky</NovinkyLink>
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
           <ExternalNavLink href={blogUrl}>Blog</ExternalNavLink>
           <StyledHashLink sectionId="porovnani">Proč my</StyledHashLink>

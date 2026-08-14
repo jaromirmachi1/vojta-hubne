@@ -71,6 +71,12 @@ export function getShopifyBlogUrl(): string {
   return `${base}${normalized}`;
 }
 
+/** Novinky blog — Shopify blog handle `novinky` */
+export function getShopifyNovinkyUrl(): string {
+  const base = getShopifyStoreUrl();
+  return `${base}/blogs/novinky`;
+}
+
 /** Collection by handle, e.g. "bestsellery" */
 export function getShopifyCollectionUrl(handle: string): string | null {
   const base = getShopifyStoreUrl();

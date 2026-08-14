@@ -9,7 +9,7 @@ import {
   ALT_SUB_NAV_LINKS,
 } from '../data/altHomepage'
 import { useRegimeQuiz } from '../contexts/RegimeQuizContext'
-import { getShopifyAccountUrl, getShopifyBlogUrl } from '../utils/shopify'
+import { getShopifyAccountUrl, getShopifyBlogUrl, getShopifyNovinkyUrl } from '../utils/shopify'
 import { BrandLogo } from './BrandLogo'
 import { openRegimeCategory } from './AltSubNav'
 import { HashLink } from './HashLink'
@@ -77,6 +77,22 @@ const NavHashLink = styled(HashLink)`
 
 const ExternalNavLink = styled.a`
   ${navLinkStyles}
+`
+
+const NovinkyLink = styled.a`
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  color: ${({ theme }) => theme.colors.white};
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.85;
+    color: ${({ theme }) => theme.colors.white};
+  }
 `
 
 const Actions = styled.div`
@@ -167,9 +183,11 @@ const MenuToggle = styled.button`
 `
 
 const blogUrl = getShopifyBlogUrl()
+const novinkyUrl = getShopifyNovinkyUrl()
 const accountUrl = getShopifyAccountUrl()
 
 const mobileLinks: MobileNavLink[] = [
+  { label: 'Novinky', href: novinkyUrl, external: true },
   { label: ALT_NAV_CTA.label, sectionId: ALT_NAV_CTA.sectionId },
   ...ALT_SUB_NAV_LINKS.map((link) => ({
     label: link.label,
@@ -196,6 +214,7 @@ export function AltSiteHeader() {
         </LogoLink>
 
         <Nav aria-label="Hlavní navigace">
+          <NovinkyLink href={novinkyUrl}>Novinky</NovinkyLink>
           {ALT_NAV_LINKS.map((link) => (
             <NavHashLink
               key={link.sectionId}
