@@ -1,0 +1,313 @@
+{% comment %}
+  Free-shipping progress bar for Horizon /cart (UI incentive only).
+
+  Thresholds (cart total after discounts, Kč):
+    0–999     → pickup fee message + fill toward 1 990 Kč
+    1000–1589 → remaining Kč to free shipping
+    1590–1989 → strong “prefer product over shipping”
+    ≥1990     → DOPRAVU PLATÍME MY
+
+  Setup:
+  1. Snippets → vojta-hubne-cart-shipping-bar (paste this file)
+  2. In main-cart section under title: {% render 'vojta-hubne-cart-shipping-bar' %}
+  3. Re-upload vojta-hubne-horizon.css (optional; styles are also inlined below)
+{% endcomment %}
+
+{% if cart.item_count > 0 %}
+  {% assign vh_cart_total_kc = cart.total_price | divided_by: 100.0 %}
+  {% assign vh_free_ship_kc = 1990 %}
+  {% assign vh_remaining_kc = vh_free_ship_kc | minus: vh_cart_total_kc %}
+  {% if vh_remaining_kc < 0 %}
+    {% assign vh_remaining_kc = 0 %}
+  {% endif %}
+  {% assign vh_progress_pct = vh_cart_total_kc | times: 100.0 | divided_by: vh_free_ship_kc %}
+  {% if vh_progress_pct > 100 %}
+    {% assign vh_progress_pct = 100 %}
+  {% endif %}
+  {% assign vh_remaining_round = vh_remaining_kc | round %}
+
+  {% if vh_cart_total_kc >= 1990 %}
+    {% assign vh_ship_tier = 'unlocked' %}
+    {% assign vh_ship_message = 'DOPRAVU PLATÍME MY' %}
+  {% elsif vh_cart_total_kc >= 1590 %}
+    {% assign vh_ship_tier = 'strong' %}
+    {% assign vh_ship_message = 'Ještě ' | append: vh_remaining_round | append: ' Kč — raději produkt než 79 Kč za dopravu' %}
+  {% elsif vh_cart_total_kc >= 1000 %}
+    {% assign vh_ship_tier = 'mid' %}
+    {% assign vh_ship_message = 'Ještě ' | append: vh_remaining_round | append: ' Kč do dopravy ZDARMA' %}
+  {% else %}
+    {% assign vh_ship_tier = 'soft' %}
+    {% assign vh_ship_message = 'Výdejní místo 79 Kč · Od 1 990 Kč dopravu platíme my' %}
+  {% endif %}
+
+  {% comment %} Critical styles inlined so the bar works even if CSS asset is stale {% endcomment %}
+  <style id="vh-cart-shipping-bar-css">
+    .vh-cart-shipping-bar {
+      display: block !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      margin: 0.85rem 0 1.25rem !important;
+      padding: 1.1rem 1.15rem 1.15rem !important;
+      border: 1px solid rgba(238, 220, 130, 0.35) !important;
+      border-radius: 14px !important;
+      background: #141414 !important;
+      color: #eedc82 !important;
+      grid-column: 1 / -1 !important;
+    }
+    .vh-cart-shipping-bar[hidden] {
+      display: none !important;
+    }
+    .vh-cart-shipping-bar__message {
+      display: block !important;
+      margin: 0 0 0.85rem !important;
+      padding: 0 !important;
+      font-family: Inter, system-ui, sans-serif !important;
+      font-size: clamp(0.95rem, 2.4vw, 1.15rem) !important;
+      font-weight: 700 !important;
+      line-height: 1.3 !important;
+      letter-spacing: 0.04em !important;
+      text-align: center !important;
+      text-transform: none !important;
+      color: #eedc82 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    .vh-cart-shipping-bar__track {
+      display: block !important;
+      position: relative !important;
+      width: 100% !important;
+      height: 12px !important;
+      min-height: 12px !important;
+      overflow: hidden !important;
+      border-radius: 999px !important;
+      background: rgba(238, 220, 130, 0.18) !important;
+      border: 1px solid rgba(238, 220, 130, 0.22) !important;
+      box-sizing: border-box !important;
+    }
+    .vh-cart-shipping-bar__fill {
+      display: block !important;
+      height: 100% !important;
+      min-height: 10px !important;
+      border-radius: inherit !important;
+      background: linear-gradient(90deg, #b89f3d 0%, #eedc82 55%, #fff1a8 100%) !important;
+      transition: width 0.45s ease !important;
+    }
+    .vh-cart-shipping-bar--soft .vh-cart-shipping-bar__message {
+      color: #eedc82 !important;
+      font-weight: 650 !important;
+    }
+    .vh-cart-shipping-bar--mid .vh-cart-shipping-bar__message,
+    .vh-cart-shipping-bar--strong .vh-cart-shipping-bar__message {
+      color: #eedc82 !important;
+      font-size: clamp(1rem, 2.6vw, 1.2rem) !important;
+    }
+    .vh-cart-shipping-bar--strong {
+      border-color: rgba(238, 220, 130, 0.55) !important;
+      box-shadow: 0 0 0 1px rgba(238, 220, 130, 0.15), 0 10px 28px rgba(0, 0, 0, 0.35) !important;
+    }
+    .vh-cart-shipping-bar--strong .vh-cart-shipping-bar__track {
+      height: 14px !important;
+      min-height: 14px !important;
+      background: rgba(238, 220, 130, 0.22) !important;
+    }
+    .vh-cart-shipping-bar--unlocked {
+      border-color: rgba(238, 220, 130, 0.65) !important;
+      background: linear-gradient(180deg, rgba(238, 220, 130, 0.14) 0%, #141414 100%) !important;
+    }
+    .vh-cart-shipping-bar--unlocked .vh-cart-shipping-bar__message {
+      letter-spacing: 0.14em !important;
+      text-transform: uppercase !important;
+      font-size: clamp(1rem, 2.8vw, 1.25rem) !important;
+    }
+    .vh-cart-shipping-bar--unlocked .vh-cart-shipping-bar__fill {
+      width: 100% !important;
+      background: #eedc82 !important;
+    }
+  </style>
+
+  <div
+    class="vh-cart-shipping-bar vh-cart-shipping-bar--{{ vh_ship_tier }}"
+    id="vh-cart-shipping-bar"
+    data-vh-cart-shipping-bar
+    data-total-cents="{{ cart.total_price }}"
+    role="status"
+    aria-live="polite"
+  >
+    <p class="vh-cart-shipping-bar__message" data-vh-ship-message>{{ vh_ship_message }}</p>
+    <div
+      class="vh-cart-shipping-bar__track"
+      role="progressbar"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="{{ vh_progress_pct | round }}"
+      aria-label="Progress k dopravě zdarma"
+      data-vh-ship-track
+    >
+      <div
+        class="vh-cart-shipping-bar__fill"
+        data-vh-ship-fill
+        style="width: {{ vh_progress_pct }}%;"
+      ></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var FREE_SHIPPING_KC = 1990;
+      var PICKUP_FEE_KC = 79;
+      var root = document.querySelector('[data-vh-cart-shipping-bar]');
+      if (!root) return;
+
+      var messageEl = root.querySelector('[data-vh-ship-message]');
+      var trackEl = root.querySelector('[data-vh-ship-track]');
+      var fillEl = root.querySelector('[data-vh-ship-fill]');
+
+      function formatKc(n) {
+        return String(Math.max(0, Math.round(n))).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      }
+
+      function tierFromTotalKc(totalKc) {
+        var remaining = Math.max(0, FREE_SHIPPING_KC - totalKc);
+        var pct = Math.min(100, (totalKc / FREE_SHIPPING_KC) * 100);
+        var tier;
+        var message;
+
+        if (totalKc >= FREE_SHIPPING_KC) {
+          tier = 'unlocked';
+          message = 'DOPRAVU PLATÍME MY';
+        } else if (totalKc >= 1590) {
+          tier = 'strong';
+          message =
+            'Ještě ' +
+            formatKc(remaining) +
+            ' Kč — raději produkt než ' +
+            PICKUP_FEE_KC +
+            ' Kč za dopravu';
+        } else if (totalKc >= 1000) {
+          tier = 'mid';
+          message = 'Ještě ' + formatKc(remaining) + ' Kč do dopravy ZDARMA';
+        } else {
+          tier = 'soft';
+          message =
+            'Výdejní místo ' +
+            PICKUP_FEE_KC +
+            ' Kč · Od ' +
+            formatKc(FREE_SHIPPING_KC) +
+            ' Kč dopravu platíme my';
+        }
+
+        return { tier: tier, message: message, pct: pct, remaining: remaining };
+      }
+
+      function applyState(totalCents) {
+        var totalKc = Number(totalCents) / 100;
+        if (!isFinite(totalKc) || totalKc < 0) totalKc = 0;
+
+        var state = tierFromTotalKc(totalKc);
+        root.className =
+          'vh-cart-shipping-bar vh-cart-shipping-bar--' + state.tier;
+        root.setAttribute('data-total-cents', String(Math.round(totalCents)));
+
+        if (messageEl) messageEl.textContent = state.message;
+        if (fillEl) fillEl.style.width = state.pct + '%';
+        if (trackEl) {
+          trackEl.setAttribute('aria-valuenow', String(Math.round(state.pct)));
+          trackEl.setAttribute(
+            'aria-label',
+            state.tier === 'unlocked'
+              ? 'Doprava zdarma odemčena'
+              : 'Progress k dopravě zdarma: ' + Math.round(state.pct) + ' %'
+          );
+        }
+
+        root.hidden = false;
+      }
+
+      function hideIfEmpty(itemCount) {
+        root.hidden = itemCount <= 0;
+      }
+
+      function refreshFromCartJs() {
+        return fetch('/cart.js', {
+          credentials: 'same-origin',
+          headers: { Accept: 'application/json' },
+        })
+          .then(function (res) {
+            if (!res.ok) throw new Error('cart.js ' + res.status);
+            return res.json();
+          })
+          .then(function (cart) {
+            hideIfEmpty(cart.item_count || 0);
+            if ((cart.item_count || 0) > 0) {
+              applyState(cart.total_price);
+            }
+          })
+          .catch(function () {});
+      }
+
+      document.addEventListener('cart:updated', refreshFromCartJs);
+      document.addEventListener('cart:update', refreshFromCartJs);
+      document.addEventListener('theme:cart:change', refreshFromCartJs);
+
+      document.addEventListener(
+        'change',
+        function (event) {
+          var t = event.target;
+          if (!t) return;
+          if (
+            t.matches(
+              'quantity-selector input, .quantity__input, input[name="updates[]"], input[name="quantity"], cart-items-component input'
+            ) ||
+            (t.closest && t.closest('cart-items-component, form[action*="/cart"]'))
+          ) {
+            window.setTimeout(refreshFromCartJs, 350);
+          }
+        },
+        true
+      );
+
+      document.addEventListener(
+        'click',
+        function (event) {
+          var t = event.target;
+          if (!t || !t.closest) return;
+          if (
+            t.closest(
+              'button[name="plus"], button[name="minus"], button[name="update"], .quantity__button, cart-remove-button, [data-quantity-selector], .cart-discount__button'
+            )
+          ) {
+            window.setTimeout(refreshFromCartJs, 450);
+          }
+        },
+        true
+      );
+
+      var originalFetch = window.fetch;
+      if (typeof originalFetch === 'function') {
+        window.fetch = function () {
+          var args = arguments;
+          var input = args[0];
+          var url =
+            typeof input === 'string'
+              ? input
+              : input && input.url
+                ? input.url
+                : '';
+          var result = originalFetch.apply(this, args);
+          if (/\/cart\/(add|change|update|clear)/.test(String(url))) {
+            result
+              .then(function (res) {
+                if (res && res.ok) window.setTimeout(refreshFromCartJs, 200);
+                return res;
+              })
+              .catch(function () {});
+          }
+          return result;
+        };
+      }
+
+      window.setTimeout(refreshFromCartJs, 100);
+    })();
+  </script>
+{% endif %}

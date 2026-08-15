@@ -1,0 +1,226 @@
+{% comment %}
+  Horizon cart section with VH free-shipping progress bar.
+
+  Theme install:
+  1. Ensure snippets/vojta-hubne-cart-shipping-bar.liquid exists (from repo).
+  2. Replace sections/main-cart.liquid (or your cart section file) with this file,
+     OR paste only the {% render 'vojta-hubne-cart-shipping-bar' %} line under cart-page__title.
+  3. Re-upload assets/vojta-hubne-horizon.css.
+{% endcomment %}
+
+{% capture cart_page_more_blocks_content %}
+  <div class="cart-page__more-blocks">
+    {%- content_for 'blocks' -%}
+  </div>
+{% endcapture %}
+
+{% capture cart_items_children %}
+  <template id="empty-cart-template">
+    <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+    <div
+      class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
+    >
+      <div
+        class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
+        style="{% render 'spacing-style', settings: section.settings %}"
+      >
+        <div class="cart-page__title">
+          {%- content_for 'block', id: 'cart-page-title', type: '_cart-title', force_empty: true %}
+        </div>
+        <div class="cart-page__items">
+          {%- content_for 'block', id: 'cart-page-items', type: '_cart-products', force_empty: true %}
+        </div>
+        {{ cart_page_more_blocks_content }}
+      </div>
+    </div>
+  </template>
+
+  {% # theme-check-disable UniqueStaticBlockId %}
+  <div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  <div
+    class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}"
+  >
+    <div
+      class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
+      style="{% render 'spacing-style', settings: section.settings %}"
+    >
+      <div class="cart-page__title">
+        {%- content_for 'block', id: 'cart-page-title', type: '_cart-title' %}
+      </div>
+
+      {% comment %} VH free-shipping progress bar — under title, above line items {% endcomment %}
+      {% render 'vojta-hubne-cart-shipping-bar' %}
+
+      <div class="cart-page__items">
+        {%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}
+      </div>
+
+      {%- unless cart.empty? -%}
+        <div class="cart-page__summary">
+          {%- content_for 'block', id: 'cart-page-summary', type: '_cart-summary' -%}
+        </div>
+      {%- endunless -%}
+
+      {{ cart_page_more_blocks_content }}
+    </div>
+  </div>
+  {% # theme-check-enable UniqueStaticBlockId %}
+{% endcapture %}
+{% render 'cart-items-component', children: cart_items_children, section_id: section.id %}
+
+{% stylesheet %}
+  .cart-page {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    width: 100%;
+    max-width: min(100%, 40rem);
+    margin-inline: auto;
+  }
+
+  .cart-page--empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cart-page--empty .cart-page__title,
+  .cart-page--empty .cart-page__more-blocks {
+    margin-top: var(--margin-6xl);
+  }
+
+  .cart-page__more-blocks {
+    width: 100%;
+  }
+
+  .cart-page--empty .cart-title {
+    text-align: center;
+  }
+
+  .cart-page__main,
+  .cart-page__title,
+  .cart-page__items,
+  .cart-page__summary,
+  .vh-cart-shipping-bar {
+    width: 100%;
+  }
+
+  .cart-page__summary {
+    padding-top: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .cart-page__title + .vh-cart-shipping-bar {
+    margin-block-start: var(--margin-lg);
+  }
+
+  .vh-cart-shipping-bar + .cart-page__items {
+    margin-block-start: var(--margin-lg);
+  }
+
+  @media screen and (min-width: 750px) {
+    .cart-page {
+      max-width: min(100%, 44rem);
+    }
+
+    .cart-page__summary {
+      position: static;
+      height: auto;
+      grid-column: auto;
+      grid-row: auto;
+      padding-top: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .section--page-width .cart-page:has(.cart-summary--extend) {
+      grid-column: auto;
+      grid-template-columns: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.cart",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    },
+    {
+      "type": "text"
+    },
+    {
+      "type": "icon"
+    },
+    {
+      "type": "image"
+    },
+    {
+      "type": "button"
+    },
+    {
+      "type": "video"
+    },
+    {
+      "type": "group"
+    },
+    {
+      "type": "spacer"
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

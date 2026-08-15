@@ -50,11 +50,18 @@
     </nav>
 
     <div class="vh-shop-header__actions">
-      <a class="vh-shop-header__account-link" href="{{ account_url }}" aria-label="Přihlásit se / účet">
+      <a
+        class="vh-shop-header__account-link{% if customer %} vh-shop-header__account-link--logged-in{% endif %}"
+        href="{{ account_url }}"
+        aria-label="{% if customer %}Účet{% if customer.first_name != blank %} — {{ customer.first_name }}{% endif %}{% else %}Přihlásit se / účet{% endif %}"
+      >
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
           <circle cx="12" cy="8" r="3.25"></circle>
           <path d="M5.5 19.5c1.6-3.2 4-4.75 6.5-4.75s4.9 1.55 6.5 4.75"></path>
         </svg>
+        {% if customer and customer.first_name != blank %}
+          <span class="vh-shop-header__account-name">{{ customer.first_name }}</span>
+        {% endif %}
       </a>
 
       <a class="vh-shop-header__cart-link" href="{{ cart_url }}" aria-label="Košík">
@@ -109,7 +116,15 @@
       <a class="vh-mobile-nav__link" href="{{ marketing }}/co-chystame">Co chystáme</a>
       <a class="vh-mobile-nav__link" href="{{ marketing }}/kontakt">Kontakt</a>
       <a class="vh-mobile-nav__link" href="{{ account_url }}">
-        {% if customer %}Můj účet{% else %}Přihlásit se{% endif %}
+        {% if customer %}
+          {% if customer.first_name != blank %}
+            {{ customer.first_name }} — Můj účet
+          {% else %}
+            Můj účet
+          {% endif %}
+        {% else %}
+          Přihlásit se
+        {% endif %}
       </a>
     </nav>
 

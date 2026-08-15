@@ -2,22 +2,18 @@ import styled from 'styled-components'
 import { theme } from '../../styles/theme'
 import { Particles } from './Particles'
 
+/*
+ * Keep this absolute inside the hero only.
+ * Fixed + dark vignette on mobile was pinning a dim overlay to the viewport
+ * while later sections (e.g. Story) scrolled underneath — bright strip at the
+ * bottom when 100svh < visual viewport (iOS chrome).
+ */
 const BackgroundLayer = styled.div`
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-
-  /* Mobile: pin to viewport so WebGL canvas fills the full screen */
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100dvh;
-    height: 100svh;
-    min-height: -webkit-fill-available;
-  }
 `
 
 const ParticlesHost = styled.div`
@@ -37,15 +33,6 @@ const ParticlesHost = styled.div`
     display: block !important;
     width: 100% !important;
     height: 100% !important;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100dvh;
-    height: 100svh;
-    min-height: -webkit-fill-available;
   }
 `
 
@@ -75,15 +62,6 @@ const StaticFallback = styled.div`
       rgba(138, 125, 82, 0.12) 0%,
       transparent 22%
     );
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100dvh;
-    height: 100svh;
-    min-height: -webkit-fill-available;
-  }
 `
 
 const Vignette = styled.div`
@@ -98,12 +76,6 @@ const Vignette = styled.div`
   pointer-events: none;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100dvh;
-    height: 100svh;
-    min-height: -webkit-fill-available;
     /* Lighter vignette on mobile so particles stay visible edge-to-edge */
     background: radial-gradient(
       ellipse 90% 80% at 50% 50%,
