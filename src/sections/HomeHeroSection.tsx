@@ -134,9 +134,9 @@ const PrimaryLink = styled.a`
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
   background: ${({ theme }) => theme.colors.gold};
-  border: 2px solid #e11d2e;
+  border: 2px solid ${({ theme }) => theme.colors.goldMuted};
   border-radius: ${({ theme }) => theme.radii.pill};
-  box-shadow: 0 0 0 1px rgba(225, 29, 46, 0.25);
+  box-shadow: 0 0 0 1px rgba(238, 220, 130, 0.35);
   transition: opacity 0.2s ease;
 
   &:hover {

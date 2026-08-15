@@ -8,6 +8,7 @@ import { CoChystameTeaserSection } from '../sections/CoChystameTeaserSection'
 import { HomeHeroSection } from '../sections/HomeHeroSection'
 import { HomeMobilePromoScroll } from '../sections/HomeMobilePromoScroll'
 import { HomeSecondaryPromoSection } from '../sections/HomeSecondaryPromoSection'
+import { NovinkyTeaserSection } from '../sections/NovinkyTeaserSection'
 import { ProductComparisonSection } from '../sections/ProductComparisonSection'
 import { ProductReviewsSection } from '../sections/ProductReviewsSection'
 import { StorySection } from '../sections/StorySection'
@@ -27,6 +28,7 @@ export function HomePage() {
       <HomeMobilePromoScroll />
       <HomeSecondaryPromoSection />
       <BestsellersSection />
+      <NovinkyTeaserSection />
       <CoChystameTeaserSection />
       <ProductReviewsSection />
       <CategoryTeasersSection />

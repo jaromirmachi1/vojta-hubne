@@ -77,6 +77,13 @@ export function getShopifyNovinkyUrl(): string {
   return `${base}/blogs/novinky`;
 }
 
+/** Single Novinky article: /blogs/novinky/{handle} */
+export function getShopifyNovinkyArticleUrl(handle: string): string {
+  const base = getShopifyNovinkyUrl();
+  if (!handle) return base;
+  return `${base}/${encodeURIComponent(handle)}`;
+}
+
 /** Collection by handle, e.g. "bestsellery" */
 export function getShopifyCollectionUrl(handle: string): string | null {
   const base = getShopifyStoreUrl();

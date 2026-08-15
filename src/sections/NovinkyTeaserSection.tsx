@@ -1,15 +1,12 @@
-import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import { PageContainer } from '../components/PageContainer'
 import { ArrowIcon } from '../components/cochystame/ArrowIcon'
-import { coChystameProjects } from '../data/coChystameProjects'
+import { novinkyTeaserPosts } from '../data/novinkyTeaserPosts'
 import { eyebrowText } from '../styles/eyebrow'
-
-const teaserIds = ['flavor', 'odvodnovac', 'kreatin'] as const
-
-const teaserProjects = teaserIds
-  .map((id) => coChystameProjects.find((project) => project.id === id))
-  .filter((project): project is (typeof coChystameProjects)[number] => Boolean(project))
+import {
+  getShopifyNovinkyArticleUrl,
+  getShopifyNovinkyUrl,
+} from '../utils/shopify'
 
 const pulse = keyframes`
   0%, 100% { opacity: 1; }
@@ -19,7 +16,7 @@ const pulse = keyframes`
 const Section = styled.section`
   position: relative;
   isolation: isolate;
-  padding-block: clamp(3.5rem, 8vw, 6rem);
+  padding-block: clamp(2.75rem, 6vw, 4.5rem);
   overflow: hidden;
   border-block: 1px solid rgba(238, 220, 130, 0.35);
   background:
@@ -58,15 +55,31 @@ const Inner = styled(PageContainer)`
   z-index: 1;
 `
 
-const Header = styled.header`
+const Layout = styled.div`
   display: grid;
-  gap: 1.25rem;
-  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  gap: clamp(1.35rem, 3vw, 2rem);
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
-    align-items: end;
-    gap: 3rem;
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.15fr);
+    grid-template-areas:
+      'intro posts'
+      'cta posts';
+    align-items: start;
+    column-gap: clamp(2rem, 4vw, 3.5rem);
+    row-gap: 1.25rem;
+  }
+`
+
+const Intro = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-area: intro;
+    justify-content: end;
+    padding-top: 0.25rem;
   }
 `
 
@@ -75,7 +88,7 @@ const BadgeRow = styled.div`
   flex-wrap: wrap;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.35rem;
 `
 
 const NewBadge = styled.span`
@@ -110,18 +123,17 @@ const Eyebrow = styled.p`
 const Title = styled.h2`
   margin: 0;
   font-family: ${({ theme }) => theme.fonts.display};
-  font-size: clamp(2.35rem, 6vw, 4rem);
+  font-size: clamp(2.1rem, 5.5vw, 3.5rem);
   line-height: 0.92;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.gold};
-  text-shadow: 0 0 40px rgba(238, 220, 130, 0.18);
+  color: ${({ theme }) => theme.colors.white};
 `
 
 const Lead = styled.p`
   display: none;
   margin: 0;
-  max-width: 42ch;
+  max-width: 38ch;
   padding: 1rem 1.15rem;
   border-left: 2px solid ${({ theme }) => theme.colors.gold};
   background: rgba(238, 220, 130, 0.05);
@@ -137,26 +149,18 @@ const Lead = styled.p`
 const Grid = styled.div`
   display: grid;
   gap: 1.25rem;
-  grid-template-columns: 1fr;
-
-  & > *:nth-child(n + 3) {
-    display: none;
-  }
+  min-width: 0;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-
-    & > *:nth-child(n + 3) {
-      display: flex;
-    }
+    grid-area: posts;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  & > * {
+    height: 100%;
   }
 `
 
-const Card = styled(Link)`
+const Card = styled.a`
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
@@ -220,63 +224,40 @@ const CardTitle = styled.h3`
 `
 
 const CardExcerpt = styled.p`
-  display: none;
   margin: 0;
   color: ${({ theme }) => theme.colors.textMuted};
   line-height: 1.7;
   font-size: 0.92rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    display: block;
-  }
 `
 
-const Progress = styled.div`
-  display: none;
+const CardCta = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   margin-top: auto;
-  gap: 0.55rem;
-  padding-top: 0.5rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    display: grid;
-  }
-`
-
-const ProgressTop = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.65rem;
+  padding-top: 0.35rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-`
-
-const ProgressValue = styled.span`
   color: ${({ theme }) => theme.colors.gold};
-`
 
-const ProgressBar = styled.div`
-  height: 2px;
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 999px;
-  overflow: hidden;
-`
-
-const ProgressFill = styled.div<{ $pct: number }>`
-  width: ${({ $pct }) => `${$pct}%`};
-  height: 100%;
-  background: ${({ theme }) => theme.colors.gold};
+  svg {
+    color: currentColor;
+  }
 `
 
 const CtaRow = styled.div`
   display: flex;
-  justify-content: center;
-  margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  justify-content: flex-start;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-area: cta;
+    align-self: start;
+  }
 `
 
-const CtaLink = styled(Link)`
+const CtaLink = styled.a`
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
@@ -317,56 +298,52 @@ const CtaLink = styled(Link)`
   }
 `
 
-export function CoChystameTeaserSection() {
+export function NovinkyTeaserSection() {
+  const novinkyUrl = getShopifyNovinkyUrl()
+
   return (
-    <Section aria-labelledby="co-chystame-teaser-title">
+    <Section aria-labelledby="novinky-teaser-title">
       <Inner>
-        <Header>
-          <div>
+        <Layout>
+          <Intro>
             <BadgeRow>
               <NewBadge>
                 <BadgeDot aria-hidden />
                 Nové
               </NewBadge>
-              <Eyebrow>Právě spuštěno</Eyebrow>
+              <Eyebrow>Ze shopu</Eyebrow>
             </BadgeRow>
-            <Title id="co-chystame-teaser-title">Co chystáme</Title>
-          </div>
-          <Lead>
-            Transparentní pohled do vývoje: nové produkty, testování a komunita.
-            Nic neschováváme — ukážeme, co je potvrzené a co teprve vzniká.
-          </Lead>
-        </Header>
+            <Title id="novinky-teaser-title">Novinky</Title>
+            <Lead>
+              Co je nové v e-shopu: košík, platby, klub a další změny — přímo od
+              Vojty Hubně.
+            </Lead>
+          </Intro>
 
-        <Grid>
-          {teaserProjects.map((project) => (
-            <Card
-              key={project.id}
-              to="/co-chystame"
-              aria-label={`Zjistit více o projektu ${project.title}`}
-            >
-              <StatusPill>{project.status}</StatusPill>
-              <CardKicker>{project.kicker}</CardKicker>
-              <CardTitle>{project.title}</CardTitle>
-              <CardExcerpt>{project.excerpt}</CardExcerpt>
-              <Progress>
-                <ProgressTop>
-                  <span>Stav vývoje</span>
-                  <ProgressValue>{project.progress} %</ProgressValue>
-                </ProgressTop>
-                <ProgressBar>
-                  <ProgressFill $pct={project.progress} />
-                </ProgressBar>
-              </Progress>
-            </Card>
-          ))}
-        </Grid>
+          <Grid>
+            {novinkyTeaserPosts.map((post) => (
+              <Card
+                key={post.id}
+                href={getShopifyNovinkyArticleUrl(post.handle)}
+                aria-label={`Přečíst novinku: ${post.title}`}
+              >
+                <StatusPill>{post.status}</StatusPill>
+                <CardKicker>{post.kicker}</CardKicker>
+                <CardTitle>{post.title}</CardTitle>
+                <CardExcerpt>{post.excerpt}</CardExcerpt>
+                <CardCta>
+                  Přečíst <ArrowIcon />
+                </CardCta>
+              </Card>
+            ))}
+          </Grid>
 
-        <CtaRow>
-          <CtaLink to="/co-chystame">
-            Co dalšího chystáme <ArrowIcon />
-          </CtaLink>
-        </CtaRow>
+          <CtaRow>
+            <CtaLink href={novinkyUrl}>
+              Všechny novinky <ArrowIcon />
+            </CtaLink>
+          </CtaRow>
+        </Layout>
       </Inner>
     </Section>
   )
