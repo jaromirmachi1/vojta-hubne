@@ -187,7 +187,7 @@ const novinkyUrl = getShopifyNovinkyUrl()
 const accountUrl = getShopifyAccountUrl()
 
 const mobileLinks: MobileNavLink[] = [
-  { label: 'Novinky', href: novinkyUrl, external: true },
+  { label: 'Novinky', href: novinkyUrl, external: true, emphasis: true },
   { label: ALT_NAV_CTA.label, sectionId: ALT_NAV_CTA.sectionId },
   ...ALT_SUB_NAV_LINKS.map((link) => ({
     label: link.label,

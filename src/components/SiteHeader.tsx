@@ -163,7 +163,7 @@ export function SiteHeader() {
   const accountUrl = getShopifyAccountUrl()
 
   const mobileLinks = [
-    { label: 'Novinky', href: novinkyUrl, external: true },
+    { label: 'Novinky', href: novinkyUrl, external: true, emphasis: true },
     { label: 'Produkty', href: catalogUrl, external: true },
     { label: 'Blog', href: blogUrl, external: true },
     { label: 'Proč my', sectionId: 'porovnani' },

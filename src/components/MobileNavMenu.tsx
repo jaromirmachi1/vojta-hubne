@@ -4,11 +4,17 @@ import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { HashLink } from './HashLink'
 
+type MobileNavLinkBase = {
+  label: string
+  /** White text — matches desktop Novinky treatment */
+  emphasis?: boolean
+}
+
 export type MobileNavLink =
-  | { label: string; href: string; external: true }
-  | { label: string; to: string }
-  | { label: string; sectionId: string }
-  | { label: string; regimePathId: string }
+  | (MobileNavLinkBase & { href: string; external: true })
+  | (MobileNavLinkBase & { to: string })
+  | (MobileNavLinkBase & { sectionId: string })
+  | (MobileNavLinkBase & { regimePathId: string })
 
 type MobileNavMenuProps = {
   isOpen: boolean
@@ -102,20 +108,33 @@ const linkStyles = css`
   }
 `
 
-const MenuHashLink = styled(HashLink)`
-  ${linkStyles}
+const emphasisStyles = css`
+  color: ${({ theme }) => theme.colors.white};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.white};
+    opacity: 0.85;
+  }
 `
 
-const MenuInternalLink = styled(Link)`
+const MenuHashLink = styled(HashLink)<{ $emphasis?: boolean }>`
   ${linkStyles}
+  ${({ $emphasis }) => $emphasis && emphasisStyles}
 `
 
-const MenuExternalLink = styled.a`
+const MenuInternalLink = styled(Link)<{ $emphasis?: boolean }>`
   ${linkStyles}
+  ${({ $emphasis }) => $emphasis && emphasisStyles}
 `
 
-const MenuButton = styled.button`
+const MenuExternalLink = styled.a<{ $emphasis?: boolean }>`
   ${linkStyles}
+  ${({ $emphasis }) => $emphasis && emphasisStyles}
+`
+
+const MenuButton = styled.button<{ $emphasis?: boolean }>`
+  ${linkStyles}
+  ${({ $emphasis }) => $emphasis && emphasisStyles}
   text-align: left;
   cursor: pointer;
 `
@@ -247,17 +266,28 @@ export function MobileNavMenu({
       <Nav aria-label="Hlavní navigace">
         {links.map((link) =>
           'external' in link ? (
-            <MenuExternalLink key={link.href} href={link.href} onClick={onClose}>
+            <MenuExternalLink
+              key={link.href}
+              href={link.href}
+              $emphasis={link.emphasis}
+              onClick={onClose}
+            >
               {link.label}
             </MenuExternalLink>
           ) : 'to' in link ? (
-            <MenuInternalLink key={link.to} to={link.to} onClick={onClose}>
+            <MenuInternalLink
+              key={link.to}
+              to={link.to}
+              $emphasis={link.emphasis}
+              onClick={onClose}
+            >
               {link.label}
             </MenuInternalLink>
           ) : 'regimePathId' in link ? (
             <MenuButton
               key={link.regimePathId}
               type="button"
+              $emphasis={link.emphasis}
               onClick={() => {
                 skipScrollRestoreRef.current = true
                 onRegimePathClick?.(link.regimePathId)
@@ -271,6 +301,7 @@ export function MobileNavMenu({
               key={link.sectionId}
               sectionId={link.sectionId}
               pathname={hashPathname}
+              $emphasis={link.emphasis}
               onClick={() => {
                 skipScrollRestoreRef.current = true
                 onClose()

@@ -6,6 +6,7 @@ import { BestsellersSection } from '../sections/BestsellersSection'
 import { CategoryTeasersSection } from '../sections/CategoryTeasersSection'
 import { CoChystameTeaserSection } from '../sections/CoChystameTeaserSection'
 import { HomeHeroSection } from '../sections/HomeHeroSection'
+import { HomeMobilePromoScroll } from '../sections/HomeMobilePromoScroll'
 import { HomeSecondaryPromoSection } from '../sections/HomeSecondaryPromoSection'
 import { ProductComparisonSection } from '../sections/ProductComparisonSection'
 import { ProductReviewsSection } from '../sections/ProductReviewsSection'
@@ -23,6 +24,7 @@ export function HomePage() {
   return (
     <ShopLayout>
       <HomeHeroSection />
+      <HomeMobilePromoScroll />
       <HomeSecondaryPromoSection />
       <BestsellersSection />
       <CoChystameTeaserSection />

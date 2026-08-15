@@ -23,12 +23,8 @@ const Bar = styled(Link)`
   &:hover {
     opacity: 0.92;
   }
-`;
+`
 
 export function PromoBar() {
-  return (
-    <Bar to={PROMO_BAR_HOME_PATH}>
-      {PROMO_BAR_TEXT}
-    </Bar>
-  );
+  return <Bar to={PROMO_BAR_HOME_PATH}>{PROMO_BAR_TEXT}</Bar>
 }

@@ -8,7 +8,7 @@ import { eyebrowText } from '../styles/eyebrow'
 
 const Section = styled.section`
   position: relative;
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: center;
   width: 100%;
@@ -16,6 +16,10 @@ const Section = styled.section`
   min-height: ${({ theme }) => theme.layout.heroMinHeightDvh};
   overflow: hidden;
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: flex;
+  }
 `
 
 const Inner = styled(PageContainer)`
@@ -140,10 +144,6 @@ export function HomeSecondaryPromoSection() {
           <Title id="home-restart-promo-title">Balíček (re)START</Title>
           <Lead>{PROMO_BAR_TEXT}</Lead>
           <Stats>
-            <Stat>
-              <StatValue>3</StatValue>
-              <StatLabel>Produkty v balíčku</StatLabel>
-            </Stat>
             <Stat>
               <StatValue>30 %</StatValue>
               <StatLabel>Sleva</StatLabel>

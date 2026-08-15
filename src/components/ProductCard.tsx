@@ -127,18 +127,27 @@ const Description = styled.p`
 `;
 
 const Meta = styled.p`
+  display: none;
   margin: 0;
   font-size: 0.75rem;
   color: ${({ theme }) => theme.colors.text};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: block;
+  }
 `;
 
 const Benefits = styled.ul`
-  display: flex;
+  display: none;
   flex-wrap: wrap;
   gap: 0.4rem;
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: flex;
+  }
 `;
 
 const Benefit = styled.li`
