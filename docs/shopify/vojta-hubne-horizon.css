@@ -1497,31 +1497,33 @@ media-gallery.media-gallery--grid,
   .media-gallery__grid img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover !important;
+    object-fit: contain !important;
   }
 
   .media-gallery--large-first-image .media-gallery__grid > :first-child img {
-    max-height: min(56vh, 560px) !important;
+    max-height: none !important;
+    aspect-ratio: 1 / 1 !important;
     object-fit: contain !important;
   }
 
   .product-information__media media-gallery,
   .product-information__media .product-media-gallery,
   .product-information__media slideshow-component {
-    max-width: min(100%, 560px) !important;
+    max-width: min(100%, 32rem) !important;
     width: 100% !important;
     margin-inline: auto !important;
   }
 
   .product-information__media .product-media-container,
   .product-information__media .media-gallery__grid > :first-child {
-    max-height: min(56vh, 560px) !important;
+    max-height: none !important;
+    aspect-ratio: 1 / 1 !important;
   }
 
   .product-information__media .product-media-container img,
   .product-information__media .media-gallery__grid > :first-child img,
   .product-information__media slideshow-slide.product-media-container img {
-    max-height: min(56vh, 560px) !important;
+    max-height: 100% !important;
     object-fit: contain !important;
   }
 }
@@ -2980,22 +2982,16 @@ main cart-items-component [class*="color-scheme"] {
   --color-background-rgb: 0 0 0 !important;
 }
 
-/* Cart layout — single column on all breakpoints:
-   title → shipping bar → items → summary (discount / totals / checkout) */
+/* Cart layout — mobile column; tablet+ items left / summary right */
 main .section--page-width .cart-page:has(.cart-summary--extend),
 main .cart-page,
 main .cart-page.cart-page--empty {
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
-  grid-template-columns: none !important;
-  grid-template-rows: none !important;
-  grid-column: 1 / -1 !important;
   width: 100% !important;
-  max-width: min(100%, 40rem) !important;
-  margin-inline: auto !important;
-  column-gap: 0 !important;
-  row-gap: 0 !important;
+  max-width: 100% !important;
+  margin-inline: 0 !important;
   gap: 0 !important;
 }
 
@@ -3006,15 +3002,8 @@ main .cart-page__more-blocks,
 main .cart-page__main,
 main .cart-page .vh-cart-shipping-bar,
 main cart-items-component .vh-cart-shipping-bar {
-  display: block !important;
-  grid-column: auto !important;
-  grid-row: auto !important;
   width: 100% !important;
   max-width: 100% !important;
-  position: static !important;
-  height: auto !important;
-  align-self: stretch !important;
-  justify-self: stretch !important;
 }
 
 main .cart-page__summary {
@@ -3023,13 +3012,8 @@ main .cart-page__summary {
 }
 
 main .cart-page .vh-cart-shipping-bar {
-  order: 0;
   margin-top: 0.75rem !important;
   margin-bottom: 1.15rem !important;
-}
-
-main .cart-page__title {
-  order: -1;
 }
 
 main .cart-summary,
@@ -3049,12 +3033,76 @@ main .cart-summary--extend .cart-summary__inner {
 @media screen and (min-width: 750px) {
   main .section--page-width .cart-page:has(.cart-summary--extend),
   main .cart-page {
-    max-width: min(100%, 44rem) !important;
+    display: grid !important;
+    flex-direction: unset !important;
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+    grid-template-columns: minmax(0, 1fr) clamp(18rem, 24vw, 24rem) !important;
+    grid-template-rows: auto auto auto auto !important;
+    column-gap: clamp(1.5rem, 4vw, 3.5rem) !important;
+    row-gap: 0 !important;
+    align-items: start !important;
   }
 
+  main .cart-page__title {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+  }
+
+  main .cart-page .vh-cart-shipping-bar,
+  main cart-items-component .vh-cart-shipping-bar,
+  main .cart-page > .vh-cart-shipping-bar {
+    grid-column: 1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+  }
+
+  main .cart-page__items {
+    grid-column: 1 !important;
+    grid-row: 3 !important;
+    width: 100% !important;
+  }
+
+  main .cart-page__more-blocks,
+  main .cart-page__main {
+    grid-column: 1 !important;
+    grid-row: 4 !important;
+    width: 100% !important;
+  }
+
+  /* Stick beside the left column — do NOT inflate row 1 height */
   main .cart-page__summary {
-    position: static !important;
-    top: auto !important;
+    grid-column: 2 !important;
+    grid-row: 1 / 5 !important;
+    justify-self: stretch !important;
+    align-self: start !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: max-content !important;
+    max-height: none !important;
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    position: sticky !important;
+    top: calc(4.5rem + 2.25rem + 1rem) !important;
+  }
+
+  main .cart-summary,
+  main .cart-summary--extend {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    justify-self: stretch !important;
+    height: max-content !important;
+  }
+
+  main .cart-summary--extend .cart-summary__inner {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+    padding-inline: clamp(1rem, 2vw, 1.75rem) !important;
   }
 }
 
@@ -3424,9 +3472,18 @@ main .card-gallery a.contents slideshow-slides {
   color: var(--vh-gold) !important;
 }
 
+.vh-product-tags__chip--white {
+  color: #ffffff !important;
+}
+
 .vh-product-tags__sep {
   color: var(--vh-gold-muted);
   opacity: 0.75;
+}
+
+.vh-product-tags__sep--white {
+  color: rgba(255, 255, 255, 0.55);
+  opacity: 1;
 }
 
 .vh-product-tags__meta {
@@ -4556,4 +4613,308 @@ blog-posts-list,
 .blog-post-comments-pagination .current {
   color: var(--vh-gold) !important;
   border-bottom-color: var(--vh-gold) !important;
+}
+
+/* ─── Uniform product image frames (PDP + cards + cart upsell) ───
+   Product photos have different native aspect ratios (tall bottles vs
+   square tubs). Force every product media box to 1:1 with object-fit:
+   contain so layouts stay aligned across the shop.
+*/
+
+:root {
+  --vh-product-image-ratio: 1 / 1;
+}
+
+/* PDP — kill Horizon "tallest media" / unconstrained height */
+.product-information .product-media-container,
+.product-information .product-media-container.constrain-height,
+.product-information .product-media-container--tallest,
+.product-information .product-media-container--image,
+.product-information .product-media-container.media-fit,
+.product-information .product-media-container.media-fit-contain,
+.product-information slideshow-slide.product-media-container,
+.product-information slideshow-slide.product-media-container--image,
+.product-information .product-media,
+.product-information .media-gallery__grid > *,
+.product-information__media .product-media-container,
+.product-information__media slideshow-slide.product-media-container {
+  --product-media-fit: contain !important;
+  --constrained-height: auto !important;
+  --grid-template-rows: none !important;
+  --grid-template-rows-desktop: none !important;
+  aspect-ratio: var(--vh-product-image-ratio) !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  background: #000000 !important;
+}
+
+.product-information .product-media-container .product-media,
+.product-information slideshow-slide .product-media,
+.product-information .product-media__drag-zoom-wrapper {
+  position: static !important;
+  inset: auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: auto !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+
+.product-information .product-media-container img,
+.product-information .product-media img,
+.product-information img.product-media__image,
+.product-information .media-gallery__grid img,
+.product-information media-gallery img,
+.product-information slideshow-slide img,
+.product-information__media img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  background: #000000 !important;
+}
+
+/* Cap PDP hero frame so mobile bottles don't dominate the viewport */
+@media screen and (max-width: 749px) {
+  .product-information__media,
+  .product-information__media media-gallery,
+  .product-information__media slideshow-component,
+  .product-information__media .product-media-gallery,
+  .product-information__media slideshow-container,
+  .product-information__media slideshow-slides {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Kill Horizon per-slide cover + 50dvh row (crops wide/tall bottles differently) */
+  .product-information slideshow-slide,
+  .product-information .product-media-container,
+  .product-information .product-media-container.media-fit,
+  .product-information .product-media-container.media-fit-contain,
+  .product-information .product-media-container.constrain-height,
+  .product-information .product-media-container--tallest,
+  .product-information slideshow-slide.product-media-container,
+  .product-information__media .product-media-container {
+    --product-media-fit: contain !important;
+    --grid-template-rows: none !important;
+    --grid-template-rows-desktop: none !important;
+    --slide-min-height: 0 !important;
+    --constrained-height: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: hidden !important;
+    padding: 0.75rem !important;
+    box-sizing: border-box !important;
+    display: grid !important;
+    place-items: center !important;
+  }
+
+  .product-information .media-fit,
+  .product-information .media-fit-contain {
+    --product-media-fit: contain !important;
+  }
+
+  .product-information .product-media,
+  .product-information .product-media__drag-zoom-wrapper,
+  .product-information .product-media-container .product-media {
+    position: relative !important;
+    inset: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    overflow: hidden !important;
+    transform: none !important;
+  }
+
+  /* Scale image down to fit — never crop on mobile (cover → contain) */
+  .product-information .product-media-container img,
+  .product-information .product-media img,
+  .product-information img.product-media__image,
+  .product-information .media-gallery__grid img,
+  .product-information media-gallery img,
+  .product-information slideshow-slide img,
+  .product-information__media img,
+  .product-information .deferred-media__poster img,
+  .product-information .media-fit img,
+  .product-information .media-fit-contain img,
+  .product-information .media-fit :is(img, video, .deferred-media__poster-image),
+  .product-information .media-fit-contain :is(img, video, .deferred-media__poster-image) {
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    margin: auto !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    transform: none !important;
+    transform-origin: center !important;
+    background: #000000 !important;
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .product-information__media media-gallery,
+  .product-information__media .product-media-gallery,
+  .product-information__media slideshow-component {
+    max-width: min(100%, 32rem) !important;
+  }
+
+  .product-information .product-media-container,
+  .product-information slideshow-slide.product-media-container,
+  .product-information__media .media-gallery__grid > :first-child {
+    max-height: none !important;
+  }
+
+  .product-information .product-media-container img,
+  .product-information__media .media-gallery__grid > :first-child img {
+    max-height: 100% !important;
+  }
+}
+
+/* Resource cards (cart / recommendations blocks) */
+.resource-card,
+.resource-card__link {
+  min-width: 0 !important;
+}
+
+.resource-card__media,
+.resource-card .resource-card__image,
+.resource-card [class*="media"] {
+  aspect-ratio: var(--vh-product-image-ratio) !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  background: #000000 !important;
+  border-radius: var(--vh-radius-lg) !important;
+}
+
+.resource-card__media img,
+.resource-card img,
+.resource-card__image img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* LB Upsell / Selleasy — free-shipping product suggestions */
+.lb-upsell-widget,
+.lb-widget,
+.lb-widget-icuc,
+[class*="lb-upsell"],
+[class*="lb-widget"],
+.shopify-block:has([class*="lb-"]) {
+  --lb-product-image-ratio: 1 / 1;
+}
+
+.lb-upsell-widget img,
+.lb-widget img,
+.lb-widget-icuc img,
+[class*="lb-upsell"] img,
+[class*="lb-widget"] img,
+.shopify-block[class*="lb-"] img,
+.shopify-block:has(.lb-upsell-widget) img,
+.shopify-block:has([class*="lb-upsell"]) img {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+.lb-upsell-widget [class*="image"],
+.lb-upsell-widget [class*="media"],
+.lb-upsell-widget [class*="product"] > :has(> img),
+.lb-widget [class*="image"],
+.lb-widget [class*="media"],
+[class*="lb-upsell"] [class*="image"],
+[class*="lb-upsell"] [class*="media"],
+[class*="lb-widget"] [class*="image"],
+[class*="lb-widget"] [class*="media"] {
+  aspect-ratio: 1 / 1 !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  overflow: hidden !important;
+  background: #000000 !important;
+}
+
+/* Product recommendations / related products */
+product-recommendations product-card .card-gallery,
+product-recommendations .card-gallery,
+.product-recommendations .card-gallery,
+product-recommendations a.contents slideshow-slide.product-media-container,
+.product-recommendations a.contents slideshow-slide.product-media-container {
+  aspect-ratio: var(--vh-product-image-ratio) !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+product-recommendations img.product-media__image,
+.product-recommendations img.product-media__image,
+product-recommendations .card-gallery img,
+.product-recommendations .card-gallery img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* Global safety net — any Horizon card-gallery product image */
+main .card-gallery,
+main product-card .card-gallery,
+main .product-grid .card-gallery {
+  aspect-ratio: var(--vh-product-image-ratio) !important;
+  width: 100% !important;
+  height: auto !important;
+  overflow: hidden !important;
+}
+
+main .card-gallery slideshow-component,
+main .card-gallery slideshow-container,
+main .card-gallery slideshow-slides,
+main .card-gallery a.contents {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+main .card-gallery slideshow-slide.product-media-container,
+main .card-gallery slideshow-slide.product-media-container--image {
+  aspect-ratio: var(--vh-product-image-ratio) !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
 }

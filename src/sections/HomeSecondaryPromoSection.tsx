@@ -31,9 +31,13 @@ const Inner = styled(PageContainer)`
   gap: 2rem;
   padding-block: clamp(2rem, 5vh, 3rem);
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     align-items: center;
+    gap: 2.5rem;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     gap: 4rem;
     padding-block: clamp(2.5rem, 6vh, 4rem);
   }
@@ -139,6 +143,19 @@ export function HomeSecondaryPromoSection() {
     <Section aria-labelledby="home-restart-promo-title">
       <LaunchBackground />
       <Inner>
+        <Portrait>
+          <PortraitFrame>
+            <PortraitImage
+              src={restartHeroPromoImage}
+              alt="Balíček (re)START — GLP-1 Support, Lean Shake a D3+K2+Vápník se slevou 30 %. Kód 30STARTSVOJTOU."
+              width={1448}
+              height={1086}
+              loading="lazy"
+              decoding="async"
+            />
+          </PortraitFrame>
+          <PromoCodeCopyButton />
+        </Portrait>
         <Content>
           <Eyebrow>Akce · sleva 30 %</Eyebrow>
           <Title id="home-restart-promo-title">Balíček (re)START</Title>
@@ -157,19 +174,6 @@ export function HomeSecondaryPromoSection() {
             Slevový kód: <strong>{PROMO_BAR_CODE}</strong>
           </CodeHint>
         </Content>
-        <Portrait>
-          <PortraitFrame>
-            <PortraitImage
-              src={restartHeroPromoImage}
-              alt="Balíček (re)START — GLP-1 Support, Lean Shake a D3+K2+Vápník se slevou 30 %. Kód 30STARTSVOJTOU."
-              width={1448}
-              height={1086}
-              loading="lazy"
-              decoding="async"
-            />
-          </PortraitFrame>
-          <PromoCodeCopyButton />
-        </Portrait>
       </Inner>
     </Section>
   )

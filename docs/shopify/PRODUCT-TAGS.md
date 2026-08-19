@@ -90,7 +90,7 @@ vh-bullet|Intenzivní hydratace a regenerace
 vh-bullet|Vhodný pro citlivou pleť
 ```
 
-Without at least one `vh-line|`, `vh-meta|`, `vh-spec|`, or `vh-bullet|` tag, nothing appears on the live store (by design).
+Without at least one `vh-line|`, `vh-line-white|`, `vh-meta|`, `vh-spec|`, or `vh-bullet|` tag, nothing appears on the live store (by design).
 
 **Note:** Text like `Hydratace • Zklidnění • Regenerace | 50 ml` inside the **product description** is separate — the snippet only reads **Tags**, not description.
 
@@ -105,6 +105,7 @@ Add tags on each product in Shopify Admin. Each line is one tag.
 | Metafield     | `custom.short_description`     | Small grey text under chips, above price |
 | `vh-desc\|`   | `vh-desc\|Proteinový koktejl…` | Same (fallback if no metafield)          |
 | `vh-line\|`   | `vh-line\|Sytost`              | Gold highlight chip under title          |
+| `vh-line-white\|` | `vh-line-white\|Sytost`    | Same chip row/position, white text       |
 | `vh-meta\|`   | `vh-meta\|450 g`               | Trailing text after `\|` on the same row |
 | `vh-spec\|`   | `vh-spec\|Forma\|Kapsle`       | Left spec table row                      |
 | `vh-bullets-title\|` | `vh-bullets-title\|Aktivní složky v 1 dávce (30 g):` | Bold heading above bullet list |

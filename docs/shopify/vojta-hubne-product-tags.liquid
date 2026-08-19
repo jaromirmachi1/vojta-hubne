@@ -7,6 +7,7 @@
 
   Other tags (Admin → Products → Tags):
     vh-line|Hydratace           → gold chips (• separated)
+    vh-line-white|Hydratace     → same chips, white text
     vh-meta|50 ml               → trailing | segment on chip row
     vh-spec|Forma|Krém          → spec table
     vh-bullets-title|Aktivní složky v 1 dávce (30 g): → heading above bullets
@@ -42,7 +43,9 @@
     assign has_desc_tags = false
 
     for tag in p.tags
-      if tag contains 'vh-line|'
+      if tag contains 'vh-line-white|'
+        assign has_lines = true
+      elsif tag contains 'vh-line|'
         assign has_lines = true
       elsif tag contains 'vh-meta|'
         assign has_meta = true
@@ -69,15 +72,20 @@
         <p class="vh-product-tags__line">
           {%- assign line_count = 0 -%}
           {%- for tag in p.tags -%}
-            {%- if tag contains 'vh-line|' -%}
+            {%- assign line_text = '' -%}
+            {%- assign line_white = false -%}
+            {%- if tag contains 'vh-line-white|' -%}
+              {%- assign line_text = tag | remove: 'vh-line-white|' | strip -%}
+              {%- assign line_white = true -%}
+            {%- elsif tag contains 'vh-line|' -%}
               {%- assign line_text = tag | remove: 'vh-line|' | strip -%}
-              {%- if line_text != blank -%}
-                {%- if line_count > 0 -%}
-                  <span class="vh-product-tags__sep" aria-hidden="true"> • </span>
-                {%- endif -%}
-                <span class="vh-product-tags__chip">{{ line_text }}</span>
-                {%- assign line_count = line_count | plus: 1 -%}
+            {%- endif -%}
+            {%- if line_text != blank -%}
+              {%- if line_count > 0 -%}
+                <span class="vh-product-tags__sep{% if line_white %} vh-product-tags__sep--white{% endif %}" aria-hidden="true"> • </span>
               {%- endif -%}
+              <span class="vh-product-tags__chip{% if line_white %} vh-product-tags__chip--white{% endif %}">{{ line_text }}</span>
+              {%- assign line_count = line_count | plus: 1 -%}
             {%- endif -%}
           {%- endfor -%}
 
@@ -163,7 +171,7 @@
       <p><strong>Krátký popis:</strong> metafield <code>custom.short_description</code> nebo tag <code>vh-desc|...</code></p>
       <p><strong>Štítky:</strong> Admin → Produkty → {{ p.title }} → Štítky, např.:</p>
       <ul>
-        <li><code>vh-line|Hydratace</code></li>
+        <li><code>vh-line|Hydratace</code> (zlato) nebo <code>vh-line-white|Hydratace</code> (bílá)</li>
         <li><code>vh-desc|Proteinový koktejl pro každodenní podporu sytosti.</code></li>
         <li><code>vh-meta|450 g</code></li>
       </ul>

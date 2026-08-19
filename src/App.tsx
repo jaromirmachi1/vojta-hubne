@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { AlternativeHomePage } from './pages/AlternativeHomePage'
+import { AffiliatePage } from './pages/AffiliatePage'
 import { ContactPage } from './pages/ContactPage'
 import { HomePage } from './pages/HomePage'
 import { CoChystamePage } from './pages/CoChystamePage'
@@ -25,6 +26,7 @@ function App() {
         <Route path="/alt" element={<AlternativeHomePage />} />
         <Route path="/klub" element={<KlubPage />} />
         <Route path="/kontakt" element={<ContactPage />} />
+        <Route path="/spoluprace" element={<AffiliatePage />} />
         <Route path="/homepage/*" element={<LegacyHomepageRedirect />} />
         <Route path="/products/:handle" element={<ProductPage />} />
         <Route path="/collections/*" element={<ShopifyCollectionRedirectPage />} />
