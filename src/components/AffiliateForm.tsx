@@ -142,8 +142,7 @@ const Status = styled.p<{ $error?: boolean }>`
   margin: 0;
   font-size: 0.85rem;
   line-height: 1.5;
-  color: ${({ theme, $error }) =>
-    $error ? "#ffb4b4" : theme.colors.goldMuted};
+  color: ${({ $error }) => ($error ? '#ffb4b4' : '#6fcf97')};
 `;
 
 const Hint = styled.p`

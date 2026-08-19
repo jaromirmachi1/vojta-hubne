@@ -74,8 +74,8 @@ function escapeHtml(value: string): string {
 
 function row(label: string, value: string): string {
   return `<tr>
-    <td style="padding:6px 12px 6px 0;font-weight:600;color:#c9b56a;white-space:nowrap;vertical-align:top">${escapeHtml(label)}</td>
-    <td style="padding:6px 0;color:#ffffff">${escapeHtml(value || '—')}</td>
+    <td style="padding:6px 12px 6px 0;font-weight:600;color:#7a6a1a;white-space:nowrap;vertical-align:top">${escapeHtml(label)}</td>
+    <td style="padding:6px 0;color:#111111">${escapeHtml(value || '—')}</td>
   </tr>`
 }
 
@@ -124,53 +124,68 @@ async function sendAffiliateEmail(config: ResendConfig, input: AffiliateInput) {
     <!DOCTYPE html>
     <html lang="cs">
     <head><meta charset="utf-8"></head>
-    <body style="margin:0;padding:0;background:#0a0a0a;font-family:system-ui,sans-serif">
-      <div style="max-width:600px;margin:0 auto;padding:32px 24px">
-        <p style="margin:0 0 4px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#c9b56a">
-          Vojta Hubne
-        </p>
-        <h1 style="margin:0 0 24px;font-size:22px;font-weight:700;color:#eedc82">
-          Nová přihláška ke spolupráci
-        </h1>
+    <body style="margin:0;padding:0;background:#f5f5f5;font-family:system-ui,sans-serif">
+      <div style="max-width:600px;margin:0 auto;padding:32px 16px">
 
-        <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
-          ${row('Jméno', input.name)}
-          ${row('E-mail', input.email)}
-          ${row('Telefon', input.phone)}
-        </table>
+        <!-- Header -->
+        <div style="background:#111111;border-radius:10px 10px 0 0;padding:24px 28px">
+          <p style="margin:0 0 4px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#c9b56a">
+            Vojta Hubne
+          </p>
+          <h1 style="margin:0;font-size:22px;font-weight:700;color:#eedc82">
+            Nová přihláška ke spolupráci
+          </h1>
+        </div>
 
-        <p style="margin:0 0 8px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#c9b56a">
-          Sociální sítě
-        </p>
-        <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
-          ${row('Instagram', input.instagram)}
-          ${row('TikTok', input.tiktok)}
-          ${row('YouTube', input.youtube)}
-        </table>
+        <!-- Body -->
+        <div style="background:#ffffff;border-radius:0 0 10px 10px;padding:28px;border:1px solid #e5e5e5;border-top:0">
 
-        <p style="margin:0 0 8px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#c9b56a">
-          Komunita
-        </p>
-        <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
-          ${row('Počet sledujících', input.followers)}
-          ${row('Průměr lajků', input.avgLikes)}
-          ${row('Pohlaví sledujících', input.gender)}
-          ${row('Věková skupina', input.ageGroup)}
-          ${row('Zaměření', input.focus)}
-        </table>
+          <!-- Kontakt -->
+          <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7a6a1a;font-weight:600">
+            Kontakt
+          </p>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+            ${row('Jméno', input.name)}
+            ${row('E-mail', input.email)}
+            ${row('Telefon', input.phone)}
+          </table>
 
-        ${input.message ? `
-        <p style="margin:0 0 8px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#c9b56a">
-          Zpráva
-        </p>
-        <p style="margin:0 0 24px;line-height:1.65;color:#ffffff">
-          ${escapeHtml(input.message).replaceAll('\n', '<br>')}
-        </p>
-        ` : ''}
+          <!-- Sociální sítě -->
+          <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7a6a1a;font-weight:600">
+            Sociální sítě
+          </p>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+            ${row('Instagram', input.instagram)}
+            ${row('TikTok', input.tiktok)}
+            ${row('YouTube', input.youtube)}
+          </table>
 
-        <p style="margin:24px 0 0;font-size:12px;color:rgba(255,255,255,0.4)">
-          Odesláno přes formulář na vojtahubne.cz/spoluprace
-        </p>
+          <!-- Komunita -->
+          <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7a6a1a;font-weight:600">
+            Komunita
+          </p>
+          <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+            ${row('Počet sledujících', input.followers)}
+            ${row('Průměr lajků', input.avgLikes)}
+            ${row('Pohlaví sledujících', input.gender)}
+            ${row('Věková skupina', input.ageGroup)}
+            ${row('Zaměření', input.focus)}
+          </table>
+
+          ${input.message ? `
+          <p style="margin:0 0 10px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#7a6a1a;font-weight:600">
+            Zpráva
+          </p>
+          <p style="margin:0 0 24px;line-height:1.65;color:#111111">
+            ${escapeHtml(input.message).replaceAll('\n', '<br>')}
+          </p>
+          ` : ''}
+
+          <p style="margin:24px 0 0;font-size:12px;color:#999999">
+            Odesláno přes formulář na vojtahubne.cz/spoluprace
+          </p>
+        </div>
+
       </div>
     </body>
     </html>
