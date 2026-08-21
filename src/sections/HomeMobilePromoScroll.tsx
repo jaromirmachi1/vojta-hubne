@@ -1,12 +1,6 @@
 import styled from 'styled-components'
-import tisicataHeroPromoImage from '../assets/tisicata-hero-promo.png'
-import restartHeroPromoImage from '../assets/159ede93-2c6a-47a5-ab52-1fac5d5e1c3c.jpg'
 import { PromoCodeCopyButton } from '../components/PromoCodeCopyButton'
-import { getShopifyProductUrl } from '../utils/shopify'
-
-const TISICATA_PRODUCT_URL = `${getShopifyProductUrl(
-  'lean-shake-slany-karamel-aquamin-mg',
-)}?variant=60361804480846`
+import { homeHeroPromos } from '../data/homeHeroPromos'
 
 /** Mobile-only: swipeable promo cards (image + CTA). Hidden from tablet up. */
 const Section = styled.section`
@@ -82,33 +76,26 @@ export function HomeMobilePromoScroll() {
   return (
     <Section aria-label="Aktuální akce">
       <Track>
-        <Card>
-          <Frame>
-            <Image
-              src={tisicataHeroPromoImage}
-              alt="Tisící objednávka — děkovný set Slaný karamel + Aquamin Mg, jen 50 ks za 949 Kč."
-              width={1024}
-              height={768}
-              fetchPriority="high"
-              decoding="async"
-            />
-          </Frame>
-          <BuyCta href={TISICATA_PRODUCT_URL}>Nakoupit balíček</BuyCta>
-        </Card>
-
-        <Card>
-          <Frame>
-            <Image
-              src={restartHeroPromoImage}
-              alt="Balíček (re)START — GLP-1 Support, Lean Shake a D3+K2+Vápník se slevou 30 %. Kód 30STARTSVOJTOU."
-              width={1448}
-              height={1086}
-              loading="lazy"
-              decoding="async"
-            />
-          </Frame>
-          <PromoCodeCopyButton />
-        </Card>
+        {homeHeroPromos.map((promo, index) => (
+          <Card key={promo.id}>
+            <Frame>
+              <Image
+                src={promo.image}
+                alt={promo.alt}
+                width={promo.width}
+                height={promo.height}
+                fetchPriority={index === 0 ? 'high' : undefined}
+                loading={index === 0 ? 'eager' : 'lazy'}
+                decoding="async"
+              />
+            </Frame>
+            {promo.ctaMode === 'copy-code' ? (
+              <PromoCodeCopyButton />
+            ) : (
+              <BuyCta href={promo.href}>{promo.ctaLabel}</BuyCta>
+            )}
+          </Card>
+        ))}
       </Track>
     </Section>
   )

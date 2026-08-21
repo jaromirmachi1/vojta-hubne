@@ -88,9 +88,11 @@
     if (!recommendations) return;
 
     resetRecommendationCards();
+    setupClubHighlights(recommendations);
 
     const observer = new MutationObserver(() => {
       resetRecommendationCards();
+      setupClubHighlights(recommendations);
     });
     observer.observe(recommendations, { childList: true, subtree: true });
   }
@@ -144,8 +146,92 @@
         tags: Array.isArray(product.tags) ? product.tags : [],
       };
     } catch {
-      return { title: fallbackTitle, type: "" };
+      return { title: fallbackTitle, type: "", tags: [] };
     }
+  }
+
+  function hasClubTag(tags) {
+    if (!Array.isArray(tags)) return false;
+
+    return tags.some((value) => {
+      const normalized = String(value)
+        .trim()
+        .toLowerCase()
+        .replace(/_/g, "-");
+      return normalized === "vh-club";
+    });
+  }
+
+  function applyClubHighlight(card, product) {
+    if (!hasClubTag(product.tags)) return;
+
+    card.classList.add("vh-card--club");
+    card.dataset.vhClub = "1";
+
+    const productCard = card.matches?.("product-card")
+      ? card
+      : card.querySelector("product-card");
+    if (productCard) {
+      productCard.classList.add("vh-card--club");
+    }
+
+    if (card.querySelector(".vh-club-badge")) return;
+
+    const badge = document.createElement("div");
+    badge.className =
+      "vh-club-badge product-badges__badge product-badges__badge--rectangle";
+    badge.textContent = "Jen pro členy VH Clubu";
+
+    const gallery =
+      card.querySelector(".card-gallery") ||
+      productCard?.querySelector(".card-gallery");
+
+    if (gallery) {
+      let badges = gallery.querySelector(".product-badges");
+      if (!badges) {
+        badges = document.createElement("div");
+        badges.className =
+          "product-badges product-badges--top-right vh-club-badges";
+        gallery.appendChild(badges);
+      } else {
+        badges.classList.add("product-badges--top-right");
+      }
+      badges.prepend(badge);
+      return;
+    }
+
+    const info =
+      card.querySelector(
+        ".product-card__content, .product-card__info, .card__content, .card__information",
+      ) || productCard;
+
+    if (info) {
+      info.appendChild(badge);
+      return;
+    }
+
+    card.appendChild(badge);
+  }
+
+  async function setupClubHighlights(root = document) {
+    const cards = [
+      ...root.querySelectorAll(GRID_ITEM_SELECTOR),
+      ...root.querySelectorAll(
+        "main .product-grid product-card, product-recommendations product-card, .product-recommendations product-card",
+      ),
+    ];
+
+    const unique = [...new Set(cards)];
+
+    await Promise.all(
+      unique.map(async (card) => {
+        if (card.dataset.vhClubChecked === "1") return;
+        card.dataset.vhClubChecked = "1";
+
+        const product = await getProductData(card);
+        applyClubHighlight(card, product);
+      }),
+    );
   }
 
   function readCategoryTag(tags) {
@@ -250,16 +336,35 @@
 
     if (categories.length < 2) return null;
 
+    const chipsId = `${FILTER_ID}-chips`;
+
     const wrap = document.createElement("section");
     wrap.id = FILTER_ID;
-    wrap.className = "vh-collection-filter";
+    wrap.className = "vh-collection-filter is-collapsed";
     wrap.setAttribute("aria-label", "Filtrovat produkty podle kategorie");
 
-    const eyebrow = document.createElement("p");
+    const toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "vh-collection-filter__toggle";
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-controls", chipsId);
+
+    const eyebrow = document.createElement("span");
     eyebrow.className = "vh-collection-filter__eyebrow";
     eyebrow.textContent = "Kategorie";
 
+    const chevron = document.createElement("span");
+    chevron.className = "vh-collection-filter__chevron";
+    chevron.setAttribute("aria-hidden", "true");
+
+    toggle.append(eyebrow, chevron);
+    toggle.addEventListener("click", () => {
+      const collapsed = wrap.classList.toggle("is-collapsed");
+      toggle.setAttribute("aria-expanded", String(!collapsed));
+    });
+
     const chips = document.createElement("div");
+    chips.id = chipsId;
     chips.className = "vh-collection-filter__chips";
     chips.setAttribute("role", "list");
 
@@ -270,7 +375,7 @@
       chips.append(createFilterButton(label, slug, count, false));
     });
 
-    wrap.append(eyebrow, chips);
+    wrap.append(toggle, chips);
     return wrap;
   }
 
@@ -339,6 +444,8 @@
         const category = getDisplayCategory(product);
         card.dataset.vhCategory = category;
         card.dataset.vhCategorySlug = normalizeCategory(category);
+        applyClubHighlight(card, product);
+        card.dataset.vhClubChecked = "1";
       }),
     );
 
@@ -363,6 +470,7 @@
   function refreshCollectionPage() {
     resetAll();
     setupCategoryFilters();
+    setupClubHighlights();
     scrollCollectionToTop();
   }
 
@@ -370,18 +478,22 @@
     refreshCollectionPage();
     setupRecommendationCards();
     resetRecommendationCards();
+    setupClubHighlights();
     [0, 50, 150, 350, 700, 1200].forEach((delay) => {
       window.setTimeout(() => {
         refreshCollectionPage();
         resetRecommendationCards();
+        setupClubHighlights();
       }, delay);
     });
     requestAnimationFrame(() => {
       refreshCollectionPage();
       resetRecommendationCards();
+      setupClubHighlights();
       requestAnimationFrame(() => {
         refreshCollectionPage();
         resetRecommendationCards();
+        setupClubHighlights();
       });
     });
   }

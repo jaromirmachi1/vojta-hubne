@@ -1,5 +1,9 @@
 import type { ReactNode } from 'react'
 import styled from 'styled-components'
+import {
+  Breadcrumbs,
+  type BreadcrumbItem,
+} from '../components/Breadcrumbs'
 import { AltSiteHeader } from '../components/AltSiteHeader'
 import { PromoBar } from '../components/PromoBar'
 import { ReviewTickerBar } from '../components/ReviewTickerBar'
@@ -24,15 +28,17 @@ const Main = styled.main`
 
 type AltShopLayoutProps = {
   children: ReactNode
+  breadcrumbs?: BreadcrumbItem[]
 }
 
-export function AltShopLayout({ children }: AltShopLayoutProps) {
+export function AltShopLayout({ children, breadcrumbs }: AltShopLayoutProps) {
   return (
     <RegimeQuizProvider>
       <Page>
         <PromoBar />
         <ReviewTickerBar />
         <AltSiteHeader />
+        {breadcrumbs?.length ? <Breadcrumbs items={breadcrumbs} /> : null}
         <Main>{children}</Main>
         <SiteFooter />
       </Page>

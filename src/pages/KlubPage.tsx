@@ -119,7 +119,12 @@ export function KlubPage() {
   usePageMeta(klubPageMeta)
 
   return (
-    <AltShopLayout>
+    <AltShopLayout
+      breadcrumbs={[
+        { label: 'Domů', to: '/' },
+        { label: 'VH Club' },
+      ]}
+    >
       <Section>
         <Inner>
           <Intro>

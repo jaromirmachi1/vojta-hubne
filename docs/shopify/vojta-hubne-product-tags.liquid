@@ -8,6 +8,7 @@
   Other tags (Admin → Products → Tags):
     vh-line|Hydratace           → gold chips (• separated)
     vh-line-white|Hydratace     → same chips, white text
+    VH_CLUB                     → “Jen pro členy VH Clubu” badge (collection cards + PDP)
     vh-meta|50 ml               → trailing | segment on chip row
     vh-spec|Forma|Krém          → spec table
     vh-bullets-title|Aktivní složky v 1 dávce (30 g): → heading above bullets
@@ -41,9 +42,13 @@
     assign has_specs = false
     assign has_bullets = false
     assign has_desc_tags = false
+    assign has_vh_club = false
 
     for tag in p.tags
-      if tag contains 'vh-line-white|'
+      assign tag_down = tag | downcase | strip
+      if tag_down == 'vh_club' or tag_down == 'vh-club'
+        assign has_vh_club = true
+      elsif tag contains 'vh-line-white|'
         assign has_lines = true
       elsif tag contains 'vh-line|'
         assign has_lines = true
@@ -66,8 +71,12 @@
     endif
   %}
 
-  {%- if has_lines or has_meta or has_short_description or has_specs or has_bullets -%}
-    <div class="vh-product-tags">
+  {%- if has_lines or has_meta or has_short_description or has_specs or has_bullets or has_vh_club -%}
+    <div class="vh-product-tags{% if has_vh_club %} vh-product-tags--club{% endif %}">
+      {%- if has_vh_club -%}
+        <p class="vh-club-badge vh-club-badge--pdp">Jen pro členy VH Clubu</p>
+      {%- endif -%}
+
       {%- if has_lines or has_meta -%}
         <p class="vh-product-tags__line">
           {%- assign line_count = 0 -%}

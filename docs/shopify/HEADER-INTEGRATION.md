@@ -30,6 +30,7 @@ This asset now handles two collection-page behaviors:
 
 - resets Horizon product-card media after back/forward navigation
 - adds the premium category cells on `/collections/all`
+- highlights products tagged `VH_CLUB` / `vh-club` (gold border + „Jen pro členy VH Clubu“)
 
 **Verify the JS loaded:** on `/collections/all`, open DevTools → Network → filter `collection-media-fix`. If missing, the asset file is not uploaded or the script tag is missing.
 
@@ -38,6 +39,8 @@ This asset now handles two collection-page behaviors:
 ```text
 vh-filter|Proteinové doplňky
 ```
+
+**VH Club cards:** add product tag `VH_CLUB` (or `vh-club`). Collection / recommendation cards get a thin gold border and a small outline badge. Product page badge comes from `vojta-hubne-product-tags.liquid` (re-upload snippet + CSS).
 
 ## 2. One line in `sections/header.liquid`
 

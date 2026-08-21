@@ -47,7 +47,12 @@ export function CoChystamePage() {
   }
 
   return (
-    <ShopLayout>
+    <ShopLayout
+      breadcrumbs={[
+        { label: 'Domů', to: '/' },
+        { label: 'Co chystáme' },
+      ]}
+    >
       <CoChystameProjectsSection
         categories={coChystameCategories}
         activeCategory={activeCategory}

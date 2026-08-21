@@ -1,5 +1,9 @@
 import type { ReactNode } from 'react'
 import styled from 'styled-components'
+import {
+  Breadcrumbs,
+  type BreadcrumbItem,
+} from '../components/Breadcrumbs'
 import { PromoBar } from '../components/PromoBar'
 import { ReviewTickerBar } from '../components/ReviewTickerBar'
 import { SiteFooter } from '../components/SiteFooter'
@@ -18,14 +22,16 @@ const Main = styled.main`
 
 type ShopLayoutProps = {
   children: ReactNode
+  breadcrumbs?: BreadcrumbItem[]
 }
 
-export function ShopLayout({ children }: ShopLayoutProps) {
+export function ShopLayout({ children, breadcrumbs }: ShopLayoutProps) {
   return (
     <Page>
       <PromoBar />
       <ReviewTickerBar />
       <SiteHeader />
+      {breadcrumbs?.length ? <Breadcrumbs items={breadcrumbs} /> : null}
       <Main>{children}</Main>
       <SiteFooter />
     </Page>

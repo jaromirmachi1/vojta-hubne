@@ -136,7 +136,12 @@ export function NotFoundPage() {
   usePageMeta(notFoundPageMeta)
 
   return (
-    <ShopLayout>
+    <ShopLayout
+      breadcrumbs={[
+        { label: 'Domů', to: '/' },
+        { label: 'Stránka nenalezena' },
+      ]}
+    >
       <Section>
         <Inner>
           <Code aria-hidden>404</Code>

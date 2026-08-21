@@ -107,7 +107,12 @@ export function ContactPage() {
   usePageMeta(contactPageMeta)
 
   return (
-    <ShopLayout>
+    <ShopLayout
+      breadcrumbs={[
+        { label: 'Domů', to: '/' },
+        { label: 'Kontakt' },
+      ]}
+    >
       <Section>
         <Inner>
           <InfoPanel>

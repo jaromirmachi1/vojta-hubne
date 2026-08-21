@@ -106,6 +106,7 @@ Add tags on each product in Shopify Admin. Each line is one tag.
 | `vh-desc\|`   | `vh-desc\|Proteinový koktejl…` | Same (fallback if no metafield)          |
 | `vh-line\|`   | `vh-line\|Sytost`              | Gold highlight chip under title          |
 | `vh-line-white\|` | `vh-line-white\|Sytost`    | Same chip row/position, white text       |
+| `VH_CLUB` / `vh-club` | `VH_CLUB`              | Quiet gold border + „Jen pro členy VH Clubu“ on cards + PDP |
 | `vh-meta\|`   | `vh-meta\|450 g`               | Trailing text after `\|` on the same row |
 | `vh-spec\|`   | `vh-spec\|Forma\|Kapsle`       | Left spec table row                      |
 | `vh-bullets-title\|` | `vh-bullets-title\|Aktivní složky v 1 dávce (30 g):` | Bold heading above bullet list |

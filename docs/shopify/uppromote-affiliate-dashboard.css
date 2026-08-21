@@ -1,0 +1,234 @@
+/**
+ * Vojta Hubne — UpPromote affiliate dashboard branding
+ *
+ * Paste into: UpPromote → Displays → Account customization → Custom CSS
+ * Docs: https://docs.uppromote.com/settings/affiliate-admin-settings/customize-the-affiliate-accounts-color
+ *
+ * Brand:
+ *   black #000000 | surface #0a0a0a | raised #111111
+ *   gold #eedc82 | goldMuted #c9b56a
+ */
+
+/* ─── Tokens ─── */
+:root {
+  --vh-black: #000000;
+  --vh-surface: #0a0a0a;
+  --vh-raised: #111111;
+  --vh-gold: #eedc82;
+  --vh-gold-muted: #c9b56a;
+  --vh-text: #111111;
+  --vh-muted: #6b6b6b;
+}
+
+/* ─── Left sidebar + profile header (official UpPromote selectors) ─── */
+#wrapper {
+  background: var(--vh-black) !important;
+}
+
+.skin-3 .nav-header {
+  background-image: none !important;
+  background-color: var(--vh-black) !important;
+}
+
+.skin-3 .navbar-default.navbar-static-side,
+.skin-3 .navbar-static-side,
+.navbar-default.navbar-static-side,
+.navbar-static-side {
+  background: var(--vh-black) !important;
+}
+
+.skin-3 .nav > li > a {
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.skin-3 .nav > li > a:hover,
+.skin-3 .nav > li > a:focus {
+  background: rgba(238, 220, 130, 0.1) !important;
+  color: var(--vh-gold) !important;
+}
+
+/* Active sidebar item — gold instead of red/blue */
+.skin-3 .nav > li.active,
+.skin-3 .nav > li.active > a,
+.skin-3 .nav > li.active > a:hover,
+.skin-3 .nav > li.active > a:focus,
+.navbar-default .nav > li.active > a {
+  background: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+  border-left-color: var(--vh-gold) !important;
+}
+
+.skin-3 .nav > li.active > a i,
+.skin-3 .nav > li.active > a .nav-label,
+.skin-3 .nav > li.active > a .fa,
+.skin-3 .nav > li.active > a svg {
+  color: var(--vh-black) !important;
+  fill: var(--vh-black) !important;
+}
+
+/* Active icon chip — kill the red square behind the icon */
+.skin-3 .nav > li.active > a i,
+.skin-3 .nav > li.active > a .fa,
+.skin-3 .nav > li.active > a [class*="icon"],
+.skin-3 .nav > li.active > a .nav-icon,
+.skin-3 .nav > li.active > a .menu-icon,
+.navbar-default .nav > li.active > a i,
+.navbar-static-side .nav > li.active > a i,
+.navbar-static-side .nav > li.active > a span.nav-icon,
+.navbar-static-side .nav > li.active > a > span:first-child {
+  background: var(--vh-gold) !important;
+  background-color: var(--vh-gold) !important;
+  border-color: var(--vh-gold) !important;
+  box-shadow: none !important;
+}
+
+/* Hover icon chip — same red → gold (inactive items) */
+.skin-3 .nav > li:not(.active) > a:hover i,
+.skin-3 .nav > li:not(.active) > a:focus i,
+.skin-3 .nav > li:not(.active) > a:hover .fa,
+.skin-3 .nav > li:not(.active) > a:focus .fa,
+.skin-3 .nav > li:not(.active) > a:hover [class*="icon"],
+.skin-3 .nav > li:not(.active) > a:focus [class*="icon"],
+.skin-3 .nav > li:not(.active) > a:hover .nav-icon,
+.skin-3 .nav > li:not(.active) > a:focus .nav-icon,
+.skin-3 .nav > li:not(.active) > a:hover .menu-icon,
+.skin-3 .nav > li:not(.active) > a:focus .menu-icon,
+.navbar-default .nav > li:not(.active) > a:hover i,
+.navbar-default .nav > li:not(.active) > a:focus i,
+.navbar-static-side .nav > li:not(.active) > a:hover i,
+.navbar-static-side .nav > li:not(.active) > a:focus i,
+.navbar-static-side .nav > li:not(.active) > a:hover span.nav-icon,
+.navbar-static-side .nav > li:not(.active) > a:focus span.nav-icon,
+.navbar-static-side .nav > li:not(.active) > a:hover > span:first-child,
+.navbar-static-side .nav > li:not(.active) > a:focus > span:first-child {
+  background: var(--vh-gold) !important;
+  background-color: var(--vh-gold) !important;
+  border-color: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+  box-shadow: none !important;
+}
+
+/* Catch-all: any sidebar icon that still paints red on hover/active */
+.navbar-static-side .nav li a:hover i,
+.navbar-static-side .nav li a:focus i,
+.navbar-static-side .nav li.active a i,
+.skin-3 .navbar-static-side .nav li a:hover i,
+.skin-3 .navbar-static-side .nav li a:focus i,
+.skin-3 .navbar-static-side .nav li.active a i {
+  background: var(--vh-gold) !important;
+  background-color: var(--vh-gold) !important;
+}
+
+/* Some UpPromote skins put the red on a ::before / wrapper */
+.skin-3 .nav > li.active > a i::before,
+.skin-3 .nav > li.active > a i::after {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: var(--vh-black) !important;
+}
+
+/* Status “Active” text near profile */
+.nav-header .text-muted,
+.nav-header small {
+  color: var(--vh-gold-muted) !important;
+}
+
+/* ─── Top bar ─── */
+.navbar-static-top,
+.border-bottom {
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+/* ─── Primary buttons → gold ─── */
+.btn-primary,
+.btn-info,
+a.btn-primary,
+button.btn-primary,
+.btn-primary:active,
+.btn-primary:focus,
+.open > .dropdown-toggle.btn-primary {
+  background-color: var(--vh-gold) !important;
+  border-color: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+  box-shadow: none !important;
+}
+
+.btn-primary:hover,
+.btn-info:hover,
+a.btn-primary:hover,
+button.btn-primary:hover {
+  background-color: var(--vh-gold-muted) !important;
+  border-color: var(--vh-gold-muted) !important;
+  color: var(--vh-black) !important;
+}
+
+.btn-primary:disabled,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  background-color: rgba(238, 220, 130, 0.45) !important;
+  border-color: transparent !important;
+  color: rgba(0, 0, 0, 0.45) !important;
+}
+
+/* Outline / secondary actions */
+.btn-default,
+.btn-white,
+.btn-outline {
+  border-color: var(--vh-gold-muted) !important;
+  color: var(--vh-text) !important;
+}
+
+.btn-default:hover,
+.btn-white:hover {
+  background: rgba(238, 220, 130, 0.12) !important;
+  border-color: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+}
+
+/* ─── Tabs (Commission / Program details) ─── */
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  border-bottom-color: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+}
+
+.nav-tabs > li > a:hover {
+  color: var(--vh-gold-muted) !important;
+}
+
+/* ─── Links & accents ─── */
+a {
+  color: var(--vh-gold-muted);
+}
+
+a:hover {
+  color: #b89a3e;
+}
+
+/* Commission amounts — keep Pending gold, shift Approved toward brand */
+.text-warning,
+.commission-pending,
+.pending {
+  color: var(--vh-gold-muted) !important;
+}
+
+/* Alert banner CTA (payment update) */
+.alert .btn,
+.alert .btn-primary {
+  background-color: var(--vh-gold) !important;
+  border-color: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+}
+
+/* Soften the pink payment alert toward brand */
+.alert-warning,
+.alert-danger {
+  border-color: rgba(238, 220, 130, 0.45) !important;
+  background: rgba(238, 220, 130, 0.12) !important;
+  color: var(--vh-text) !important;
+}
+
+/* Chat widget — optional: hide if you don’t want it */
+/* .intercom-lightweight-app, [class*="chat"], .chat-widget { display: none !important; } */

@@ -1951,8 +1951,23 @@ main [class*="collection"] {
     0 18px 54px rgba(0, 0, 0, 0.26);
 }
 
+.vh-collection-filter__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: inherit;
+  text-align: left;
+}
+
 .vh-collection-filter__eyebrow {
-  margin: 0 0 0.75rem;
+  margin: 0;
   font-family: var(--vh-font-sans);
   font-size: clamp(0.72rem, 0.85vw, 0.8rem);
   font-weight: 600;
@@ -1962,10 +1977,22 @@ main [class*="collection"] {
   color: var(--vh-gold);
 }
 
+.vh-collection-filter__chevron {
+  display: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  flex-shrink: 0;
+  border-right: 1.5px solid var(--vh-gold);
+  border-bottom: 1.5px solid var(--vh-gold);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+
 .vh-collection-filter__chips {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
+  margin-top: 0.75rem;
 }
 
 .vh-collection-filter__chip {
@@ -2040,16 +2067,55 @@ button.vh-collection-filter__chip:hover small,
   .vh-collection-filter {
     margin-inline: 1rem;
     width: auto;
+    padding: 0.85rem 1rem;
   }
 
-  .vh-collection-filter__chips {
+  .vh-collection-filter__chevron {
+    display: block;
+  }
+
+  .vh-collection-filter.is-collapsed {
+    padding-block: 0.85rem;
+  }
+
+  .vh-collection-filter.is-collapsed .vh-collection-filter__chips {
+    display: none;
+  }
+
+  .vh-collection-filter.is-collapsed .vh-collection-filter__chevron {
+    transform: rotate(45deg);
+  }
+
+  .vh-collection-filter:not(.is-collapsed) .vh-collection-filter__chevron {
+    transform: rotate(225deg);
+    margin-top: 0.2rem;
+  }
+
+  .vh-collection-filter:not(.is-collapsed) .vh-collection-filter__chips {
     display: grid;
     grid-template-columns: 1fr;
+    margin-top: 0.85rem;
   }
 
   .vh-collection-filter__chip {
     justify-content: space-between;
     width: 100%;
+  }
+}
+
+@media (min-width: 750px) {
+  .vh-collection-filter__toggle {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .vh-collection-filter__chevron {
+    display: none !important;
+  }
+
+  .vh-collection-filter.is-collapsed .vh-collection-filter__chips,
+  .vh-collection-filter .vh-collection-filter__chips {
+    display: flex !important;
   }
 }
 
@@ -2863,7 +2929,12 @@ main .collection [class*="card-product"] img {
   height: 100% !important;
   min-height: 10px !important;
   border-radius: inherit !important;
-  background: linear-gradient(90deg, #b89f3d 0%, #eedc82 55%, #fff1a8 100%) !important;
+  background: linear-gradient(
+    90deg,
+    #b89f3d 0%,
+    #eedc82 55%,
+    #fff1a8 100%
+  ) !important;
   transition: width 0.45s ease !important;
 }
 
@@ -2875,7 +2946,9 @@ main .collection [class*="card-product"] img {
 
 .vh-cart-shipping-bar--strong {
   border-color: rgba(238, 220, 130, 0.55) !important;
-  box-shadow: 0 0 0 1px rgba(238, 220, 130, 0.15), 0 10px 28px rgba(0, 0, 0, 0.35) !important;
+  box-shadow:
+    0 0 0 1px rgba(238, 220, 130, 0.15),
+    0 10px 28px rgba(0, 0, 0, 0.35) !important;
 }
 
 .vh-cart-shipping-bar--strong .vh-cart-shipping-bar__track {
@@ -2885,7 +2958,11 @@ main .collection [class*="card-product"] img {
 
 .vh-cart-shipping-bar--unlocked {
   border-color: rgba(238, 220, 130, 0.65) !important;
-  background: linear-gradient(180deg, rgba(238, 220, 130, 0.14) 0%, #141414 100%) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(238, 220, 130, 0.14) 0%,
+    #141414 100%
+  ) !important;
 }
 
 .vh-cart-shipping-bar--unlocked .vh-cart-shipping-bar__message {
@@ -4257,8 +4334,12 @@ blog-posts-list,
 /* Image + content wrappers always stack full-width */
 .blog-post-card > .shopify-block:has(.blog-post-card__image-container),
 .blog-post-card > .shopify-block:has(.blog-post-card__image),
-.blog-post-item--horizontal .blog-post-card > .shopify-block:has(.blog-post-card__image-container),
-.blog-post-item--horizontal .blog-post-card > .shopify-block:has(.blog-post-card__image) {
+.blog-post-item--horizontal
+  .blog-post-card
+  > .shopify-block:has(.blog-post-card__image-container),
+.blog-post-item--horizontal
+  .blog-post-card
+  > .shopify-block:has(.blog-post-card__image) {
   flex: none !important;
   width: 100% !important;
   max-width: 100% !important;
@@ -4754,8 +4835,12 @@ blog-posts-list,
   .product-information .deferred-media__poster img,
   .product-information .media-fit img,
   .product-information .media-fit-contain img,
-  .product-information .media-fit :is(img, video, .deferred-media__poster-image),
-  .product-information .media-fit-contain :is(img, video, .deferred-media__poster-image) {
+  .product-information
+    .media-fit
+    :is(img, video, .deferred-media__poster-image),
+  .product-information
+    .media-fit-contain
+    :is(img, video, .deferred-media__poster-image) {
     position: relative !important;
     inset: auto !important;
     left: auto !important;
@@ -4917,4 +5002,181 @@ main .card-gallery slideshow-slide.product-media-container--image {
   width: 100% !important;
   height: 100% !important;
   max-height: 100% !important;
+}
+
+/* Hide collection page bio under PRODUKTY title
+   Horizon custom section: .section-content-wrapper > rte-formatter.text-block */
+main[data-template="collection"]
+  .section-content-wrapper
+  > rte-formatter.text-block,
+main[data-template="collection"] .section-content-wrapper > rte-formatter.rte,
+main[data-template="collection"]
+  .custom-section-content
+  rte-formatter.text-block,
+main[data-template="collection"] .collection-hero__description,
+main[data-template="collection"] .collection-info__description,
+main[data-template="collection"] .collection__description,
+main[data-template="collection"] collection-info .rte,
+main[data-template="collection"] collection-info rte-formatter,
+main[data-template="collection"] [class*="collection-info"] .rte,
+main[data-template="collection"] [class*="collection-info"] rte-formatter,
+main[data-template="collection"] [class*="collection-banner"] .rte,
+main[data-template="collection"] [class*="collection-header"] .rte,
+main[data-template="collection"] .section-resource-list__header .rte,
+main[data-template="collection"] .resource-list__header .rte {
+  display: none !important;
+}
+
+/* ─── Breadcrumbs (React-matched; vojta-hubne-breadcrumbs.liquid) ─── */
+.vh-breadcrumbs {
+  width: 100%;
+  padding-block: 0.85rem;
+  border-bottom: 0;
+  background: var(--vh-black);
+}
+
+.vh-breadcrumbs__inner {
+  width: 100%;
+  max-width: var(--vh-page-max-width);
+  margin-inline: auto;
+  padding-inline: var(--vh-page-padding-inline);
+}
+
+.vh-breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vh-breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  font-family: var(--vh-font-sans);
+  font-size: 0.58rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  color: var(--vh-gold-muted);
+}
+
+.vh-breadcrumbs__item:not(:last-child)::after {
+  content: "/";
+  margin-inline-start: 0.15rem;
+  color: rgba(255, 255, 255, 0.28);
+  font-weight: 400;
+}
+
+.vh-breadcrumbs__link {
+  color: inherit;
+  text-decoration: none;
+  max-width: 28ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.vh-breadcrumbs__link:hover {
+  color: var(--vh-gold);
+}
+
+.vh-breadcrumbs__current {
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 36ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── VH Club product highlight (tag: VH_CLUB / vh-club) ─── */
+/* One visible gold frame only — on the image tile, not card-gallery + inner media */
+main product-card.vh-card--club .card-gallery,
+main .product-grid__item.vh-card--club .card-gallery,
+main .vh-card--club .card-gallery {
+  position: relative !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+main
+  product-card.vh-card--club
+  a.contents
+  slideshow-slide.product-media-container,
+main
+  product-card.vh-card--club
+  a.contents
+  slideshow-slide.product-media-container--image,
+main
+  .product-grid__item.vh-card--club
+  a.contents
+  slideshow-slide.product-media-container,
+main
+  .product-grid__item.vh-card--club
+  a.contents
+  slideshow-slide.product-media-container--image,
+main .vh-card--club a.contents slideshow-slide.product-media-container,
+main .vh-card--club a.contents slideshow-slide.product-media-container--image {
+  border: 2px solid var(--vh-gold) !important;
+  border-radius: 0.9rem !important;
+}
+
+main
+  product-card.vh-card--club:hover
+  a.contents
+  slideshow-slide.product-media-container,
+main
+  product-card.vh-card--club:hover
+  a.contents
+  slideshow-slide.product-media-container--image,
+main
+  .product-grid__item.vh-card--club:hover
+  a.contents
+  slideshow-slide.product-media-container,
+main
+  .product-grid__item.vh-card--club:hover
+  a.contents
+  slideshow-slide.product-media-container--image,
+main .vh-card--club:hover a.contents slideshow-slide.product-media-container,
+main
+  .vh-card--club:hover
+  a.contents
+  slideshow-slide.product-media-container--image {
+  border-color: var(--vh-gold) !important;
+  box-shadow: 0 0 0 1px rgba(238, 220, 130, 0.25) !important;
+}
+
+/* Same slot as Horizon “Zvýhodněná cena” (product-badges--top-right) */
+.vh-club-badge,
+.vh-card--club .product-badges .vh-club-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0.35rem 0.75rem !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.62rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  line-height: 1.3 !important;
+  color: var(--vh-black) !important;
+  background: var(--vh-gold) !important;
+  border: 0 !important;
+  border-radius: var(--vh-radius-pill) !important;
+  box-shadow: none !important;
+}
+
+.vh-club-badge--pdp {
+  margin: 0 0 0.75rem !important;
+  font-size: 0.68rem !important;
+}
+
+.vh-product-tags--club {
+  margin-block-start: 0.5rem;
 }

@@ -346,7 +346,12 @@ export function AffiliatePage() {
   usePageMeta(affiliatePageMeta)
 
   return (
-    <ShopLayout>
+    <ShopLayout
+      breadcrumbs={[
+        { label: 'Domů', to: '/' },
+        { label: 'Spolupráce' },
+      ]}
+    >
       {/* Hero */}
       <HeroSection>
         <HeroInner>

@@ -1,0 +1,157 @@
+{% comment %}
+  Vojta Hubne — breadcrumbs (Shopify Horizon)
+
+  Setup:
+  1. Snippets → Add snippet → vojta-hubne-breadcrumbs.liquid (this file)
+  2. Re-upload vojta-hubne-horizon.css (includes .vh-breadcrumbs styles)
+  3. In layout/theme.liquid, right after the header group / header, add:
+       {% render 'vojta-hubne-breadcrumbs', marketing_url: 'https://www.vojtahubne.cz' %}
+
+  Hidden on: homepage (index), password, gift card.
+{% endcomment %}
+
+{% liquid
+  assign marketing = marketing_url | default: 'https://www.vojtahubne.cz'
+  assign catalog_url = routes.all_products_collection_url | default: '/collections/all'
+  unless catalog_url contains 'sort_by='
+    if catalog_url contains '?'
+      assign catalog_url = catalog_url | append: '&sort_by=best-selling'
+    else
+      assign catalog_url = catalog_url | append: '?sort_by=best-selling'
+    endif
+  endunless
+
+  assign show_crumbs = true
+  if template.name == 'index' or template.name == 'password' or template.name == 'gift_card'
+    assign show_crumbs = false
+  endif
+%}
+
+{%- if show_crumbs -%}
+  <nav class="vh-breadcrumbs" aria-label="Drobečková navigace">
+    <div class="vh-breadcrumbs__inner">
+      <ol class="vh-breadcrumbs__list" itemscope itemtype="https://schema.org/BreadcrumbList">
+        <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+          <a class="vh-breadcrumbs__link" href="{{ marketing }}" itemprop="item">
+            <span itemprop="name">Domů</span>
+          </a>
+          <meta itemprop="position" content="1">
+        </li>
+
+        {%- case template.name -%}
+          {%- when 'product' -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a class="vh-breadcrumbs__link" href="{{ catalog_url }}" itemprop="item">
+                <span itemprop="name">Produkty</span>
+              </a>
+              <meta itemprop="position" content="2">
+            </li>
+            {%- if collection -%}
+              <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a class="vh-breadcrumbs__link" href="{{ collection.url }}" itemprop="item">
+                  <span itemprop="name">{{ collection.title }}</span>
+                </a>
+                <meta itemprop="position" content="3">
+              </li>
+              <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">{{ product.title }}</span>
+                <meta itemprop="position" content="4">
+              </li>
+            {%- elsif product.collections.size > 0 -%}
+              {%- assign crumb_collection = product.collections.first -%}
+              <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a class="vh-breadcrumbs__link" href="{{ crumb_collection.url }}" itemprop="item">
+                  <span itemprop="name">{{ crumb_collection.title }}</span>
+                </a>
+                <meta itemprop="position" content="3">
+              </li>
+              <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">{{ product.title }}</span>
+                <meta itemprop="position" content="4">
+              </li>
+            {%- else -%}
+              <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">{{ product.title }}</span>
+                <meta itemprop="position" content="3">
+              </li>
+            {%- endif -%}
+
+          {%- when 'collection' -%}
+            {%- if collection.handle == 'all' -%}
+              <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">Produkty</span>
+                <meta itemprop="position" content="2">
+              </li>
+            {%- else -%}
+              <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <a class="vh-breadcrumbs__link" href="{{ catalog_url }}" itemprop="item">
+                  <span itemprop="name">Produkty</span>
+                </a>
+                <meta itemprop="position" content="2">
+              </li>
+              <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">{{ collection.title }}</span>
+                <meta itemprop="position" content="3">
+              </li>
+            {%- endif -%}
+
+          {%- when 'cart' -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">Košík</span>
+              <meta itemprop="position" content="2">
+            </li>
+
+          {%- when 'search' -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">Hledání</span>
+              <meta itemprop="position" content="2">
+            </li>
+
+          {%- when 'blog' -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">{{ blog.title }}</span>
+              <meta itemprop="position" content="2">
+            </li>
+
+          {%- when 'article' -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <a class="vh-breadcrumbs__link" href="{{ blog.url }}" itemprop="item">
+                <span itemprop="name">{{ blog.title }}</span>
+              </a>
+              <meta itemprop="position" content="2">
+            </li>
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">{{ article.title }}</span>
+              <meta itemprop="position" content="3">
+            </li>
+
+          {%- when 'page' -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">{{ page.title }}</span>
+              <meta itemprop="position" content="2">
+            </li>
+
+          {%- when 'list-collections' -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">Kolekce</span>
+              <meta itemprop="position" content="2">
+            </li>
+
+          {%- when 'customers' -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">Účet</span>
+              <meta itemprop="position" content="2">
+            </li>
+
+          {%- else -%}
+            <li class="vh-breadcrumbs__item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+              <span class="vh-breadcrumbs__current" aria-current="page" itemprop="name">
+                {%- if page_title != blank -%}{{ page_title }}{%- else -%}Obchod{%- endif -%}
+              </span>
+              <meta itemprop="position" content="2">
+            </li>
+        {%- endcase -%}
+      </ol>
+    </div>
+  </nav>
+{%- endif -%}
