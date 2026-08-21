@@ -194,7 +194,12 @@
           "product-badges product-badges--top-right vh-club-badges";
         gallery.appendChild(badges);
       } else {
-        badges.classList.add("product-badges--top-right");
+        badges.classList.remove(
+          "product-badges--top-left",
+          "product-badges--bottom-left",
+          "product-badges--bottom-right",
+        );
+        badges.classList.add("product-badges--top-right", "vh-club-badges");
       }
       badges.prepend(badge);
       return;

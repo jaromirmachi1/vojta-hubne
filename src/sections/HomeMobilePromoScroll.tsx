@@ -45,12 +45,15 @@ const Frame = styled.div`
   border-radius: ${({ theme }) => theme.radii.xl};
   background: #e8dccb;
   line-height: 0;
+  aspect-ratio: 3 / 2;
 `
 
 const Image = styled.img`
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 `
 
 const BuyCta = styled.a`
