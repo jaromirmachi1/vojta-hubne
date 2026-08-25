@@ -43,7 +43,7 @@ const Nav = styled.nav`
   align-items: center;
   gap: 2rem;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.headerNav}) {
     display: flex;
   }
 `
@@ -134,7 +134,7 @@ const MenuToggle = styled.button`
   ${iconButtonStyles}
   display: flex;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.headerNav}) {
     display: none;
   }
 

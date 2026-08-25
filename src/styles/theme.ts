@@ -23,6 +23,8 @@ export const theme = {
   },
   breakpoints: {
     tablet: '768px',
+    /** Desktop nav links — below this, header uses hamburger menu */
+    headerNav: '1090px',
     desktop: '1024px',
     wide: '1440px',
   },

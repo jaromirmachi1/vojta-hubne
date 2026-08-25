@@ -26,6 +26,7 @@
   --vh-font-sans: "Montserrat", system-ui, sans-serif;
   --vh-page-max-width: 1600px;
   --vh-page-padding-inline: clamp(1.25rem, 5vw, 3.5rem);
+  --vh-header-nav-breakpoint: 1090px;
   --vh-radius-sm: 0.5rem;
   --vh-radius-md: 0.75rem;
   --vh-radius-lg: 1rem;
@@ -454,7 +455,7 @@ header.header-section,
   font-weight: 600 !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1090px) {
   #header-component .vh-shop-header__nav {
     display: flex !important;
   }
@@ -477,7 +478,7 @@ header.header-section,
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1089px) {
   #header-component .vh-shop-header__inner {
     display: flex !important;
     justify-content: space-between !important;
@@ -498,10 +499,6 @@ header.header-section,
     display: inline-flex !important;
   }
 
-  #header-component .vh-shop-header__logo {
-    height: 2rem !important;
-  }
-
   #header-component .vh-shop-header__cart-link,
   #header-component .vh-shop-header__account-link {
     width: 2.25rem !important;
@@ -519,6 +516,12 @@ header.header-section,
   #header-component .vh-shop-header__account-name {
     max-width: 7ch !important;
     font-size: 0.68rem !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #header-component .vh-shop-header__logo {
+    height: 2rem !important;
   }
 }
 
@@ -709,7 +712,7 @@ body:has(main cart-items-component) .vh-mobile-nav:not(.is-open) {
   color: #ffffff !important;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1090px) {
   .vh-mobile-nav,
   #header-component .vh-shop-header__menu-toggle {
     display: none !important;
@@ -1761,7 +1764,9 @@ media-gallery.media-gallery--grid,
 .rte,
 .product__description,
 [class*="product-details"]
-  p:not(.vh-product-tags__line):not(.vh-product-tags__bullets-title) {
+  p:not(.vh-product-tags__line):not(.vh-product-tags__bullets-title):not(
+    .vh-club-badge
+  ) {
   color: var(--vh-text) !important;
   line-height: 1.65 !important;
 }
@@ -5177,7 +5182,10 @@ main
 }
 
 .vh-club-badge,
-.vh-card--club .product-badges .vh-club-badge {
+p.vh-club-badge,
+.vh-club-badge--pdp,
+.vh-card--club .product-badges .vh-club-badge,
+[class*="product-details"] p.vh-club-badge {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -5192,7 +5200,7 @@ main
   text-transform: uppercase !important;
   line-height: 1.25 !important;
   text-align: center !important;
-  color: var(--vh-black) !important;
+  color: #000000 !important;
   background: var(--vh-gold) !important;
   border: 0 !important;
   border-radius: var(--vh-radius-pill) !important;
@@ -5217,9 +5225,11 @@ main
   }
 }
 
-.vh-club-badge--pdp {
+.vh-club-badge--pdp,
+[class*="product-details"] p.vh-club-badge--pdp {
   margin: 0 0 0.75rem !important;
   font-size: 0.68rem !important;
+  color: #000000 !important;
 }
 
 .vh-product-tags--club {

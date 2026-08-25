@@ -51,7 +51,7 @@ const Nav = styled.nav`
   justify-self: center;
   gap: clamp(1.25rem, 2.5vw, 2rem);
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.headerNav}) {
     display: flex;
   }
 `
@@ -125,7 +125,7 @@ const CtaLink = styled(HashLink)`
     color: ${({ theme }) => theme.colors.black};
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.headerNav}) {
     display: inline-flex;
   }
 `
@@ -172,7 +172,7 @@ const MenuToggle = styled.button`
     background: rgba(238, 220, 130, 0.08);
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.headerNav}) {
     display: none;
   }
 
