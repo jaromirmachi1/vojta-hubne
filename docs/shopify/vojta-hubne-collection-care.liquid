@@ -1,0 +1,155 @@
+{% comment %}
+  Vojta Hubne — Péče a doplňky.
+
+  Own section BELOW the catalog (balíčky), on /collections.
+  Compact product tiles with a short description + Horizon quick-add.
+
+  Setup:
+  1. Sections → filename MUST be: vojta-hubne-collection-care.liquid
+  2. Snippets → vojta-hubne-quick-add.liquid
+  3. Templates → list-collections.json type "vojta-hubne-collection-care"
+  4. Re-upload vojta-hubne-horizon.css
+{% endcomment %}
+
+<section class="vh-care" aria-labelledby="vh-care-title">
+  <div class="vh-care__inner">
+    <header class="vh-care__header">
+      <h2 class="vh-care__title" id="vh-care-title">Péče a doplňky</h2>
+    </header>
+
+    <ul class="vh-care__grid" role="list">
+      {%- for i in (1..4) -%}
+        {%- assign vh_product = blank -%}
+        {%- assign vh_desc = '' -%}
+        {%- case i -%}
+          {%- when 1 -%}
+            {%- assign vh_product = all_products['antiage-cream-emulfeel®'] -%}
+            {%- if vh_product == blank -%}
+              {%- assign vh_product = all_products['antiage-cream-emulfeel'] -%}
+            {%- endif -%}
+            {%- assign vh_desc = 'Lehký hydratační krém s GHK-Cu, panthenolem a bisabololem.' -%}
+          {%- when 2 -%}
+            {%- assign vh_product = all_products['ghk-cu-cream'] -%}
+            {%- assign vh_desc = 'Hřejivý regenerační krém s GHK-Cu pro suchou a namáhanou pokožku.' -%}
+          {%- when 3 -%}
+            {%- assign vh_product = all_products['aquamin®-mg-b6'] -%}
+            {%- if vh_product == blank -%}
+              {%- assign vh_product = all_products['aquamin-mg-b6'] -%}
+            {%- endif -%}
+            {%- if vh_product == blank -%}
+              {%- assign vh_product = all_products['aquamin-mg'] -%}
+            {%- endif -%}
+            {%- assign vh_desc = 'Hořčík z mořských řas pro nervy, energii a proti únavě.' -%}
+          {%- when 4 -%}
+            {%- assign vh_product = all_products['d3-k2-vapnik'] -%}
+            {%- assign vh_desc = 'Trio vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu.' -%}
+        {%- endcase -%}
+
+        {%- if vh_product != blank -%}
+          {%- assign vh_shop_desc = vh_product.description | strip_html | strip -%}
+          {%- if vh_shop_desc != blank and vh_shop_desc.size > 12 -%}
+            {%- assign vh_desc = vh_shop_desc | truncate: 110 -%}
+          {%- endif -%}
+
+          <li class="vh-care__item" role="listitem">
+            <article class="vh-care-card">
+              <div class="vh-care-card__media">
+                <a
+                  class="vh-care-card__media-link"
+                  href="{{ vh_product.url }}"
+                  aria-label="{{ vh_product.title | escape }} — zobrazit produkt"
+                  tabindex="-1"
+                >
+                  {%- if vh_product.featured_media -%}
+                    <img
+                      class="vh-care-card__image"
+                      src="{{ vh_product.featured_media.preview_image | image_url: width: 720 }}"
+                      alt="{{ vh_product.featured_media.alt | default: vh_product.title | escape }}"
+                      width="360"
+                      height="360"
+                      loading="lazy"
+                      decoding="async"
+                    >
+                  {%- endif -%}
+                </a>
+
+                {% render 'vojta-hubne-quick-add',
+                  product: vh_product,
+                  section_id: section.id,
+                  form_prefix: 'vh-care-quick-add'
+                %}
+              </div>
+
+              <div class="vh-care-card__body">
+                <a
+                  class="vh-care-card__link"
+                  href="{{ vh_product.url }}"
+                  aria-label="{{ vh_product.title | escape }}"
+                >
+                  <h3 class="vh-care-card__name">{{ vh_product.title }}</h3>
+                  {%- if vh_desc != blank -%}
+                    <p class="vh-care-card__desc">{{ vh_desc }}</p>
+                  {%- endif -%}
+                  <p class="vh-care-card__price">{{ vh_product.price | money }}</p>
+                  <div
+                    class="vh-care-card__rating jdgm-widget jdgm-preview-badge"
+                    data-id="{{ vh_product.id }}"
+                  >
+                    {{ vh_product.metafields.judgeme.badge }}
+                  </div>
+                </a>
+              </div>
+            </article>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.__vhCareQuickAddPatched) return;
+    window.__vhCareQuickAddPatched = true;
+
+    function patchCareQuickAdd() {
+      document.querySelectorAll('.vh-care-card quick-add-component').forEach(function (el) {
+        var card = el.closest('.vh-care-card');
+        var link = card && card.querySelector('.vh-care-card__media-link');
+        if (!link || !link.href) return;
+
+        Object.defineProperty(el, 'productPageUrl', {
+          configurable: true,
+          get: function () {
+            return link.href;
+          },
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', patchCareQuickAdd);
+    } else {
+      patchCareQuickAdd();
+    }
+
+    document.addEventListener('shopify:section:load', patchCareQuickAdd);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VH péče a doplňky",
+  "tag": "section",
+  "class": "section-vh-collection-care",
+  "enabled_on": {
+    "templates": ["list-collections"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "VH péče a doplňky"
+    }
+  ]
+}
+{% endschema %}

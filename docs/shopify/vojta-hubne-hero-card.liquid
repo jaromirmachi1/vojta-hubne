@@ -1,0 +1,182 @@
+{% comment %}
+  Hero product card for /collections catalog section.
+  Params: product, category, tagline, description, image_loading, section_id
+{% endcomment %}
+
+{%- if product != blank -%}
+  {%- liquid
+    assign vh_variant = product.selected_or_first_available_variant
+    assign vh_single_variant = false
+    if product.has_only_default_variant or product.variants.size == 1
+      assign vh_single_variant = true
+    endif
+
+    assign vh_quick_add_mode = 'choose'
+    if vh_single_variant
+      assign vh_quick_add_mode = 'add'
+    endif
+
+    assign vh_form_id = 'vh-hero-quick-add-' | append: product.id
+    assign vh_variant_media = ''
+    if product.featured_media
+      assign vh_variant_media = product.featured_media.preview_image | image_url: width: 100
+    endif
+  -%}
+
+  <article class="vh-hero-card" role="listitem">
+    <div class="vh-hero-card__media">
+      <a
+        class="vh-hero-card__media-link"
+        href="{{ product.url }}"
+        aria-label="{{ product.title | escape }} — zobrazit produkt"
+        tabindex="-1"
+      >
+        {%- if product.featured_media -%}
+          <img
+            src="{{ product.featured_media.preview_image | image_url: width: 800 }}"
+            alt="{{ product.featured_media.alt | default: product.title | escape }}"
+            width="400"
+            height="400"
+            loading="{{ image_loading | default: 'lazy' }}"
+            decoding="async"
+          >
+        {%- endif -%}
+      </a>
+
+      {%- if product.available -%}
+        <quick-add-component
+          class="quick-add color-scheme-1"
+          ref="quickAdd"
+          data-product-title="{{ product.title | escape }}"
+          data-quick-add-button="{{ vh_quick_add_mode }}"
+          data-product-options-count="{{ product.options.size }}"
+        >
+          <product-form-component
+            data-section-id="{{ section_id }}"
+            data-product-id="{{ product.id }}"
+            on:submit="/handleSubmit"
+            class="quick-add__product-form-component"
+          >
+            <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+            {% form 'product', product, id: vh_form_id, class: 'shopify-product-form', data-type: 'add-to-cart-form' %}
+              <input type="hidden" name="id" ref="variantId" value="{{ vh_variant.id }}">
+              <input type="hidden" name="quantity" value="1">
+
+              <add-to-cart-component
+                ref="addToCartButtonContainer"
+                data-product-variant-media="{{ vh_variant_media }}"
+                data-add-to-cart-animation="true"
+              >
+                <button
+                  type="submit"
+                  name="add"
+                  ref="addToCartButton"
+                  on:click="/handleClick"
+                  class="button button quick-add__button quick-add__button--add add-to-cart-button"
+                >
+                  <span class="add-to-cart-text">
+                    <span aria-hidden="true" class="svg-wrapper add-to-cart-icon">
+                      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" d="M16.608 9.421V6.906H3.392v8.016c0 .567.224 1.112.624 1.513.4.402.941.627 1.506.627H8.63M8.818 3h2.333c.618 0 1.212.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.344c0-.622.246-1.218.683-1.658A2.33 2.33 0 0 1 8.82 3"></path>
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="var(--icon-stroke-width)" d="M14.608 12.563v5m2.5-2.5h-5"></path>
+                      </svg>
+                    </span>
+                    <span class="add-to-cart-text__content is-visually-hidden-mobile">
+                      <span><span>Přidat</span></span>
+                    </span>
+                  </span>
+                  <span class="add-to-cart__added">
+                    <span class="svg-wrapper add-to-cart__added-icon">
+                      <svg aria-hidden="true" class="checkmark-burst" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g class="check">
+                          <circle class="ring" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle>
+                          <path class="tick" d="M9 12.75L11.25 15L15 9.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </g>
+                        <g class="burst">
+                          <g style="--index: 0;"><line class="line" stroke-linecap="round" pathLength="1" x1="12" y1="8.5" x2="12" y2="15.5" stroke="currentColor"></line></g>
+                          <g style="--index: 1;"><line class="line" stroke-linecap="round" pathLength="1" x1="12" y1="8.5" x2="12" y2="15.5" stroke="currentColor"></line></g>
+                          <g style="--index: 2;"><line class="line" stroke-linecap="round" pathLength="1" x1="12" y1="8.5" x2="12" y2="15.5" stroke="currentColor"></line></g>
+                          <g style="--index: 3;"><line class="line" stroke-linecap="round" pathLength="1" x1="12" y1="8.5" x2="12" y2="15.5" stroke="currentColor"></line></g>
+                          <g style="--index: 4;"><line class="line" stroke-linecap="round" pathLength="1" x1="12" y1="8.5" x2="12" y2="15.5" stroke="currentColor"></line></g>
+                          <g style="--index: 5;"><line class="line" stroke-linecap="round" pathLength="1" x1="12" y1="8.5" x2="12" y2="15.5" stroke="currentColor"></line></g>
+                          <g style="--index: 6;"><line class="line" stroke-linecap="round" pathLength="1" x1="12" y1="8.5" x2="12" y2="15.5" stroke="currentColor"></line></g>
+                          <g style="--index: 7;"><line class="line" stroke-linecap="round" pathLength="1" x1="12" y1="8.5" x2="12" y2="15.5" stroke="currentColor"></line></g>
+                        </g>
+                      </svg>
+                    </span>
+                  </span>
+                </button>
+              </add-to-cart-component>
+
+              <button
+                class="button quick-add__button quick-add__button--choose add-to-cart-button"
+                type="button"
+                name="add"
+                on:click="quick-add-component/handleClick"
+              >
+                <span class="add-to-cart-text">
+                  <span aria-hidden="true" class="svg-wrapper add-to-cart-icon">
+                    <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" d="M16.608 9.421V6.906H3.392v8.016c0 .567.224 1.112.624 1.513.4.402.941.627 1.506.627H8.63M8.818 3h2.333c.618 0 1.212.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.344c0-.622.246-1.218.683-1.658A2.33 2.33 0 0 1 8.82 3"></path>
+                      <path stroke="currentColor" stroke-linecap="round" stroke-width="var(--icon-stroke-width)" d="M14.608 12.563v5m2.5-2.5h-5"></path>
+                    </svg>
+                  </span>
+                  <span class="add-to-cart-text__content is-visually-hidden-mobile">
+                    <span><span>Vybrat</span></span>
+                  </span>
+                </span>
+              </button>
+            {% endform %}
+          </product-form-component>
+        </quick-add-component>
+      {%- endif -%}
+    </div>
+
+    <div class="vh-hero-card__body">
+      <a class="vh-hero-card__link" href="{{ product.url }}" aria-label="{{ product.title | escape }} — zobrazit produkt">
+        {%- if category != blank -%}
+          <p class="vh-hero-card__cat">{{ category }}</p>
+        {%- endif -%}
+        <h2 class="vh-hero-card__name">{{ product.title }}</h2>
+        <p class="vh-hero-card__price">{{ product.price | money }}</p>
+        {%- if tagline != blank -%}
+          <p class="vh-hero-card__tagline">{{ tagline }}</p>
+        {%- endif -%}
+        {%- if description != blank -%}
+          <p class="vh-hero-card__desc">{{ description }}</p>
+        {%- endif -%}
+      </a>
+      <a class="vh-hero-card__cta" href="{{ product.url }}">Zobrazit produkt</a>
+    </div>
+  </article>
+{%- endif -%}
+
+<script>
+  (function () {
+    if (window.__vhHeroQuickAddPatched) return;
+    window.__vhHeroQuickAddPatched = true;
+
+    function patchHeroQuickAdd() {
+      document.querySelectorAll('.vh-hero-card quick-add-component').forEach(function (el) {
+        var card = el.closest('.vh-hero-card');
+        var link = card && card.querySelector('.vh-hero-card__media-link');
+        if (!link || !link.href) return;
+
+        Object.defineProperty(el, 'productPageUrl', {
+          configurable: true,
+          get: function () {
+            return link.href;
+          },
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', patchHeroQuickAdd);
+    } else {
+      patchHeroQuickAdd();
+    }
+
+    document.addEventListener('shopify:section:load', patchHeroQuickAdd);
+  })();
+</script>

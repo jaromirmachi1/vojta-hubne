@@ -1,0 +1,175 @@
+{% comment %}
+  Vojta Hubne — /collections (list-collections), not /collections/all.
+
+  Mirrors React AltShopCatalog: hero products + real Balíčky products.
+
+  Setup:
+  1. Sections → Add section → filename MUST be: vojta-hubne-collection-catalog.liquid
+     (same name as this file)
+  2. Sections → Add vojta-hubne-collection-care.liquid (Péče grid underneath)
+  3. Templates → list-collections.json → paste docs/shopify/list-collections.json
+  4. Re-upload vojta-hubne-horizon.css
+
+  See COLLECTION-INTEGRATION.md
+{% endcomment %}
+
+{% liquid
+  assign catalog_url = routes.all_products_collection_url | default: '/collections/all'
+  unless catalog_url contains 'sort_by='
+    if catalog_url contains '?'
+      assign catalog_url = catalog_url | append: '&sort_by=best-selling'
+    else
+      assign catalog_url = catalog_url | append: '?sort_by=best-selling'
+    endif
+  endunless
+
+  assign vh_hero_1 = all_products['glp1-support']
+  assign vh_hero_2 = all_products['lean-shake-glp-1']
+  assign vh_hero_3 = all_products['d3-k2-vapnik']
+  if vh_hero_3 == blank
+    assign vh_hero_3 = all_products['d3-k2']
+  endif
+  assign vh_all_collection = collections.all
+%}
+
+<section class="vh-catalog" aria-label="Katalog">
+  <div class="vh-catalog__content">
+    {%- if vh_hero_1 != blank or vh_hero_2 != blank or vh_hero_3 != blank -%}
+      <div class="vh-catalog__block vh-catalog__block--heroes" aria-labelledby="vh-catalog-heroes-title">
+        <header class="vh-catalog__header">
+          <h1 class="vh-catalog__title" id="vh-catalog-heroes-title">Vaše nejoblíbenější produkty</h1>
+        </header>
+
+        <div class="vh-hero-cards vh-hero-cards--heroes" role="list">
+          {%- if vh_hero_1 != blank -%}
+            {% render 'vojta-hubne-hero-card',
+              product: vh_hero_1,
+              section_id: section.id,
+              category: 'Doplňky stravy',
+              tagline: 'Energie · Spalování · Kontrola chuti',
+              description: 'Komplex s Carolean®, berberinem, gymnemou a kreatinem pro podporu sytosti, metabolismu a energie.',
+              image_loading: 'eager'
+            %}
+          {%- endif -%}
+
+          {%- if vh_hero_2 != blank -%}
+            {% render 'vojta-hubne-hero-card',
+              product: vh_hero_2,
+              section_id: section.id,
+              category: 'Proteiny & shaky',
+              tagline: 'Sytost · Kontrola · Výsledky',
+              description: 'Proteinový shake s CaroLean®, VinOgrape® a vitamíny. 22 g bílkovin v jedné dávce pro každodenní kontrolu váhy.',
+              image_loading: 'lazy'
+            %}
+          {%- endif -%}
+
+          {%- if vh_hero_3 != blank -%}
+            {% render 'vojta-hubne-hero-card',
+              product: vh_hero_3,
+              section_id: section.id,
+              category: 'Doplňky stravy',
+              tagline: 'Kosti · Svaly · Imunita',
+              description: 'Trio vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu v jedné dávce.',
+              image_loading: 'lazy'
+            %}
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="vh-catalog__trust">
+      {% render 'vojta-hubne-product-benefits' %}
+    </div>
+
+    <div class="vh-catalog__block vh-catalog__block--bundles" aria-labelledby="vh-catalog-bundles-title">
+      <header class="vh-catalog__header">
+        <h2 class="vh-catalog__title" id="vh-catalog-bundles-title">Balíčky</h2>
+        <p class="vh-catalog__subtitle">
+          Méně rozhodování, více výsledků. Vše připravené tak, aby dávalo smysl právě vám.
+        </p>
+      </header>
+
+      <div class="vh-hero-cards vh-hero-cards--bundles" role="list">
+        {%- if vh_all_collection != blank -%}
+          {%- paginate vh_all_collection.products by 250 -%}
+            {%- for vh_product in vh_all_collection.products -%}
+              {%- assign vh_type = vh_product.type | strip | downcase -%}
+              {%- assign vh_title_down = vh_product.title | downcase -%}
+              {%- assign vh_is_bundle = false -%}
+              {%- if vh_type == 'bundles' or vh_type contains 'balíč' or vh_type contains 'balic' -%}
+                {%- assign vh_is_bundle = true -%}
+              {%- elsif vh_title_down contains 'balíček' or vh_title_down contains 'balicek' -%}
+                {%- assign vh_is_bundle = true -%}
+              {%- endif -%}
+
+              {%- if vh_is_bundle -%}
+                {%- assign vh_desc = vh_product.description | strip_html | strip | truncate: 160 -%}
+                {% render 'vojta-hubne-hero-card',
+                  product: vh_product,
+                  section_id: section.id,
+                  category: 'Balíčky',
+                  tagline: '',
+                  description: vh_desc,
+                  image_loading: 'lazy'
+                %}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endpaginate -%}
+        {%- endif -%}
+      </div>
+
+      <div class="vh-bundles-more-row">
+        <button type="button" class="vh-bundles-more" data-vh-bundles-more>
+          Více balíčků
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.__vhBundlesMoreBound) return;
+    window.__vhBundlesMoreBound = true;
+
+    function bindBundlesMore() {
+      document.querySelectorAll('[data-vh-bundles-more]').forEach(function (btn) {
+        if (btn.dataset.bound === 'true') return;
+        btn.dataset.bound = 'true';
+        btn.addEventListener('click', function () {
+          var block = btn.closest('.vh-catalog__block--bundles');
+          var grid = block && block.querySelector('.vh-hero-cards--bundles');
+          if (!grid) return;
+          block.classList.add('is-expanded');
+          grid.classList.add('is-expanded');
+          btn.setAttribute('hidden', '');
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindBundlesMore);
+    } else {
+      bindBundlesMore();
+    }
+
+    document.addEventListener('shopify:section:load', bindBundlesMore);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "VH katalog",
+  "tag": "section",
+  "class": "section-vh-collection-list",
+  "enabled_on": {
+    "templates": ["list-collections"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "VH katalog"
+    }
+  ]
+}
+{% endschema %}

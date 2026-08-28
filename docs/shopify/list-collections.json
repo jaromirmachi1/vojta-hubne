@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "catalog": {
+      "type": "vojta-hubne-collection-catalog",
+      "settings": {}
+    },
+    "care": {
+      "type": "vojta-hubne-collection-care",
+      "settings": {}
+    },
+    "upcoming": {
+      "type": "vojta-hubne-collection-upcoming",
+      "settings": {}
+    }
+  },
+  "order": ["catalog", "care", "upcoming"]
+}

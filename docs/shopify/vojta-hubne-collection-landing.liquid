@@ -1,0 +1,353 @@
+{% comment %}
+  Vojta Hubne — collection landing (catalog structure from the layout PDF).
+
+  Upload as: sections/vh-collection-landing.liquid
+  Template:  templates/collection.landing.json
+  Assign to the main catalog collection (usually "all" / Produkty).
+
+  Announcement bar stays global in the theme — do not duplicate it here.
+{% endcomment %}
+
+{% liquid
+  assign banner_title = section.settings.banner_title | default: collection.title
+  if banner_title == blank
+    assign banner_title = 'Cesta k vysněné váze'
+  endif
+  assign banner_lead = section.settings.banner_lead
+
+  assign hero_1 = section.settings.hero_product_1
+  if hero_1 == blank
+    assign hero_1 = all_products['glp1-support']
+  endif
+  assign hero_2 = section.settings.hero_product_2
+  if hero_2 == blank
+    assign hero_2 = all_products['lean-shake-glp-1']
+  endif
+
+  assign hero_1_upsell = section.settings.hero_1_upsell_product
+  assign hero_2_upsell = section.settings.hero_2_upsell_product
+
+  assign pack_1 = section.settings.pack_collection_1
+  if pack_1 == blank
+    assign pack_1 = collections[section.settings.pack_handle_1]
+  endif
+  assign pack_2 = section.settings.pack_collection_2
+  if pack_2 == blank
+    assign pack_2 = collections[section.settings.pack_handle_2]
+  endif
+  assign pack_3 = section.settings.pack_collection_3
+  if pack_3 == blank
+    assign pack_3 = collections[section.settings.pack_handle_3]
+  endif
+
+  assign care = section.settings.care_collection
+  if care == blank
+    assign care = collections[section.settings.care_handle]
+  endif
+%}
+
+<section class="vh-cat-landing" data-vh-cat-landing>
+  <header class="vh-cat-landing__banner">
+    <div class="vh-cat-landing__inner">
+      <p class="vh-cat-landing__eyebrow">{{ collection.title | default: 'Produkty' }}</p>
+      <h1 class="vh-cat-landing__title">{{ banner_title }}</h1>
+      {%- if banner_lead != blank -%}
+        <p class="vh-cat-landing__lead">{{ banner_lead }}</p>
+      {%- endif -%}
+    </div>
+  </header>
+
+  <div class="vh-cat-landing__trust">
+    {% render 'vojta-hubne-product-benefits' %}
+  </div>
+
+  {%- if hero_1 != blank or hero_2 != blank -%}
+    <section class="vh-cat-landing__heroes" aria-labelledby="vh-cat-heroes-title">
+      <div class="vh-cat-landing__inner">
+        <header class="vh-cat-landing__header">
+          <p class="vh-cat-landing__eyebrow">Hero produkty</p>
+          <h2 class="vh-cat-landing__h2" id="vh-cat-heroes-title">Začněte tady</h2>
+        </header>
+        <div class="vh-cat-heroes">
+          {%- if hero_1 != blank -%}
+            {% render 'vojta-hubne-catalog-card',
+              product: hero_1,
+              style: 'hero',
+              upsell_label: section.settings.hero_1_upsell_label,
+              upsell_product: hero_1_upsell
+            %}
+          {%- endif -%}
+          {%- if hero_2 != blank -%}
+            {% render 'vojta-hubne-catalog-card',
+              product: hero_2,
+              style: 'hero',
+              upsell_label: section.settings.hero_2_upsell_label,
+              upsell_product: hero_2_upsell
+            %}
+          {%- endif -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- if pack_1 != blank or pack_2 != blank or pack_3 != blank -%}
+    <section class="vh-cat-landing__packs" aria-labelledby="vh-cat-packs-title">
+      <div class="vh-cat-landing__inner">
+        <header class="vh-cat-landing__header">
+          <p class="vh-cat-landing__eyebrow">Balíčky</p>
+          <h2 class="vh-cat-landing__h2" id="vh-cat-packs-title">
+            {{ section.settings.packs_title }}
+          </h2>
+        </header>
+
+        <div class="vh-cat-packs">
+          {%- for i in (1..3) -%}
+            {%- case i -%}
+              {%- when 1 -%}
+                {%- assign pack = pack_1 -%}
+                {%- assign pack_title = section.settings.pack_title_1 -%}
+              {%- when 2 -%}
+                {%- assign pack = pack_2 -%}
+                {%- assign pack_title = section.settings.pack_title_2 -%}
+              {%- when 3 -%}
+                {%- assign pack = pack_3 -%}
+                {%- assign pack_title = section.settings.pack_title_3 -%}
+            {%- endcase -%}
+
+            {%- if pack != blank and pack.products_count > 0 -%}
+              <div class="vh-cat-pack-group">
+                <h3 class="vh-cat-pack-group__title">{{ pack_title | default: pack.title }}</h3>
+                <div class="vh-cat-pack-group__grid">
+                  {%- for product in pack.products limit: 4 -%}
+                    {% render 'vojta-hubne-catalog-card', product: product, style: 'pack' %}
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+
+  <section class="vh-cat-landing__care" aria-labelledby="vh-cat-care-title">
+    <div class="vh-cat-landing__inner">
+      <header class="vh-cat-landing__header">
+        <p class="vh-cat-landing__eyebrow">Doplňky</p>
+        <h2 class="vh-cat-landing__h2" id="vh-cat-care-title">
+          {{ section.settings.care_title }}
+        </h2>
+      </header>
+
+      <div class="vh-cat-care">
+        {%- if care != blank and care.products_count > 0 -%}
+          {%- for product in care.products limit: 8 -%}
+            {% render 'vojta-hubne-catalog-card', product: product, style: 'care' %}
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign care_fallback = all_products['antiage-cream-emulfeel®'] -%}
+          {%- if care_fallback != blank -%}
+            {% render 'vojta-hubne-catalog-card', product: care_fallback, style: 'care' %}
+          {%- endif -%}
+          {%- assign care_fallback = all_products['ghk-cu-cream'] -%}
+          {%- if care_fallback != blank -%}
+            {% render 'vojta-hubne-catalog-card', product: care_fallback, style: 'care' %}
+          {%- endif -%}
+          {%- assign care_fallback = all_products['aquamin-mg-b6'] -%}
+          {%- if care_fallback != blank -%}
+            {% render 'vojta-hubne-catalog-card', product: care_fallback, style: 'care' %}
+          {%- endif -%}
+          {%- assign care_fallback = all_products['d3-k2-vapnik'] -%}
+          {%- if care_fallback != blank -%}
+            {% render 'vojta-hubne-catalog-card', product: care_fallback, style: 'care' %}
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="vh-cat-landing__reviews" aria-labelledby="vh-cat-reviews-title">
+    <div class="vh-cat-landing__inner vh-cat-reviews">
+      <p class="vh-cat-reviews__score" id="vh-cat-reviews-title">{{ section.settings.reviews_score }}</p>
+      <p class="vh-cat-reviews__copy">{{ section.settings.reviews_copy }}</p>
+      {%- if section.settings.show_judgeme -%}
+        <div class="vh-cat-reviews__widget jdgm-widget jdgm-all-reviews-widget"></div>
+      {%- endif -%}
+    </div>
+  </section>
+</section>
+
+{% schema %}
+{
+  "name": "VH Collection landing",
+  "tag": "section",
+  "class": "section-vh-collection-landing",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Banner"
+    },
+    {
+      "type": "text",
+      "id": "banner_title",
+      "label": "Nadpis",
+      "default": "Cesta k vysněné váze"
+    },
+    {
+      "type": "textarea",
+      "id": "banner_lead",
+      "label": "Podnadpis",
+      "default": "Doplňky a balíčky, které to zvládnou s vámi"
+    },
+    {
+      "type": "header",
+      "content": "Hero produkty"
+    },
+    {
+      "type": "product",
+      "id": "hero_product_1",
+      "label": "Hero produkt 1"
+    },
+    {
+      "type": "text",
+      "id": "hero_1_upsell_label",
+      "label": "Hero 1 odkaz pod košíkem",
+      "default": "Balíček (re)Start ušetří 590 Kč →"
+    },
+    {
+      "type": "product",
+      "id": "hero_1_upsell_product",
+      "label": "Hero 1 odkaz — produkt"
+    },
+    {
+      "type": "product",
+      "id": "hero_product_2",
+      "label": "Hero produkt 2"
+    },
+    {
+      "type": "text",
+      "id": "hero_2_upsell_label",
+      "label": "Hero 2 odkaz pod košíkem",
+      "default": "Se slaným karamelem + Aquamin za 949 Kč →"
+    },
+    {
+      "type": "product",
+      "id": "hero_2_upsell_product",
+      "label": "Hero 2 odkaz — produkt"
+    },
+    {
+      "type": "header",
+      "content": "Balíčky — 3 skupiny"
+    },
+    {
+      "type": "text",
+      "id": "packs_title",
+      "label": "Nadpis sekce",
+      "default": "Balíčky — vyberte podle cíle"
+    },
+    {
+      "type": "text",
+      "id": "pack_title_1",
+      "label": "Skupina 1 — název",
+      "default": "Podpora po GLP"
+    },
+    {
+      "type": "collection",
+      "id": "pack_collection_1",
+      "label": "Skupina 1 — kolekce"
+    },
+    {
+      "type": "text",
+      "id": "pack_handle_1",
+      "label": "Skupina 1 — handle (záloha)",
+      "default": "podpora-po-glp",
+      "info": "Použije se, pokud kolekce nahoře není vybraná."
+    },
+    {
+      "type": "text",
+      "id": "pack_title_2",
+      "label": "Skupina 2 — název",
+      "default": "Váha a pleť"
+    },
+    {
+      "type": "collection",
+      "id": "pack_collection_2",
+      "label": "Skupina 2 — kolekce"
+    },
+    {
+      "type": "text",
+      "id": "pack_handle_2",
+      "label": "Skupina 2 — handle (záloha)",
+      "default": "vaha-a-plet"
+    },
+    {
+      "type": "text",
+      "id": "pack_title_3",
+      "label": "Skupina 3 — název",
+      "default": "Rychlý start"
+    },
+    {
+      "type": "collection",
+      "id": "pack_collection_3",
+      "label": "Skupina 3 — kolekce"
+    },
+    {
+      "type": "text",
+      "id": "pack_handle_3",
+      "label": "Skupina 3 — handle (záloha)",
+      "default": "rychly-start"
+    },
+    {
+      "type": "header",
+      "content": "Péče a doplňky"
+    },
+    {
+      "type": "text",
+      "id": "care_title",
+      "label": "Nadpis sekce",
+      "default": "Péče a doplňky"
+    },
+    {
+      "type": "collection",
+      "id": "care_collection",
+      "label": "Kolekce péče"
+    },
+    {
+      "type": "text",
+      "id": "care_handle",
+      "label": "Handle péče (záloha)",
+      "default": "pece-a-doplnky"
+    },
+    {
+      "type": "header",
+      "content": "Recenze"
+    },
+    {
+      "type": "text",
+      "id": "reviews_score",
+      "label": "Skóre",
+      "default": "4,8 z 5"
+    },
+    {
+      "type": "text",
+      "id": "reviews_copy",
+      "label": "Text",
+      "default": "Přes 500 recenzí"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_judgeme",
+      "label": "Zobrazit Judge.me widget",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "VH Collection landing"
+    }
+  ]
+}
+{% endschema %}

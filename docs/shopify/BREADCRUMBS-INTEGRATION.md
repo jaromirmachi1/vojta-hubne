@@ -60,4 +60,4 @@ Or if you only use our header snippet inside `header.liquid`, put the render **b
 | Page | Domů → název stránky |
 | Homepage | hidden |
 
-**Domů** points to the marketing site (`www.vojtahubne.cz`). **Produkty** points to `/collections/all`.
+**Domů** points to the marketing site (`www.vojtahubne.cz`). **Produkty** points to `/collections`.

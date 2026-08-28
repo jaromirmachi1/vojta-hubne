@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "landing": {
+      "type": "vh-collection-landing",
+      "settings": {
+        "banner_title": "Cesta k vysněné váze",
+        "banner_lead": "Doplňky a balíčky, které to zvládnou s vámi",
+        "hero_1_upsell_label": "Balíček (re)Start ušetří 590 Kč →",
+        "hero_2_upsell_label": "Se slaným karamelem + Aquamin za 949 Kč →",
+        "packs_title": "Balíčky — vyberte podle cíle",
+        "pack_title_1": "Podpora po GLP",
+        "pack_handle_1": "podpora-po-glp",
+        "pack_title_2": "Váha a pleť",
+        "pack_handle_2": "vaha-a-plet",
+        "pack_title_3": "Rychlý start",
+        "pack_handle_3": "rychly-start",
+        "care_title": "Péče a doplňky",
+        "care_handle": "pece-a-doplnky",
+        "reviews_score": "4,8 z 5",
+        "reviews_copy": "Přes 500 recenzí",
+        "show_judgeme": false
+      }
+    }
+  },
+  "order": ["landing"]
+}

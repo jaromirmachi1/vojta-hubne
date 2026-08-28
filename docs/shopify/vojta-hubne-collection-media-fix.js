@@ -16,6 +16,7 @@
   const FILTER_ID = "vh-collection-category-filter";
   const ALL_CATEGORY = "__all";
   let categoryFilterSetupPending = false;
+  let userHasScrolled = false;
 
   const RESET_TARGETS = [
     "slideshow-component",
@@ -62,8 +63,16 @@
     return window.location.pathname.includes("/collections/");
   }
 
+  function markUserScrolled() {
+    if ((window.scrollY || window.pageYOffset || 0) > 2) {
+      userHasScrolled = true;
+    }
+  }
+
   function scrollCollectionToTop() {
     if (!isCollectionPage()) return;
+    // Delayed media/filter refreshes must not yank mobile scroll back to top.
+    if (userHasScrolled) return;
 
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
@@ -405,11 +414,17 @@
   function placeFilter(filter) {
     if (!filter) return;
 
+    const catalog = document.querySelector("main .vh-catalog");
     const facets = document.querySelector("main .facets-block-wrapper");
     const collectionWrapper = document.querySelector(
       "main .collection-wrapper",
     );
     const results = document.querySelector("main #ResultsList");
+
+    if (catalog) {
+      catalog.insertAdjacentElement("afterend", filter);
+      return;
+    }
 
     if (facets) {
       facets.insertAdjacentElement("beforebegin", filter);
@@ -472,36 +487,41 @@
     categoryFilterSetupPending = false;
   }
 
-  function refreshCollectionPage() {
+  function refreshCollectionPage(options) {
+    const shouldScrollTop = Boolean(options && options.scrollTop);
     resetAll();
     setupCategoryFilters();
     setupClubHighlights();
-    scrollCollectionToTop();
+    if (shouldScrollTop) scrollCollectionToTop();
   }
 
   function scheduleReset() {
-    refreshCollectionPage();
+    // Only the first pass may reset scroll; later retries must not fight the user.
+    refreshCollectionPage({ scrollTop: true });
     setupRecommendationCards();
     resetRecommendationCards();
     setupClubHighlights();
     [0, 50, 150, 350, 700, 1200].forEach((delay) => {
       window.setTimeout(() => {
-        refreshCollectionPage();
+        refreshCollectionPage({ scrollTop: false });
         resetRecommendationCards();
         setupClubHighlights();
       }, delay);
     });
     requestAnimationFrame(() => {
-      refreshCollectionPage();
+      refreshCollectionPage({ scrollTop: false });
       resetRecommendationCards();
       setupClubHighlights();
       requestAnimationFrame(() => {
-        refreshCollectionPage();
+        refreshCollectionPage({ scrollTop: false });
         resetRecommendationCards();
         setupClubHighlights();
       });
     });
   }
+
+  window.addEventListener("scroll", markUserScrolled, { passive: true });
+  window.addEventListener("touchmove", markUserScrolled, { passive: true });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", scheduleReset, {
@@ -511,7 +531,10 @@
     scheduleReset();
   }
 
-  window.addEventListener("pageshow", scheduleReset);
+  window.addEventListener("pageshow", () => {
+    userHasScrolled = (window.scrollY || window.pageYOffset || 0) > 2;
+    scheduleReset();
+  });
   window.addEventListener("popstate", scheduleReset);
   document.addEventListener("shopify:section:load", scheduleReset);
 })();

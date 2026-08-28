@@ -1,0 +1,113 @@
+{% comment %}
+  Vojta Hubne — Co chystáme teaser on /collections.
+
+  3 newest in-progress products from vojtahubne.cz/co-chystame.
+  Place UNDER Péče a doplňky.
+
+  Setup:
+  1. Sections → filename MUST be: vojta-hubne-collection-upcoming.liquid
+  2. Templates → list-collections.json type "vojta-hubne-collection-upcoming"
+  3. Re-upload vojta-hubne-horizon.css
+{% endcomment %}
+
+{%- assign vh_upcoming_url = 'https://www.vojtahubne.cz/co-chystame' -%}
+
+<section class="vh-upcoming" aria-labelledby="vh-upcoming-title">
+  <div class="vh-upcoming__inner">
+    <header class="vh-upcoming__header">
+      <div>
+        <div class="vh-upcoming__badge-row">
+          <span class="vh-upcoming__new">
+            <span class="vh-upcoming__dot" aria-hidden="true"></span>
+            Nové
+          </span>
+          <p class="vh-upcoming__eyebrow">Právě ve vývoji</p>
+        </div>
+        <h2 class="vh-upcoming__title" id="vh-upcoming-title">Co chystáme</h2>
+      </div>
+      <p class="vh-upcoming__lead">
+        Transparentní pohled do vývoje: nové produkty, testování a komunita.
+        Nic neschováváme — ukážeme, co je potvrzené a co teprve vzniká.
+      </p>
+    </header>
+
+    <div class="vh-upcoming__grid" role="list">
+      <a class="vh-upcoming-card" href="{{ vh_upcoming_url }}" role="listitem" aria-label="Zjistit více o projektu Nová příchuť Lean Shake">
+        <span class="vh-upcoming-card__status">Ve vývoji</span>
+        <p class="vh-upcoming-card__kicker">Komunita rozhodla</p>
+        <h3 class="vh-upcoming-card__name">Nová příchuť Lean Shake</h3>
+        <p class="vh-upcoming-card__excerpt">
+          Hlasování skončilo. Do výroby jdou Višeň v čokoládě a Čokoláda — dvě příchutě, které získaly nejvíc hlasů.
+        </p>
+        <div class="vh-upcoming-card__progress">
+          <div class="vh-upcoming-card__progress-top">
+            <span>Stav vývoje</span>
+            <span>95 %</span>
+          </div>
+          <div class="vh-upcoming-card__bar" aria-hidden="true">
+            <span style="width:95%"></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="vh-upcoming-card" href="{{ vh_upcoming_url }}" role="listitem" aria-label="Zjistit více o projektu Odvodňovač">
+        <span class="vh-upcoming-card__status">Ve vývoji – ladíme finální podobu</span>
+        <p class="vh-upcoming-card__kicker">Lehčí pocit. Méně zadržené vody.</p>
+        <h3 class="vh-upcoming-card__name">Odvodňovač</h3>
+        <p class="vh-upcoming-card__excerpt">
+          Produkt zaměřený na podporu přirozeného hospodaření organismu s vodou a na pocit větší lehkosti při hubnutí.
+        </p>
+        <div class="vh-upcoming-card__progress">
+          <div class="vh-upcoming-card__progress-top">
+            <span>Stav vývoje</span>
+            <span>60 %</span>
+          </div>
+          <div class="vh-upcoming-card__bar" aria-hidden="true">
+            <span style="width:60%"></span>
+          </div>
+        </div>
+      </a>
+
+      <a class="vh-upcoming-card" href="{{ vh_upcoming_url }}" role="listitem" aria-label="Zjistit více o projektu Kreatin">
+        <span class="vh-upcoming-card__status">Ve vývoji – ladíme finální podobu</span>
+        <p class="vh-upcoming-card__kicker">Síla. Výkon. Udržení aktivního režimu.</p>
+        <h3 class="vh-upcoming-card__name">Kreatin</h3>
+        <p class="vh-upcoming-card__excerpt">
+          Vlastní kreatin jako přirozená součást programu Vojta Hubne — jednoduché dávkování, dobrá rozpustnost a použití pro každého.
+        </p>
+        <div class="vh-upcoming-card__progress">
+          <div class="vh-upcoming-card__progress-top">
+            <span>Stav vývoje</span>
+            <span>95 %</span>
+          </div>
+          <div class="vh-upcoming-card__bar" aria-hidden="true">
+            <span style="width:95%"></span>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="vh-upcoming__cta-row">
+      <a class="vh-upcoming__cta" href="{{ vh_upcoming_url }}">
+        Zobrazit více →
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VH Co chystáme",
+  "tag": "section",
+  "class": "section-vh-collection-upcoming",
+  "enabled_on": {
+    "templates": ["list-collections"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "VH Co chystáme"
+    }
+  ]
+}
+{% endschema %}

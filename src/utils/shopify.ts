@@ -51,15 +51,21 @@ export function getShopifyAccountUrl(): string {
   return `${base}/account`;
 }
 
-/** Shop catalog — all products, default sort = most ordered (best-selling). */
+/** Shop catalog landing — `/collections` (heroes, balíčky, péče). */
 export function getShopifyCatalogUrl(): string {
   const base = getShopifyStoreUrl();
 
   const path =
-    import.meta.env.VITE_SHOPIFY_CATALOG_PATH?.trim() || "/collections/all";
+    import.meta.env.VITE_SHOPIFY_CATALOG_PATH?.trim() || "/collections";
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  const separator = normalized.includes("?") ? "&" : "?";
-  return `${base}${normalized}${separator}sort_by=best-selling`;
+  const clean = normalized.replace(/\/$/, "") || "/collections";
+
+  if (clean === "/collections") {
+    return `${base}${clean}`;
+  }
+
+  const separator = clean.includes("?") ? "&" : "?";
+  return `${base}${clean}${separator}sort_by=best-selling`;
 }
 
 /** Blog index — default handle is `blog`; override via VITE_SHOPIFY_BLOG_PATH */

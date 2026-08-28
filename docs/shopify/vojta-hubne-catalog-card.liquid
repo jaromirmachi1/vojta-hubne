@@ -1,0 +1,80 @@
+{% comment %}
+  Catalog card for the collection landing page.
+  style: hero | pack | care
+{% endcomment %}
+
+{%- if product == blank -%}
+  {%- comment -%}Skip empty product pickers{%- endcomment -%}
+{%- else -%}
+{% liquid
+  assign card_style = style | default: 'care'
+  assign card_product = product
+
+  assign variant = card_product.selected_or_first_available_variant
+  assign save_cents = 0
+  if card_product.compare_at_price > card_product.price
+    assign save_cents = card_product.compare_at_price | minus: card_product.price
+  endif
+
+  assign is_club = false
+  for tag in card_product.tags
+    assign tag_down = tag | downcase | replace: '_', '-' | strip
+    if tag_down == 'vh-club'
+      assign is_club = true
+    endif
+  endfor
+%}
+
+<article class="vh-cat-card vh-cat-card--{{ card_style }}{% if is_club %} vh-cat-card--club{% endif %}">
+  <a class="vh-cat-card__media" href="{{ card_product.url }}">
+    {%- if is_club -%}
+      <span class="vh-club-badge">Jen pro členy VH Clubu</span>
+    {%- endif -%}
+    {%- if card_product.featured_media -%}
+      <img
+        src="{{ card_product.featured_media.preview_image | image_url: width: 900 }}"
+        alt="{{ card_product.featured_media.alt | default: card_product.title | escape }}"
+        width="450"
+        height="450"
+        loading="lazy"
+        decoding="async"
+      >
+    {%- else -%}
+      <span class="vh-cat-card__placeholder">{{ card_product.title | slice: 0, 1 }}</span>
+    {%- endif -%}
+  </a>
+
+  <div class="vh-cat-card__body">
+    <h3 class="vh-cat-card__title">
+      <a href="{{ card_product.url }}">{{ card_product.title }}</a>
+    </h3>
+
+    <p class="vh-cat-card__price">{{ card_product.price | money }}</p>
+
+    {%- if card_style == 'pack' and save_cents > 0 -%}
+      <p class="vh-cat-card__save">Ušetříte {{ save_cents | money }}</p>
+    {%- endif -%}
+
+    {%- if card_style == 'hero' -%}
+      {% form 'product', card_product, class: 'vh-cat-card__form' %}
+        <input type="hidden" name="id" value="{{ variant.id }}">
+        <button
+          class="vh-cat-card__atc"
+          type="submit"
+          {% unless card_product.available %}disabled{% endunless %}
+        >
+          {%- if card_product.available -%}Přidat do košíku{%- else -%}Vyprodáno{%- endif -%}
+        </button>
+      {% endform %}
+
+      {%- if upsell_product != blank -%}
+        <a class="vh-cat-card__upsell" href="{{ upsell_product.url }}">
+          {{ upsell_label | default: upsell_product.title }}
+        </a>
+      {%- elsif upsell_label != blank -%}
+        <p class="vh-cat-card__upsell vh-cat-card__upsell--static">{{ upsell_label }}</p>
+      {%- endif -%}
+    {%- endif -%}
+    </div>
+  </article>
+{%- endif -%}

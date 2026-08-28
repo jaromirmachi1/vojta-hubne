@@ -26,11 +26,14 @@ Before `</body>` (after theme scripts):
 
 Do **not** use `| script_tag` here — Theme Check flags it as parser-blocking (red error in the editor). `defer` is correct for this script.
 
-This asset now handles two collection-page behaviors:
+This asset now handles collection-page behaviors:
 
 - resets Horizon product-card media after back/forward navigation
 - adds the premium category cells on `/collections/all`
 - highlights products tagged `VH_CLUB` / `vh-club` (gold border + „Jen pro členy VH Clubu“)
+- places those chips **under** the catalog cards from `vojta-hubne-collection-catalog.liquid`
+
+Catalog structure (gold situation cards on **`/collections`**, not `/collections/all`): see **[COLLECTION-INTEGRATION.md](./COLLECTION-INTEGRATION.md)**. You do not need to export Liquid from Shopify.
 
 **Verify the JS loaded:** on `/collections/all`, open DevTools → Network → filter `collection-media-fix`. If missing, the asset file is not uploaded or the script tag is missing.
 
@@ -113,7 +116,7 @@ Horizon menu blocks are hidden by CSS; nav comes from the snippet.
 If you keep Horizon’s menu for mobile drawer, set in **Navigation → Main menu**:
 
 - **Domů** → `https://www.vojtahubne.cz/homepage` (custom URL)
-- **Katalog** → `/collections/all` (on shop domain)
+- **Katalog** → `/collections` (on shop domain)
 
 Custom snippet desktop nav already matches React: Produkty, Blog, Proč my, Co chystáme, Kontakt.
 
@@ -126,7 +129,7 @@ Use two different “home” targets:
 | User intent | URL |
 |-------------|-----|
 | Brand / story (logo, “Domů”) | `https://www.vojtahubne.cz/homepage` |
-| Shopping / catalog (shop root, “Pokračovat v nákupu”) | `https://shop.vojtahubne.cz/collections/all?sort_by=best-selling` |
+| Shopping / catalog (shop root, “Pokračovat v nákupu”) | `https://shop.vojtahubne.cz/collections` |
 
 ### Default catalog sort = most ordered (best-selling)
 
@@ -155,7 +158,7 @@ Shopify Admin → **Online Store → Navigation → URL redirects** → Add:
 
 | From | To |
 |------|-----|
-| `/` | `/collections/all?sort_by=best-selling` |
+| `/` | `/collections` |
 
 **Option 2 — Theme snippet**
 
@@ -180,7 +183,7 @@ Checkout is separate from the theme. Theme CSS/Liquid does not control checkout 
 **Navigation → Main menu:**
 
 - **Domů** → `https://www.vojtahubne.cz/homepage`
-- **Katalog** → `/collections/all`
+- **Katalog** → `/collections`
 - **Blog** → `/blogs/blog`
 
 ### D. Facebook in-app browser — blue bar then blank black cart

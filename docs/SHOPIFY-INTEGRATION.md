@@ -54,7 +54,7 @@ Notes:
 Optional:
 
 ```env
-VITE_SHOPIFY_CATALOG_PATH=/collections/all
+VITE_SHOPIFY_CATALOG_PATH=/collections
 ```
 
 After `shop.vojtahubne.cz` is definitely connected to Shopify and removed from Vercel domains, set:
