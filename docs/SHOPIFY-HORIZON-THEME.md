@@ -209,11 +209,12 @@ Keeps one brand journey: marketing site ↔ shop.
 
 ### Step 7 — Footer content
 
-In **Customize → Footer**, keep the newsletter block but replace the default English copy:
+In **Customize → Footer**, keep the Horizon **Email signup** block. Copy is rewritten to match React `SiteFooter`:
 
-- Heading: `Přidej se k Vojta Hubne`
-- Text: `Nové produkty, akce a praktické tipy pro transformaci těla přímo do e-mailu.`
-- Newsletter placeholder: `E-mailová adresa`
+- Heading: `Buďte u toho s námi`
+- Text: `Tipy, novinky, nové produkty, zákulisí vývoje a občas Karel z expedice. Bez každodenního spamu.`
+- Placeholder: `E-mailová adresa`
+- Button: `Chci novinky`
 
 In **Settings → Policies**, fill every policy that Shopify shows in the footer:
 

@@ -33,13 +33,14 @@
     <div class="vh-home__glow" aria-hidden="true"></div>
     <div class="vh-home__inner vh-home-hero__grid">
       <div class="vh-home-hero__content">
-        <p class="vh-home__eyebrow">Prémiová řada GLP-1</p>
+        <p class="vh-home__eyebrow vh-home-hero__eyebrow">Žádné tajné směsi. Složení, dávky a důvod, proč produkt vznikl.</p>
         <h1 class="vh-home-hero__title" id="vh-home-hero-title">
           Transformace, která má váhu
         </h1>
         <p class="vh-home-hero__lead">
-          Vojta Hubne — značka postavená na reálné cestě z 160&nbsp;kg na 99&nbsp;kg.
-          Doplňky stravy a regenerační péče navržené pro každodenní disciplínu.
+          Vojta Hubne vznikl z reálné cesty ze 160 na 99&nbsp;kg.
+          Tvoříme doplňky stravy, funkční výživu a péči o pokožku pro lidi,
+          kteří chtějí vědět, co přesně používají a proč.
         </p>
 
         <div class="vh-home-hero__stats">
@@ -54,8 +55,8 @@
         </div>
 
         <div class="vh-home-hero__actions">
-          <a class="vh-home__btn vh-home__btn--solid" href="#vh-home-produkty">Nejprodávanější</a>
-          <a class="vh-home__btn vh-home__btn--outline" href="/collections">Nakupovat v e-shopu</a>
+          <a class="vh-home__btn vh-home__btn--solid" href="/collections#vh-catalog-bundles-title">Vybrat podle toho, co řeším</a>
+          <a class="vh-home__btn vh-home__btn--outline" href="/collections">Prohlednout produkty</a>
         </div>
 
         <button
@@ -458,6 +459,12 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+  }
+
+  .vh-home-hero__eyebrow {
+    max-width: 32rem;
+    letter-spacing: 0.12em;
+    line-height: 1.7;
   }
 
   .vh-home-hero__title {

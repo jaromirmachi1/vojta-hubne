@@ -155,14 +155,20 @@ function getJudgeMeConfig(): { apiToken: string; shopDomain: string } | null {
   return { apiToken, shopDomain }
 }
 
-async function fetchJudgeMeReviews(config: {
-  apiToken: string
-  shopDomain: string
-}): Promise<PublicReview[]> {
+async function fetchJudgeMeReviews(
+  config: {
+    apiToken: string
+    shopDomain: string
+  },
+  options: { limit?: number; perPage?: number } = {},
+): Promise<PublicReview[]> {
+  const limit = options.limit ?? REVIEW_LIMIT
+  const perPage = options.perPage ?? 50
+
   const url = new URL(JUDGEME_REVIEWS_URL)
   url.searchParams.set('shop_domain', config.shopDomain)
   url.searchParams.set('api_token', config.apiToken)
-  url.searchParams.set('per_page', '50')
+  url.searchParams.set('per_page', String(perPage))
   url.searchParams.set('page', '1')
 
   const response = await fetch(url, {
@@ -186,7 +192,36 @@ async function fetchJudgeMeReviews(config: {
       const secondDate = second.createdAt ? Date.parse(second.createdAt) : 0
       return secondDate - firstDate
     })
-    .slice(0, REVIEW_LIMIT)
+    .slice(0, limit)
+}
+
+function buildProductStats(reviews: PublicReview[]) {
+  const grouped = new Map<string, { totalRating: number; count: number }>()
+
+  for (const review of reviews) {
+    if (!review.productHandle) continue
+
+    const current = grouped.get(review.productHandle) ?? {
+      totalRating: 0,
+      count: 0,
+    }
+
+    grouped.set(review.productHandle, {
+      totalRating: current.totalRating + review.rating,
+      count: current.count + 1,
+    })
+  }
+
+  const stats: Record<string, { count: number; averageRating: number }> = {}
+
+  for (const [handle, value] of grouped) {
+    stats[handle] = {
+      count: value.count,
+      averageRating: value.totalRating / value.count,
+    }
+  }
+
+  return stats
 }
 
 export default async function handler(
@@ -209,6 +244,23 @@ export default async function handler(
   }
 
   try {
+    const requestUrl = new URL(request.url ?? '/', 'http://localhost')
+    const statsMode = requestUrl.searchParams.get('stats') === '1'
+
+    if (statsMode) {
+      const reviews = await fetchJudgeMeReviews(config, {
+        limit: 250,
+        perPage: 250,
+      })
+
+      response.setHeader(
+        'Cache-Control',
+        'public, s-maxage=900, stale-while-revalidate=86400',
+      )
+      sendJson(response, 200, { ok: true, stats: buildProductStats(reviews) })
+      return
+    }
+
     const reviews = await fetchJudgeMeReviews(config)
 
     response.setHeader(

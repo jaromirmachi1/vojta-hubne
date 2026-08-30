@@ -1,15 +1,23 @@
 import { useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
-import { RegimeQuizProductCard } from "../../components/RegimeQuizProductCard";
+import { CareStyleProductCard } from "../../components/CareStyleProductCard";
 import { useRegimeQuiz } from "../../contexts/RegimeQuizContext";
-import { ALT_SECTION_IDS } from "../../data/altHomepage";
+import { ALT_SECTION_IDS, customerPaths } from "../../data/altHomepage";
+import { theme } from "../../styles/theme";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+import { useProductReviewStats } from "../../hooks/useProductReviewStats";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { useShopifyCollectionProducts } from "../../hooks/useShopifyCollectionProducts";
+import { scrollToSection } from "../../utils/scrollToSection";
 import { getShopifyCollectionUrl } from "../../utils/shopify";
 import { Reveal } from "./motion";
 import { ProblemsSection, REGIME_QUIZ_PRODUCTS_ID } from "./ProblemsSection";
 import { AltInner, AltSection, GhostButton } from "./shared";
+
+type RegimeQuizSectionProps = {
+  showProblems?: boolean;
+};
 
 const Panel = styled.div`
   width: 100%;
@@ -44,10 +52,13 @@ const Subtitle = styled.p`
 `;
 
 const Grid = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 0.85rem;
+  width: 100%;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -61,12 +72,24 @@ const Grid = styled.div`
   }
 `;
 
+const GoalGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  min-width: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: contents;
+  }
+`;
+
 const GoalCard = styled.button<{ $selected: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 0.85rem;
-  min-height: 100%;
+  width: 100%;
   padding: clamp(1.15rem, 2.5vw, 1.35rem);
   text-align: left;
   cursor: pointer;
@@ -82,6 +105,10 @@ const GoalCard = styled.button<{ $selected: boolean }>`
     border-color 0.2s ease,
     background 0.2s ease,
     box-shadow 0.2s ease;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    min-height: 100%;
+  }
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.border};
@@ -126,10 +153,27 @@ const ProductsWrap = styled(motion.div)`
   overflow: hidden;
 `;
 
+const InlineProductsWrap = styled.div`
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding-bottom: 0.35rem;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    display: none;
+  }
+`;
+
+const DesktopProductsWrap = styled(ProductsWrap)``;
+
 const ProductsInner = styled.div`
   padding-top: clamp(1.75rem, 4vw, 2.5rem);
   border-top: 1px solid ${({ theme }) => theme.colors.borderSubtle};
   margin-top: clamp(1.75rem, 4vw, 2.25rem);
+`;
+
+const InlineProductsInner = styled.div`
+  padding-top: 0.15rem;
 `;
 
 const ProductsHeader = styled.div`
@@ -152,11 +196,12 @@ const ProductsTitle = styled.h3`
 
 const ProductsGrid = styled.div`
   display: grid;
-  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
   align-items: stretch;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
@@ -170,6 +215,61 @@ const StatusText = styled.p`
   line-height: 1.65;
   color: ${({ theme }) => theme.colors.textMuted};
 `;
+
+const REGIME_QUIZ_PRODUCTS_DESKTOP_ID = `${REGIME_QUIZ_PRODUCTS_ID}-desktop`;
+
+type CustomerPath = (typeof customerPaths)[number];
+
+type RegimeQuizProductsPanelProps = {
+  selectedPath: CustomerPath;
+  collection: ReturnType<typeof useShopifyCollectionProducts>["collection"];
+  loading: boolean;
+  error: string | null;
+  collectionUrl: string | null;
+  reviewStatsByHandle: ReturnType<typeof useProductReviewStats>;
+  inner: typeof ProductsInner | typeof InlineProductsInner;
+  id?: string;
+};
+
+function RegimeQuizProductsPanel({
+  selectedPath,
+  collection,
+  loading,
+  error,
+  collectionUrl,
+  reviewStatsByHandle,
+  inner: Inner,
+  id,
+}: RegimeQuizProductsPanelProps) {
+  return (
+    <Inner id={id}>
+      <ProductsHeader>
+        <ProductsTitle>{selectedPath.headline}</ProductsTitle>
+        {collectionUrl ? (
+          <GhostButton href={collectionUrl}>Celá kolekce →</GhostButton>
+        ) : null}
+      </ProductsHeader>
+
+      {loading ? (
+        <StatusText>Načítám doporučené produkty…</StatusText>
+      ) : error ? (
+        <StatusText>{error}</StatusText>
+      ) : collection && collection.products.length > 0 ? (
+        <ProductsGrid>
+          {collection.products.map((product) => (
+            <CareStyleProductCard
+              key={product.handle}
+              product={product}
+              reviewStats={reviewStatsByHandle.get(product.handle)}
+            />
+          ))}
+        </ProductsGrid>
+      ) : (
+        <StatusText>V této kolekci zatím nejsou žádné produkty.</StatusText>
+      )}
+    </Inner>
+  );
+}
 
 function GoalIcon({ pathId }: { pathId: string }) {
   switch (pathId) {
@@ -250,8 +350,12 @@ function GoalIcon({ pathId }: { pathId: string }) {
   }
 }
 
-export function RegimeQuizSection() {
+export function RegimeQuizSection({
+  showProblems = true,
+}: RegimeQuizSectionProps) {
+  const isTabletUp = useMediaQuery(`(min-width: ${theme.breakpoints.tablet})`);
   const reducedMotion = useReducedMotion();
+  const reviewStatsByHandle = useProductReviewStats();
   const { selectedId, togglePath, paths: customerPaths } = useRegimeQuiz();
 
   const selectedPath = useMemo(
@@ -268,10 +372,23 @@ export function RegimeQuizSection() {
     : null;
 
   const handleSelect = (pathId: string) => {
+    const willSelect = selectedId !== pathId;
     togglePath(pathId);
+
+    if (willSelect) {
+      requestAnimationFrame(() => {
+        const isMobile = window.matchMedia(
+          `(max-width: calc(${theme.breakpoints.tablet} - 1px))`,
+        ).matches;
+
+        scrollToSection(
+          isMobile ? REGIME_QUIZ_PRODUCTS_ID : REGIME_QUIZ_PRODUCTS_DESKTOP_ID,
+        );
+      });
+    }
   };
 
-  const motionProps = reducedMotion
+  const desktopMotionProps = reducedMotion
     ? {}
     : {
         initial: { opacity: 0, height: 0 },
@@ -297,66 +414,66 @@ export function RegimeQuizSection() {
               {customerPaths.map((path) => {
                 const selected = selectedId === path.id;
                 return (
-                  <GoalCard
-                    key={path.id}
-                    type="button"
-                    role="listitem"
-                    $selected={selected}
-                    aria-pressed={selected}
-                    aria-expanded={selected}
-                    onClick={() => handleSelect(path.id)}
-                  >
-                    <IconWrap>
-                      <GoalIcon pathId={path.id} />
-                    </IconWrap>
-                    <CardTitle>{path.headline}</CardTitle>
-                    <CardText>{path.subtext}</CardText>
-                  </GoalCard>
+                  <GoalGroup key={path.id}>
+                    <GoalCard
+                      type="button"
+                      role="listitem"
+                      $selected={selected}
+                      aria-pressed={selected}
+                      aria-expanded={selected}
+                      onClick={() => handleSelect(path.id)}
+                    >
+                      <IconWrap>
+                        <GoalIcon pathId={path.id} />
+                      </IconWrap>
+                      <CardTitle>{path.headline}</CardTitle>
+                      <CardText>{path.subtext}</CardText>
+                    </GoalCard>
+
+                    {selectedId === path.id && selectedPath ? (
+                      <InlineProductsWrap key={selectedPath.id}>
+                        <RegimeQuizProductsPanel
+                          id={REGIME_QUIZ_PRODUCTS_ID}
+                          selectedPath={selectedPath}
+                          collection={collection}
+                          loading={loading}
+                          error={error}
+                          collectionUrl={collectionUrl}
+                          reviewStatsByHandle={reviewStatsByHandle}
+                          inner={InlineProductsInner}
+                        />
+                      </InlineProductsWrap>
+                    ) : null}
+                  </GoalGroup>
                 );
               })}
             </Grid>
 
-            <AnimatePresence initial={false}>
-              {selectedPath ? (
-                <ProductsWrap key={selectedPath.id} {...motionProps}>
-                  <ProductsInner id={REGIME_QUIZ_PRODUCTS_ID}>
-                    <ProductsHeader>
-                      <ProductsTitle>
-                        {collection?.title ?? selectedPath.headline}
-                      </ProductsTitle>
-                      {collectionUrl ? (
-                        <GhostButton href={collectionUrl}>
-                          Celá kolekce →
-                        </GhostButton>
-                      ) : null}
-                    </ProductsHeader>
-
-                    {loading ? (
-                      <StatusText>Načítám doporučené produkty…</StatusText>
-                    ) : error ? (
-                      <StatusText>{error}</StatusText>
-                    ) : collection && collection.products.length > 0 ? (
-                      <ProductsGrid>
-                        {collection.products.map((product) => (
-                          <RegimeQuizProductCard
-                            key={product.handle}
-                            product={product}
-                          />
-                        ))}
-                      </ProductsGrid>
-                    ) : (
-                      <StatusText>
-                        V této kolekci zatím nejsou žádné produkty.
-                      </StatusText>
-                    )}
-                  </ProductsInner>
-                </ProductsWrap>
-              ) : null}
-            </AnimatePresence>
+            {isTabletUp ? (
+              <AnimatePresence initial={false}>
+                {selectedPath ? (
+                  <DesktopProductsWrap
+                    key={selectedPath.id}
+                    {...desktopMotionProps}
+                  >
+                    <RegimeQuizProductsPanel
+                      id={REGIME_QUIZ_PRODUCTS_DESKTOP_ID}
+                      selectedPath={selectedPath}
+                      collection={collection}
+                      loading={loading}
+                      error={error}
+                      collectionUrl={collectionUrl}
+                      reviewStatsByHandle={reviewStatsByHandle}
+                      inner={ProductsInner}
+                    />
+                  </DesktopProductsWrap>
+                ) : null}
+              </AnimatePresence>
+            ) : null}
           </Panel>
         </Reveal>
 
-        <ProblemsSection />
+        {showProblems ? <ProblemsSection /> : null}
       </AltInner>
     </AltSection>
   );

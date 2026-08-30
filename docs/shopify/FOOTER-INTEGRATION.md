@@ -31,8 +31,8 @@ There is **no Custom Liquid** block in the footer — use **Edit code** instead.
 5. **Save**
 6. Hard refresh the shop (`Cmd+Shift+R`)
 
-The legal columns appear **inside** the footer grid, before the newsletter block.  
-Styling is in `vojta-hubne-horizon.css` (`.vh-footer-legal`).
+The legal columns and newsletter appear **inside** the footer grid as one block (`vh-footer-top`), matching React.  
+Horizon **Email signup** is hidden automatically — you can delete it from Customize or leave it.
 
 ---
 
@@ -77,7 +77,16 @@ Use premade blocks only — layout won’t match React exactly:
    - Reklamace → Shopify refund policy URL
    - Zásady ochrany osobních údajů → `/pages/zasady-ochrany-osobnich-udaju`
    - Zásady používání cookies → `/pages/zasady-pouzivani-cookies`
-3. Keep **Email signup** block for newsletter (React doesn’t have this — optional on shop)
+3. Keep **Email signup** block for newsletter
+
+**Newsletter copy (same as React — snippet rewrites Horizon text):**
+
+| Field | Text |
+|-------|------|
+| Heading | `Buďte u toho s námi` |
+| Text | `Tipy, novinky, nové produkty, zákulisí vývoje a občas Karel z expedice. Bez každodenního spamu.` |
+| Placeholder | `E-mailová adresa` |
+| Button | `Chci novinky` |
 
 ---
 
@@ -98,7 +107,7 @@ Use premade blocks only — layout won’t match React exactly:
 |-------|---------|
 | Kontaktní informace (vč. DIČ + nejsem plátce DPH) | Left column in snippet |
 | Důležité informace | Right column in snippet |
-| Newsletter jako 3. sloupec | Horizon Email signup block (styled by CSS) |
+| Newsletter jako 3. sloupec | Horizon Email signup block (copy rewritten to match React) |
 | © Vojta Hubne · RM Solution | Footer utilities (CSS override) |
 | Socials + payment icons (bottom right) | Utilities: Social Links + Payment Icons blocks |
 | Country + © (bottom left) | Utilities: localization + copyright blocks |

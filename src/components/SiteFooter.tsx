@@ -128,15 +128,20 @@ const NewsletterButton = styled.button`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 2.75rem;
+  min-width: 2.75rem;
   height: 2.75rem;
+  padding: 0 1rem;
   border: 1px solid ${({ theme }) => theme.colors.gold};
   border-radius: ${({ theme }) => theme.radii.pill};
   background: ${({ theme }) => theme.colors.gold};
   color: ${({ theme }) => theme.colors.black};
-  font-size: 1.15rem;
-  font-weight: 700;
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
   line-height: 1;
+  white-space: nowrap;
   cursor: pointer;
   box-shadow: 0 0 18px rgba(238, 220, 130, 0.28);
   transition:
@@ -352,9 +357,10 @@ export function SiteFooter({ id }: SiteFooterProps) {
         </Column>
 
         <NewsletterColumn>
-          <ColumnTitle>Přihlaste se k odběru našeho newsletteru</ColumnTitle>
+          <ColumnTitle>Buďte u toho s námi</ColumnTitle>
           <NewsletterText>
-            Nejnovější zprávy a upozornění zasílané do vaší schránky.
+            Tipy, novinky, nové produkty, zákulisí vývoje a občas Karel z expedice.
+            Bez každodenního spamu.
           </NewsletterText>
           <NewsletterForm
             action="/api/newsletter"
@@ -365,8 +371,8 @@ export function SiteFooter({ id }: SiteFooterProps) {
               type="email"
               name="email"
               autoComplete="email"
-              placeholder="E-mail"
-              aria-label="E-mail pro odběr newsletteru"
+              placeholder="E-mailová adresa"
+              aria-label="E-mailová adresa"
               value={newsletterEmail}
               onChange={(event) => {
                 setNewsletterEmail(event.target.value)
@@ -376,10 +382,10 @@ export function SiteFooter({ id }: SiteFooterProps) {
             />
             <NewsletterButton
               type="submit"
-              aria-label="Odeslat e-mail"
+              aria-label="Chci novinky"
               disabled={newsletterStatus === 'loading'}
             >
-              →
+              Chci novinky
             </NewsletterButton>
           </NewsletterForm>
           {newsletterStatus === 'success' ? (

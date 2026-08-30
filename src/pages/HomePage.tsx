@@ -1,6 +1,7 @@
 import { useHashScroll } from '../hooks/useHashScroll'
 import { useJsonLd } from '../hooks/useJsonLd'
 import { usePageMeta } from '../hooks/usePageMeta'
+import { RegimeQuizProvider } from '../contexts/RegimeQuizContext'
 import { BenefitsSection } from '../sections/BenefitsSection'
 import { BestsellersSection } from '../sections/BestsellersSection'
 import { CategoryTeasersSection } from '../sections/CategoryTeasersSection'
@@ -10,6 +11,7 @@ import { HomeMobilePromoScroll } from '../sections/HomeMobilePromoScroll'
 import { NovinkyTeaserSection } from '../sections/NovinkyTeaserSection'
 import { ProductComparisonSection } from '../sections/ProductComparisonSection'
 import { ProductReviewsSection } from '../sections/ProductReviewsSection'
+import { RegimeQuizSection } from '../sections/alt/RegimeQuizSection'
 import { StorySection } from '../sections/StorySection'
 import { ShopLayout } from '../layouts/ShopLayout'
 import { homePageMeta } from '../seo/homePageMeta'
@@ -23,17 +25,20 @@ export function HomePage() {
 
   return (
     <ShopLayout>
-      <HomeHeroSection />
-      <HomeMobilePromoScroll />
-      <BestsellersSection />
-      <NovinkyTeaserSection />
-      <CoChystameTeaserSection />
-      <ProductReviewsSection />
-      <CategoryTeasersSection />
-      <StorySection />
-      <ProductComparisonSection />
-      <BenefitsSection />
-      <NewsletterPopup />
+      <RegimeQuizProvider>
+        <HomeHeroSection />
+        <HomeMobilePromoScroll />
+        <RegimeQuizSection showProblems={false} />
+        <BestsellersSection />
+        <NovinkyTeaserSection />
+        <CoChystameTeaserSection />
+        <ProductReviewsSection />
+        <CategoryTeasersSection />
+        <StorySection />
+        <ProductComparisonSection />
+        <BenefitsSection />
+        <NewsletterPopup />
+      </RegimeQuizProvider>
     </ShopLayout>
   )
 }

@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
+import { HashLink } from '../components/HashLink'
 import { LaunchBackground } from '../components/backgrounds/LaunchBackground'
 import { PageContainer } from '../components/PageContainer'
 import { PromoCodeCopyButton } from '../components/PromoCodeCopyButton'
 import { homeHeroPromos } from '../data/homeHeroPromos'
+import { ALT_SECTION_IDS } from '../data/altHomepage'
 import { eyebrowText } from '../styles/eyebrow'
-import { getShopifyCatalogUrl, getShopifyNovinkyUrl } from '../utils/shopify'
-
-const NOVINKY_URL = getShopifyNovinkyUrl()
+import { getShopifyCatalogUrl } from '../utils/shopify'
 
 const Section = styled.section`
   position: relative;
@@ -54,8 +54,10 @@ const Content = styled.div`
 
 const Eyebrow = styled.p`
   margin: 0;
+  max-width: 32rem;
   font-size: 0.7rem;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.12em;
+  line-height: 1.7;
   ${eyebrowText}
 `
 
@@ -113,18 +115,16 @@ const Actions = styled.div`
   padding-top: 0.55rem;
 `
 
-const PrimaryLink = styled.a`
-  position: relative;
+const PrimaryHashLink = styled(HashLink)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.55rem;
   box-sizing: border-box;
   min-height: 3.25rem;
-  padding: 0.85rem 1.35rem 0.85rem 1.15rem;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  padding: 0 1.75rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   text-decoration: none;
   color: ${({ theme }) => theme.colors.black};
@@ -135,73 +135,6 @@ const PrimaryLink = styled.a`
 
   &:hover {
     opacity: 0.92;
-  }
-`
-
-const CtaEyebrow = styled.span`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, -55%);
-  padding: 0.12rem 0.45rem;
-  font-size: 0.52rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.colors.gold};
-  background: ${({ theme }) => theme.colors.black};
-  border: 1px solid ${({ theme }) => theme.colors.goldMuted};
-  border-radius: ${({ theme }) => theme.radii.pill};
-  white-space: nowrap;
-`
-
-const CtaArrow = styled.span`
-  display: inline-flex;
-  width: 0.85rem;
-  height: 0.85rem;
-
-  svg {
-    width: 100%;
-    height: 100%;
-    stroke-width: 2;
-  }
-`
-
-const badgePulse = keyframes`
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.12); opacity: 0.85; }
-`
-
-const NotificationIcon = styled.span`
-  position: relative;
-  display: inline-flex;
-  width: 1.05rem;
-  height: 1.05rem;
-  flex-shrink: 0;
-
-  svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: -0.05rem;
-    right: -0.05rem;
-    width: 0.42rem;
-    height: 0.42rem;
-    border-radius: 50%;
-    background: #e11d2e;
-    border: 1.5px solid ${({ theme }) => theme.colors.gold};
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
-    animation: ${badgePulse} 2.4s ease-in-out infinite;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    &::after {
-      animation: none;
-    }
   }
 `
 
@@ -357,17 +290,6 @@ const NavButton = styled.button<{ $side: 'prev' | 'next' }>`
   }
 `
 
-function BellNotificationIcon() {
-  return (
-    <NotificationIcon aria-hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75">
-        <path d="M6.2 9.6a5.8 5.8 0 0 1 11.6 0c0 4.1 1.7 5.5 1.7 5.5H4.5s1.7-1.4 1.7-5.5" />
-        <path d="M10 18.2a2 2 0 0 0 4 0" />
-      </svg>
-    </NotificationIcon>
-  )
-}
-
 export function HomeHeroSection() {
   const catalogUrl = getShopifyCatalogUrl()
   const [index, setIndex] = useState(0)
@@ -381,12 +303,12 @@ export function HomeHeroSection() {
       <LaunchBackground />
       <Inner>
         <Content>
-          <Eyebrow>Prémiová řada GLP-1</Eyebrow>
+          <Eyebrow>Žádné tajné směsi. Složení, dávky a důvod, proč produkt vznikl.</Eyebrow>
           <Title>Transformace, která má váhu</Title>
           <Lead>
-            Vojta Hubne — značka postavená na reálné cestě z 160 kg na 99 kg.
-            Doplňky stravy a regenerační péče pro ty, kteří chtějí výsledky, ne
-            prázdné sliby.
+            Vojta Hubne vznikl z reálné cesty ze 160 na 99 kg. Tvoříme doplňky
+            stravy, funkční výživu a péči o pokožku pro lidi, kteří chtějí vědět,
+            co přesně používají a proč.
           </Lead>
           <Stats>
             <Stat>
@@ -399,18 +321,10 @@ export function HomeHeroSection() {
             </Stat>
           </Stats>
           <Actions>
-            <PrimaryLink href={NOVINKY_URL}>
-              <CtaEyebrow>Novinky</CtaEyebrow>
-              <BellNotificationIcon />
-              Nově QR Platby, nový košík a další...
-              <CtaArrow aria-hidden>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M5 12h14" />
-                  <path d="M13 6l6 6-6 6" />
-                </svg>
-              </CtaArrow>
-            </PrimaryLink>
-            <SecondaryLink href={catalogUrl}>Nakupovat v e-shopu</SecondaryLink>
+            <PrimaryHashLink sectionId={ALT_SECTION_IDS.regimeQuiz}>
+              Vybrat podle toho, co řeším
+            </PrimaryHashLink>
+            <SecondaryLink href={catalogUrl}>Prohlednout produkty</SecondaryLink>
           </Actions>
         </Content>
 

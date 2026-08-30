@@ -4,6 +4,7 @@ import { formatShopifyPrice } from './shopifyFormat'
 export type ShopifyProductListNode = {
   handle: string
   title: string
+  description?: string | null
   featuredImage: { url: string; altText: string | null } | null
   priceRange: {
     minVariantPrice: { amount: string; currencyCode: string }
