@@ -1,4 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { ScrollToTop } from './components/ScrollToTop'
 import { AlternativeHomePage } from './pages/AlternativeHomePage'
 import { AffiliatePage } from './pages/AffiliatePage'
 import { ContactPage } from './pages/ContactPage'
@@ -20,6 +21,7 @@ function LegacyHomepageRedirect() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/co-chystame" element={<CoChystamePage />} />

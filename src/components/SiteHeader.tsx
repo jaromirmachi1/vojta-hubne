@@ -166,7 +166,7 @@ export function SiteHeader() {
     { label: 'Novinky', href: novinkyUrl, external: true, emphasis: true },
     { label: 'Produkty', href: catalogUrl, external: true },
     { label: 'Blog', href: blogUrl, external: true },
-    { label: 'Proč my', sectionId: 'porovnani' },
+    { label: 'Proč my', sectionId: 'proc-my' },
     { label: 'Co chystáme', to: '/co-chystame' },
     { label: 'Spolupráce', to: '/spoluprace' },
     { label: 'Kontakt', to: '/kontakt' },
@@ -183,7 +183,7 @@ export function SiteHeader() {
           <NovinkyLink href={novinkyUrl}>Novinky</NovinkyLink>
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
           <ExternalNavLink href={blogUrl}>Blog</ExternalNavLink>
-          <StyledHashLink sectionId="porovnani">Proč my</StyledHashLink>
+          <StyledHashLink sectionId="proc-my">Proč my</StyledHashLink>
           <StyledNavLink to="/co-chystame">Co chystáme</StyledNavLink>
           <StyledNavLink to="/spoluprace">Spolupráce</StyledNavLink>
           <StyledNavLink to="/kontakt">Kontakt</StyledNavLink>

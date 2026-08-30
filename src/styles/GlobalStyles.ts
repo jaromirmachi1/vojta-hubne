@@ -42,8 +42,10 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   #produkty,
+  #proc-my,
   #porovnani,
-  #pribeh {
+  #pribeh,
+  #recenze {
     scroll-margin-top: calc(
       ${({ theme }) => theme.layout.promoBarHeight} +
         ${({ theme }) => theme.layout.headerHeight} + 0.5rem

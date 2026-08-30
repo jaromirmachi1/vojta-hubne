@@ -3,10 +3,13 @@ import { useJsonLd } from '../hooks/useJsonLd'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { RegimeQuizProvider } from '../contexts/RegimeQuizContext'
 import { BenefitsSection } from '../sections/BenefitsSection'
+import { CoVhNedelaSection } from '../sections/CoVhNedelaSection'
+import { SupplementChecklistSection } from '../sections/SupplementChecklistSection'
 import { BestsellersSection } from '../sections/BestsellersSection'
-import { CategoryTeasersSection } from '../sections/CategoryTeasersSection'
+import { CuratedProductsSection } from '../sections/CuratedProductsSection'
 import { CoChystameTeaserSection } from '../sections/CoChystameTeaserSection'
 import { HomeHeroSection } from '../sections/HomeHeroSection'
+import { MenShopHereSection } from '../sections/MenShopHereSection'
 import { HomeMobilePromoScroll } from '../sections/HomeMobilePromoScroll'
 import { NovinkyTeaserSection } from '../sections/NovinkyTeaserSection'
 import { ProductComparisonSection } from '../sections/ProductComparisonSection'
@@ -30,13 +33,16 @@ export function HomePage() {
         <HomeMobilePromoScroll />
         <RegimeQuizSection showProblems={false} />
         <BestsellersSection />
+        <CuratedProductsSection />
         <NovinkyTeaserSection />
         <CoChystameTeaserSection />
         <ProductReviewsSection />
-        <CategoryTeasersSection />
         <StorySection />
+        <SupplementChecklistSection />
         <ProductComparisonSection />
         <BenefitsSection />
+        <CoVhNedelaSection />
+        <MenShopHereSection />
         <NewsletterPopup />
       </RegimeQuizProvider>
     </ShopLayout>

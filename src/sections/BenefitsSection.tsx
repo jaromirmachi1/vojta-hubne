@@ -87,7 +87,7 @@ const CardText = styled.p`
 
 export function BenefitsSection() {
   return (
-    <Section>
+    <Section id="proc-my">
       <Inner>
         <Header>
           <Eyebrow>Proč Vojta Hubne</Eyebrow>
