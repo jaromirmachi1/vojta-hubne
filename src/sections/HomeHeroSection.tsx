@@ -210,6 +210,19 @@ const PromoFrame = styled.div`
   aspect-ratio: 3 / 2;
 `
 
+const PromoImageLink = styled.a`
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.gold};
+    outline-offset: 2px;
+  }
+`
+
 const PromoImage = styled.img`
   display: block;
   width: 100%;
@@ -332,21 +345,33 @@ export function HomeHeroSection() {
           <PromoStage>
             <PromoViewport>
               <PromoTrack $index={index}>
-                {homeHeroPromos.map((promo, promoIndex) => (
-                  <PromoSlide key={promo.id}>
-                    <PromoFrame>
-                      <PromoImage
-                        src={promo.image}
-                        alt={promo.alt}
-                        width={promo.width}
-                        height={promo.height}
-                        fetchPriority={promoIndex === 0 ? 'high' : undefined}
-                        loading={promoIndex === 0 ? 'eager' : 'lazy'}
-                        decoding="async"
-                      />
-                    </PromoFrame>
-                  </PromoSlide>
-                ))}
+                {homeHeroPromos.map((promo, promoIndex) => {
+                  const image = (
+                    <PromoImage
+                      src={promo.image}
+                      alt={promo.alt}
+                      width={promo.width}
+                      height={promo.height}
+                      fetchPriority={promoIndex === 0 ? 'high' : undefined}
+                      loading={promoIndex === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
+                    />
+                  )
+
+                  return (
+                    <PromoSlide key={promo.id}>
+                      <PromoFrame>
+                        {promo.ctaMode === 'image-link' ? (
+                          <PromoImageLink href={promo.href} aria-label={promo.alt}>
+                            {image}
+                          </PromoImageLink>
+                        ) : (
+                          image
+                        )}
+                      </PromoFrame>
+                    </PromoSlide>
+                  )
+                })}
               </PromoTrack>
             </PromoViewport>
 
@@ -380,11 +405,11 @@ export function HomeHeroSection() {
 
           {homeHeroPromos[index]?.ctaMode === 'copy-code' ? (
             <PromoCodeCopyButton />
-          ) : (
+          ) : homeHeroPromos[index]?.ctaMode === 'link' ? (
             <PromoCta href={homeHeroPromos[index]?.href ?? '#'}>
               {homeHeroPromos[index]?.ctaLabel}
             </PromoCta>
-          )}
+          ) : null}
         </PromoPanel>
       </Inner>
     </Section>

@@ -47,11 +47,14 @@ Do **not** put care content into the catalog file.
 
 5. Re-upload **`vojta-hubne-horizon.css`**
 
-6. Hard-refresh `/collections`
+6. **Theme → Assets** — upload **`vh-catalog-novinky-banner.jpg`** and **`vh-catalog-novinky-banner-mobil.png`** from `src/assets/` (or `docs/shopify/assets/`)
+
+7. Hard-refresh `/collections`
 
 ## What you should see
 
-1. Vaše nejoblíbenější produkty (GLP-1 Support, Lean Shake, D3 + K2 + Vápník)
+0. **Nové produkty** promo banner (Lean Shake Višeň v čokoládě + Kreatin HMB)
+1. Vaše nejoblíbenější produkty — **4 compact tiles** (GLP-1 Support, Lean Shake, Kreatin + HMB, D3 + K2 + Vápník), same style as Péče a doplňky: **2 per row mobile, 4 desktop**
 2. Trust bar
 3. **Balíčky** — real Shopify products with type **Balíčky**, same cards as heroes
 4. **Péče a doplňky** (own product grid underneath)
@@ -60,5 +63,6 @@ Do **not** put care content into the catalog file.
 ## Snippets needed
 
 - `vojta-hubne-product-benefits.liquid` (trust bar)
-- `vojta-hubne-hero-card.liquid` (hero + bundle product cards with quick add)
-- `vojta-hubne-quick-add.liquid` (fast add-to-cart on Péče tiles)
+- `vojta-hubne-care-product-card.liquid` (favorites + péče product tiles)
+- `vojta-hubne-hero-card.liquid` (bundle product cards with quick add)
+- `vojta-hubne-quick-add.liquid` (fast add-to-cart on compact tiles)

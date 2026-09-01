@@ -78,18 +78,6 @@ export const coChystameProjects: CoChystameProject[] = [
     updatedAt: '20. 7. 2026',
   },
   {
-    id: 'kreatin',
-    category: 'Připravujeme',
-    status: 'Ve vývoji – ladíme finální podobu',
-    title: 'Kreatin',
-    kicker: 'Síla. Výkon. Udržení aktivního režimu.',
-    excerpt:
-      'Vlastní kreatin jako přirozená součást programu Vojta Hubne — jednoduché dávkování, dobrá rozpustnost a použití pro každého.',
-    progress: 95,
-    phase: 'Aktivně ladíme a testujeme recepturu',
-    updatedAt: '20. 7. 2026',
-  },
-  {
     id: 'probiotika',
     category: 'Připravujeme',
     status: 'Ve vývoji – ladíme finální podobu',
@@ -100,18 +88,6 @@ export const coChystameProjects: CoChystameProject[] = [
     progress: 60,
     phase: 'Aktivně ladíme a testujeme recepturu',
     updatedAt: '20. 7. 2026',
-  },
-  {
-    id: 'flavor',
-    category: 'Komunita',
-    status: 'Ve vývoji',
-    title: 'Nová příchuť Lean Shake',
-    kicker: 'Komunita rozhodla',
-    excerpt:
-      'Hlasování skončilo. Do výroby jdou Višeň v čokoládě a Čokoláda — dvě příchutě, které získaly nejvíc hlasů.',
-    progress: 95,
-    phase: 'Ladíme finální recepturu a výrobu',
-    updatedAt: '4. 8. 2026',
   },
   {
     id: 'xxl',
@@ -138,18 +114,6 @@ export const coChystameProjects: CoChystameProject[] = [
     updatedAt: '20. 7. 2026',
   },
   {
-    id: 'affiliate',
-    category: 'Komunita',
-    status: 'Připravujeme pravidla',
-    title: 'Affiliate program',
-    kicker: 'Doporučení ze zkušenosti',
-    excerpt:
-      'Tři úrovně spolupráce pro aktivní zákazníky a tvůrce, kteří značku znají a chtějí ji autenticky doporučovat.',
-    progress: 95,
-    phase: 'Finalizujeme podmínky',
-    updatedAt: '20. 7. 2026',
-  },
-  {
     id: 'lab',
     category: 'Vojta Lab',
     status: 'Vzniká komunita',
@@ -172,6 +136,42 @@ export const coChystameProjects: CoChystameProject[] = [
     progress: 18,
     phase: 'Vyhodnocujeme zadání',
     updatedAt: '20. 7. 2026',
+  },
+  {
+    id: 'kreatin',
+    category: 'Připravujeme',
+    status: 'Dokončeno',
+    title: 'Kreatin',
+    kicker: 'Síla. Výkon. Udržení aktivního režimu.',
+    excerpt:
+      'Vlastní kreatin jako přirozená součást programu Vojta Hubne — jednoduché dávkování, dobrá rozpustnost a použití pro každého.',
+    progress: 100,
+    phase: 'V prodeji jako Kreatin + HMB',
+    updatedAt: '1. 9. 2026',
+  },
+  {
+    id: 'flavor',
+    category: 'Komunita',
+    status: 'Dokončeno',
+    title: 'Nová příchuť Lean Shake',
+    kicker: 'Komunita rozhodla',
+    excerpt:
+      'Hlasování skončilo. Do výroby jdou Višeň v čokoládě a Čokoláda — dvě příchutě, které získaly nejvíc hlasů.',
+    progress: 100,
+    phase: 'Višeň v čokoládě a Čokoláda v prodeji',
+    updatedAt: '1. 9. 2026',
+  },
+  {
+    id: 'affiliate',
+    category: 'Komunita',
+    status: 'Dokončeno',
+    title: 'Affiliate program',
+    kicker: 'Doporučení ze zkušenosti',
+    excerpt:
+      'Tři úrovně spolupráce pro aktivní zákazníky a tvůrce, kteří značku znají a chtějí ji autenticky doporučovat.',
+    progress: 100,
+    phase: 'Program spuštěn',
+    updatedAt: '1. 9. 2026',
   },
 ]
 

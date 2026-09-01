@@ -1,33 +1,31 @@
-import tisicataHeroPromoImage from '../assets/tisicata-hero-promo.png'
+import noveProduktyHeroPromoImage from '../assets/nove-produkty-hero-promo.jpg'
 import vhClubHeroPromoImage from '../assets/vh-club-hero-promo.jpg'
-import { getShopifyProductUrl, getShopifyStoreUrl } from '../utils/shopify'
+import { getShopifyCatalogUrl, getShopifyStoreUrl } from '../utils/shopify'
 
 export type HomeHeroPromo = {
   id: string
   image: string
   alt: string
-  ctaLabel: string
   href: string
-  /** Use gold CTA; restart uses copy-code style via separate button in UI when true */
-  ctaMode: 'link' | 'copy-code'
+  ctaLabel?: string
+  /** image-link = whole banner is clickable, no separate CTA button */
+  ctaMode: 'link' | 'copy-code' | 'image-link'
   width: number
   height: number
 }
-
-const TISICATA_PRODUCT_URL = `${getShopifyProductUrl('lean-shake-slany-karamel-aquamin-mg')}?variant=60361804480846`
 
 const VH_CLUB_BLOG_URL = `${getShopifyStoreUrl()}/blogs/blog/vitejte-ve-vh-clubu`
 
 export const homeHeroPromos: HomeHeroPromo[] = [
   {
-    id: 'tisicata',
-    image: tisicataHeroPromoImage,
-    alt: 'Tisící objednávka — děkovný set Slaný karamel + Aquamin Mg, jen 50 ks za 949 Kč.',
-    ctaLabel: 'Nakoupit balíček',
-    href: TISICATA_PRODUCT_URL,
+    id: 'nove-produkty',
+    image: noveProduktyHeroPromoImage,
+    alt: 'Nové produkty — Lean Shake Višeň v čokoládě a Kreatin HMB. Splnili jsme slib.',
+    href: getShopifyCatalogUrl(),
+    ctaLabel: 'Podívejte se na novinky',
     ctaMode: 'link',
     width: 1024,
-    height: 768,
+    height: 674,
   },
   {
     id: 'vh-club',

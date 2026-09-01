@@ -1,0 +1,69 @@
+{% comment %}
+  Compact care-style product tile (Péče a doplňky grid).
+
+  @param product {Product} required
+  @param section_id {String} required
+  @param form_prefix {String} required — unique quick-add id prefix
+  @param fallback_desc {String} optional — used when Shopify description is empty
+  @param image_loading {String} optional — eager | lazy (default lazy)
+{% endcomment %}
+
+{%- liquid
+  assign vh_desc = fallback_desc | default: ''
+  assign vh_shop_desc = product.description | strip_html | strip
+  if vh_shop_desc != blank and vh_shop_desc.size > 12
+    assign vh_desc = vh_shop_desc | truncate: 110
+  endif
+  assign vh_image_loading = image_loading | default: 'lazy'
+-%}
+
+<li class="vh-care__item" role="listitem">
+  <article class="vh-care-card">
+    <div class="vh-care-card__media">
+      <a
+        class="vh-care-card__media-link"
+        href="{{ product.url }}"
+        aria-label="{{ product.title | escape }} — zobrazit produkt"
+        tabindex="-1"
+      >
+        {%- if product.featured_media -%}
+          <img
+            class="vh-care-card__image"
+            src="{{ product.featured_media.preview_image | image_url: width: 720 }}"
+            alt="{{ product.featured_media.alt | default: product.title | escape }}"
+            width="360"
+            height="360"
+            loading="{{ vh_image_loading }}"
+            decoding="async"
+          >
+        {%- endif -%}
+      </a>
+
+      {% render 'vojta-hubne-quick-add',
+        product: product,
+        section_id: section_id,
+        form_prefix: form_prefix
+      %}
+    </div>
+
+    <div class="vh-care-card__body">
+      <a
+        class="vh-care-card__link"
+        href="{{ product.url }}"
+        aria-label="{{ product.title | escape }}"
+      >
+        <h3 class="vh-care-card__name">{{ product.title }}</h3>
+        {%- if vh_desc != blank -%}
+          <p class="vh-care-card__desc">{{ vh_desc }}</p>
+        {%- endif -%}
+        <p class="vh-care-card__price">{{ product.price | money }}</p>
+        <div
+          class="vh-care-card__rating jdgm-widget jdgm-preview-badge"
+          data-id="{{ product.id }}"
+        >
+          {{ product.metafields.judgeme.badge }}
+        </div>
+      </a>
+    </div>
+  </article>
+</li>

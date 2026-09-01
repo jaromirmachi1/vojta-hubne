@@ -28,7 +28,12 @@ export function CoChystamePage() {
         ? [...coChystameProjects]
         : coChystameProjects.filter((p) => p.category === activeCategory)
 
-    return projects.sort((a, b) => b.progress - a.progress)
+    return projects.sort((a, b) => {
+      const aCompleted = a.status === 'Dokončeno'
+      const bCompleted = b.status === 'Dokončeno'
+      if (aCompleted !== bCompleted) return aCompleted ? 1 : -1
+      return b.progress - a.progress
+    })
   }, [activeCategory])
 
   const selectedProject: CoChystameProject | null = useMemo(() => {

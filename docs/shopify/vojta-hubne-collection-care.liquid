@@ -6,7 +6,7 @@
 
   Setup:
   1. Sections → filename MUST be: vojta-hubne-collection-care.liquid
-  2. Snippets → vojta-hubne-quick-add.liquid
+  2. Snippets → vojta-hubne-care-product-card.liquid + vojta-hubne-quick-add.liquid
   3. Templates → list-collections.json type "vojta-hubne-collection-care"
   4. Re-upload vojta-hubne-horizon.css
 {% endcomment %}
@@ -46,61 +46,12 @@
         {%- endcase -%}
 
         {%- if vh_product != blank -%}
-          {%- assign vh_shop_desc = vh_product.description | strip_html | strip -%}
-          {%- if vh_shop_desc != blank and vh_shop_desc.size > 12 -%}
-            {%- assign vh_desc = vh_shop_desc | truncate: 110 -%}
-          {%- endif -%}
-
-          <li class="vh-care__item" role="listitem">
-            <article class="vh-care-card">
-              <div class="vh-care-card__media">
-                <a
-                  class="vh-care-card__media-link"
-                  href="{{ vh_product.url }}"
-                  aria-label="{{ vh_product.title | escape }} — zobrazit produkt"
-                  tabindex="-1"
-                >
-                  {%- if vh_product.featured_media -%}
-                    <img
-                      class="vh-care-card__image"
-                      src="{{ vh_product.featured_media.preview_image | image_url: width: 720 }}"
-                      alt="{{ vh_product.featured_media.alt | default: vh_product.title | escape }}"
-                      width="360"
-                      height="360"
-                      loading="lazy"
-                      decoding="async"
-                    >
-                  {%- endif -%}
-                </a>
-
-                {% render 'vojta-hubne-quick-add',
-                  product: vh_product,
-                  section_id: section.id,
-                  form_prefix: 'vh-care-quick-add'
-                %}
-              </div>
-
-              <div class="vh-care-card__body">
-                <a
-                  class="vh-care-card__link"
-                  href="{{ vh_product.url }}"
-                  aria-label="{{ vh_product.title | escape }}"
-                >
-                  <h3 class="vh-care-card__name">{{ vh_product.title }}</h3>
-                  {%- if vh_desc != blank -%}
-                    <p class="vh-care-card__desc">{{ vh_desc }}</p>
-                  {%- endif -%}
-                  <p class="vh-care-card__price">{{ vh_product.price | money }}</p>
-                  <div
-                    class="vh-care-card__rating jdgm-widget jdgm-preview-badge"
-                    data-id="{{ vh_product.id }}"
-                  >
-                    {{ vh_product.metafields.judgeme.badge }}
-                  </div>
-                </a>
-              </div>
-            </article>
-          </li>
+          {% render 'vojta-hubne-care-product-card',
+            product: vh_product,
+            section_id: section.id,
+            form_prefix: 'vh-care-quick-add',
+            fallback_desc: vh_desc
+          %}
         {%- endif -%}
       {%- endfor -%}
     </ul>

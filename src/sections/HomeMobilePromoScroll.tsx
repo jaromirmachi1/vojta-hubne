@@ -48,6 +48,19 @@ const Frame = styled.div`
   aspect-ratio: 3 / 2;
 `
 
+const ImageLink = styled.a`
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.gold};
+    outline-offset: 2px;
+  }
+`
+
 const Image = styled.img`
   display: block;
   width: 100%;
@@ -79,26 +92,38 @@ export function HomeMobilePromoScroll() {
   return (
     <Section aria-label="Aktuální akce">
       <Track>
-        {homeHeroPromos.map((promo, index) => (
-          <Card key={promo.id}>
-            <Frame>
-              <Image
-                src={promo.image}
-                alt={promo.alt}
-                width={promo.width}
-                height={promo.height}
-                fetchPriority={index === 0 ? 'high' : undefined}
-                loading={index === 0 ? 'eager' : 'lazy'}
-                decoding="async"
-              />
-            </Frame>
-            {promo.ctaMode === 'copy-code' ? (
-              <PromoCodeCopyButton />
-            ) : (
-              <BuyCta href={promo.href}>{promo.ctaLabel}</BuyCta>
-            )}
-          </Card>
-        ))}
+        {homeHeroPromos.map((promo, index) => {
+          const image = (
+            <Image
+              src={promo.image}
+              alt={promo.alt}
+              width={promo.width}
+              height={promo.height}
+              fetchPriority={index === 0 ? 'high' : undefined}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          )
+
+          return (
+            <Card key={promo.id}>
+              <Frame>
+                {promo.ctaMode === 'image-link' ? (
+                  <ImageLink href={promo.href} aria-label={promo.alt}>
+                    {image}
+                  </ImageLink>
+                ) : (
+                  image
+                )}
+              </Frame>
+              {promo.ctaMode === 'copy-code' ? (
+                <PromoCodeCopyButton />
+              ) : promo.ctaMode === 'link' ? (
+                <BuyCta href={promo.href}>{promo.ctaLabel}</BuyCta>
+              ) : null}
+            </Card>
+          )
+        })}
       </Track>
     </Section>
   )

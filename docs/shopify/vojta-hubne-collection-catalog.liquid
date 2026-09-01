@@ -6,9 +6,12 @@
   Setup:
   1. Sections → Add section → filename MUST be: vojta-hubne-collection-catalog.liquid
      (same name as this file)
-  2. Sections → Add vojta-hubne-collection-care.liquid (Péče grid underneath)
-  3. Templates → list-collections.json → paste docs/shopify/list-collections.json
-  4. Re-upload vojta-hubne-horizon.css
+  2. Theme assets: upload vh-catalog-novinky-banner.jpg + vh-catalog-novinky-banner-mobil.png
+     (from src/assets/ or docs/shopify/assets/)
+  3. Sections → Add vojta-hubne-collection-care.liquid (Péče grid underneath)
+  4. Snippets → vojta-hubne-care-product-card.liquid + vojta-hubne-quick-add.liquid
+  5. Templates → list-collections.json → paste docs/shopify/list-collections.json
+  6. Re-upload vojta-hubne-horizon.css
 
   See COLLECTION-INTEGRATION.md
 {% endcomment %}
@@ -26,51 +29,77 @@
   assign vh_hero_1 = all_products['glp1-support']
   assign vh_hero_2 = all_products['lean-shake-glp-1']
   assign vh_hero_3 = all_products['kreatin-hmb']
+  assign vh_hero_4 = all_products['d3-k2-vapnik']
   assign vh_all_collection = collections.all
+  assign vh_novinky_banner = 'vh-catalog-novinky-banner.jpg' | asset_url
+  assign vh_novinky_banner_mobil = 'vh-catalog-novinky-banner-mobil.png' | asset_url
 %}
 
 <section class="vh-catalog" aria-label="Katalog">
   <div class="vh-catalog__content">
-    {%- if vh_hero_1 != blank or vh_hero_2 != blank or vh_hero_3 != blank -%}
+    <div class="vh-catalog__promo-banner">
+      <picture>
+        <source
+          media="(max-width: 749px)"
+          srcset="{{ vh_novinky_banner_mobil }}"
+        >
+        <img
+          class="vh-catalog__promo-banner-image"
+          src="{{ vh_novinky_banner }}"
+          alt="Nové produkty Vojta Hubne: Lean Shake Višeň v čokoládě a Kreatin HMB"
+          width="1024"
+          height="295"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        >
+      </picture>
+    </div>
+
+    {%- if vh_hero_1 != blank or vh_hero_2 != blank or vh_hero_3 != blank or vh_hero_4 != blank -%}
       <div class="vh-catalog__block vh-catalog__block--heroes" aria-labelledby="vh-catalog-heroes-title">
-        <header class="vh-catalog__header">
-          <h1 class="vh-catalog__title" id="vh-catalog-heroes-title">Vaše nejoblíbenější produkty</h1>
+        <header class="vh-care__header">
+          <h1 class="vh-care__title" id="vh-catalog-heroes-title">Vaše nejoblíbenější produkty</h1>
         </header>
 
-        <div class="vh-hero-cards vh-hero-cards--heroes" role="list">
+        <ul class="vh-care__grid" role="list">
           {%- if vh_hero_1 != blank -%}
-            {% render 'vojta-hubne-hero-card',
+            {% render 'vojta-hubne-care-product-card',
               product: vh_hero_1,
               section_id: section.id,
-              category: 'Doplňky stravy',
-              tagline: 'Energie · Spalování · Kontrola chuti',
-              description: 'Komplex s Carolean®, berberinem, gymnemou a kreatinem pro podporu sytosti, metabolismu a energie.',
+              form_prefix: 'vh-heroes-quick-add',
+              fallback_desc: 'Komplex s Carolean®, berberinem, gymnemou a kreatinem pro podporu sytosti, metabolismu a energie.',
               image_loading: 'eager'
             %}
           {%- endif -%}
 
           {%- if vh_hero_2 != blank -%}
-            {% render 'vojta-hubne-hero-card',
+            {% render 'vojta-hubne-care-product-card',
               product: vh_hero_2,
               section_id: section.id,
-              category: 'Proteiny & shaky',
-              tagline: 'Sytost · Kontrola · Výsledky',
-              description: 'Proteinový shake s CaroLean®, VinOgrape® a vitamíny. 22 g bílkovin v jedné dávce pro každodenní kontrolu váhy.',
-              image_loading: 'lazy'
+              form_prefix: 'vh-heroes-quick-add',
+              fallback_desc: 'Proteinový shake s CaroLean®, VinOgrape® a vitamíny. 22 g bílkovin v jedné dávce pro každodenní kontrolu váhy.'
             %}
           {%- endif -%}
 
           {%- if vh_hero_3 != blank -%}
-            {% render 'vojta-hubne-hero-card',
+            {% render 'vojta-hubne-care-product-card',
               product: vh_hero_3,
               section_id: section.id,
-              category: 'Doplňky stravy',
-              tagline: 'Výkon · Síla · Jednoduché dávkování',
-              description: '5 g kreatin monohydrátu a 3 g CaHMB v jedné denní dávce. Jedna odměrka denně, 60 dávek v balení.',
-              image_loading: 'lazy'
+              form_prefix: 'vh-heroes-quick-add',
+              fallback_desc: '5 g kreatin monohydrátu a 3 g CaHMB v jedné denní dávce. Jedna odměrka denně, 60 dávek v balení.'
             %}
           {%- endif -%}
-        </div>
+
+          {%- if vh_hero_4 != blank -%}
+            {% render 'vojta-hubne-care-product-card',
+              product: vh_hero_4,
+              section_id: section.id,
+              form_prefix: 'vh-heroes-quick-add',
+              fallback_desc: 'Trio vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu.'
+            %}
+          {%- endif -%}
+        </ul>
       </div>
     {%- endif -%}
 
@@ -151,6 +180,36 @@
     }
 
     document.addEventListener('shopify:section:load', bindBundlesMore);
+  })();
+</script>
+
+<script>
+  (function () {
+    if (window.__vhCareQuickAddPatched) return;
+    window.__vhCareQuickAddPatched = true;
+
+    function patchCareQuickAdd() {
+      document.querySelectorAll('.vh-care-card quick-add-component').forEach(function (el) {
+        var card = el.closest('.vh-care-card');
+        var link = card && card.querySelector('.vh-care-card__media-link');
+        if (!link || !link.href) return;
+
+        Object.defineProperty(el, 'productPageUrl', {
+          configurable: true,
+          get: function () {
+            return link.href;
+          },
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', patchCareQuickAdd);
+    } else {
+      patchCareQuickAdd();
+    }
+
+    document.addEventListener('shopify:section:load', patchCareQuickAdd);
   })();
 </script>
 
