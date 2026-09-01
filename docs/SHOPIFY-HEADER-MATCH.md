@@ -23,15 +23,15 @@ CSS: `vojta-hubne-horizon.css` → **Promo bar** block (gold bg, Montserrat 0.7r
 3. **Text** (copy exactly from `src/data/promoBar.ts`):
 
    ```
-   Restart je zpet ! Sleva 30%
+   NOVINKY JSOU TADY: LEAN SHAKE™ VIŠEŇ V ČOKOLÁDĚ + CREATIN HMB — OBJEDNÁVEJTE UŽ TEĎ
    ```
 
-4. **Link:** `https://www.vojtahubne.cz/` (marketing homepage — same as React promo bar)
+4. **Link:** `/collections` (shop catalog — same message as React promo bar on vojtahubne.cz)
 5. In **announcement block** settings (Horizon), if typography options appear:
    - Prefer **Montserrat** / body font
    - CSS overrides thin weight — but you can set **Semibold (600)** if available
    - Auto-rotate: **Off** (single message like React)
-6. **Link:** `https://www.vojtahubne.cz/` — must point to marketing homepage (hero banner + copy code button)
+6. **Link:** `/collections` — shop catalog (React promo bar on vojtahubne.cz links to the same place)
 7. Re-upload **`vojta-hubne-horizon.css`** and hard refresh (Cmd+Shift+R)
 
 Horizon ships inline `font-weight: 100` and `0.625rem` on the slide — the CSS file forces homepage parity (`0.7rem`, weight `600`, gold bar, `0.14em` tracking).

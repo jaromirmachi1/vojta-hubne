@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { PROMO_BAR_HOME_PATH, PROMO_BAR_TEXT } from '../data/promoBar'
+import { PROMO_BAR_HREF, PROMO_BAR_TEXT } from '../data/promoBar'
 
-const Bar = styled(Link)`
+const Bar = styled.a`
   display: block;
   padding: 0.6rem 1rem;
   text-align: center;
@@ -26,5 +25,9 @@ const Bar = styled(Link)`
 `
 
 export function PromoBar() {
-  return <Bar to={PROMO_BAR_HOME_PATH}>{PROMO_BAR_TEXT}</Bar>
+  return (
+    <Bar href={PROMO_BAR_HREF} rel="noopener noreferrer">
+      {PROMO_BAR_TEXT}
+    </Bar>
+  )
 }
