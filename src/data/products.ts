@@ -1,7 +1,7 @@
-import creamGhkCu from "../assets/products/cream-ghk-cu.png";
-import emulfeelCream from "../assets/products/emulfeel-cream.png";
 import glpSupport from "../assets/products/glp-support.png";
 import leanShake from "../assets/products/lean-shake.png";
+import d3Image from "../assets/vitality.png";
+import kreatinImage from "../assets/glp1generic.png";
 
 export type Product = {
   id: string;
@@ -53,33 +53,33 @@ export const featuredProducts: Product[] = [
     shopifyHandle: "lean-shake-glp-1",
   },
   {
-    id: "cream-glp-1-ghk-cu",
-    slug: "cream-glp-1-ghk-cu",
-    name: "Cream GLP-1 GHK-Cu",
-    subtitle: "Regenerační krém",
-    tagline: "Pocit sytosti · Ochrana · Regenerace",
+    id: "kreatin-hmb",
+    slug: "kreatin-hmb",
+    name: "Kreatin + HMB",
+    subtitle: "Doplněk stravy",
+    tagline: "Výkon · Síla · Jednoduché dávkování",
     description:
-      "Hřejivý regenerační krém s GHK-Cu pro suchou a namáhanou pokožku. Podporuje pocit sytosti a obnovu kožní bariéry.",
-    image: creamGhkCu,
-    category: "Péče o tělo",
-    format: "300 ml",
-    benefits: ["GHK-Cu", "Hřejivý efekt", "Hydratace"],
+      "5 g kreatin monohydrátu a 3 g CaHMB v jedné denní dávce. Jedna odměrka denně, 60 dávek v balení.",
+    image: kreatinImage,
+    category: "Doplňky stravy",
+    format: "480 g · 60 dávek",
+    benefits: ["Kreatin monohydrát", "CaHMB", "Jedna odměrka denně"],
     featured: true,
-    shopifyHandle: "ghk-cu-cream",
+    shopifyHandle: "kreatin-hmb",
   },
   {
-    id: "regeneracni-krem-emulfeel",
-    slug: "regeneracni-krem-emulfeel",
-    name: "Regenerační krém Emulfeel®",
-    subtitle: "Pleťová péče",
-    tagline: "Hydratace · Zklidnění · Regenerace",
+    id: "d3-k2-vapnik",
+    slug: "d3-k2-vapnik",
+    name: "D3 + K2 + Vápník",
+    subtitle: "Doplněk stravy",
+    tagline: "Kosti · Svaly · Imunita",
     description:
-      "Lehký hydratační krém pro každodenní péči. GHK-Cu, panthenol a bisabolol pro regeneraci a zklidnění pleti.",
-    image: emulfeelCream,
-    category: "Péče o pleť",
-    format: "50 ml",
-    benefits: ["GHK-Cu", "Zklidnění", "Elasticita"],
+      "Trio vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu v jedné dávce.",
+    image: d3Image,
+    category: "Doplňky stravy",
+    format: "60 kapslí",
+    benefits: ["Vitamín D3", "Vitamín K2", "Vápník"],
     featured: true,
-    shopifyHandle: "antiage-cream-emulfeel®",
+    shopifyHandle: "d3-k2-vapnik",
   },
 ];

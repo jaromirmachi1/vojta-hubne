@@ -24,8 +24,8 @@
 
 {% assign p_glp = all_products['glp1-support'] %}
 {% assign p_lean = all_products['lean-shake-glp-1'] %}
-{% assign p_cream = all_products['ghk-cu-cream'] %}
-{% assign p_emul = all_products['antiage-cream-emulfeel®'] %}
+{% assign p_kreatin = all_products['kreatin-hmb'] %}
+{% assign p_d3 = all_products['d3-k2-vapnik'] %}
 
 <section class="vh-home" data-vh-home>
   {% comment %} —— HERO —— {% endcomment %}
@@ -110,19 +110,19 @@
               {% assign fallback_desc = 'Proteinový shake s CaroLean®, VinOgrape® a vitamíny. 22 g bílkovin v jedné dávce.' %}
               {% assign fallback_cat = 'Proteiny & shaky' %}
             {% when 3 %}
-              {% assign product = p_cream %}
-              {% assign fallback_name = 'Cream GLP-1 GHK-Cu' %}
-              {% assign fallback_handle = 'ghk-cu-cream' %}
-              {% assign fallback_tagline = 'Pocit sytosti · Ochrana · Regenerace' %}
-              {% assign fallback_desc = 'Hřejivý regenerační krém s GHK-Cu pro suchou a namáhanou pokožku.' %}
-              {% assign fallback_cat = 'Péče o tělo' %}
+              {% assign product = p_kreatin %}
+              {% assign fallback_name = 'Kreatin + HMB' %}
+              {% assign fallback_handle = 'kreatin-hmb' %}
+              {% assign fallback_tagline = 'Výkon · Síla · Jednoduché dávkování' %}
+              {% assign fallback_desc = '5 g kreatin monohydrátu a 3 g CaHMB v jedné denní dávce. Jedna odměrka denně, 60 dávek v balení.' %}
+              {% assign fallback_cat = 'Doplňky stravy' %}
             {% when 4 %}
-              {% assign product = p_emul %}
-              {% assign fallback_name = 'Regenerační krém Emulfeel®' %}
-              {% assign fallback_handle = 'antiage-cream-emulfeel®' %}
-              {% assign fallback_tagline = 'Hydratace · Zklidnění · Regenerace' %}
-              {% assign fallback_desc = 'Lehký hydratační krém s GHK-Cu, panthenolem a bisabololem.' %}
-              {% assign fallback_cat = 'Péče o pleť' %}
+              {% assign product = p_d3 %}
+              {% assign fallback_name = 'D3 + K2 + Vápník' %}
+              {% assign fallback_handle = 'd3-k2-vapnik' %}
+              {% assign fallback_tagline = 'Kosti · Svaly · Imunita' %}
+              {% assign fallback_desc = 'Trio vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu v jedné dávce.' %}
+              {% assign fallback_cat = 'Doplňky stravy' %}
           {% endcase %}
 
           {% if product != blank %}
