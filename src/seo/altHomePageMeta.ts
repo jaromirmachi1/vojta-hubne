@@ -1,7 +1,7 @@
 export const altHomePageMeta = {
-  title: 'Kompletní systém — Vojta Hubne',
+  title: 'Hubnutí, které tělo zvládne — Vojta Hubne',
   description:
-    'Systém doplňků od Vojty Hubně — z reálné cesty z 160 kg na 99 kg. Vyber si balíček, začni program nebo nakupuj podle potřeby.',
+    'České doplňky stravy, proteinové shaky a péče o pleť pro lidi v redukci. Vyvinuté podle toho, co Vojta potřeboval při cestě ze 160 na 99 kg.',
   path: '/alt',
   noindex: true,
 } as const

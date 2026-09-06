@@ -38,7 +38,7 @@ export const customerPaths = [
   {
     id: 'nutrition',
     headline: 'Nutriční jistota',
-    collectionHandle: 'bojuji-s-hladem-a-chutemi',
+    collectionHandle: 'nutricni-jistota',
     subtext:
       'Když nevíte, co tělu chybí — vitamíny, minerály a podpora metabolismu v jednom plánu.',
     cta: 'Získat jistotu →',
@@ -62,7 +62,7 @@ export const customerPaths = [
   {
     id: 'post-tapering',
     headline: 'Po vysazení',
-    collectionHandle: 'vysazuji-nebo-jsem-vysadil-a',
+    collectionHandle: 'po-vysazeni-glp-1',
     subtext:
       'Plynulý přechod bez jojo efektu — udržení sytosti a stabilní režim po léčbě.',
     cta: 'Režim po vysazení →',
@@ -70,7 +70,7 @@ export const customerPaths = [
   {
     id: 'glp1-regime',
     headline: 'GLP-1 režim',
-    collectionHandle: 'jsem-na-glp-1-lecbe',
+    collectionHandle: 'glp-1-rezim',
     subtext:
       'Podpora těla během GLP-1 léčby — živiny, sytost a péče o metabolismus v jednom systému.',
     cta: 'Režim pro GLP-1 →',

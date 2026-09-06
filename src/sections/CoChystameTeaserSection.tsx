@@ -5,7 +5,7 @@ import { ArrowIcon } from '../components/cochystame/ArrowIcon'
 import { coChystameProjects } from '../data/coChystameProjects'
 import { eyebrowText } from '../styles/eyebrow'
 
-const teaserIds = ['flavor', 'odvodnovac', 'kreatin'] as const
+const teaserIds = ['nevinatko', 'odvodnovac', 'probiotika'] as const
 
 const teaserProjects = teaserIds
   .map((id) => coChystameProjects.find((project) => project.id === id))

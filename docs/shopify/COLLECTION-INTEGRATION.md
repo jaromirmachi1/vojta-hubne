@@ -58,7 +58,7 @@ Do **not** put care content into the catalog file.
 2. Trust bar
 3. **Balíčky** — real Shopify products with type **Balíčky**, same cards as heroes
 4. **Péče a doplňky** (own product grid underneath)
-5. **Co chystáme** — 3 in-progress products + **Zobrazit více** → `vojtahubne.cz/co-chystame`
+5. **Co chystáme** — Neviňátko, Odvodňovač, Probiotika + **Zobrazit více** → `vojtahubne.cz/co-chystame`
 
 ## Snippets needed
 

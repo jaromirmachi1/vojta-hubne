@@ -34,6 +34,7 @@ Styling lives in **`vojta-hubne-horizon.css`** (section **Blog listing + article
 ### Blog listing (`/blogs/blog`)
 
 - Gold display title **BLOG**
+- Grid: **1 column on mobile**, **4 columns on desktop** (≥1024px); mobile uses tighter padding/gaps so cards fill the width (Horizon card scale disabled)
 - Dark cards with subtle gold border + hover lift
 - Featured image cover crop
 - Post title in Bebas Neue / gold
