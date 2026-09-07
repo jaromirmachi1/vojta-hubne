@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { BrandLogo } from '../../../components/BrandLogo'
 import { HashLink } from '../../../components/HashLink'
 import { MobileNavMenu, type MobileNavLink } from '../../../components/MobileNavMenu'
 import { ALT_HOME_PATH } from '../../../data/altHomepage'
-import { ALT_V4_SECTION_IDS, altV4Promo } from '../../../data/altHomeV4'
+import { ALT_V4_SECTION_IDS, altV4Promos } from '../../../data/altHomeV4'
 import { altV4 } from '../../../styles/altV4'
 import { getShopifyCartUrl, getShopifyCatalogUrl } from '../../../utils/shopify'
 
@@ -170,8 +170,17 @@ const PromoText = styled.span`
 
 export function AltV4Chrome() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [promoIndex, setPromoIndex] = useState(0)
   const catalogUrl = getShopifyCatalogUrl()
   const cartUrl = getShopifyCartUrl()
+  const promo = altV4Promos[promoIndex] ?? altV4Promos[0]
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setPromoIndex((current) => (current + 1) % altV4Promos.length)
+    }, 5200)
+    return () => window.clearInterval(timer)
+  }, [])
 
   const mobileLinks: MobileNavLink[] = [
     { label: 'Produkty', href: catalogUrl, external: true },
@@ -205,9 +214,9 @@ export function AltV4Chrome() {
           Košík
         </CartBtn>
       </Header>
-      <Promo href={catalogUrl} rel="noopener noreferrer">
-        <PromoTag>{altV4Promo.tag}</PromoTag>
-        <PromoText>{altV4Promo.text}</PromoText>
+      <Promo href={promo.href} rel={promo.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+        <PromoTag>{promo.tag}</PromoTag>
+        <PromoText>{promo.text}</PromoText>
         <span aria-hidden>→</span>
       </Promo>
       <MobileNavMenu

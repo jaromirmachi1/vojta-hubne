@@ -65,13 +65,14 @@ function TrustIcon({ icon }: { icon: (typeof altV4Trust)[number]['icon'] }) {
       </svg>
     )
   }
-  if (icon === 'people') {
+  if (icon === 'truck') {
     return (
       <svg {...common}>
-        <circle cx="8" cy="9" r="3" />
-        <circle cx="16" cy="9" r="3" />
-        <path d="M2 19c0-3 3-5 6-5s6 2 6 5" />
-        <path d="M14 14c1-1 2-1 2-1 3 0 6 2 6 5" />
+        <path d="M4 7h11l3 4h2v6h-3" />
+        <circle cx="7" cy="17" r="2" />
+        <circle cx="17" cy="17" r="2" />
+        <path d="M9 17h6" />
+        <path d="M4 7v10h1" />
       </svg>
     )
   }

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import styled from 'styled-components'
 import {
@@ -7,8 +8,8 @@ import {
 } from '../../../data/altHomeV4'
 import { altV4 } from '../../../styles/altV4'
 import {
-  V4Eyebrow,
   V4Inner,
+  V4PillOutline,
   V4Section,
   V4Stack,
   V4Title,
@@ -63,7 +64,6 @@ export function AltFaqV4Section() {
       aria-labelledby="alt-v4-faq-title"
     >
       <V4Inner>
-        <V4Eyebrow>{altV4FaqCopy.eyebrow}</V4Eyebrow>
         <V4Title id="alt-v4-faq-title">{altV4FaqCopy.title}</V4Title>
         <V4Stack>
           {altV4Faq.map((item) => {
@@ -87,6 +87,11 @@ export function AltFaqV4Section() {
             )
           })}
         </V4Stack>
+        <div style={{ marginTop: '0.9rem' }}>
+          <V4PillOutline as={Link} to={altV4FaqCopy.contactHref}>
+            {altV4FaqCopy.contactLabel}
+          </V4PillOutline>
+        </div>
       </V4Inner>
     </V4Section>
   )

@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import {
   ALT_V4_SECTION_IDS,
-  altV4Bundles,
+  altV4BundleIds,
   altV4BundlesCopy,
 } from '../../../data/altHomeV4'
-import { altV4 } from '../../../styles/altV4'
+import { useAltV4Catalog } from '../../../hooks/useAltV4Catalog'
 import {
   V4Eyebrow,
   V4Inner,
@@ -12,92 +12,38 @@ import {
   V4Section,
   V4Title,
 } from './shared'
+import { AltV4ProductDetailCard } from './AltV4ProductDetailCard'
 
 const Grid = styled.div`
   display: grid;
-  gap: 0.75rem;
+  gap: 0.9rem;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-template-columns: 1fr 1fr;
   }
 `
 
-const Card = styled.a`
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 0.9rem;
-  border-radius: 1.125rem;
-  background: ${altV4.paper2};
-  border: 1px solid ${altV4.line};
-  text-decoration: none;
-  color: ${altV4.ink};
-  text-align: left;
-`
-
-const Top = styled.span`
-  display: flex;
-  gap: 0.9rem;
-  align-items: center;
-  width: 100%;
-`
-
-const Thumb = styled.img`
-  width: 4.85rem;
-  height: 4.85rem;
-  object-fit: contain;
-  border-radius: 0.85rem;
-  background: ${altV4.paper};
-`
-
-const Body = styled.span`
-  flex: 1;
-  min-width: 0;
-`
-
-const Name = styled.span`
-  display: block;
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: 1.45rem;
-  line-height: 1.05;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-`
-
-const Short = styled.span`
-  font-size: 0.88rem;
-  line-height: 1.55;
-  color: ${altV4.ink2};
-`
-
-const Arrow = styled.span`
-  color: ${altV4.goldInk};
-  font-size: 1.35rem;
-`
-
 export function AltBundlesV4Section() {
+  const { get } = useAltV4Catalog()
+  const items = altV4BundleIds.map((id) => get(id)).filter(Boolean)
+
   return (
     <V4Section id={ALT_V4_SECTION_IDS.bundles} aria-labelledby="alt-v4-bundles-title">
       <V4Inner>
         <V4Eyebrow>{altV4BundlesCopy.eyebrow}</V4Eyebrow>
         <V4Title id="alt-v4-bundles-title">
-          Méně rozhodování,
+          {altV4BundlesCopy.titleLine1}
           <br />
-          více výsledků
+          {altV4BundlesCopy.titleLine2}
         </V4Title>
         <V4Lead>{altV4BundlesCopy.lead}</V4Lead>
         <Grid>
-          {altV4Bundles.map((b) => (
-            <Card key={b.id} href={b.href} rel="noopener noreferrer">
-              <Top>
-                <Thumb src={b.image} alt="" width={78} height={78} />
-                <Body>
-                  <Name>{b.name}</Name>
-                </Body>
-                <Arrow aria-hidden>→</Arrow>
-              </Top>
-              <Short>{b.short}</Short>
-            </Card>
+          {items.map((product) => (
+            <AltV4ProductDetailCard
+              key={product.id}
+              product={product}
+              ctaPrefix="Koupit balíček"
+            />
           ))}
         </Grid>
       </V4Inner>

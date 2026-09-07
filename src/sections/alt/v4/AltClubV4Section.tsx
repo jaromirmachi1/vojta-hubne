@@ -16,12 +16,6 @@ const Grid = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 0.65rem;
   margin-bottom: 1rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 0.85rem;
-    margin-bottom: 1.35rem;
-  }
 `
 
 const Tile = styled.div`
@@ -44,10 +38,6 @@ const Text = styled.div`
   color: rgba(255, 255, 255, 0.88);
 `
 
-const Cta = styled(V4PillGold)`
-  /* Link styled as pill; uses react-router for /klub */
-`
-
 export function AltClubV4Section() {
   return (
     <V4Section
@@ -58,9 +48,7 @@ export function AltClubV4Section() {
       <V4Inner>
         <V4Eyebrow $onDark>{altV4Club.eyebrow}</V4Eyebrow>
         <V4Title $onDark $size="lg" id="alt-v4-club-title">
-          VH Club:
-          <br />
-          10 Kč = 1 bod
+          {altV4Club.title}
         </V4Title>
         <V4Lead $onDark>{altV4Club.lead}</V4Lead>
         <Grid>
@@ -71,9 +59,9 @@ export function AltClubV4Section() {
             </Tile>
           ))}
         </Grid>
-        <Cta as={Link} to={altV4Club.href}>
+        <V4PillGold as={Link} to={altV4Club.href}>
           {altV4Club.cta}
-        </Cta>
+        </V4PillGold>
       </V4Inner>
     </V4Section>
   )

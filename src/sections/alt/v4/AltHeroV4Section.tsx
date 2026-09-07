@@ -1,12 +1,12 @@
 import styled from 'styled-components'
-import heroImage from '../../../assets/vojta-alt-hero.png'
+import heroImage from '../../../assets/vojta-alt-hero.webp'
 import { ALT_V4_SECTION_IDS, altV4Hero } from '../../../data/altHomeV4'
 import { altV4 } from '../../../styles/altV4'
 import { scrollToSection } from '../../../utils/scrollToSection'
 import {
   V4Inner,
   V4PillGoldButton,
-  V4PillOutline,
+  V4PillOutlineButton,
   V4Section,
 } from './shared'
 
@@ -140,7 +140,7 @@ const Img = styled.img`
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 3162 / 3134;
+  aspect-ratio: 1600 / 1586;
   object-fit: contain;
   border-radius: 1.125rem;
 
@@ -175,19 +175,8 @@ const BadgeNote = styled.span`
 `
 
 const Primary = styled(V4PillGoldButton)`
-  flex-direction: column;
-  gap: 0.15rem;
   min-height: 4rem;
   margin-bottom: 0.65rem;
-`
-
-const PrimarySub = styled.span`
-  font-family: ${({ theme }) => theme.fonts.sans};
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.72;
 `
 
 export function AltHeroV4Section() {
@@ -197,9 +186,9 @@ export function AltHeroV4Section() {
         <Layout>
           <Copy>
             <Title id="alt-v4-hero-title">
-              Hubnutí, které
+              {altV4Hero.titleLine1}
               <br />
-              tělo zvládne
+              {altV4Hero.titleLine2}
             </Title>
             <Lead>{altV4Hero.lead}</Lead>
           </Copy>
@@ -208,8 +197,8 @@ export function AltHeroV4Section() {
               <Img
                 src={heroImage}
                 alt="Vojta Hubne před a po zhubnutí 61 kilogramů"
-                width={3162}
-                height={3134}
+                width={1600}
+                height={1586}
                 fetchPriority="high"
               />
               <Badge>
@@ -221,18 +210,17 @@ export function AltHeroV4Section() {
           <Actions>
             <Primary
               type="button"
+              onClick={() => scrollToSection(ALT_V4_SECTION_IDS.bestsellers)}
+            >
+              {altV4Hero.primaryCta}
+            </Primary>
+            <V4PillOutlineButton
+              $onDark
+              type="button"
               onClick={() => scrollToSection(ALT_V4_SECTION_IDS.quiz)}
             >
-              <span>{altV4Hero.primaryCta}</span>
-              <PrimarySub>{altV4Hero.primarySub}</PrimarySub>
-            </Primary>
-            <V4PillOutline
-              $onDark
-              href={altV4Hero.catalogUrl}
-              rel="noopener noreferrer"
-            >
-              {altV4Hero.secondaryCtaPrefix} produktů
-            </V4PillOutline>
+              {altV4Hero.secondaryCta}
+            </V4PillOutlineButton>
           </Actions>
         </Layout>
       </HeroInner>

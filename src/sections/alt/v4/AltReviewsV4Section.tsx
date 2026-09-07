@@ -38,7 +38,7 @@ const Card = styled.div`
   gap: 0.55rem;
   padding: 1rem;
   border-radius: 1.125rem;
-  background: ${altV4.paper2};
+  background: ${altV4.paper};
   border: 1px solid ${altV4.line};
 `
 
@@ -64,7 +64,11 @@ const Who = styled.div`
 
 export function AltReviewsV4Section() {
   return (
-    <V4Section id={ALT_V4_SECTION_IDS.reviews} aria-labelledby="alt-v4-reviews-title">
+    <V4Section
+      $tone="paper2"
+      id={ALT_V4_SECTION_IDS.reviews}
+      aria-labelledby="alt-v4-reviews-title"
+    >
       <V4Inner>
         <V4Eyebrow>{altV4ReviewsCopy.eyebrow}</V4Eyebrow>
         <V4Title id="alt-v4-reviews-title">{altV4ReviewsCopy.rating}</V4Title>

@@ -1,5 +1,4 @@
 import { useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import {
   ALT_V4_SECTION_IDS,
@@ -78,30 +77,6 @@ const Status = styled.p<{ $error?: boolean }>`
   color: ${({ $error }) => ($error ? '#ffb4b4' : 'rgba(255,255,255,0.8)')};
 `
 
-const Contact = styled(Link)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 3.4rem;
-  margin-bottom: 0.9rem;
-  border: 1px solid ${altV4.line};
-  border-radius: 999px;
-  background: ${altV4.paper2};
-  color: ${altV4.ink};
-  font-family: ${({ theme }) => theme.fonts.display};
-  font-size: 1.15rem;
-  letter-spacing: 0.06em;
-  text-decoration: none;
-  text-transform: uppercase;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    width: fit-content;
-    min-width: 18rem;
-    padding-inline: 1.75rem;
-  }
-`
-
 const Legal = styled.div`
   font-size: 0.75rem;
   line-height: 1.6;
@@ -161,9 +136,6 @@ export function AltNewsletterV4Section() {
             <Status $error>Zkontrolujte e-mail a zkuste to znovu.</Status>
           ) : null}
         </Card>
-        <Contact to={altV4Newsletter.contactHref}>
-          {altV4Newsletter.contactLabel}
-        </Contact>
         <Legal>{altV4Newsletter.legal}</Legal>
       </V4Inner>
     </V4Section>
