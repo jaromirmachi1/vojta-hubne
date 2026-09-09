@@ -5,6 +5,7 @@ import {
   altV4BestsellersCopy,
 } from '../../../data/altHomeV4'
 import { useAltV4Catalog } from '../../../hooks/useAltV4Catalog'
+import { useProductReviewStats } from '../../../hooks/useProductReviewStats'
 import {
   V4Eyebrow,
   V4Inner,
@@ -25,6 +26,7 @@ const Grid = styled.div`
 
 export function AltBestsellersV4Section() {
   const { get } = useAltV4Catalog()
+  const reviewStatsByHandle = useProductReviewStats()
   const items = altV4BestIds.map((id) => get(id)).filter(Boolean)
 
   return (
@@ -42,7 +44,15 @@ export function AltBestsellersV4Section() {
         <V4Lead>{altV4BestsellersCopy.lead}</V4Lead>
         <Grid>
           {items.map((product) => (
-            <AltV4ProductDetailCard key={product.id} product={product} />
+            <AltV4ProductDetailCard
+              key={product.id}
+              product={product}
+              reviewStats={
+                product.shopifyHandle
+                  ? reviewStatsByHandle.get(product.shopifyHandle)
+                  : undefined
+              }
+            />
           ))}
         </Grid>
       </V4Inner>

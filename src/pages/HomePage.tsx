@@ -1,5 +1,4 @@
 import { useHashScroll } from '../hooks/useHashScroll'
-import { useJsonLd } from '../hooks/useJsonLd'
 import { usePageMeta } from '../hooks/usePageMeta'
 import { RegimeQuizProvider } from '../contexts/RegimeQuizContext'
 import { BenefitsSection } from '../sections/BenefitsSection'
@@ -18,13 +17,12 @@ import { RegimeQuizSection } from '../sections/alt/RegimeQuizSection'
 import { StorySection } from '../sections/StorySection'
 import { ShopLayout } from '../layouts/ShopLayout'
 import { homePageMeta } from '../seo/homePageMeta'
-import { getHomePageSchema } from '../seo/homePageSchema'
 import { NewsletterPopup } from '../components/NewsletterPopup'
+import { LEGACY_HOME_PATH } from '../data/altHomepage'
 
 export function HomePage() {
-  useHashScroll()
+  useHashScroll(LEGACY_HOME_PATH)
   usePageMeta(homePageMeta)
-  useJsonLd('vh-home-schema', getHomePageSchema())
 
   return (
     <ShopLayout>

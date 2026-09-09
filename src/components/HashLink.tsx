@@ -4,7 +4,7 @@ import { scrollToSection } from '../utils/scrollToSection'
 
 type HashLinkProps = {
   sectionId: string
-  /** Page path for same-page scroll (default `/`). Use `/alt` on the alt homepage. */
+  /** Page path for same-page scroll (default `/`). */
   pathname?: string
   children: ReactNode
   className?: string

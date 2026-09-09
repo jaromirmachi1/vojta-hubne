@@ -1,8 +1,10 @@
-import { usePageMeta } from '../hooks/usePageMeta'
 import { useHashScroll } from '../hooks/useHashScroll'
+import { usePageMeta } from '../hooks/usePageMeta'
+import { useJsonLd } from '../hooks/useJsonLd'
 import { ALT_HOME_PATH } from '../data/altHomepage'
 import { AltV4ShopLayout } from '../layouts/AltV4ShopLayout'
 import { altHomePageMeta } from '../seo/altHomePageMeta'
+import { getHomePageSchema } from '../seo/homePageSchema'
 import { AltV4FirstFold } from '../sections/alt/v4/shared'
 import { AltHeroV4Section } from '../sections/alt/v4/AltHeroV4Section'
 import { AltTrustStripSection } from '../sections/alt/v4/AltTrustStripSection'
@@ -22,6 +24,7 @@ import { AltNewsletterV4Section } from '../sections/alt/v4/AltNewsletterV4Sectio
 
 export function AlternativeHomePage() {
   usePageMeta(altHomePageMeta)
+  useJsonLd('vh-home-schema', getHomePageSchema())
   useHashScroll(ALT_HOME_PATH)
 
   return (

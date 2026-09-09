@@ -1,4 +1,4 @@
-/** Local light tokens for `/alt` Homepage v4 — do not flip global dark theme. */
+/** Local light tokens for the primary homepage (v4) — do not flip global dark theme. */
 export const altV4 = {
   black: '#0a0a0a',
   gold: '#eedc82',

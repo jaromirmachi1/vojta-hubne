@@ -5,7 +5,9 @@ import {
   getAltV4ProductPrice,
   type AltV4Product,
 } from '../../../data/altHomeV4'
+import type { ProductReviewStats } from '../../../hooks/useProductReviewStats'
 import { altV4 } from '../../../styles/altV4'
+import { formatReviewCount } from '../../../utils/plainText'
 import { V4PillBlack } from './shared'
 
 const Card = styled.article`
@@ -66,9 +68,26 @@ const Claim = styled.div`
 `
 
 const Rating = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.4rem;
   margin-top: 0.25rem;
   font-size: 0.75rem;
   color: ${altV4.ink2};
+`
+
+const Stars = styled.span`
+  display: inline-flex;
+  gap: 0.04rem;
+  line-height: 1;
+  color: ${altV4.goldInk};
+  letter-spacing: 0.02em;
+`
+
+const Average = styled.span`
+  font-weight: 700;
+  color: ${altV4.ink};
 `
 
 const Desc = styled.p`
@@ -195,14 +214,21 @@ const Cta = styled(V4PillBlack)`
   }
 `
 
+function renderStars(rating: number) {
+  const rounded = Math.round(rating)
+  return '★'.repeat(rounded) + '☆'.repeat(5 - rounded)
+}
+
 type AltV4ProductDetailCardProps = {
   product: AltV4Product
   ctaPrefix?: string
+  reviewStats?: ProductReviewStats
 }
 
 export function AltV4ProductDetailCard({
   product,
   ctaPrefix = 'Koupit',
+  reviewStats,
 }: AltV4ProductDetailCardProps) {
   const [open, setOpen] = useState(false)
   const href = getAltV4ProductHref(product)
@@ -216,6 +242,23 @@ export function AltV4ProductDetailCard({
     ? 'Předprodej — členové klubu nakupují první.'
     : `Za tento nákup získáte ${Math.max(1, Math.round(product.value / 10))} bodů do VH Clubu.`
 
+  const liveReviews =
+    reviewStats && reviewStats.count > 0
+      ? {
+          average: reviewStats.averageRating.toFixed(1).replace('.', ','),
+          label: formatReviewCount(reviewStats.count),
+          stars: renderStars(reviewStats.averageRating),
+          aria: `Hodnocení ${reviewStats.averageRating.toFixed(1)} z 5 · ${formatReviewCount(reviewStats.count)}`,
+        }
+      : product.reviews
+        ? {
+            average: null,
+            label: product.reviews,
+            stars: null,
+            aria: product.reviews,
+          }
+        : null
+
   return (
     <Card>
       <Top>
@@ -224,7 +267,20 @@ export function AltV4ProductDetailCard({
           {product.badge ? <Badge>{product.badge}</Badge> : null}
           <Name>{product.name}</Name>
           <Claim>{product.claim}</Claim>
-          <Rating>{product.reviews}</Rating>
+          {liveReviews ? (
+            <Rating aria-label={liveReviews.aria}>
+              {liveReviews.stars ? (
+                <Stars aria-hidden>{liveReviews.stars}</Stars>
+              ) : null}
+              {liveReviews.average ? (
+                <>
+                  <Average>{liveReviews.average}</Average>
+                  <span aria-hidden>·</span>
+                </>
+              ) : null}
+              <span>{liveReviews.label}</span>
+            </Rating>
+          ) : null}
         </Body>
       </Top>
       <Desc>{product.desc}</Desc>

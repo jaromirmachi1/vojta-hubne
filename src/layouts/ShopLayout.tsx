@@ -4,6 +4,10 @@ import {
   Breadcrumbs,
   type BreadcrumbItem,
 } from '../components/Breadcrumbs'
+import {
+  MobileBottomNav,
+  MobileBottomNavSpacer,
+} from '../components/MobileBottomNav'
 import { PromoBar } from '../components/PromoBar'
 import { ReviewTickerBar } from '../components/ReviewTickerBar'
 import { SiteFooter } from '../components/SiteFooter'
@@ -32,8 +36,12 @@ export function ShopLayout({ children, breadcrumbs }: ShopLayoutProps) {
       <ReviewTickerBar />
       <SiteHeader />
       {breadcrumbs?.length ? <Breadcrumbs items={breadcrumbs} /> : null}
-      <Main>{children}</Main>
+      <Main>
+        {children}
+        <MobileBottomNavSpacer />
+      </Main>
       <SiteFooter />
+      <MobileBottomNav homeTo="/" />
     </Page>
   )
 }

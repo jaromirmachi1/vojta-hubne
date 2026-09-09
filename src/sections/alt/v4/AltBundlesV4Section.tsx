@@ -5,6 +5,7 @@ import {
   altV4BundlesCopy,
 } from '../../../data/altHomeV4'
 import { useAltV4Catalog } from '../../../hooks/useAltV4Catalog'
+import { useProductReviewStats } from '../../../hooks/useProductReviewStats'
 import {
   V4Eyebrow,
   V4Inner,
@@ -25,6 +26,7 @@ const Grid = styled.div`
 
 export function AltBundlesV4Section() {
   const { get } = useAltV4Catalog()
+  const reviewStatsByHandle = useProductReviewStats()
   const items = altV4BundleIds.map((id) => get(id)).filter(Boolean)
 
   return (
@@ -43,6 +45,11 @@ export function AltBundlesV4Section() {
               key={product.id}
               product={product}
               ctaPrefix="Koupit balíček"
+              reviewStats={
+                product.shopifyHandle
+                  ? reviewStatsByHandle.get(product.shopifyHandle)
+                  : undefined
+              }
             />
           ))}
         </Grid>

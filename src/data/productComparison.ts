@@ -27,7 +27,7 @@ export const glpSupportComparison = {
     ingredientCountLabel: '5 aktivních látek',
     visualImage: glpSupportImage,
     ingredients: [
-      { name: 'Carolean® — karob & nopal', percent: '3 200 mg', grade: 1, note: '(sytost)' },
+      { name: 'Carolean™ — karob & nopal', percent: '3 200 mg', grade: 1, note: '(sytost)' },
       { name: 'Kreatin monohydrát', percent: '1000 mg', grade: 1 },
       { name: 'Berberin HCl', percent: '500 mg', grade: 1 },
       { name: 'Gymnema sylvestre', percent: '500 mg', grade: 1 },

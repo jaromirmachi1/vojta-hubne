@@ -11,7 +11,7 @@ type AltV4ShopLayoutProps = {
   children: ReactNode
 }
 
-/** Light paper shell for Homepage v4 on `/alt`. */
+/** Light paper shell for the primary homepage (v4). */
 export function AltV4ShopLayout({ children }: AltV4ShopLayoutProps) {
   return (
     <RegimeQuizProvider>

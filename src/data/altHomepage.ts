@@ -4,8 +4,11 @@ import {
   getShopifyProductUrl,
 } from '../utils/shopify'
 
-/** Alt homepage route — used for in-page nav hash links */
-export const ALT_HOME_PATH = '/alt'
+/** Primary homepage route (v4 shop homepage). */
+export const ALT_HOME_PATH = '/'
+
+/** Previous dark homepage (kept for comparison / legacy). */
+export const LEGACY_HOME_PATH = '/alt'
 
 /** Section anchor IDs — used for in-page scroll */
 export const ALT_SECTION_IDS = {

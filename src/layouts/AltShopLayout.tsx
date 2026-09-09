@@ -5,10 +5,15 @@ import {
   type BreadcrumbItem,
 } from '../components/Breadcrumbs'
 import { AltSiteHeader } from '../components/AltSiteHeader'
+import {
+  MobileBottomNav,
+  MobileBottomNavSpacer,
+} from '../components/MobileBottomNav'
 import { PromoBar } from '../components/PromoBar'
 import { ReviewTickerBar } from '../components/ReviewTickerBar'
 import { SiteFooter } from '../components/SiteFooter'
 import { RegimeQuizProvider } from '../contexts/RegimeQuizContext'
+import { ALT_HOME_PATH } from '../data/altHomepage'
 
 const Page = styled.div`
   display: flex;
@@ -39,8 +44,12 @@ export function AltShopLayout({ children, breadcrumbs }: AltShopLayoutProps) {
         <ReviewTickerBar />
         <AltSiteHeader />
         {breadcrumbs?.length ? <Breadcrumbs items={breadcrumbs} /> : null}
-        <Main>{children}</Main>
+        <Main>
+          {children}
+          <MobileBottomNavSpacer />
+        </Main>
         <SiteFooter />
+        <MobileBottomNav homeTo={ALT_HOME_PATH} />
       </Page>
     </RegimeQuizProvider>
   )

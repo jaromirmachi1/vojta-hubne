@@ -35,6 +35,8 @@ This asset now handles collection-page behaviors:
 
 Catalog structure (gold situation cards on **`/collections`**, not `/collections/all`): see **[COLLECTION-INTEGRATION.md](./COLLECTION-INTEGRATION.md)**. You do not need to export Liquid from Shopify.
 
+**Mobile bottom tab bar:** see **[BOTTOM-NAV-INTEGRATION.md](./BOTTOM-NAV-INTEGRATION.md)** (`vojta-hubne-bottom-nav.liquid` + CSS).
+
 **Verify the JS loaded:** on `/collections/all`, open DevTools → Network → filter `collection-media-fix`. If missing, the asset file is not uploaded or the script tag is missing.
 
 **Exact category labels:** the script reads Shopify product JSON in real time. It uses a `vh-filter|...` or `vh-category|...` product tag first, then falls back to product title/type rules. Example product tag:

@@ -41,7 +41,7 @@ export function getHomePageSchema() {
         '@type': 'WebPage',
         '@id': `${SITE_URL}/#webpage`,
         url: SITE_URL,
-        name: 'Vojta Hubne — Prémiové doplňky pro transformaci',
+        name: 'Hubnutí, které tělo zvládne — Vojta Hubne',
         isPartOf: { '@id': `${SITE_URL}/#website` },
         about: { '@id': `${SITE_URL}/#organization` },
         inLanguage: 'cs-CZ',

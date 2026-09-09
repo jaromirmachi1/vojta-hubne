@@ -1,6 +1,7 @@
 import react from '@vitejs/plugin-react'
 import { defineConfig, loadEnv } from 'vite'
 import {
+  buildProductStats,
   fetchJudgeMeReviews,
   getJudgeMeConfigFromEnv,
 } from './api/_lib/judgemeReviews'
@@ -40,6 +41,25 @@ export default defineConfig(({ mode }) => {
             }
 
             try {
+              const requestUrl = new URL(request.url, 'http://localhost')
+              const statsMode = requestUrl.searchParams.get('stats') === '1'
+
+              if (statsMode) {
+                const reviews = await fetchJudgeMeReviews(config, {
+                  limit: 250,
+                  perPage: 250,
+                })
+                response.statusCode = 200
+                response.setHeader('Content-Type', 'application/json')
+                response.end(
+                  JSON.stringify({
+                    ok: true,
+                    stats: buildProductStats(reviews),
+                  }),
+                )
+                return
+              }
+
               const reviews = await fetchJudgeMeReviews(config)
               response.statusCode = 200
               response.setHeader('Content-Type', 'application/json')

@@ -5,6 +5,7 @@ import {
   altV4RestIds,
 } from '../../../data/altHomeV4'
 import { useAltV4Catalog } from '../../../hooks/useAltV4Catalog'
+import { useProductReviewStats } from '../../../hooks/useProductReviewStats'
 import {
   V4Eyebrow,
   V4Inner,
@@ -36,6 +37,7 @@ const Catalog = styled(V4PillOutline)`
 
 export function AltRestV4Section() {
   const { get } = useAltV4Catalog()
+  const reviewStatsByHandle = useProductReviewStats()
   const items = altV4RestIds.map((id) => get(id)).filter(Boolean)
 
   return (
@@ -53,7 +55,15 @@ export function AltRestV4Section() {
         </V4Title>
         <Grid>
           {items.map((product) => (
-            <AltV4CollectionProductCard key={product.id} product={product} />
+            <AltV4CollectionProductCard
+              key={product.id}
+              product={product}
+              reviewStats={
+                product.shopifyHandle
+                  ? reviewStatsByHandle.get(product.shopifyHandle)
+                  : undefined
+              }
+            />
           ))}
         </Grid>
         <Catalog

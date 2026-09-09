@@ -152,11 +152,15 @@ export function getJudgeMeConfigFromEnv(
 
 export async function fetchJudgeMeReviews(
   config: JudgeMeReviewsConfig,
+  options: { limit?: number; perPage?: number } = {},
 ): Promise<PublicReview[]> {
+  const limit = options.limit ?? JUDGEME_REVIEW_LIMIT
+  const perPage = options.perPage ?? 50
+
   const url = new URL(JUDGEME_REVIEWS_URL)
   url.searchParams.set('shop_domain', config.shopDomain)
   url.searchParams.set('api_token', config.apiToken)
-  url.searchParams.set('per_page', '50')
+  url.searchParams.set('per_page', String(perPage))
   url.searchParams.set('page', '1')
 
   const response = await fetch(url, {
@@ -180,5 +184,34 @@ export async function fetchJudgeMeReviews(
       const secondDate = second.createdAt ? Date.parse(second.createdAt) : 0
       return secondDate - firstDate
     })
-    .slice(0, JUDGEME_REVIEW_LIMIT)
+    .slice(0, limit)
+}
+
+export function buildProductStats(reviews: PublicReview[]) {
+  const grouped = new Map<string, { totalRating: number; count: number }>()
+
+  for (const review of reviews) {
+    if (!review.productHandle) continue
+
+    const current = grouped.get(review.productHandle) ?? {
+      totalRating: 0,
+      count: 0,
+    }
+
+    grouped.set(review.productHandle, {
+      totalRating: current.totalRating + review.rating,
+      count: current.count + 1,
+    })
+  }
+
+  const stats: Record<string, { count: number; averageRating: number }> = {}
+
+  for (const [handle, value] of grouped) {
+    stats[handle] = {
+      count: value.count,
+      averageRating: value.totalRating / value.count,
+    }
+  }
+
+  return stats
 }

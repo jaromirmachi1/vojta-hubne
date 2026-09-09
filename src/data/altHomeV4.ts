@@ -13,7 +13,6 @@ import leanShake from '../assets/products/lean-shake.png'
 import {
   getShopifyBlogUrl,
   getShopifyCatalogUrl,
-  getShopifyCollectionUrl,
   getShopifyNovinkyArticleUrl,
   getShopifyProductUrl,
 } from '../utils/shopify'
@@ -75,7 +74,7 @@ export const altV4Products: Record<string, AltV4Product> = {
     badge: 'Nejprodávanější',
     claim: 'Sytost · Kontrola chuti · Energie',
     reviews: '38 recenzí',
-    desc: 'Komplex s Carolean®, berberinem, gymnemou a kreatinem pro podporu sytosti, metabolismu a energie. Výživová podpora během hubnutí.',
+    desc: 'Komplex s Carolean™, berberinem, gymnemou a kreatinem pro podporu sytosti, metabolismu a energie. Výživová podpora během hubnutí.',
     bullets: [
       'Podpora sytosti během redukčního režimu',
       'Kontrola chuti k jídlu a chutí na sladké',
@@ -86,7 +85,7 @@ export const altV4Products: Record<string, AltV4Product> = {
       { k: 'Dávkování', v: 'Doporučená denní dávka podle etikety' },
       {
         k: 'Klíčové látky',
-        v: 'Carolean® 3 200 mg, kreatin monohydrát 1 000 mg, berberin HCl 500 mg, gymnema sylvestre 500 mg, VinOgrape® 300 mg',
+        v: 'Carolean™ 3 200 mg, kreatin monohydrát 1 000 mg, berberin HCl 500 mg, gymnema sylvestre 500 mg, VinOgrape® 300 mg',
       },
     ],
     value: 1190,
@@ -372,7 +371,7 @@ export const altV4Products: Record<string, AltV4Product> = {
       { k: 'Obsah', v: 'Kompletní měsíční systém' },
     ],
     value: 4190,
-    href: getShopifyCollectionUrl('po-vysazeni-glp-1') ?? catalogUrl,
+    shopifyHandle: 'po-glp-intense-30',
     image: bundleGlp,
     why: 'Silnější podpora po léčbě',
     unit: 'balíček',
@@ -412,17 +411,19 @@ export function getAltV4ProductPrice(product: AltV4Product) {
   return product.livePrice ?? formatAltCzk(product.value)
 }
 
-export const altV4BestIds = ['glp1', 'lean', 'kreatin'] as const
+export const altV4BestIds = ['glp1', 'lean', 'kreatin', 'd3k2'] as const
 export const altV4RestIds = [
   'ileancoko',
-  'd3k2',
   'aquamin',
   'ghk',
   'antiage',
-  'biome4',
-  'hair',
 ] as const
-export const altV4BundleIds = ['bnutricni', 'bpoglpsmart', 'bvahaplet'] as const
+export const altV4BundleIds = [
+  'bnutricni',
+  'bpoglpsmart',
+  'bpoglpintense',
+  'bvahaplet',
+] as const
 
 export const altV4Hero = {
   titleLine1: 'Hubnutí, které',
@@ -631,7 +632,7 @@ export const altV4GlossaryCopy = {
 
 export const altV4Glossary = [
   {
-    term: 'Carolean®',
+    term: 'Carolean™',
     text: 'Standardizovaný extrakt, který v GLP-1 Supportu tvoří hlavní podíl — 3 200 mg v denní dávce. Uvádíme přesné množství, ne „proprietární směs“.',
   },
   {
@@ -649,6 +650,10 @@ export const altV4Glossary = [
   {
     term: 'GHK-Cu',
     text: 'Peptid mědi v kosmetice. Pečuje o vzhled a komfort pokožky. Neodstraňuje nadbytečnou kůži a nenahrazuje plastickou chirurgii — to říkáme rovnou.',
+  },
+  {
+    term: 'VinOgrape™',
+    text: 'VinOgrape™ je extrakt z hroznů obsahující přirozeně se vyskytující rostlinné polyfenoly. GLP-1 Support obsahuje 300 mg VinOgrape™ v doporučené denní dávce.',
   },
 ] as const
 

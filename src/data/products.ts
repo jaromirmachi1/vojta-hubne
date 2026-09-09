@@ -29,7 +29,7 @@ export const featuredProducts: Product[] = [
     subtitle: "Doplněk stravy",
     tagline: "Energie · Spalování · Kontrola chuti",
     description:
-      "Komplex s Carolean®, berberinem, gymnemou a kreatinem pro podporu sytosti, metabolismu a energie.",
+      "Komplex s Carolean™, berberinem, gymnemou a kreatinem pro podporu sytosti, metabolismu a energie.",
     image: glpSupport,
     category: "Doplňky stravy",
     format: "120 kapslí · 82,4 g",

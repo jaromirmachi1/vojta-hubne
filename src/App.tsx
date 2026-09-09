@@ -12,6 +12,7 @@ import {
   ShopifyCartRedirectPage,
   ShopifyCollectionRedirectPage,
 } from './pages/ShopifyRedirectPage'
+import { LEGACY_HOME_PATH } from './data/altHomepage'
 
 function LegacyHomepageRedirect() {
   const { hash, search } = useLocation()
@@ -23,9 +24,9 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<AlternativeHomePage />} />
         <Route path="/co-chystame" element={<CoChystamePage />} />
-        <Route path="/alt" element={<AlternativeHomePage />} />
+        <Route path={LEGACY_HOME_PATH} element={<HomePage />} />
         <Route path="/klub" element={<KlubPage />} />
         <Route path="/kontakt" element={<ContactPage />} />
         <Route path="/spoluprace" element={<AffiliatePage />} />

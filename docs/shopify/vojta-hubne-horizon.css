@@ -7630,3 +7630,87 @@ p.vh-club-badge,
   max-height: 28rem !important;
   object-fit: contain !important;
 }
+
+/* ─── Mobile bottom tab bar (matches React MobileBottomNav) ─── */
+.vh-bottom-nav {
+  position: fixed !important;
+  inset-inline: 0 !important;
+  bottom: 0 !important;
+  z-index: 90 !important;
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+  min-height: 4.6rem !important;
+  padding: 0.45rem 0.35rem calc(0.4rem + env(safe-area-inset-bottom, 0px)) !important;
+  border-radius: 1.35rem 1.35rem 0 0 !important;
+  background: var(--vh-black, #000) !important;
+  box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.28) !important;
+  box-sizing: border-box !important;
+}
+
+.vh-bottom-nav__item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.28rem !important;
+  min-width: 0 !important;
+  padding: 0.15rem 0.2rem !important;
+  color: rgba(255, 255, 255, 0.48) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.58rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  line-height: 1.1 !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  text-align: center !important;
+}
+
+.vh-bottom-nav__item.is-active,
+.vh-bottom-nav__item[aria-current="page"] {
+  color: var(--vh-gold, #eedc82) !important;
+}
+
+.vh-bottom-nav__icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 1.35rem !important;
+  height: 1.35rem !important;
+  color: inherit !important;
+}
+
+.vh-bottom-nav__icon svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.vh-bottom-nav__label {
+  display: block !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 1023px) {
+  body:has(.vh-bottom-nav) {
+    padding-bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px) + 0.5rem) !important;
+  }
+
+  /* Keep sticky product CTAs above the tab bar */
+  body:has(.vh-bottom-nav) .sticky-add-to-cart,
+  body:has(.vh-bottom-nav) [class*="sticky-add"],
+  body:has(.vh-bottom-nav) .product-sticky-bar,
+  body:has(.vh-bottom-nav) sticky-add-to-cart {
+    bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .vh-bottom-nav {
+    display: none !important;
+  }
+}

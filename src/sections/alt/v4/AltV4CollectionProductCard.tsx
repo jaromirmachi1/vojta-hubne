@@ -4,6 +4,7 @@ import {
   getAltV4ProductPrice,
   type AltV4Product,
 } from '../../../data/altHomeV4'
+import type { ProductReviewStats } from '../../../hooks/useProductReviewStats'
 import { altV4 } from '../../../styles/altV4'
 import { formatReviewCount } from '../../../utils/plainText'
 
@@ -216,10 +217,9 @@ function BagPlusIcon() {
   )
 }
 
-function reviewCountFromLabel(label: string): number | null {
-  const match = label.match(/(\d+)/)
-  if (!match) return null
-  return Number(match[1])
+function renderStars(rating: number) {
+  const rounded = Math.round(rating)
+  return '★'.repeat(rounded) + '☆'.repeat(5 - rounded)
 }
 
 function buildDescription(product: AltV4Product): string {
@@ -232,17 +232,35 @@ function buildDescription(product: AltV4Product): string {
 
 type AltV4CollectionProductCardProps = {
   product: AltV4Product
+  reviewStats?: ProductReviewStats
 }
 
 export function AltV4CollectionProductCard({
   product,
+  reviewStats,
 }: AltV4CollectionProductCardProps) {
   const href = getAltV4ProductHref(product)
   const price = getAltV4ProductPrice(product)
   const description = buildDescription(product)
-  const reviewCount = reviewCountFromLabel(product.reviews)
   const external = href.startsWith('http')
   const rel = external ? 'noopener noreferrer' : undefined
+
+  const liveReviews =
+    reviewStats && reviewStats.count > 0
+      ? {
+          average: reviewStats.averageRating.toFixed(1).replace('.', ','),
+          label: formatReviewCount(reviewStats.count),
+          stars: renderStars(reviewStats.averageRating),
+          aria: `Hodnocení ${reviewStats.averageRating.toFixed(1)} z 5 · ${formatReviewCount(reviewStats.count)}`,
+        }
+      : product.reviews
+        ? {
+            average: null,
+            label: product.reviews,
+            stars: null,
+            aria: product.reviews,
+          }
+        : null
 
   return (
     <Card>
@@ -274,14 +292,18 @@ export function AltV4CollectionProductCard({
           <Name>{product.name}</Name>
           <Description>{description}</Description>
           <Price>{price}</Price>
-          {reviewCount !== null ? (
-            <Rating aria-label={`${reviewCount} recenzí`}>
-              <Stars aria-hidden>★★★★★</Stars>
-              <ReviewCount>{formatReviewCount(reviewCount)}</ReviewCount>
-            </Rating>
-          ) : product.reviews ? (
-            <Rating>
-              <ReviewCount>{product.reviews}</ReviewCount>
+          {liveReviews ? (
+            <Rating aria-label={liveReviews.aria}>
+              {liveReviews.stars ? (
+                <Stars aria-hidden>{liveReviews.stars}</Stars>
+              ) : null}
+              {liveReviews.average ? (
+                <>
+                  <ReviewCount>{liveReviews.average}</ReviewCount>
+                  <ReviewCount aria-hidden>·</ReviewCount>
+                </>
+              ) : null}
+              <ReviewCount>{liveReviews.label}</ReviewCount>
             </Rating>
           ) : null}
         </BodyLink>
