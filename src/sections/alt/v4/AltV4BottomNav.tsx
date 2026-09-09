@@ -8,7 +8,7 @@ import {
   getShopifyNovinkyUrl,
 } from '../../../utils/shopify'
 
-const BOTTOM_NAV_HEIGHT = '4.25rem'
+const BOTTOM_NAV_HEIGHT = '4.6rem'
 
 const Bar = styled.nav`
   position: fixed;
@@ -19,7 +19,7 @@ const Bar = styled.nav`
   grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: stretch;
   min-height: ${BOTTOM_NAV_HEIGHT};
-  padding: 0.55rem 0.35rem calc(0.45rem + env(safe-area-inset-bottom, 0px));
+  padding: 0.45rem 0.35rem calc(0.4rem + env(safe-area-inset-bottom, 0px));
   border-radius: 1.35rem 1.35rem 0 0;
   background: ${altV4.black};
   box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.28);
@@ -34,7 +34,7 @@ const itemStyles = css<{ $active?: boolean }>`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.35rem;
+  gap: 0.28rem;
   min-width: 0;
   padding: 0.15rem 0.2rem;
   border: 0;
@@ -59,13 +59,19 @@ const ItemAnchor = styled.a<{ $active?: boolean }>`
   ${itemStyles}
 `
 
-const Indicator = styled.span<{ $active?: boolean }>`
-  display: block;
-  width: ${({ $active }) => ($active ? '1.15rem' : '0.35rem')};
-  height: 0.35rem;
-  border-radius: 999px;
-  background: ${({ $active }) =>
-    $active ? altV4.gold : 'rgba(255, 255, 255, 0.42)'};
+const Icon = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  color: inherit;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 `
 
 const Label = styled.span`
@@ -85,6 +91,113 @@ export const AltV4BottomNavSpacer = styled.div`
   }
 `
 
+function HomeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
+      <path
+        d="M4.5 10.75 12 4.5l7.5 6.25V19a1.5 1.5 0 0 1-1.5 1.5h-3.75v-5.25h-4.5V20.5H6A1.5 1.5 0 0 1 4.5 19v-8.25Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function ProductsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
+      <rect
+        x="3.75"
+        y="3.75"
+        width="7"
+        height="7"
+        rx="1.4"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <rect
+        x="13.25"
+        y="3.75"
+        width="7"
+        height="7"
+        rx="1.4"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <rect
+        x="3.75"
+        y="13.25"
+        width="7"
+        height="7"
+        rx="1.4"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <rect
+        x="13.25"
+        y="13.25"
+        width="7"
+        height="7"
+        rx="1.4"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+    </svg>
+  )
+}
+
+function ClubIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
+      <path
+        d="M12 3.75 13.7 9.1h5.55l-4.5 3.25 1.72 5.4L12 14.7l-4.47 3.05 1.72-5.4-4.5-3.25H10.3L12 3.75Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function NewsIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
+      <path
+        d="M5 5.75h11.5A2.75 2.75 0 0 1 19.25 8.5v9.75H7.5A2.75 2.75 0 0 1 4.75 15.5V6.5A.75.75 0 0 1 5.5 5.75"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.25 9.5h7.5M8.25 12.5h7.5M8.25 15.5H14"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+    </svg>
+  )
+}
+
+function CartIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
+      <path
+        d="M7.25 7.5V6.25a4.75 4.75 0 0 1 9.5 0V7.5"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6.5 7.5h11l-.85 10.2a1.75 1.75 0 0 1-1.74 1.55H9.09a1.75 1.75 0 0 1-1.74-1.55L6.5 7.5Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export function AltV4BottomNav() {
   const { pathname } = useLocation()
   const homeActive = pathname === ALT_HOME_PATH || pathname === `${ALT_HOME_PATH}/`
@@ -96,23 +209,33 @@ export function AltV4BottomNav() {
         $active={homeActive}
         aria-current={homeActive ? 'page' : undefined}
       >
-        <Indicator $active={homeActive} aria-hidden />
+        <Icon>
+          <HomeIcon />
+        </Icon>
         <Label>Domů</Label>
       </ItemLink>
       <ItemAnchor href={getShopifyCatalogUrl()} rel="noopener noreferrer">
-        <Indicator aria-hidden />
+        <Icon>
+          <ProductsIcon />
+        </Icon>
         <Label>Produkty</Label>
       </ItemAnchor>
       <ItemLink to="/klub">
-        <Indicator aria-hidden />
+        <Icon>
+          <ClubIcon />
+        </Icon>
         <Label>VH Club</Label>
       </ItemLink>
       <ItemAnchor href={getShopifyNovinkyUrl()} rel="noopener noreferrer">
-        <Indicator aria-hidden />
+        <Icon>
+          <NewsIcon />
+        </Icon>
         <Label>Novinky</Label>
       </ItemAnchor>
       <ItemAnchor href={getShopifyCartUrl()} rel="noopener noreferrer">
-        <Indicator aria-hidden />
+        <Icon>
+          <CartIcon />
+        </Icon>
         <Label>Košík</Label>
       </ItemAnchor>
     </Bar>

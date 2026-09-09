@@ -432,7 +432,7 @@ export const altV4Hero = {
   badgeValue: '160 → 99 KG',
   badgeNote: '−61 kg',
   primaryCta: 'Začít u nejprodávanějších',
-  secondaryCta: 'Nechat si poradit · 2 otázky',
+  secondaryCta: 'Celý katalog',
 } as const
 
 export const altV4Trust = [

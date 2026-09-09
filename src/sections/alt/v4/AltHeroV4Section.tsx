@@ -3,10 +3,11 @@ import heroImage from '../../../assets/vojta-alt-hero.webp'
 import { ALT_V4_SECTION_IDS, altV4Hero } from '../../../data/altHomeV4'
 import { altV4 } from '../../../styles/altV4'
 import { scrollToSection } from '../../../utils/scrollToSection'
+import { getShopifyCatalogUrl } from '../../../utils/shopify'
 import {
   V4Inner,
   V4PillGoldButton,
-  V4PillOutlineButton,
+  V4PillOutline,
   V4Section,
 } from './shared'
 
@@ -214,13 +215,13 @@ export function AltHeroV4Section() {
             >
               {altV4Hero.primaryCta}
             </Primary>
-            <V4PillOutlineButton
+            <V4PillOutline
               $onDark
-              type="button"
-              onClick={() => scrollToSection(ALT_V4_SECTION_IDS.quiz)}
+              href={getShopifyCatalogUrl()}
+              rel="noopener noreferrer"
             >
               {altV4Hero.secondaryCta}
-            </V4PillOutlineButton>
+            </V4PillOutline>
           </Actions>
         </Layout>
       </HeroInner>

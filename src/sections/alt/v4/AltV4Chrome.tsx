@@ -7,7 +7,12 @@ import { MobileNavMenu, type MobileNavLink } from '../../../components/MobileNav
 import { ALT_HOME_PATH } from '../../../data/altHomepage'
 import { ALT_V4_SECTION_IDS, altV4Promos } from '../../../data/altHomeV4'
 import { altV4 } from '../../../styles/altV4'
-import { getShopifyCartUrl, getShopifyCatalogUrl } from '../../../utils/shopify'
+import {
+  getShopifyBlogUrl,
+  getShopifyCartUrl,
+  getShopifyCatalogUrl,
+  getShopifyNovinkyUrl,
+} from '../../../utils/shopify'
 
 const Shell = styled.div`
   position: sticky;
@@ -172,6 +177,8 @@ export function AltV4Chrome() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [promoIndex, setPromoIndex] = useState(0)
   const catalogUrl = getShopifyCatalogUrl()
+  const blogUrl = getShopifyBlogUrl()
+  const novinkyUrl = getShopifyNovinkyUrl()
   const cartUrl = getShopifyCartUrl()
   const promo = altV4Promos[promoIndex] ?? altV4Promos[0]
 
@@ -183,10 +190,12 @@ export function AltV4Chrome() {
   }, [])
 
   const mobileLinks: MobileNavLink[] = [
+    { label: 'Novinky', href: novinkyUrl, external: true, emphasis: true },
     { label: 'Produkty', href: catalogUrl, external: true },
-    { label: 'Poradit', sectionId: ALT_V4_SECTION_IDS.quiz },
-    { label: 'VH Club', to: '/klub' },
+    { label: 'Blog', href: blogUrl, external: true },
+    { label: 'Proč my', sectionId: ALT_V4_SECTION_IDS.story },
     { label: 'Co chystáme', to: '/co-chystame' },
+    { label: 'Spolupráce', to: '/spoluprace' },
     { label: 'Kontakt', to: '/kontakt' },
   ]
 
@@ -197,14 +206,23 @@ export function AltV4Chrome() {
           <BrandLogo variant="nav" />
         </LogoLink>
         <DesktopNav aria-label="Hlavní menu">
+          <NavA href={novinkyUrl} rel="noopener noreferrer">
+            Novinky
+          </NavA>
           <NavA href={catalogUrl} rel="noopener noreferrer">
             Produkty
           </NavA>
-          <NavHash sectionId={ALT_V4_SECTION_IDS.quiz} pathname={ALT_HOME_PATH}>
-            Poradit
+          <NavA href={blogUrl} rel="noopener noreferrer">
+            Blog
+          </NavA>
+          <NavHash
+            sectionId={ALT_V4_SECTION_IDS.story}
+            pathname={ALT_HOME_PATH}
+          >
+            Proč my
           </NavHash>
-          <NavLink to="/klub">VH Club</NavLink>
           <NavLink to="/co-chystame">Co chystáme</NavLink>
+          <NavLink to="/spoluprace">Spolupráce</NavLink>
           <NavLink to="/kontakt">Kontakt</NavLink>
         </DesktopNav>
         <MenuBtn type="button" aria-label="Menu" onClick={() => setMenuOpen(true)}>

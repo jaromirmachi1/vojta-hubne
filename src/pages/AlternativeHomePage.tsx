@@ -30,8 +30,8 @@ export function AlternativeHomePage() {
         <AltHeroV4Section />
         <AltTrustStripSection />
       </AltV4FirstFold>
-      <AltBestsellersV4Section />
       <AltSituationQuizSection />
+      <AltBestsellersV4Section />
       <AltDailyV4Section />
       <AltBundlesV4Section />
       <AltRestV4Section />
