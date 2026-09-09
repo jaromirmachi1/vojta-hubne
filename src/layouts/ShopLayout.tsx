@@ -8,10 +8,8 @@ import {
   MobileBottomNav,
   MobileBottomNavSpacer,
 } from '../components/MobileBottomNav'
-import { PromoBar } from '../components/PromoBar'
-import { ReviewTickerBar } from '../components/ReviewTickerBar'
+import { SiteChrome } from '../components/SiteChrome'
 import { SiteFooter } from '../components/SiteFooter'
-import { SiteHeader } from '../components/SiteHeader'
 
 const Page = styled.div`
   display: flex;
@@ -32,9 +30,7 @@ type ShopLayoutProps = {
 export function ShopLayout({ children, breadcrumbs }: ShopLayoutProps) {
   return (
     <Page>
-      <PromoBar />
-      <ReviewTickerBar />
-      <SiteHeader />
+      <SiteChrome />
       {breadcrumbs?.length ? <Breadcrumbs items={breadcrumbs} /> : null}
       <Main>
         {children}

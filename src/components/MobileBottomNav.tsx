@@ -1,7 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import {
-  getShopifyCartUrl,
   getShopifyCatalogUrl,
   getShopifyNovinkyUrl,
 } from '../utils/shopify'
@@ -14,7 +13,7 @@ const Bar = styled.nav`
   bottom: 0;
   z-index: 90;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: stretch;
   min-height: ${MOBILE_BOTTOM_NAV_HEIGHT};
   padding: 0.45rem 0.35rem calc(0.4rem + env(safe-area-inset-bottom, 0px));
@@ -180,25 +179,6 @@ function NewsIcon() {
   )
 }
 
-function CartIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden focusable="false">
-      <path
-        d="M7.25 7.5V6.25a4.75 4.75 0 0 1 9.5 0V7.5"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-      />
-      <path
-        d="M6.5 7.5h11l-.85 10.2a1.75 1.75 0 0 1-1.74 1.55H9.09a1.75 1.75 0 0 1-1.74-1.55L6.5 7.5Z"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
 function pathMatches(pathname: string, target: string) {
   return pathname === target || pathname === `${target}/`
 }
@@ -251,12 +231,6 @@ export function MobileBottomNav({
           <NewsIcon />
         </Icon>
         <Label>Novinky</Label>
-      </ItemAnchor>
-      <ItemAnchor href={getShopifyCartUrl()} rel="noopener noreferrer">
-        <Icon>
-          <CartIcon />
-        </Icon>
-        <Label>Košík</Label>
       </ItemAnchor>
     </Bar>
   )

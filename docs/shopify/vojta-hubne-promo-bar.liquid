@@ -1,0 +1,88 @@
+{% comment %}
+  Rotating gold promo bar — matches React SiteChrome / sitePromos.
+  Only one line visible at a time (.is-active). Re-upload CSS + this snippet.
+{% endcomment %}
+
+{% assign marketing = marketing_url | default: 'https://www.vojtahubne.cz' %}
+
+<nav class="vh-promo-bar" aria-label="Aktuality" data-vh-promo-bar>
+  <a
+    class="vh-promo-bar__link is-active"
+    href="/products/lean-shake-glp-1"
+    data-vh-promo-item
+  >
+    <span class="vh-promo-bar__tag">Jen pro členy</span>
+    <span class="vh-promo-bar__text">LEAN SHAKE™ MALINA — nová příchuť pro členy klubu</span>
+    <span class="vh-promo-bar__arrow" aria-hidden="true">→</span>
+  </a>
+  <a
+    class="vh-promo-bar__link"
+    href="/products/lean-shake-glp-1"
+    data-vh-promo-item
+    aria-hidden="true"
+  >
+    <span class="vh-promo-bar__tag">Jen pro členy</span>
+    <span class="vh-promo-bar__text">LEAN SHAKE™ ČOKOLÁDA · bez inulinu, první série</span>
+    <span class="vh-promo-bar__arrow" aria-hidden="true">→</span>
+  </a>
+  <a
+    class="vh-promo-bar__link"
+    href="/products/kreatin-hmb"
+    data-vh-promo-item
+    aria-hidden="true"
+  >
+    <span class="vh-promo-bar__tag">Novinka</span>
+    <span class="vh-promo-bar__text">Kreatin + HMB · 60 dávek, 590 Kč — už skladem</span>
+    <span class="vh-promo-bar__arrow" aria-hidden="true">→</span>
+  </a>
+  <a
+    class="vh-promo-bar__link"
+    href="{{ marketing }}/co-chystame"
+    data-vh-promo-item
+    aria-hidden="true"
+  >
+    <span class="vh-promo-bar__tag">Připravujeme</span>
+    <span class="vh-promo-bar__text">BIOME 4™ — 4 živé kultury, 5 miliard CFU</span>
+    <span class="vh-promo-bar__arrow" aria-hidden="true">→</span>
+  </a>
+  <a
+    class="vh-promo-bar__link"
+    href="{{ marketing }}/co-chystame"
+    data-vh-promo-item
+    aria-hidden="true"
+  >
+    <span class="vh-promo-bar__tag">Připravujeme</span>
+    <span class="vh-promo-bar__text">VH HAIR · 120 kapslí na 30 dní, 699 Kč</span>
+    <span class="vh-promo-bar__arrow" aria-hidden="true">→</span>
+  </a>
+  <a
+    class="vh-promo-bar__link"
+    href="/products/lean-shake-glp-1"
+    data-vh-promo-item
+    aria-hidden="true"
+  >
+    <span class="vh-promo-bar__tag">Nová příchuť</span>
+    <span class="vh-promo-bar__text">Lean Shake™ Višeň v čokoládě — k dodání</span>
+    <span class="vh-promo-bar__arrow" aria-hidden="true">→</span>
+  </a>
+</nav>
+
+<script>
+  (function () {
+    var root = document.querySelector('[data-vh-promo-bar]');
+    if (!root) return;
+    var items = Array.prototype.slice.call(
+      root.querySelectorAll('[data-vh-promo-item]'),
+    );
+    if (items.length < 2) return;
+
+    var index = 0;
+    window.setInterval(function () {
+      items[index].classList.remove('is-active');
+      items[index].setAttribute('aria-hidden', 'true');
+      index = (index + 1) % items.length;
+      items[index].classList.add('is-active');
+      items[index].removeAttribute('aria-hidden');
+    }, 5200);
+  })();
+</script>

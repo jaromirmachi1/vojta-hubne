@@ -45,10 +45,10 @@ export function getShopifyCartUrl(): string {
   return `${base}/cart`;
 }
 
-/** Customer account — login if logged out, account hub if logged in */
+/** CustomerHub account dashboard (not classic /account). */
 export function getShopifyAccountUrl(): string {
   const base = getShopifyStoreUrl();
-  return `${base}/account`;
+  return `${base}/a/customerhub#account:a:dashboard`;
 }
 
 /** Shop catalog landing — `/collections` (heroes, balíčky, péče). */

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { SiteFooter } from '../components/SiteFooter'
 import { RegimeQuizProvider } from '../contexts/RegimeQuizContext'
 import {
   AltV4BottomNav,
@@ -21,6 +22,7 @@ export function AltV4ShopLayout({ children }: AltV4ShopLayoutProps) {
           {children}
           <AltV4BottomNavSpacer />
         </V4Main>
+        <SiteFooter />
         <AltV4BottomNav />
       </V4Page>
     </RegimeQuizProvider>

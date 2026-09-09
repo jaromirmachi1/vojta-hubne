@@ -24,9 +24,9 @@ Matches the React `MobileBottomNav` used on the marketing homepage and other pag
 | Produkty | `/collections` |
 | VH Club | `marketing_url/klub` |
 | Novinky | `/blogs/novinky` |
-| Košík | Cart |
 
 - Mobile only (hidden from `1024px` up)
+- Four equal-width tabs (cart lives in the header — avoids clash with chat FAB)
 - Body gets bottom padding so content clears the bar
 - Sticky product CTAs sit above the bar on mobile
 

@@ -237,7 +237,7 @@ export function AltV4ProductDetailCard({
     ? 'Zobrazit předprodej'
     : product.clubOnly
       ? 'Koupit — jen pro členy'
-      : `${ctaPrefix} — ${price}`
+      : ctaPrefix
   const note = product.soon
     ? 'Předprodej — členové klubu nakupují první.'
     : `Za tento nákup získáte ${Math.max(1, Math.round(product.value / 10))} bodů do VH Clubu.`

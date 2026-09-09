@@ -1,18 +1,18 @@
 {% comment %}
-  Vojta Hubne custom Shopify header — mirrors React SiteHeader.
+  Vojta Hubne custom Shopify header — mirrors React SiteChrome
+  (centered nav + account + KOŠÍK + rotating gold promo bar).
 
   Setup:
-  1. Shopify Admin → Content → Files / Theme assets: upload VojtHLogo.png
-  2. Save this file as snippets/vojta-hubne-header-nav.liquid
-  3. In sections/header.liquid, render it instead of the default header markup:
+  1. Upload VojtHLogo.png + vojta-hubne-horizon.css
+  2. Snippets: vojta-hubne-header-nav.liquid + vojta-hubne-promo-bar.liquid
+  3. In sections/header.liquid inside <header-component>:
      {% render 'vojta-hubne-header-nav', marketing_url: 'https://www.vojtahubne.cz' %}
-  4. Load assets/vojta-hubne-horizon.css in layout/theme.liquid.
 {% endcomment %}
 
 {% assign marketing = marketing_url | default: 'https://www.vojtahubne.cz' %}
 {% assign catalog_url = '/collections' %}
 {% assign cart_url = routes.cart_url %}
-{% assign account_url = routes.account_url | default: '/account' %}
+{% assign account_url = '/a/customerhub#account:a:dashboard' %}
 {% assign blog_url = '/blogs/blog' %}
 {% assign novinky_url = '/blogs/novinky' %}
 
@@ -54,13 +54,8 @@
         {% endif %}
       </a>
 
-      <a class="vh-shop-header__cart-link" href="{{ cart_url }}" aria-label="Košík">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M6 6h15l-1.5 9h-12L6 6z"></path>
-          <path d="M6 6L5 3H2"></path>
-          <circle cx="9" cy="20" r="1"></circle>
-          <circle cx="18" cy="20" r="1"></circle>
-        </svg>
+      <a class="vh-shop-header__cart-link vh-shop-header__cart-link--label" href="{{ cart_url }}">
+        <span class="vh-shop-header__cart-label">Košík</span>
         {% if cart.item_count > 0 %}
           <span class="vh-shop-header__cart-count" aria-label="{{ cart.item_count }} položek v košíku">
             {{ cart.item_count }}
@@ -135,6 +130,8 @@
     </footer>
   </div>
 </div>
+
+{% render 'vojta-hubne-promo-bar', marketing_url: marketing %}
 
 <script>
   (function () {

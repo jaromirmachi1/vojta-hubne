@@ -7638,7 +7638,7 @@ p.vh-club-badge,
   bottom: 0 !important;
   z-index: 90 !important;
   display: grid !important;
-  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
   align-items: stretch !important;
   min-height: 4.6rem !important;
   padding: 0.45rem 0.35rem calc(0.4rem + env(safe-area-inset-bottom, 0px)) !important;
@@ -7700,12 +7700,31 @@ p.vh-club-badge,
     padding-bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px) + 0.5rem) !important;
   }
 
-  /* Keep sticky product CTAs above the tab bar */
-  body:has(.vh-bottom-nav) .sticky-add-to-cart,
-  body:has(.vh-bottom-nav) [class*="sticky-add"],
-  body:has(.vh-bottom-nav) .product-sticky-bar,
-  body:has(.vh-bottom-nav) sticky-add-to-cart {
+  /*
+    Lift only the fixed sticky bar above the tab nav.
+    Do NOT use [class*="sticky-add"] — that also hits __button (position:relative),
+    and bottom: on a relatively positioned button shifts it up off the bar.
+  */
+  body:has(.vh-bottom-nav) .sticky-add-to-cart__bar,
+  body:has(.vh-bottom-nav) .product-sticky-bar {
     bottom: calc(4.6rem + env(safe-area-inset-bottom, 0px)) !important;
+    padding-block-end: var(--padding-sm, 0.55rem) !important;
+  }
+
+  body:has(.vh-bottom-nav) .sticky-add-to-cart__bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--gap-md, 0.75rem) !important;
+  }
+
+  body:has(.vh-bottom-nav) .sticky-add-to-cart__button {
+    position: relative !important;
+    bottom: auto !important;
+    inset: auto !important;
+    flex: none !important;
+    align-self: center !important;
+    margin: 0 !important;
+    transform: none !important;
   }
 }
 
@@ -7713,4 +7732,105 @@ p.vh-club-badge,
   .vh-bottom-nav {
     display: none !important;
   }
+}
+
+
+/* ─── Rotating promo bar (matches React SiteChrome) ─── */
+body:has(.vh-promo-bar) .shopify-section:has(.announcement-bar),
+body:has(.vh-promo-bar) .shopify-section:has(announcement-bar-component),
+body:has(.vh-promo-bar) aside.announcement-bar,
+body:has(.vh-promo-bar) announcement-bar-component {
+  display: none !important;
+}
+
+.vh-promo-bar {
+  display: block !important;
+  width: 100% !important;
+  background: var(--vh-gold, #eedc82) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+.vh-promo-bar__link {
+  display: none !important;
+  align-items: center !important;
+  gap: 0.65rem !important;
+  width: 100% !important;
+  min-height: 3rem !important;
+  padding: 0.55rem 1rem !important;
+  text-decoration: none !important;
+  color: var(--vh-black, #000) !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
+
+.vh-promo-bar__link.is-active {
+  display: flex !important;
+}
+
+@media (min-width: 1024px) {
+  .vh-promo-bar__link.is-active {
+    justify-content: center !important;
+    padding-inline: clamp(1.5rem, 4vw, 3rem) !important;
+  }
+}
+
+.vh-promo-bar__tag {
+  flex: none !important;
+  padding: 0.2rem 0.55rem !important;
+  border-radius: 999px !important;
+  background: var(--vh-black, #000) !important;
+  color: var(--vh-gold, #eedc82) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.625rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+.vh-promo-bar__text {
+  flex: 1 !important;
+  min-width: 0 !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  line-height: 1.35 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  color: var(--vh-black, #000) !important;
+}
+
+@media (min-width: 1024px) {
+  .vh-promo-bar__text {
+    flex: none !important;
+  }
+}
+
+.vh-promo-bar__arrow {
+  flex: none !important;
+  color: var(--vh-black, #000) !important;
+}
+
+#header-component .vh-shop-header__cart-link--label {
+  width: auto !important;
+  min-width: 0 !important;
+  height: 2.85rem !important;
+  min-height: 2.85rem !important;
+  padding: 0 1.1rem !important;
+  gap: 0.45rem !important;
+  border: 1px solid rgba(238, 220, 130, 0.5) !important;
+  border-radius: 999px !important;
+  color: var(--vh-gold, #eedc82) !important;
+  font-family: var(--vh-font-display) !important;
+  font-size: 1.1rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+
+#header-component .vh-shop-header__cart-label {
+  display: inline-block !important;
+  line-height: 1 !important;
 }

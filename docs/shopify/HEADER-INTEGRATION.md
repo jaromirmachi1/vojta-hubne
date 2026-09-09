@@ -37,6 +37,8 @@ Catalog structure (gold situation cards on **`/collections`**, not `/collections
 
 **Mobile bottom tab bar:** see **[BOTTOM-NAV-INTEGRATION.md](./BOTTOM-NAV-INTEGRATION.md)** (`vojta-hubne-bottom-nav.liquid` + CSS).
 
+**Rotating gold promo bar:** add snippet `vojta-hubne-promo-bar.liquid` (already rendered from the header snippet). Re-upload header snippet + CSS. Horizon’s native announcement bar is hidden when `.vh-promo-bar` is present.
+
 **Verify the JS loaded:** on `/collections/all`, open DevTools → Network → filter `collection-media-fix`. If missing, the asset file is not uploaded or the script tag is missing.
 
 **Exact category labels:** the script reads Shopify product JSON in real time. It uses a `vh-filter|...` or `vh-category|...` product tag first, then falls back to product title/type rules. Example product tag:

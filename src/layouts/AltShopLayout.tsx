@@ -4,13 +4,11 @@ import {
   Breadcrumbs,
   type BreadcrumbItem,
 } from '../components/Breadcrumbs'
-import { AltSiteHeader } from '../components/AltSiteHeader'
 import {
   MobileBottomNav,
   MobileBottomNavSpacer,
 } from '../components/MobileBottomNav'
-import { PromoBar } from '../components/PromoBar'
-import { ReviewTickerBar } from '../components/ReviewTickerBar'
+import { SiteChrome } from '../components/SiteChrome'
 import { SiteFooter } from '../components/SiteFooter'
 import { RegimeQuizProvider } from '../contexts/RegimeQuizContext'
 import { ALT_HOME_PATH } from '../data/altHomepage'
@@ -40,9 +38,7 @@ export function AltShopLayout({ children, breadcrumbs }: AltShopLayoutProps) {
   return (
     <RegimeQuizProvider>
       <Page>
-        <PromoBar />
-        <ReviewTickerBar />
-        <AltSiteHeader />
+        <SiteChrome />
         {breadcrumbs?.length ? <Breadcrumbs items={breadcrumbs} /> : null}
         <Main>
           {children}

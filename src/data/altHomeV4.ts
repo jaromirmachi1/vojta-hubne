@@ -16,6 +16,7 @@ import {
   getShopifyNovinkyArticleUrl,
   getShopifyProductUrl,
 } from '../utils/shopify'
+import { sitePromos } from './promoBar'
 
 export const ALT_V4_SECTION_IDS = {
   bestsellers: 'best',
@@ -783,35 +784,4 @@ export const altV4Newsletter = {
     '© 2026 Vojta Hubne · RM Solution Group s.r.o.\nDoplňky stravy nejsou náhradou pestré stravy ani lékařské péče.',
 } as const
 
-export const altV4Promos = [
-  {
-    tag: 'Jen pro členy',
-    text: 'LEAN SHAKE™ MALINA — nová příchuť pro členy klubu',
-    href: productHref('lean-shake-glp-1'),
-  },
-  {
-    tag: 'Jen pro členy',
-    text: 'iLEAN SHAKE™ ČOKOLÁDA · bez inulinu, první série',
-    href: productHref('lean-shake-glp-1'),
-  },
-  {
-    tag: 'Novinka',
-    text: 'Kreatin + HMB · 60 dávek, 590 Kč — už skladem',
-    href: productHref('kreatin-hmb'),
-  },
-  {
-    tag: 'Předprodej',
-    text: 'BIOME 4™ — 4 živé kultury, 5 miliard CFU',
-    href: upcomingHref,
-  },
-  {
-    tag: 'Předprodej',
-    text: 'VH HAIR · 120 kapslí na 30 dní, 699 Kč',
-    href: upcomingHref,
-  },
-  {
-    tag: 'Nová příchuť',
-    text: 'Lean Shake™ Višeň v čokoládě — k dodání',
-    href: productHref('lean-shake-glp-1'),
-  },
-]
+export const altV4Promos = sitePromos
