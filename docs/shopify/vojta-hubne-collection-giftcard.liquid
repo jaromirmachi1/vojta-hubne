@@ -1,0 +1,101 @@
+{% comment %}
+  Vojta Hubne — Dárková karta banner on /collections.
+  Place ABOVE Co chystáme (under Péče a doplňky).
+
+  Setup:
+  1. Sections → filename MUST be: vojta-hubne-collection-giftcard.liquid
+  2. Templates → list-collections.json type "vojta-hubne-collection-giftcard"
+  3. Assets → upload vh-giftcard-logo.webp, vh-giftcard-card-a.webp, vh-giftcard-card-b.webp
+  4. Re-upload vojta-hubne-horizon.css
+{% endcomment %}
+
+{%- assign vh_gift_product = all_products['darkova-karta'] -%}
+{%- if vh_gift_product != blank -%}
+  {%- assign vh_gift_url = vh_gift_product.url -%}
+{%- else -%}
+  {%- assign vh_gift_url = '/products/darkova-karta' -%}
+{%- endif -%}
+
+<section class="vh-giftcard-banner" aria-labelledby="vhgc-title">
+  <div class="vh-giftcard-banner__inner">
+    <div class="vhgc">
+      <span class="vhgc-glow" aria-hidden="true"></span>
+      <span class="vhgc-ring" aria-hidden="true"></span>
+      <span class="vhgc-edge" aria-hidden="true"></span>
+
+      <div class="vhgc-copy">
+        <img
+          class="vhgc-logo"
+          src="{{ 'vh-giftcard-logo.webp' | asset_url }}"
+          alt="Vojta Hubne"
+          width="480"
+          height="154"
+          loading="lazy"
+          decoding="async"
+        >
+        <p class="vhgc-kicker">Dárkový poukaz</p>
+        <h2 class="vhgc-title" id="vhgc-title">
+          Nevíte, co vybrat?<br>
+          <span>Nechte vybrat je.</span>
+        </h2>
+        <p class="vhgc-bonus">
+          Zaplaťte méně, získejte více – dárková karta s bonusem 10 % navíc.
+        </p>
+        <p class="vhgc-sub">
+          Platí na celý e-shop. Přijde e-mailem — hned, nebo ve vybraný den.
+        </p>
+
+        <div class="vhgc-actions">
+          <a class="vhgc-cta" href="{{ vh_gift_url }}">
+            Vybrat hodnotu
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
+          <span class="vhgc-val">1 100 Kč</span>
+          <span class="vhgc-val">2 200 Kč</span>
+          <span class="vhgc-val">4 400 Kč</span>
+        </div>
+      </div>
+
+      <div class="vhgc-cards" aria-hidden="true">
+        <img
+          class="vhgc-card-b"
+          src="{{ 'vh-giftcard-card-b.webp' | asset_url }}"
+          alt=""
+          width="800"
+          height="392"
+          loading="lazy"
+          decoding="async"
+        >
+        <img
+          class="vhgc-card-a"
+          src="{{ 'vh-giftcard-card-a.webp' | asset_url }}"
+          alt=""
+          width="800"
+          height="392"
+          loading="lazy"
+          decoding="async"
+        >
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VH Dárková karta",
+  "tag": "section",
+  "class": "section-vh-collection-giftcard",
+  "enabled_on": {
+    "templates": ["list-collections"]
+  },
+  "settings": [],
+  "presets": [
+    {
+      "name": "VH Dárková karta"
+    }
+  ]
+}
+{% endschema %}

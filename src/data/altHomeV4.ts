@@ -1,7 +1,8 @@
 import biomeImage from '../assets/biome4.png'
-import bundlePost from '../assets/genericglp.png'
 import bundleGlp from '../assets/all-bundle.png'
-import bundleComplex from '../assets/90dnispicusemnew.png'
+import nutricniJistotaImage from '../assets/nutricni-jistota-30.webp'
+import poGlpSmartImage from '../assets/po-glp-smart-30.webp'
+import vahaPletSmartImage from '../assets/vaha-plet-smart.webp'
 import aquaminImage from '../assets/glp1generic.png'
 import d3Image from '../assets/vitality.png'
 import kreatinImage from '../assets/glp1generic.png'
@@ -325,8 +326,8 @@ export const altV4Products: Record<string, AltV4Product> = {
       { k: 'Obsah', v: 'Kombinace doplňků pro denní režim' },
     ],
     value: 2990,
-    href: getShopifyCollectionUrl('nutricni-jistota') ?? catalogUrl,
-    image: bundleComplex,
+    shopifyHandle: 'hubnu-a-nechci-zanedbat-vitaminy-a-mineraly',
+    image: nutricniJistotaImage,
     why: 'Nutriční základ na 30 dní',
     unit: 'balíček',
   },
@@ -348,8 +349,8 @@ export const altV4Products: Record<string, AltV4Product> = {
       { k: 'Obsah', v: 'Sytost, bílkoviny, minerály' },
     ],
     value: 3849,
-    href: getShopifyCollectionUrl('po-vysazeni-glp-1') ?? catalogUrl,
-    image: bundlePost,
+    shopifyHandle: 'po-glp-smart-30',
+    image: poGlpSmartImage,
     why: 'Přechod po vysazení',
     unit: 'balíček',
   },
@@ -394,8 +395,8 @@ export const altV4Products: Record<string, AltV4Product> = {
       { k: 'Obsah', v: 'Doplňky + krémy' },
     ],
     value: 7290,
-    href: catalogUrl,
-    image: ghkImage,
+    shopifyHandle: 'vaha-plet-smart',
+    image: vahaPletSmartImage,
     why: 'Tělo i pleť v jednom',
     unit: 'balíček',
   },
@@ -446,6 +447,9 @@ export const altV4QuizCopy = {
   title: 'Co právě řešíte?',
   lead:
     'Vyberte situaci a hned pod ní se ukáže, co k ní patří — jednotlivě, nebo jako celý měsíční režim.',
+  desktopTitle: 'Jaká je vaše situace?',
+  desktopLead:
+    'Vyberte možnost, která vás vystihuje nejvíc. Hned pod tím uvidíte produkty doporučené pro vaši fázi.',
   addAll: 'Otevřít v e-shopu',
   seeAll: 'Chci vidět všechny produkty',
 } as const

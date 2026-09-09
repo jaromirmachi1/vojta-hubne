@@ -2,13 +2,14 @@
 
 Page: **`https://shop.vojtahubne.cz/collections`**
 
-Three separate sections:
+Four separate sections:
 
 | Order | Shopify section **filename** (exact) | Paste from repo |
 |-------|--------------------------------------|-----------------|
 | 1 | `vojta-hubne-collection-catalog.liquid` | `docs/shopify/vojta-hubne-collection-catalog.liquid` |
 | 2 | `vojta-hubne-collection-care.liquid` | `docs/shopify/vojta-hubne-collection-care.liquid` |
-| 3 | `vojta-hubne-collection-upcoming.liquid` | `docs/shopify/vojta-hubne-collection-upcoming.liquid` |
+| 3 | `vojta-hubne-collection-giftcard.liquid` | `docs/shopify/vojta-hubne-collection-giftcard.liquid` |
+| 4 | `vojta-hubne-collection-upcoming.liquid` | `docs/shopify/vojta-hubne-collection-upcoming.liquid` |
 
 The filename in **Sections** must match the `type` in `list-collections.json`.  
 Do **not** put care content into the catalog file.
@@ -28,28 +29,36 @@ Do **not** put care content into the catalog file.
    If you wrongly named care as catalog, delete that wrong file and recreate both correctly.
 
 3. **Sections → Add a new section**  
+   Filename exactly: **`vojta-hubne-collection-giftcard`**  
+   Paste `docs/shopify/vojta-hubne-collection-giftcard.liquid` → Save
+
+4. **Sections → Add a new section**  
    Filename exactly: **`vojta-hubne-collection-upcoming`**  
    Paste `docs/shopify/vojta-hubne-collection-upcoming.liquid` → Save
 
-4. **Templates → `list-collections.json`**  
+5. **Templates → `list-collections.json`**  
    Replace with `docs/shopify/list-collections.json` (updated types):
 
 ```json
 {
   "sections": {
+    "17888444757dec8acd": { "type": "_blocks", "...": "Judge.me (keep as-is from theme editor)" },
     "catalog": { "type": "vojta-hubne-collection-catalog", "settings": {} },
     "care": { "type": "vojta-hubne-collection-care", "settings": {} },
+    "giftcard": { "type": "vojta-hubne-collection-giftcard", "settings": {} },
     "upcoming": { "type": "vojta-hubne-collection-upcoming", "settings": {} }
   },
-  "order": ["catalog", "care", "upcoming"]
+  "order": ["17888444757dec8acd", "catalog", "care", "giftcard", "upcoming"]
 }
 ```
 
-5. Re-upload **`vojta-hubne-horizon.css`**
+6. Re-upload **`vojta-hubne-horizon.css`**
 
-6. **Theme → Assets** — upload **`vh-catalog-novinky-banner.jpg`** and **`vh-catalog-novinky-banner-mobil.png`** from `src/assets/` (or `docs/shopify/assets/`)
+7. **Theme → Assets** — upload:
+   - **`vh-catalog-novinky-banner.jpg`** and **`vh-catalog-novinky-banner-mobil.jpg`** from `docs/shopify/assets/`
+   - **`vh-giftcard-logo.webp`**, **`vh-giftcard-card-a.webp`**, **`vh-giftcard-card-b.webp`** from `docs/shopify/assets/`
 
-7. Hard-refresh `/collections`
+8. Hard-refresh `/collections`
 
 ## What you should see
 
@@ -58,7 +67,8 @@ Do **not** put care content into the catalog file.
 2. Trust bar
 3. **Balíčky** — real Shopify products with type **Balíčky**, same cards as heroes
 4. **Péče a doplňky** (own product grid underneath)
-5. **Co chystáme** — Neviňátko, Odvodňovač, Probiotika + **Zobrazit více** → `vojtahubne.cz/co-chystame`
+5. **Dárková karta** banner → `/products/darkova-karta`
+6. **Co chystáme** — Neviňátko, Odvodňovač, Probiotika + **Zobrazit více** → `vojtahubne.cz/co-chystame`
 
 ## Snippets needed
 

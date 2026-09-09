@@ -8,7 +8,7 @@
  *   black #000000, surface #0a0a0a, gold #eedc82, goldMuted #c9b56a
  */
 
-@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800&display=swap");
 
 :root {
   --vh-black: #000000;
@@ -2401,8 +2401,10 @@ button.vh-collection-filter__chip:hover small,
 /* Catalog structure on /collections (list-collections) */
 .section-vh-collection-list,
 .section-vh-collection-care,
+.section-vh-collection-giftcard,
 .shopify-section:has(.vh-catalog),
-.shopify-section:has(.vh-care) {
+.shopify-section:has(.vh-care),
+.shopify-section:has(.vh-giftcard-banner) {
   width: 100% !important;
   max-width: none !important;
   padding: 0 !important;
@@ -2411,7 +2413,9 @@ button.vh-collection-filter__chip:hover small,
 
 body.template-list-collections
   main
-  .shopify-section:not(:has(.vh-catalog)):not(:has(.vh-care)) {
+  .shopify-section:not(:has(.vh-catalog)):not(:has(.vh-care)):not(
+    :has(.vh-upcoming)
+  ):not(:has(.vh-giftcard-banner)) {
   display: none !important;
 }
 
@@ -2866,6 +2870,303 @@ body.template-list-collections
 @media (min-width: 1024px) {
   .vh-care__grid {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Dárková karta banner — above Co chystáme on /collections */
+.vh-giftcard-banner {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  padding-block: clamp(1.5rem, 4vw, 2.75rem) clamp(2rem, 5vw, 3.5rem) !important;
+  border-top: 1px solid var(--vh-border-subtle) !important;
+  background: var(--vh-black) !important;
+}
+
+.vh-giftcard-banner *,
+.vh-giftcard-banner *::before,
+.vh-giftcard-banner *::after {
+  box-sizing: border-box !important;
+}
+
+.vh-giftcard-banner__inner {
+  width: min(100%, var(--vh-page-max-width)) !important;
+  max-width: var(--vh-page-max-width) !important;
+  margin-inline: auto !important;
+  padding-inline: var(--vh-page-padding-inline) !important;
+}
+
+.vhgc {
+  --vhgc-gold: var(--vh-gold);
+  --vhgc-ink: #121212;
+  position: relative !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  height: 250px !important;
+  margin: 0 auto !important;
+  padding: 26px 56px !important;
+  background: var(--vhgc-ink) !important;
+  font-family: var(--vh-font-sans) !important;
+  display: grid !important;
+  grid-template-columns: 1fr 300px !important;
+  align-items: center !important;
+  gap: 36px !important;
+}
+
+.vhgc-glow,
+.vhgc-ring,
+.vhgc-edge {
+  position: absolute !important;
+  pointer-events: none !important;
+}
+
+.vhgc-glow {
+  inset: 0 !important;
+  background:
+    radial-gradient(
+      680px 380px at 8% 0%,
+      rgba(238, 220, 130, 0.16),
+      transparent 70%
+    ),
+    radial-gradient(
+      460px 340px at 96% 100%,
+      rgba(238, 220, 130, 0.09),
+      transparent 72%
+    ) !important;
+}
+
+.vhgc-ring {
+  width: 260px !important;
+  height: 260px !important;
+  right: -80px !important;
+  top: -110px !important;
+  border: 1px solid rgba(238, 220, 130, 0.16) !important;
+  border-radius: 50% !important;
+}
+
+.vhgc-edge {
+  left: 0 !important;
+  top: 0 !important;
+  width: 2px !important;
+  height: 100% !important;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    rgba(238, 220, 130, 0.35),
+    transparent
+  ) !important;
+}
+
+.vhgc-copy {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.vhgc-logo {
+  display: block !important;
+  height: 22px !important;
+  width: auto !important;
+  margin-bottom: 12px !important;
+}
+
+.vhgc-kicker {
+  margin: 0 0 8px !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.22em !important;
+  text-transform: uppercase !important;
+  color: var(--vhgc-gold) !important;
+}
+
+.vhgc-title {
+  margin: 0 0 8px !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 28px !important;
+  font-weight: 800 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -0.02em !important;
+  text-transform: uppercase !important;
+  color: #ffffff !important;
+  text-wrap: pretty;
+}
+
+.vhgc-title span {
+  color: var(--vhgc-gold) !important;
+}
+
+.vhgc-bonus {
+  margin: 0 0 6px !important;
+  max-width: 560px !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  color: var(--vhgc-gold) !important;
+}
+
+.vhgc-sub {
+  margin: 0 0 12px !important;
+  max-width: 520px !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.vhgc-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap !important;
+}
+
+.vhgc-cta {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex: none !important;
+  padding: 13px 22px !important;
+  border: 0 !important;
+  background: var(--vhgc-gold) !important;
+  color: var(--vhgc-ink) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+}
+
+.vhgc-cta:hover {
+  background: var(--vhgc-gold) !important;
+  color: var(--vhgc-ink) !important;
+  opacity: 0.9 !important;
+}
+
+.vhgc-cta:focus-visible {
+  outline: 2px solid var(--vhgc-gold) !important;
+  outline-offset: 3px !important;
+}
+
+.vhgc-val {
+  flex: none !important;
+  padding: 12px 15px !important;
+  border: 1px solid rgba(238, 220, 130, 0.45) !important;
+  color: var(--vhgc-gold) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+.vhgc-cards {
+  position: relative !important;
+  height: 190px !important;
+  z-index: 1 !important;
+}
+
+.vhgc-cards img {
+  position: absolute !important;
+  display: block !important;
+  height: auto !important;
+}
+
+.vhgc-card-b {
+  left: -10px !important;
+  top: 44px !important;
+  width: 240px !important;
+  transform: rotate(-6deg) !important;
+  box-shadow: 0 20px 46px rgba(0, 0, 0, 0.55) !important;
+}
+
+.vhgc-card-a {
+  right: 0 !important;
+  top: 12px !important;
+  width: 248px !important;
+  transform: rotate(4deg) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid rgba(238, 220, 130, 0.18) !important;
+}
+
+@media (max-width: 1100px) {
+  .vhgc {
+    grid-template-columns: 1fr 240px !important;
+    gap: 24px !important;
+    padding: 24px 32px !important;
+    height: auto !important;
+    min-height: 230px !important;
+  }
+
+  .vhgc-card-b {
+    left: -24px !important;
+    top: 40px !important;
+    width: 190px !important;
+  }
+
+  .vhgc-card-a {
+    width: 196px !important;
+  }
+
+  .vhgc-cards {
+    height: 160px !important;
+  }
+}
+
+@media (max-width: 749px) {
+  .vhgc {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 28px 20px 0 !important;
+    gap: 20px !important;
+  }
+
+  .vhgc-title {
+    font-size: 24px !important;
+  }
+
+  .vhgc-actions {
+    gap: 8px !important;
+  }
+
+  .vhgc-cta {
+    width: 100% !important;
+    justify-content: center !important;
+    order: -1 !important;
+    padding: 15px 20px !important;
+  }
+
+  .vhgc-val {
+    flex: 1 1 auto !important;
+    text-align: center !important;
+  }
+
+  .vhgc-cards {
+    height: 150px !important;
+  }
+
+  .vhgc-card-b {
+    display: none !important;
+  }
+
+  .vhgc-card-a {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+
+  .vhgc-ring {
+    right: -140px !important;
   }
 }
 
@@ -5000,10 +5301,9 @@ main form[action*="/cart"] [class*="remove"] svg {
 main .cart__checkout-button,
 main .cart__footer button[name="checkout"],
 main .cart__blocks button[name="checkout"],
-main button[name="checkout"],
-main .cart [class*="checkout"] button,
+main .cart button[name="checkout"],
 main cart-items [class*="checkout"] button,
-main form[action*="/cart"] [class*="checkout"] button {
+main .cart [class*="checkout"] button:not(.shopify-payment-button__button) {
   background: var(--vh-gold) !important;
   border: 1px solid var(--vh-gold) !important;
   border-radius: var(--vh-radius-pill) !important;
@@ -5019,7 +5319,7 @@ main form[action*="/cart"] [class*="checkout"] button {
 main .cart__checkout-button::after,
 main .cart__footer button[name="checkout"]::after,
 main .cart__blocks button[name="checkout"]::after,
-main button[name="checkout"]::after {
+main .cart button[name="checkout"]::after {
   content: "Pokračovat";
   font-size: 0.75rem !important;
   letter-spacing: 0.14em !important;
@@ -5100,13 +5400,82 @@ main cart-discount-component .cart-discount__form button[type="submit"] {
   text-decoration: underline !important;
 }
 
-/* Branded Shop Pay keeps its native styling — do not force gold ATC styles */
-.product-details .shopify-payment-button__button--branded,
-.product-details shopify-accelerated-checkout .shopify-payment-button__button {
+/* Branded Shop Pay / wallets keep native styling */
+.product-details .shopify-payment-button__button--branded {
   background: unset !important;
   border: none !important;
   color: inherit !important;
 }
+
+/* Unbranded “Koupit teď” — visible black label on gold (cart font-size:0 must not apply here) */
+.product-details .shopify-payment-button__button--unbranded,
+.product-details shopify-buy-it-now-button .shopify-payment-button__button,
+main .shopify-payment-button__button--unbranded,
+main form[action*="/cart"] .shopify-payment-button__button,
+main form[action*="/cart"] [class*="checkout"] .shopify-payment-button__button,
+main
+  form[action*="/cart"]
+  [class*="checkout"]
+  button.shopify-payment-button__button {
+  background-color: var(--vh-gold) !important;
+  border: 1px solid var(--vh-gold) !important;
+  color: var(--vh-black) !important;
+  font-family: var(--vh-font-sans) !important;
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
+}
+
+/* Gift card recipient form — Horizon --color-input-text is dark gray on our black fields */
+.recipient-form,
+gift-card-recipient-form.recipient-form {
+  --color-input-text: #ffffff;
+  --color-input-background: var(--vh-surface-raised);
+  --color-input-border: var(--vh-border-subtle);
+}
+
+.recipient-fields__input,
+.recipient-fields__textarea,
+gift-card-recipient-form input:not([type="hidden"]):not([type="radio"]),
+gift-card-recipient-form textarea {
+  background-color: var(--vh-surface-raised) !important;
+  border: 1px solid var(--vh-border-subtle) !important;
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+.recipient-fields__input::placeholder,
+.recipient-fields__textarea::placeholder,
+gift-card-recipient-form input::placeholder,
+gift-card-recipient-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.72) !important;
+  opacity: 1 !important;
+}
+
+.recipient-form-field-label,
+.field--send-on > div {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.field--send-on .recipient-fields__input[type="date"] {
+  color-scheme: dark;
+}
+
+.field--send-on .recipient-fields__input::-webkit-datetime-edit,
+.field--send-on .recipient-fields__input::-webkit-datetime-edit-fields-wrapper,
+.field--send-on .recipient-fields__input::-webkit-datetime-edit-text,
+.field--send-on .recipient-fields__input::-webkit-datetime-edit-year-field,
+.field--send-on .recipient-fields__input::-webkit-datetime-edit-month-field,
+.field--send-on .recipient-fields__input::-webkit-datetime-edit-day-field {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.field--send-on .recipient-fields__input::-webkit-calendar-picker-indicator {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
 /* Collection quick-add: color only, keep Horizon's native sizing and position. */
 main[data-template="collection"] .card-gallery .quick-add__button {
   color: #ffffff !important;
