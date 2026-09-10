@@ -138,7 +138,14 @@
           <p class="vh-hero-card__cat">{{ category }}</p>
         {%- endif -%}
         <h2 class="vh-hero-card__name">{{ product.title }}</h2>
-        <p class="vh-hero-card__price">{{ product.price | money }}</p>
+        <p class="vh-hero-card__price">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="vh-hero-card__price-sale">{{ product.price | money }}</span>
+            <s class="vh-hero-card__price-compare">{{ product.compare_at_price | money }}</s>
+          {%- else -%}
+            <span class="vh-hero-card__price-current">{{ product.price | money }}</span>
+          {%- endif -%}
+        </p>
         {%- if tagline != blank -%}
           <p class="vh-hero-card__tagline">{{ tagline }}</p>
         {%- endif -%}

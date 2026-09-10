@@ -13,6 +13,7 @@ import leanShake from '../assets/products/lean-shake.png'
 import {
   getShopifyBlogUrl,
   getShopifyCatalogUrl,
+  getShopifyCollectionUrl,
   getShopifyNovinkyArticleUrl,
   getShopifyProductUrl,
 } from '../utils/shopify'
@@ -548,6 +549,8 @@ export const altV4BundlesCopy = {
   titleLine2: 'skládat košík',
   lead:
     'Balíček je hotový měsíční režim: co brát ráno, co k jídlu a co večer. Jedna objednávka, žádné dohadování, co k čemu patří.',
+  moreCta: 'Více balíčků',
+  moreHref: getShopifyCollectionUrl('balicky') ?? catalogUrl,
 } as const
 
 export const altV4RestCopy = {

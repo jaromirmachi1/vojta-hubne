@@ -22,7 +22,7 @@ Shopify Admin → Products → Collections:
 | Podpora po GLP | `podpora-po-glp` | Smart / Intense (GLP group) |
 | Váha a pleť | `vaha-a-plet` | remaining Smart / Intense / skin packs |
 | Rychlý start | `rychly-start` | (re)Start, Hlad pod kontrolou, Nutriční jistota |
-| Péče a doplňky | `pece-a-doplnky` | Antiage cream, GHK-Cu cream, Aquamin, D3+K2 |
+| Péče a doplňky | `pece-a-doplnky` | Antiage cream, GHK-Cu cream, Aquamin, D3+K2, JALU-EXPERT 2.0 |
 
 Sort each collection **manually**. Grouping in the PDF is a working draft — adjust products to match real bundle contents.
 

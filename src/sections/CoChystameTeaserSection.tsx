@@ -2,14 +2,10 @@ import { Link } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import { PageContainer } from '../components/PageContainer'
 import { ArrowIcon } from '../components/cochystame/ArrowIcon'
-import { coChystameProjects } from '../data/coChystameProjects'
+import { getCoChystameTeaserProjects } from '../data/coChystameProjects'
 import { eyebrowText } from '../styles/eyebrow'
 
-const teaserIds = ['nevinatko', 'odvodnovac', 'probiotika'] as const
-
-const teaserProjects = teaserIds
-  .map((id) => coChystameProjects.find((project) => project.id === id))
-  .filter((project): project is (typeof coChystameProjects)[number] => Boolean(project))
+const teaserProjects = getCoChystameTeaserProjects(3)
 
 const pulse = keyframes`
   0%, 100% { opacity: 1; }
@@ -187,17 +183,21 @@ const Card = styled(Link)`
   }
 `
 
-const StatusPill = styled.span`
+const StatusPill = styled.span<{ $done?: boolean }>`
   align-self: start;
-  border: 1px solid rgba(238, 220, 130, 0.45);
-  color: ${({ theme }) => theme.colors.goldMuted};
+  border: 1px solid
+    ${({ $done }) =>
+      $done ? 'rgba(238, 220, 130, 0.75)' : 'rgba(238, 220, 130, 0.45)'};
+  color: ${({ $done, theme }) =>
+    $done ? theme.colors.black : theme.colors.goldMuted};
   font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 0.5rem 0.65rem;
   border-radius: ${({ theme }) => theme.radii.pill};
-  background: rgba(238, 220, 130, 0.08);
+  background: ${({ $done, theme }) =>
+    $done ? theme.colors.gold : 'rgba(238, 220, 130, 0.08)'};
 `
 
 const CardKicker = styled.p`
@@ -345,7 +345,9 @@ export function CoChystameTeaserSection() {
               to="/co-chystame"
               aria-label={`Zjistit více o projektu ${project.title}`}
             >
-              <StatusPill>{project.status}</StatusPill>
+              <StatusPill $done={project.status === 'Dokončeno'}>
+                {project.status}
+              </StatusPill>
               <CardKicker>{project.kicker}</CardKicker>
               <CardTitle>{project.title}</CardTitle>
               <CardExcerpt>{project.excerpt}</CardExcerpt>

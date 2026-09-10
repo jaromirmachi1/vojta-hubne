@@ -175,3 +175,11 @@ export const coChystameProjects: CoChystameProject[] = [
   },
 ]
 
+/** Collections / homepage teaser — only in-progress items, furthest along first. */
+export function getCoChystameTeaserProjects(limit = 3): CoChystameProject[] {
+  return [...coChystameProjects]
+    .filter((project) => project.status !== 'Dokončeno')
+    .sort((a, b) => b.progress - a.progress)
+    .slice(0, limit)
+}
+

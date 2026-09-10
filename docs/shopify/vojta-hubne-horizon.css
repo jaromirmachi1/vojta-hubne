@@ -2429,10 +2429,23 @@ body.template-list-collections
 }
 
 .vh-catalog__promo-banner {
+  display: block;
   width: 100%;
   overflow: hidden;
   border-radius: var(--vh-radius-xl, 1.25rem);
   background: #ebe8e3;
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.vh-catalog__promo-banner:hover {
+  opacity: 0.96;
+}
+
+.vh-catalog__promo-banner:focus-visible {
+  outline: 2px solid var(--vh-gold, #eedc82);
+  outline-offset: 3px;
 }
 
 .vh-catalog__promo-banner-image {
@@ -2842,11 +2855,27 @@ body.template-list-collections
 
 .vh-care-card__price {
   margin: 0.2rem 0 0 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: baseline !important;
+  gap: 0.35rem 0.55rem !important;
   font-family: var(--vh-font-sans) !important;
   font-size: clamp(0.82rem, 0.95vw, 0.9rem) !important;
   font-weight: 600 !important;
   line-height: 1.2 !important;
   color: var(--vh-gold) !important;
+}
+
+.vh-care-card__price-sale,
+.vh-care-card__price-current {
+  color: var(--vh-gold) !important;
+}
+
+.vh-care-card__price-compare {
+  color: rgba(255, 255, 255, 0.45) !important;
+  font-size: 0.8em !important;
+  font-weight: 500 !important;
+  text-decoration: line-through !important;
 }
 
 .vh-care-card__rating {
@@ -3283,6 +3312,15 @@ body.template-list-collections
   color: var(--vh-gold) !important;
 }
 
+.vh-upcoming__title-link {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.vh-upcoming__title-link:hover {
+  color: #fff !important;
+}
+
 .vh-upcoming__lead {
   display: none !important;
   margin: 0 !important;
@@ -3364,6 +3402,12 @@ body.template-list-collections
   font-weight: 700 !important;
   letter-spacing: 0.16em !important;
   text-transform: uppercase !important;
+}
+
+.vh-upcoming-card__status--done {
+  border-color: rgba(238, 220, 130, 0.75) !important;
+  background: var(--vh-gold) !important;
+  color: var(--vh-black) !important;
 }
 
 .vh-upcoming-card__kicker {
@@ -3760,10 +3804,26 @@ body.template-list-collections
 
 .vh-hero-card__price {
   margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.45rem 0.65rem;
   font-family: var(--vh-font-sans);
   font-size: 1rem;
   font-weight: 600;
   color: var(--vh-gold);
+}
+
+.vh-hero-card__price-sale,
+.vh-hero-card__price-current {
+  color: var(--vh-gold);
+}
+
+.vh-hero-card__price-compare {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: line-through;
 }
 
 .vh-hero-card__tagline {

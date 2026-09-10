@@ -1,8 +1,9 @@
 {% comment %}
   Vojta Hubne — Co chystáme teaser on /collections.
 
-  3 newest in-progress products from vojtahubne.cz/co-chystame.
-  Place UNDER Péče a doplňky.
+  Only in-progress projects (never status "Dokončeno").
+  Keep in sync with getCoChystameTeaserProjects() in src/data/coChystameProjects.ts
+  (currently top 3 by progress: Neviňátko, Odvodňovač, Probiotika).
 
   Setup:
   1. Sections → filename MUST be: vojta-hubne-collection-upcoming.liquid
@@ -23,7 +24,9 @@
           </span>
           <p class="vh-upcoming__eyebrow">Právě ve vývoji</p>
         </div>
-        <h2 class="vh-upcoming__title" id="vh-upcoming-title">Co chystáme</h2>
+        <h2 class="vh-upcoming__title" id="vh-upcoming-title">
+          <a class="vh-upcoming__title-link" href="{{ vh_upcoming_url }}">Co chystáme</a>
+        </h2>
       </div>
       <p class="vh-upcoming__lead">
         Transparentní pohled do vývoje: nové produkty, testování a komunita.
@@ -32,7 +35,12 @@
     </header>
 
     <div class="vh-upcoming__grid" role="list">
-      <a class="vh-upcoming-card" href="{{ vh_upcoming_url }}" role="listitem" aria-label="Zjistit více o projektu Neviňátko">
+      <a
+        class="vh-upcoming-card"
+        href="{{ vh_upcoming_url }}"
+        role="listitem"
+        aria-label="Zjistit více o projektu Neviňátko"
+      >
         <span class="vh-upcoming-card__status">Připravujeme</span>
         <p class="vh-upcoming-card__kicker">Večerní směs</p>
         <h3 class="vh-upcoming-card__name">Neviňátko</h3>
@@ -50,7 +58,12 @@
         </div>
       </a>
 
-      <a class="vh-upcoming-card" href="{{ vh_upcoming_url }}" role="listitem" aria-label="Zjistit více o projektu Odvodňovač">
+      <a
+        class="vh-upcoming-card"
+        href="{{ vh_upcoming_url }}"
+        role="listitem"
+        aria-label="Zjistit více o projektu Odvodňovač"
+      >
         <span class="vh-upcoming-card__status">Ve vývoji – ladíme finální podobu</span>
         <p class="vh-upcoming-card__kicker">Lehčí pocit. Méně zadržené vody.</p>
         <h3 class="vh-upcoming-card__name">Odvodňovač</h3>
@@ -68,7 +81,12 @@
         </div>
       </a>
 
-      <a class="vh-upcoming-card" href="{{ vh_upcoming_url }}" role="listitem" aria-label="Zjistit více o projektu Probiotika">
+      <a
+        class="vh-upcoming-card"
+        href="{{ vh_upcoming_url }}"
+        role="listitem"
+        aria-label="Zjistit více o projektu Probiotika"
+      >
         <span class="vh-upcoming-card__status">Ve vývoji – ladíme finální podobu</span>
         <p class="vh-upcoming-card__kicker">Podpora trávení a střevního mikrobiomu</p>
         <h3 class="vh-upcoming-card__name">Probiotika</h3>

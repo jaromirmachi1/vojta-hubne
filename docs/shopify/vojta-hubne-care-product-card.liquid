@@ -56,7 +56,14 @@
         {%- if vh_desc != blank -%}
           <p class="vh-care-card__desc">{{ vh_desc }}</p>
         {%- endif -%}
-        <p class="vh-care-card__price">{{ product.price | money }}</p>
+        <p class="vh-care-card__price">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="vh-care-card__price-sale">{{ product.price | money }}</span>
+            <s class="vh-care-card__price-compare">{{ product.compare_at_price | money }}</s>
+          {%- else -%}
+            <span class="vh-care-card__price-current">{{ product.price | money }}</span>
+          {%- endif -%}
+        </p>
         <div
           class="vh-care-card__rating jdgm-widget jdgm-preview-badge"
           data-id="{{ product.id }}"

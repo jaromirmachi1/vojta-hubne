@@ -10,6 +10,7 @@ import {
   V4Eyebrow,
   V4Inner,
   V4Lead,
+  V4PillOutline,
   V4Section,
   V4Title,
 } from './shared'
@@ -22,6 +23,16 @@ const Grid = styled.div`
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
     grid-template-columns: 1fr 1fr;
   }
+`
+
+const MoreRow = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1.35rem;
+`
+
+const MoreCta = styled(V4PillOutline)`
+  min-width: 14rem;
 `
 
 export function AltBundlesV4Section() {
@@ -53,6 +64,14 @@ export function AltBundlesV4Section() {
             />
           ))}
         </Grid>
+        <MoreRow>
+          <MoreCta
+            href={altV4BundlesCopy.moreHref}
+            rel="noopener noreferrer"
+          >
+            {altV4BundlesCopy.moreCta}
+          </MoreCta>
+        </MoreRow>
       </V4Inner>
     </V4Section>
   )

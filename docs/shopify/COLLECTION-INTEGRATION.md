@@ -55,20 +55,20 @@ Do **not** put care content into the catalog file.
 6. Re-upload **`vojta-hubne-horizon.css`**
 
 7. **Theme → Assets** — upload:
-   - **`vh-catalog-novinky-banner.jpg`** and **`vh-catalog-novinky-banner-mobil.jpg`** from `docs/shopify/assets/`
+   - **`vh-catalog-visne-banner.jpg`** and **`vh-catalog-visne-banner-mobil.jpg`** from `docs/shopify/assets/` (links to `/products/visnova-forma-complete`)
    - **`vh-giftcard-logo.webp`**, **`vh-giftcard-card-a.webp`**, **`vh-giftcard-card-b.webp`** from `docs/shopify/assets/`
 
 8. Hard-refresh `/collections`
 
 ## What you should see
 
-0. **Nové produkty** promo banner (Lean Shake Višeň v čokoládě + Kreatin HMB)
+0. **Nový balíček** promo banner → [Višňová forma COMPLETE](https://shop.vojtahubne.cz/products/visnova-forma-complete)
 1. Vaše nejoblíbenější produkty — **4 compact tiles** (GLP-1 Support, Lean Shake, Kreatin + HMB, D3 + K2 + Vápník), same style as Péče a doplňky: **2 per row mobile, 4 desktop**
 2. Trust bar
 3. **Balíčky** — real Shopify products with type **Balíčky**, same cards as heroes
 4. **Péče a doplňky** (own product grid underneath)
 5. **Dárková karta** banner → `/products/darkova-karta`
-6. **Co chystáme** — Neviňátko, Odvodňovač, Probiotika + **Zobrazit více** → `vojtahubne.cz/co-chystame`
+6. **Co chystáme** — next 3 in-progress projects only (skips **Dokončeno**; currently Neviňátko, Odvodňovač, Probiotika) + **Zobrazit více** → `vojtahubne.cz/co-chystame`
 
 ## Snippets needed
 

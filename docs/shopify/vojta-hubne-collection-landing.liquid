@@ -161,6 +161,10 @@
           {%- if care_fallback != blank -%}
             {% render 'vojta-hubne-catalog-card', product: care_fallback, style: 'care' %}
           {%- endif -%}
+          {%- assign care_fallback = all_products['jalu-expert-2-0'] -%}
+          {%- if care_fallback != blank -%}
+            {% render 'vojta-hubne-catalog-card', product: care_fallback, style: 'care' %}
+          {%- endif -%}
         {%- endif -%}
       </div>
     </div>
