@@ -3,7 +3,7 @@ import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { companyInfo } from '../data/company'
-import { eyebrowText } from '../styles/eyebrow'
+import { BrandLogo } from './BrandLogo'
 import { HashLink } from './HashLink'
 import { PageContainer } from './PageContainer'
 import { getCookiesPolicyPageUrl, getPrivacyPolicyPageUrl, getShopifyPolicyUrl } from '../utils/shopify'
@@ -17,28 +17,188 @@ const Footer = styled.footer`
   background: ${({ theme }) => theme.colors.surface};
 `
 
-const Inner = styled(PageContainer)`
+const Shell = styled(PageContainer)`
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-block: 2.75rem 1.5rem;
+`
+
+const Top = styled.div`
   display: grid;
-  gap: 2.5rem;
-  padding-block: 3rem;
+  gap: 2rem;
+  align-items: start;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.9fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 2.2fr);
+    gap: 2.5rem 3rem;
+  }
+`
+
+const Brand = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    align-items: flex-start;
+    text-align: left;
+    padding-right: 2rem;
+    border-right: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  }
+`
+
+const LogoLink = styled(Link)`
+  display: inline-flex;
+  line-height: 0;
+  text-decoration: none;
+
+  img {
+    height: 2.5rem;
+    width: auto;
+  }
+`
+
+const Tagline = styled.p`
+  margin: 0;
+  max-width: 18rem;
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.55;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.text};
+`
+
+const SocialRow = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+`
+
+const SocialLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  border-radius: 999px;
+  color: ${({ theme }) => theme.colors.text};
+  text-decoration: none;
+  transition:
+    color 0.2s ease-out,
+    border-color 0.2s ease-out,
+    transform 0.15s ease-out;
+
+  svg {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.gold};
+    border-color: ${({ theme }) => theme.colors.goldMuted};
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+`
+
+const AccordionRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
     align-items: start;
   }
 `
 
-const Column = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
+const Accordion = styled.details`
+  min-width: 0;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    border-bottom: none;
+    border-left: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+    padding-inline: 1.25rem;
+
+    &:first-child {
+      border-left: none;
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  &[open] > summary::after {
+    content: '−';
+  }
 `
 
-const ColumnTitle = styled.h2`
-  margin: 0 0 0.25rem;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  ${eyebrowText}
+const AccordionSummary = styled.summary`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0;
+  padding-block: 1rem;
+  list-style: none;
+  cursor: pointer;
+  font-family: ${({ theme }) => theme.fonts.sans};
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.gold};
+  user-select: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &::after {
+    content: '+';
+    flex-shrink: 0;
+    font-size: 1.15rem;
+    font-weight: 400;
+    line-height: 1;
+    color: ${({ theme }) => theme.colors.gold};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.gold};
+    outline-offset: 3px;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    padding-block: 0.15rem 1rem;
+  }
+`
+
+const AccordionBody = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0 0 1.15rem;
+`
+
+const Text = styled.p`
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: ${({ theme }) => theme.colors.text};
 `
 
 const CompanyName = styled.p`
@@ -49,17 +209,12 @@ const CompanyName = styled.p`
   color: ${({ theme }) => theme.colors.text};
 `
 
-const Text = styled.p`
-  margin: 0;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  color: ${({ theme }) => theme.colors.text};
-`
-
 const FooterNavLink = styled(Link)`
   font-size: 0.875rem;
+  line-height: 1.5;
   color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
+  transition: color 0.2s ease-out;
 
   &:hover {
     color: ${({ theme }) => theme.colors.gold};
@@ -68,8 +223,10 @@ const FooterNavLink = styled(Link)`
 
 const FooterExternalLink = styled.a`
   font-size: 0.875rem;
+  line-height: 1.5;
   color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
+  transition: color 0.2s ease-out;
 
   &:hover {
     color: ${({ theme }) => theme.colors.gold};
@@ -78,20 +235,28 @@ const FooterExternalLink = styled.a`
 
 const FooterHashLink = styled(HashLink)`
   font-size: 0.875rem;
+  line-height: 1.5;
   color: ${({ theme }) => theme.colors.text};
   text-decoration: none;
+  transition: color 0.2s ease-out;
 
   &:hover {
     color: ${({ theme }) => theme.colors.gold};
   }
 `
 
-const NewsletterColumn = styled(Column)`
-  gap: 1rem;
+const ContactCta = styled(FooterNavLink)`
+  color: ${({ theme }) => theme.colors.gold};
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.goldMuted};
+  }
 `
 
 const NewsletterText = styled(Text)`
-  max-width: 32rem;
+  max-width: 22rem;
 `
 
 const NewsletterForm = styled.form`
@@ -105,6 +270,7 @@ const NewsletterForm = styled.form`
 const NewsletterInput = styled.input`
   width: 100%;
   min-width: 0;
+  height: 2.75rem;
   border: 1px solid ${({ theme }) => theme.colors.goldMuted};
   border-radius: ${({ theme }) => theme.radii.pill};
   background: transparent;
@@ -112,6 +278,7 @@ const NewsletterInput = styled.input`
   font: inherit;
   font-size: 0.875rem;
   padding: 0.55rem 0.8rem;
+  transition: border-color 0.2s ease-out;
 
   &::placeholder {
     color: ${({ theme }) => theme.colors.textMuted};
@@ -128,7 +295,6 @@ const NewsletterButton = styled.button`
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  min-width: 2.75rem;
   height: 2.75rem;
   padding: 0 1rem;
   border: 1px solid ${({ theme }) => theme.colors.gold};
@@ -143,16 +309,16 @@ const NewsletterButton = styled.button`
   line-height: 1;
   white-space: nowrap;
   cursor: pointer;
-  box-shadow: 0 0 18px rgba(238, 220, 130, 0.28);
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    opacity 0.2s ease-out,
+    transform 0.15s ease-out;
 
   &:hover:not(:disabled) {
     opacity: 0.95;
-    transform: translateY(-1px);
-    box-shadow: 0 0 26px rgba(238, 220, 130, 0.4);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
   }
 
   &:focus-visible {
@@ -163,7 +329,6 @@ const NewsletterButton = styled.button`
   &:disabled {
     opacity: 0.55;
     cursor: not-allowed;
-    box-shadow: none;
   }
 `
 
@@ -172,7 +337,6 @@ const ConsentLine = styled.p`
   font-size: 0.75rem;
   line-height: 1.45;
   color: ${({ theme }) => theme.colors.textMuted};
-  white-space: nowrap;
 `
 
 const ConsentLink = styled(FooterExternalLink)`
@@ -193,76 +357,69 @@ const NewsletterStatus = styled.p<{ $error?: boolean }>`
     $error ? '#ffb4b4' : theme.colors.goldMuted};
 `
 
-const Bottom = styled(PageContainer)`
+const Bottom = styled.div`
   display: flex;
-  align-items: flex-end;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 1.5rem;
-  padding-block: 1.25rem;
-  font-size: 0.75rem;
-  color: ${({ theme }) => theme.colors.text};
+  gap: 1rem 1.5rem;
+  margin-top: 1.75rem;
+  padding-top: 1.25rem;
   border-top: 1px solid ${({ theme }) => theme.colors.borderSubtle};
+  font-size: 0.75rem;
+  color: ${({ theme }) => theme.colors.textMuted};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
   }
-`
-
-const BottomLeft = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.55rem;
-`
-
-const BottomRight = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.55rem;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    align-items: flex-start;
-  }
-`
-
-const SocialRow = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-`
-
-const Locale = styled.div`
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  color: ${({ theme }) => theme.colors.text};
 `
 
 const Copyright = styled.p`
   margin: 0;
-  color: ${({ theme }) => theme.colors.textMuted};
   line-height: 1.45;
 `
 
-const SocialLink = styled.a`
+const BottomEmail = styled.a`
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 1.35rem;
-  height: 1.35rem;
-  color: ${({ theme }) => theme.colors.text};
+  gap: 0.4rem;
+  color: ${({ theme }) => theme.colors.textMuted};
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease-out;
 
   svg {
-    width: 100%;
-    height: 100%;
+    width: 0.95rem;
+    height: 0.95rem;
+    flex-shrink: 0;
   }
 
   &:hover {
     color: ${({ theme }) => theme.colors.gold};
+  }
+`
+
+const BackToTop = styled.button`
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.textMuted};
+  cursor: pointer;
+  transition: color 0.2s ease-out;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.gold};
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.colors.gold};
+    outline-offset: 3px;
   }
 `
 
@@ -280,6 +437,15 @@ function InstagramIcon() {
       <rect x="4" y="4" width="16" height="16" rx="4" />
       <circle cx="12" cy="12" r="3.5" />
       <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+function MailIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
+      <rect x="3.5" y="5.5" width="17" height="13" rx="2" />
+      <path d="m5 8 7 5 7-5" />
     </svg>
   )
 }
@@ -319,120 +485,143 @@ export function SiteFooter({ id }: SiteFooterProps) {
     }
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <Footer id={id}>
-      <Inner>
-        <Column>
-          <ColumnTitle>Kontaktní informace</ColumnTitle>
-          <CompanyName>{companyInfo.name}</CompanyName>
-          <Text>{companyInfo.addressLine}</Text>
-          <Text>IČO: {companyInfo.ico}</Text>
-          <Text>DIČ: {companyInfo.dic}</Text>
-          <Text>{companyInfo.vatStatus}</Text>
-          <Text>ID datové schránky: {companyInfo.dataBoxId}</Text>
-          <FooterExternalLink href={`mailto:${companyInfo.email}`}>
-            {companyInfo.email}
-          </FooterExternalLink>
-        </Column>
+      <Shell>
+        <Top>
+          <Brand>
+            <LogoLink to="/" aria-label="Vojta Hubne — domů">
+              <BrandLogo variant="nav" />
+            </LogoLink>
+            <Tagline>
+              Nejen zhubnout. Zvládnout i to, co přijde potom.
+            </Tagline>
+            <SocialRow>
+              <SocialLink
+                href="https://www.facebook.com/share/g/183Ks7Zm9S/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
+                <FacebookIcon />
+              </SocialLink>
+              <SocialLink
+                href="https://www.instagram.com/vojtahubne/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                <InstagramIcon />
+              </SocialLink>
+            </SocialRow>
+          </Brand>
 
-        <Column>
-          <ColumnTitle>Důležité informace</ColumnTitle>
-          <FooterNavLink to="/kontakt">Kontakt</FooterNavLink>
-          <FooterHashLink sectionId="faq">Nejčastější dotazy</FooterHashLink>
-          <FooterExternalLink href={getShopifyPolicyUrl('shipping-policy')}>
-            Doprava a platba
-          </FooterExternalLink>
-          <FooterExternalLink href={getShopifyPolicyUrl('terms-of-service')}>
-            Obchodní podmínky
-          </FooterExternalLink>
-          <FooterExternalLink href={getShopifyPolicyUrl('refund-policy')}>
-            Reklamace
-          </FooterExternalLink>
-          <FooterExternalLink href={getPrivacyPolicyPageUrl()}>
-            Zásady ochrany osobních údajů
-          </FooterExternalLink>
-          <FooterExternalLink href={getCookiesPolicyPageUrl()}>
-            Zásady používání cookies
-          </FooterExternalLink>
-        </Column>
+          <AccordionRow>
+            <Accordion>
+              <AccordionSummary>Firma a kontakty</AccordionSummary>
+              <AccordionBody>
+                <CompanyName>{companyInfo.name}</CompanyName>
+                <Text>{companyInfo.addressLine}</Text>
+                <Text>IČO: {companyInfo.ico}</Text>
+                <Text>DIČ: {companyInfo.dic}</Text>
+                <Text>{companyInfo.vatStatus}</Text>
+                <Text>ID datové schránky: {companyInfo.dataBoxId}</Text>
+                <ContactCta to="/kontakt">Kontaktujte nás →</ContactCta>
+              </AccordionBody>
+            </Accordion>
 
-        <NewsletterColumn>
-          <ColumnTitle>Buďte u toho s námi</ColumnTitle>
-          <NewsletterText>
-            Tipy, novinky, nové produkty, zákulisí vývoje a občas Karel z expedice.
-            Bez každodenního spamu.
-          </NewsletterText>
-          <NewsletterForm
-            action="/api/newsletter"
-            method="post"
-            onSubmit={handleNewsletterSubmit}
-          >
-            <NewsletterInput
-              type="email"
-              name="email"
-              autoComplete="email"
-              placeholder="E-mailová adresa"
-              aria-label="E-mailová adresa"
-              value={newsletterEmail}
-              onChange={(event) => {
-                setNewsletterEmail(event.target.value)
-                if (newsletterStatus !== 'idle') setNewsletterStatus('idle')
-              }}
-              required
-            />
-            <NewsletterButton
-              type="submit"
-              aria-label="Chci novinky"
-              disabled={newsletterStatus === 'loading'}
-            >
-              Chci novinky
-            </NewsletterButton>
-          </NewsletterForm>
-          {newsletterStatus === 'success' ? (
-            <NewsletterStatus>Děkujeme, e-mail je přihlášen k odběru.</NewsletterStatus>
-          ) : null}
-          {newsletterStatus === 'error' ? (
-            <NewsletterStatus $error>
-              Nepodařilo se e-mail přihlásit. Zkuste to prosím znovu.
-            </NewsletterStatus>
-          ) : null}
-          <ConsentLine>
-            Odesláním souhlasíte se{' '}
-            <ConsentLink href={getPrivacyPolicyPageUrl()}>
-              zpracováním osobních údajů.
-            </ConsentLink>
-          </ConsentLine>
-        </NewsletterColumn>
-      </Inner>
-      <Bottom>
-        <BottomLeft>
-          <Locale>🇨🇿 Česko (CZK Kč)</Locale>
+            <Accordion>
+              <AccordionSummary>Informace k nákupu</AccordionSummary>
+              <AccordionBody>
+                <FooterExternalLink href={getShopifyPolicyUrl('shipping-policy')}>
+                  Doprava a platba
+                </FooterExternalLink>
+                <FooterHashLink sectionId="faq">Nejčastější dotazy</FooterHashLink>
+                <FooterExternalLink href={getShopifyPolicyUrl('terms-of-service')}>
+                  Obchodní podmínky
+                </FooterExternalLink>
+                <FooterExternalLink href={getShopifyPolicyUrl('refund-policy')}>
+                  Reklamace
+                </FooterExternalLink>
+                <FooterExternalLink href={getPrivacyPolicyPageUrl()}>
+                  Zásady ochrany osobních údajů
+                </FooterExternalLink>
+                <FooterExternalLink href={getCookiesPolicyPageUrl()}>
+                  Zásady používání cookies
+                </FooterExternalLink>
+              </AccordionBody>
+            </Accordion>
+
+            <Accordion>
+              <AccordionSummary>Novinky od Vojty</AccordionSummary>
+              <AccordionBody>
+                <NewsletterText>
+                  Tipy, novinky, nové produkty a zákulisí. Bez každodenního spamu.
+                </NewsletterText>
+                <NewsletterForm
+                  action="/api/newsletter"
+                  method="post"
+                  onSubmit={handleNewsletterSubmit}
+                >
+                  <NewsletterInput
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    placeholder="Váš e-mail"
+                    aria-label="Váš e-mail"
+                    value={newsletterEmail}
+                    onChange={(event) => {
+                      setNewsletterEmail(event.target.value)
+                      if (newsletterStatus !== 'idle') setNewsletterStatus('idle')
+                    }}
+                    required
+                  />
+                  <NewsletterButton
+                    type="submit"
+                    aria-label="Chci novinky"
+                    disabled={newsletterStatus === 'loading'}
+                  >
+                    Chci novinky
+                  </NewsletterButton>
+                </NewsletterForm>
+                {newsletterStatus === 'success' ? (
+                  <NewsletterStatus>Děkujeme, e-mail je přihlášen k odběru.</NewsletterStatus>
+                ) : null}
+                {newsletterStatus === 'error' ? (
+                  <NewsletterStatus $error>
+                    Nepodařilo se e-mail přihlásit. Zkuste to prosím znovu.
+                  </NewsletterStatus>
+                ) : null}
+                <ConsentLine>
+                  Odesláním souhlasíte se{' '}
+                  <ConsentLink href={getPrivacyPolicyPageUrl()}>
+                    zpracováním osobních údajů
+                  </ConsentLink>
+                  .
+                </ConsentLine>
+              </AccordionBody>
+            </Accordion>
+          </AccordionRow>
+        </Top>
+
+        <Bottom>
           <Copyright>
             © {new Date().getFullYear()} Vojta Hubne · {companyInfo.name}
           </Copyright>
-        </BottomLeft>
-        <BottomRight>
-          <SocialRow>
-            <SocialLink
-              href="https://www.facebook.com/share/g/183Ks7Zm9S/?mibextid=wwXIfr"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-            >
-              <FacebookIcon />
-            </SocialLink>
-            <SocialLink
-              href="https://www.instagram.com/vojtahubne/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-            >
-              <InstagramIcon />
-            </SocialLink>
-          </SocialRow>
+          <BottomEmail href={`mailto:${companyInfo.email}`}>
+            <MailIcon />
+            {companyInfo.email}
+          </BottomEmail>
           <FooterPaymentIcons />
-        </BottomRight>
-      </Bottom>
+          <BackToTop type="button" onClick={scrollToTop}>
+            Nahoru ↑
+          </BackToTop>
+        </Bottom>
+      </Shell>
     </Footer>
   )
 }

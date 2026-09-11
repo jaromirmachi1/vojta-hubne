@@ -3,12 +3,15 @@
 Horizon **Footer** in Customize only allows premade blocks (Text, Menu, Group, Email signup, …).  
 There is **no Custom Liquid** block in the footer — use **Edit code** instead.
 
+The VH footer is an **accordion layout** (brand left, three collapsed sections, bottom strip). All sections start **collapsed**.
+
 ## Files you need
 
 | Repo file | Upload to theme |
 |-----------|-----------------|
 | `vojta-hubne-footer-legal.liquid` | **Snippets** |
 | `vojta-hubne-horizon.css` | **Assets** (replace existing) |
+| `VojtHLogo.png` | **Assets** (same as header) |
 
 ---
 
@@ -31,8 +34,8 @@ There is **no Custom Liquid** block in the footer — use **Edit code** instead.
 5. **Save**
 6. Hard refresh the shop (`Cmd+Shift+R`)
 
-The legal columns and newsletter appear **inside** the footer grid as one block (`vh-footer-top`), matching React.  
-Horizon **Email signup** is hidden automatically — you can delete it from Customize or leave it.
+Brand + accordion columns + bottom bar appear **inside** the footer.  
+Horizon **Email signup** and default utilities are hidden automatically.
 
 ---
 
@@ -71,21 +74,21 @@ Use premade blocks only — layout won’t match React exactly:
 
 1. **Footer → Add block → Text** — paste company info (RM Solution Group, adresa, IČO, e-mail)
 2. **Footer → Add block → Menu** — create menu in **Content → Menus** with:
-   - Kontakt → `https://www.vojtahubne.cz/kontakt`
    - Doprava a platba → Shopify shipping policy URL
+   - Nejčastější dotazy → `https://www.vojtahubne.cz/#faq`
    - Obchodní podmínky → terms policy URL
    - Reklamace → Shopify refund policy URL
    - Zásady ochrany osobních údajů → `/pages/zasady-ochrany-osobnich-udaju`
    - Zásady používání cookies → `/pages/zasady-pouzivani-cookies`
 3. Keep **Email signup** block for newsletter
 
-**Newsletter copy (same as React — snippet rewrites Horizon text):**
+**Newsletter copy (same as React — snippet):**
 
 | Field | Text |
 |-------|------|
-| Heading | `Buďte u toho s námi` |
-| Text | `Tipy, novinky, nové produkty, zákulisí vývoje a občas Karel z expedice. Bez každodenního spamu.` |
-| Placeholder | `E-mailová adresa` |
+| Heading | `Novinky od Vojty` |
+| Text | `Tipy, novinky, nové produkty a zákulisí. Bez každodenního spamu.` |
+| Placeholder | `Váš e-mail` |
 | Button | `Chci novinky` |
 
 ---
@@ -105,12 +108,11 @@ Use premade blocks only — layout won’t match React exactly:
 
 | React | Shopify |
 |-------|---------|
-| Kontaktní informace (vč. DIČ + nejsem plátce DPH) | Left column in snippet |
-| Důležité informace | Right column in snippet |
-| Newsletter jako 3. sloupec | Horizon Email signup block (copy rewritten to match React) |
-| © Vojta Hubne · RM Solution | Footer utilities (CSS override) |
-| Socials + payment icons (bottom right) | Utilities: Social Links + Payment Icons blocks |
-| Country + © (bottom left) | Utilities: localization + copyright blocks |
+| Brand (logo + tagline + socials) | Left column in snippet |
+| Firma a kontakty (accordion, collapsed) | First `<details>` |
+| Informace k nákupu (accordion, collapsed) | Second `<details>` |
+| Novinky od Vojty (accordion, collapsed) | Third `<details>` + customer form |
+| © · email · payments · Nahoru ↑ | Bottom strip in snippet |
 | Dark + gold styling | `vojta-hubne-horizon.css` |
 
 ---
@@ -118,5 +120,7 @@ Use premade blocks only — layout won’t match React exactly:
 ## Troubleshooting
 
 - **Columns not styled** — confirm latest `vojta-hubne-horizon.css` is uploaded and loaded in `theme.liquid`
+- **Logo missing** — upload `VojtHLogo.png` to theme Assets
 - **Policy links 404** — policies not created in Settings → Policies
 - **Kontakt goes wrong** — `marketing_url` must be `https://www.vojtahubne.cz`
+- **Accordions open by default** — snippet must not set `open` on `<details>`

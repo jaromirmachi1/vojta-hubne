@@ -1,110 +1,35 @@
 {% comment %}
-  Vojta Hubne — footer legal columns + newsletter (matches React SiteFooter).
+  Vojta Hubne — accordion footer (matches React SiteFooter).
+  All accordion sections start collapsed (no open attribute on details).
 
   Setup: sections/footer.liquid — add BEFORE {% content_for 'blocks' %}:
   {% render 'vojta-hubne-footer-legal', marketing_url: 'https://www.vojtahubne.cz' %}
 
   Horizon Email signup and default utilities are hidden — this snippet includes
-  the React bottom bar (locale, copyright, socials, payment icons).
+  brand, accordion columns, and the bottom bar.
 {% endcomment %}
 
 {% assign marketing = marketing_url | default: 'https://www.vojtahubne.cz' %}
 
 <div class="vh-footer-shell">
-<div class="vh-footer-top">
-  <div class="vh-footer-legal">
-    <div class="vh-footer-legal__column">
-      <h2 class="vh-footer-legal__title">Kontaktní informace</h2>
-      <p class="vh-footer-legal__company">RM Solution Group s.r.o.</p>
-      <p class="vh-footer-legal__text">Žabeň 309, 739 25 Žabeň</p>
-      <p class="vh-footer-legal__text">IČO: 29615551</p>
-      <p class="vh-footer-legal__text">DIČ: CZ29615551</p>
-      <p class="vh-footer-legal__text">Nejsem plátce DPH.</p>
-      <p class="vh-footer-legal__text">ID datové schránky: cyauddd</p>
-      <p class="vh-footer-legal__text">
-        <a class="vh-footer-legal__link" href="mailto:info@vojtahubne.cz">info@vojtahubne.cz</a>
-      </p>
-    </div>
-
-    <div class="vh-footer-legal__column">
-      <h2 class="vh-footer-legal__title">Důležité informace</h2>
-      <nav class="vh-footer-legal__nav" aria-label="Důležité informace">
-        <a class="vh-footer-legal__link" href="{{ marketing }}/kontakt">Kontakt</a>
-        <a class="vh-footer-legal__link" href="{{ marketing }}/#faq">Nejčastější dotazy</a>
-        {% if shop.shipping_policy %}
-          <a class="vh-footer-legal__link" href="{{ shop.shipping_policy.url }}">Doprava a platba</a>
-        {% else %}
-          <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/shipping-policy">Doprava a platba</a>
-        {% endif %}
-        {% if shop.terms_of_service %}
-          <a class="vh-footer-legal__link" href="{{ shop.terms_of_service.url }}">Obchodní podmínky</a>
-        {% else %}
-          <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/terms-of-service">Obchodní podmínky</a>
-        {% endif %}
-        {% if shop.refund_policy %}
-          <a class="vh-footer-legal__link" href="{{ shop.refund_policy.url }}">Reklamace</a>
-        {% else %}
-          <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/refund-policy">Reklamace</a>
-        {% endif %}
-        <a class="vh-footer-legal__link" href="{{ routes.root_url }}pages/zasady-ochrany-osobnich-udaju">Zásady ochrany osobních údajů</a>
-        <a class="vh-footer-legal__link" href="{{ routes.root_url }}pages/zasady-pouzivani-cookies">Zásady používání cookies</a>
-      </nav>
-    </div>
-  </div>
-
-  <aside class="vh-footer-newsletter" aria-labelledby="vh-footer-newsletter-title">
-    <h2 class="vh-footer-newsletter__title" id="vh-footer-newsletter-title">Buďte u toho s námi</h2>
-    <p class="vh-footer-newsletter__text">
-      Tipy, novinky, nové produkty, zákulisí vývoje a občas Karel z expedice. Bez každodenního spamu.
-    </p>
-
-    {% form 'customer', id: 'vh-footer-newsletter-form', class: 'vh-footer-newsletter__form' %}
-      <input type="hidden" name="contact[tags]" value="newsletter, website-footer">
-      <input type="hidden" name="contact[accepts_marketing]" value="true">
-
-      {% if form.posted_successfully? %}
-        <p class="vh-footer-newsletter__status" role="status">
-          Děkujeme, e-mail je přihlášen k odběru.
-        </p>
-      {% elsif form.errors %}
-        <p class="vh-footer-newsletter__status vh-footer-newsletter__status--error" role="alert">
-          Nepodařilo se e-mail přihlásit. Zkuste to prosím znovu.
-        </p>
-      {% endif %}
-
-      <div class="vh-footer-newsletter__fields">
-        <input
-          class="vh-footer-newsletter__input"
-          type="email"
-          name="contact[email]"
-          autocomplete="email"
-          placeholder="E-mailová adresa"
-          aria-label="E-mailová adresa"
-          required
+  <div class="vh-footer-top">
+    <div class="vh-footer-brand">
+      <a class="vh-footer-brand__logo-link" href="{{ marketing }}" aria-label="Vojta Hubne — domů">
+        <img
+          class="vh-footer-brand__logo"
+          src="{{ 'VojtHLogo.png' | asset_url }}"
+          alt="Vojta Hubne"
+          width="1196"
+          height="382"
+          loading="lazy"
         >
-        <button class="vh-footer-newsletter__button" type="submit">
-          Chci novinky
-        </button>
-      </div>
-    {% endform %}
-
-    <p class="vh-footer-newsletter__consent">
-      Odesláním souhlasíte se
-      <a href="{{ routes.root_url }}pages/zasady-ochrany-osobnich-udaju">zpracováním osobních údajů</a>.
-    </p>
-  </aside>
-</div>
-
-  <div class="vh-footer-bottom">
-    <div class="vh-footer-bottom__left">
-      <p class="vh-footer-bottom__locale">🇨🇿 Česko (CZK Kč)</p>
-      <p class="vh-footer-bottom__copy">© {{ 'now' | date: '%Y' }} Vojta Hubne · RM Solution Group s.r.o.</p>
-    </div>
-
-    <div class="vh-footer-bottom__right">
-      <div class="vh-footer-bottom__socials">
+      </a>
+      <p class="vh-footer-brand__tagline">
+        Nejen zhubnout. Zvládnout i to, co přijde potom.
+      </p>
+      <div class="vh-footer-brand__socials">
         <a
-          class="vh-footer-bottom__social"
+          class="vh-footer-brand__social"
           href="https://www.facebook.com/share/g/183Ks7Zm9S/?mibextid=wwXIfr"
           target="_blank"
           rel="noopener noreferrer"
@@ -115,7 +40,7 @@
           </svg>
         </a>
         <a
-          class="vh-footer-bottom__social"
+          class="vh-footer-brand__social"
           href="https://www.instagram.com/vojtahubne/"
           target="_blank"
           rel="noopener noreferrer"
@@ -128,18 +53,123 @@
           </svg>
         </a>
       </div>
-
-      <ul class="vh-footer-bottom__payments" aria-label="Akceptované platební metody">
-        {%- assign vh_payments = shop.enabled_payment_types -%}
-        {%- if vh_payments.size == 0 -%}
-          {%- assign vh_payments = 'apple_pay,google_pay,shopify_pay,visa,master' | split: ',' -%}
-        {%- endif -%}
-        {%- for type in vh_payments -%}
-          <li class="vh-footer-bottom__payment">
-            {{ type | payment_type_svg_tag }}
-          </li>
-        {%- endfor -%}
-      </ul>
     </div>
+
+    <div class="vh-footer-accordions">
+      <details class="vh-footer-accordion">
+        <summary class="vh-footer-accordion__summary">Firma a kontakty</summary>
+        <div class="vh-footer-accordion__body">
+          <p class="vh-footer-legal__company">RM Solution Group s.r.o.</p>
+          <p class="vh-footer-legal__text">Žabeň 309, 739 25 Žabeň</p>
+          <p class="vh-footer-legal__text">IČO: 29615551</p>
+          <p class="vh-footer-legal__text">DIČ: CZ29615551</p>
+          <p class="vh-footer-legal__text">Nejsme plátci DPH.</p>
+          <p class="vh-footer-legal__text">ID datové schránky: cyauddd</p>
+          <a class="vh-footer-legal__cta" href="{{ marketing }}/kontakt">Kontaktujte nás →</a>
+        </div>
+      </details>
+
+      <details class="vh-footer-accordion">
+        <summary class="vh-footer-accordion__summary">Informace k nákupu</summary>
+        <div class="vh-footer-accordion__body">
+          <nav class="vh-footer-legal__nav" aria-label="Informace k nákupu">
+            {% if shop.shipping_policy %}
+              <a class="vh-footer-legal__link" href="{{ shop.shipping_policy.url }}">Doprava a platba</a>
+            {% else %}
+              <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/shipping-policy">Doprava a platba</a>
+            {% endif %}
+            <a class="vh-footer-legal__link" href="{{ marketing }}/#faq">Nejčastější dotazy</a>
+            {% if shop.terms_of_service %}
+              <a class="vh-footer-legal__link" href="{{ shop.terms_of_service.url }}">Obchodní podmínky</a>
+            {% else %}
+              <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/terms-of-service">Obchodní podmínky</a>
+            {% endif %}
+            {% if shop.refund_policy %}
+              <a class="vh-footer-legal__link" href="{{ shop.refund_policy.url }}">Reklamace</a>
+            {% else %}
+              <a class="vh-footer-legal__link" href="{{ routes.root_url }}policies/refund-policy">Reklamace</a>
+            {% endif %}
+            <a class="vh-footer-legal__link" href="{{ routes.root_url }}pages/zasady-ochrany-osobnich-udaju">Zásady ochrany osobních údajů</a>
+            <a class="vh-footer-legal__link" href="{{ routes.root_url }}pages/zasady-pouzivani-cookies">Zásady používání cookies</a>
+          </nav>
+        </div>
+      </details>
+
+      <details class="vh-footer-accordion">
+        <summary class="vh-footer-accordion__summary">Novinky od Vojty</summary>
+        <div class="vh-footer-accordion__body">
+          <p class="vh-footer-newsletter__text">
+            Tipy, novinky, nové produkty a zákulisí. Bez každodenního spamu.
+          </p>
+
+          {% form 'customer', id: 'vh-footer-newsletter-form', class: 'vh-footer-newsletter__form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter, website-footer">
+            <input type="hidden" name="contact[accepts_marketing]" value="true">
+
+            {% if form.posted_successfully? %}
+              <p class="vh-footer-newsletter__status" role="status">
+                Děkujeme, e-mail je přihlášen k odběru.
+              </p>
+            {% elsif form.errors %}
+              <p class="vh-footer-newsletter__status vh-footer-newsletter__status--error" role="alert">
+                Nepodařilo se e-mail přihlásit. Zkuste to prosím znovu.
+              </p>
+            {% endif %}
+
+            <div class="vh-footer-newsletter__fields">
+              <input
+                class="vh-footer-newsletter__input"
+                type="email"
+                name="contact[email]"
+                autocomplete="email"
+                placeholder="Váš e-mail"
+                aria-label="Váš e-mail"
+                required
+              >
+              <button class="vh-footer-newsletter__button" type="submit">
+                Chci novinky
+              </button>
+            </div>
+          {% endform %}
+
+          <p class="vh-footer-newsletter__consent">
+            Odesláním souhlasíte se
+            <a href="{{ routes.root_url }}pages/zasady-ochrany-osobnich-udaju">zpracováním osobních údajů</a>.
+          </p>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <div class="vh-footer-bottom">
+    <p class="vh-footer-bottom__copy">© {{ 'now' | date: '%Y' }} Vojta Hubne · RM Solution Group s.r.o.</p>
+
+    <a class="vh-footer-bottom__email" href="mailto:info@vojtahubne.cz">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
+        <path d="m5 8 7 5 7-5"></path>
+      </svg>
+      info@vojtahubne.cz
+    </a>
+
+    <ul class="vh-footer-bottom__payments" aria-label="Akceptované platební metody">
+      {%- assign vh_payments = shop.enabled_payment_types -%}
+      {%- if vh_payments.size == 0 -%}
+        {%- assign vh_payments = 'apple_pay,google_pay,shopify_pay,visa,master' | split: ',' -%}
+      {%- endif -%}
+      {%- for type in vh_payments -%}
+        <li class="vh-footer-bottom__payment">
+          {{ type | payment_type_svg_tag }}
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    <button
+      type="button"
+      class="vh-footer-bottom__top"
+      onclick="window.scrollTo({top:0,behavior:'smooth'})"
+    >
+      Nahoru ↑
+    </button>
   </div>
 </div>
