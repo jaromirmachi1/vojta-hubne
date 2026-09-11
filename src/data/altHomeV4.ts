@@ -147,7 +147,7 @@ export const altV4Products: Record<string, AltV4Product> = {
     name: 'D3 + K2 + Vápník',
     claim: 'Kosti · Svaly · Imunita',
     reviews: '8 recenzí',
-    desc: 'Trio vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu v jedné dávce.',
+    desc: 'Duo vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu v jedné dávce.',
     bullets: [
       'Kosti pod zátěží při hubnutí',
       'Podpora imunity celoročně',
@@ -534,7 +534,7 @@ export const altV4Daily = [
   {
     time: 'DEN',
     title: 'Bílkoviny místo výpadku',
-    text: 'LEAN SHAKE jako svačina nebo náhrada jídla, když nemáte chuť nebo čas. 22 g bílkovin a 107 kcal v jedné dávce.',
+    text: 'LEAN SHAKE jako svačina, když nemáte chuť nebo čas. 22 g bílkovin a 107 kcal v jedné dávce.',
   },
   {
     time: 'VEČER',

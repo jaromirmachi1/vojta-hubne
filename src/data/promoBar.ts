@@ -30,8 +30,8 @@ export const sitePromos = [
   {
     tag: 'Novinka pro VH Club',
     text: 'BIOME 4™ — 4 živé kultury, 5 miliard CFU',
-    href: upcomingHref,
-    shopifyHref: 'https://www.vojtahubne.cz/co-chystame',
+    href: productHref('biome-4'),
+    shopifyHref: '/products/biome-4',
   },
   {
     tag: 'Připravujeme',

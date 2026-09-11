@@ -103,7 +103,7 @@ export const altFeaturedProducts = [
     id: 'd3-k2',
     name: 'D3 + K2 + Vápník',
     benefits: [
-      'Trio pro kosti a svaly',
+      'Duo pro kosti a svaly',
       'Podpora imunity',
       'Vitamíny v jedné dávce',
     ],

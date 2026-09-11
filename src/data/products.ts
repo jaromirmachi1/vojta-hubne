@@ -74,7 +74,7 @@ export const featuredProducts: Product[] = [
     subtitle: "Doplněk stravy",
     tagline: "Kosti · Svaly · Imunita",
     description:
-      "Trio vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu v jedné dávce.",
+      "Duo vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu v jedné dávce.",
     image: d3Image,
     category: "Doplňky stravy",
     format: "60 kapslí",

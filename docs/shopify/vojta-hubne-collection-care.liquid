@@ -18,7 +18,7 @@
     </header>
 
     <ul class="vh-care__grid" role="list">
-      {%- for i in (1..5) -%}
+      {%- for i in (1..6) -%}
         {%- assign vh_product = blank -%}
         {%- assign vh_desc = '' -%}
         {%- case i -%}
@@ -42,10 +42,13 @@
             {%- assign vh_desc = 'Hořčík z mořských řas pro nervy, energii a proti únavě.' -%}
           {%- when 4 -%}
             {%- assign vh_product = all_products['d3-k2-vapnik'] -%}
-            {%- assign vh_desc = 'Trio vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu.' -%}
+            {%- assign vh_desc = 'Duo vitamínu D3, K2 a vápníku pro kosti, svaly a imunitu.' -%}
           {%- when 5 -%}
             {%- assign vh_product = all_products['jalu-expert-2-0'] -%}
             {%- assign vh_desc = 'Denní doplněk na bázi aminokyselin pro vlasy, nehty a pokožku.' -%}
+          {%- when 6 -%}
+            {%- assign vh_product = all_products['biome-4'] -%}
+            {%- assign vh_desc = '4 živé bakteriální kultury, 5 miliard CFU v jedné denní tobolce.' -%}
         {%- endcase -%}
 
         {%- if vh_product != blank -%}
