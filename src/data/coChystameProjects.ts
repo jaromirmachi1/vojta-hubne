@@ -49,9 +49,9 @@ export const coChystameProjects: CoChystameProject[] = [
     kicker: 'Večerní směs',
     excerpt:
       'Jednoduchý večerní rituál s transparentním pracovním složením a jasně popsaným stavem vývoje.',
-    progress: 64,
-    phase: 'Pracovní etiketa připravena',
-    updatedAt: '20. 7. 2026',
+    progress: 95,
+    phase: 'Před spuštěním — finalizace výroby',
+    updatedAt: '11. 9. 2026',
   },
   {
     id: 'cafe',
@@ -61,9 +61,9 @@ export const coChystameProjects: CoChystameProject[] = [
     kicker: 'Pracovní název',
     excerpt:
       'Samostatný řídký ranní nápoj z pravé kávy s proteinovou složkou. Ne další příchuť LEAN SHAKE.',
-    progress: 36,
-    phase: 'Čeká na testovací recepturu',
-    updatedAt: '20. 7. 2026',
+    progress: 95,
+    phase: 'Před spuštěním — finalizace etikety a výroby',
+    updatedAt: '11. 9. 2026',
   },
   {
     id: 'odvodnovac',
@@ -80,14 +80,14 @@ export const coChystameProjects: CoChystameProject[] = [
   {
     id: 'probiotika',
     category: 'Připravujeme',
-    status: 'Ve vývoji – ladíme finální podobu',
-    title: 'Probiotika',
-    kicker: 'Podpora trávení a střevního mikrobiomu',
+    status: 'Dokončeno',
+    title: 'BIOME 4™',
+    kicker: '4 živé kultury · 5 miliard CFU',
     excerpt:
-      'Probiotický produkt jako doplněk k ostatním produktům Vojta Hubne. Ladíme kmeny, množství, stabilitu a vhodnou formu.',
-    progress: 60,
-    phase: 'Aktivně ladíme a testujeme recepturu',
-    updatedAt: '20. 7. 2026',
+      'Čtyři bakteriální kultury v jedné tobolce — jednoduchý doplněk k režimu, když jíte méně a řešíte zažívání.',
+    progress: 100,
+    phase: 'V prodeji jako BIOME 4™',
+    updatedAt: '11. 9. 2026',
   },
   {
     id: 'xxl',

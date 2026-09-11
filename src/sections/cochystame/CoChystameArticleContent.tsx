@@ -4,6 +4,7 @@ import { FactsGrid } from '../../components/cochystame/FactsGrid'
 import { FAQList } from '../../components/cochystame/FAQList'
 import { Timeline } from '../../components/cochystame/Timeline'
 import { SectionHeading } from '../../components/cochystame/SectionHeading'
+import { getShopifyProductUrl } from '../../utils/shopify'
 
 const ArticleBodySection = styled.section`
   border-bottom: 1px solid ${({ theme }) => theme.colors.borderSubtle};
@@ -22,6 +23,16 @@ const Lead = styled.p`
   color: ${({ theme }) => theme.colors.textMuted};
   line-height: 1.95;
   font-size: 1.02rem;
+
+  a {
+    color: ${({ theme }) => theme.colors.gold};
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.goldMuted};
+    }
+  }
 `
 
 const StyledBlockquote = styled.blockquote`
@@ -237,12 +248,12 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
             steps={[
               { title: 'Pracovní receptura', text: 'Etiketa a pracovní složení připraveny', done: true },
               { title: 'Kontrola receptury', text: 'Ověření poslední schválené verze', done: true },
-              { title: 'Dodání surovin', text: 'Pracovní očekávání do konce srpna' },
-              { title: 'Výroba a spuštění', text: 'Orientační cíl začátkem září 2026' },
+              { title: 'Dodání surovin', text: 'Suroviny zajištěny', done: true },
+              { title: 'Výroba a spuštění', text: 'Finalizace výroby a spuštění do prodeje' },
             ]}
           />
           <FinePrint>
-            Termín je orientační a může se změnit podle dodání surovin, kontroly kvality a finálního schválení produktu.
+            Aktuální stav vývoje je přibližně 95 %. Termín spuštění může ještě upravit finální kontrola kvality.
           </FinePrint>
         </ArticleBodySection>
 
@@ -355,13 +366,13 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
           <Timeline
             steps={[
               { title: 'Vývojové zadání', text: 'Pravá káva, protein a řídká forma', done: true },
-              { title: 'Testovací receptura', text: 'Příprava první reálné varianty' },
-              { title: 'Senzorický test', text: 'Tekutost, chuť, sladkost a rozpustnost' },
-              { title: 'Etiketa a výroba', text: 'Až po finálním písemném schválení' },
+              { title: 'Testovací receptura', text: 'Reálná varianta připravena a ověřena', done: true },
+              { title: 'Senzorický test', text: 'Tekutost, chuť, sladkost a rozpustnost', done: true },
+              { title: 'Etiketa a výroba', text: 'Finalizace etikety a spuštění výroby' },
             ]}
           />
           <FinePrint>
-            Dřívější interní plán počítal s možným spuštěním kolem 10. srpna 2026. Jde o pracovní cíl, nikoli slíbené datum prodeje.
+            Aktuální stav vývoje je přibližně 95 %. Reálné datum prodeje potvrdíme po dokončení etikety a výroby.
           </FinePrint>
         </ArticleBodySection>
 
@@ -828,28 +839,61 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
   }
 
   if (id === 'probiotika') {
+    const biomeUrl = getShopifyProductUrl('biome-4')
+
     return (
       <>
         <ArticleBodySection>
-          <SectionHeading eyebrow="Proč vzniká">
-            Každodenní podpora trávení a střevního mikrobiomu
+          <SectionHeading eyebrow="Dokončeno">
+            BIOME 4™ — 4 živé kultury, 5 miliard CFU
           </SectionHeading>
           <Lead>
-            Trávení a střevní mikrobiom mohou výrazně ovlivňovat každodenní
-            komfort, pravidelnost i celkový pocit při změně jídelníčku. Proto
-            připravujeme vlastní probiotický produkt jako doplněk k ostatním
-            produktům Vojta Hubne.
+            Když jíte výrazně méně, mění se i zažívání. BIOME 4 je nejjednodušší
+            krok, který k režimu můžete přidat: čtyři živé bakteriální kultury v
+            deklarovaném množství 5 miliard CFU v jedné tobolce. Žádný prášek,
+            žádné míchání.
           </Lead>
           <Lead>
-            Aktuálně ladíme výběr kmenů, jejich množství, stabilitu a vhodnou formu
-            tak, aby výsledný produkt byl praktický, kvalitní a dlouhodobě
-            použitelný.
+            Produkt je hotový a dostupný v e-shopu. Jedna tobolka denně — před
+            jídlem, zapít dostatečným množstvím vody.
+            {biomeUrl ? (
+              <>
+                {' '}
+                <a href={biomeUrl}>Otevřít BIOME 4™ v e-shopu →</a>
+              </>
+            ) : null}
           </Lead>
           <Notice>
-            <b>Bez léčebných tvrzení:</b> neuvádíme finální kmeny, dávkování, cenu
-            ani termín, dokud nebudou schválené. Texty projdou kontrolou před
-            spuštěním.
+            <b>Bez léčebných tvrzení:</b> BIOME 4 je doplněk stravy. Nenahrazuje
+            pestrou stravu, lékařskou péči ani změnu režimu.
           </Notice>
+        </ArticleBodySection>
+
+        <ArticleBodySection>
+          <SectionHeading eyebrow="Složení">Co je v jedné tobolce</SectionHeading>
+          <FactsGrid
+            items={[
+              {
+                title: 'Lactobacillus acidophilus (La-11)',
+                text: '2 mld. CFU',
+              },
+              {
+                title: 'Lactobacillus plantarum (Lp-115)',
+                text: '1,25 mld. CFU',
+              },
+              {
+                title: 'Bifidobacterium lactis (Bl-04)',
+                text: '1 mld. CFU',
+              },
+              {
+                title: 'Bifidobacterium lactis (Bl-05)',
+                text: '0,75 mld. CFU',
+              },
+            ]}
+          />
+          <Lead>
+            Balení: 30 tobolek · 30 dávek · 17,82 g. Dávkování: 1 tobolka denně.
+          </Lead>
         </ArticleBodySection>
 
         <ArticleBodySection>
@@ -858,13 +902,12 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
             steps={[
               { title: 'Zadání produktu', text: 'Probiotika jako doplněk systému Vojta Hubne', done: true },
               { title: 'Ladění receptury', text: 'Kmeny, množství, stabilita a forma', done: true },
-              { title: 'Schválení a etiketa', text: 'Po uzavření receptury' },
-              { title: 'Výroba a spuštění', text: 'Až po finálním potvrzení' },
+              { title: 'Schválení a etiketa', text: 'Finální etiketa a složení uzavřeny', done: true },
+              { title: 'Výroba a spuštění', text: 'BIOME 4™ je v prodeji', done: true },
             ]}
           />
           <FinePrint>
-            Aktuální stav vývoje je přibližně 60 %. Průběh budeme průběžně
-            aktualizovat.
+            Stav vývoje: 100 % — Dokončeno. Produkt najdete v e-shopu jako BIOME 4™.
           </FinePrint>
         </ArticleBodySection>
 
@@ -873,16 +916,16 @@ export function CoChystameArticleContent({ id }: { id: CoChystameProjectId }) {
           <FAQList
             items={[
               {
-                q: 'Jaké kmeny budete používat?',
-                a: 'Výběr kmenů ještě finalizujeme. Seznam zveřejníme až po schválení receptury.',
+                q: 'Jaké kmeny BIOME 4 obsahuje?',
+                a: 'Čtyři kultury: L. acidophilus La-11, L. plantarum Lp-115, B. lactis Bl-04 a B. lactis Bl-05 — dohromady 5 miliard CFU v jedné tobolce.',
               },
               {
                 q: 'Nahradí to změnu jídelníčku?',
-                a: 'Ne. Má doplnit každodenní komfort v rámci programu, ne nahradit stravu ani režim.',
+                a: 'Ne. Doplňuje každodenní komfort v rámci programu, nenahrazuje stravu ani režim.',
               },
               {
-                q: 'Kdy bude produkt dostupný?',
-                a: 'Termín zatím neuvádíme. Pošleme potvrzené novinky, až bude produkt připravený.',
+                q: 'Kde ho koupím?',
+                a: 'BIOME 4™ je dostupný v e-shopu Vojta Hubne na stránce produktu biome-4.',
               },
             ]}
           />

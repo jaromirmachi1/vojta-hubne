@@ -68,7 +68,7 @@ Do **not** put care content into the catalog file.
 3. **Balíčky** — real Shopify products with type **Balíčky**, same cards as heroes
 4. **Péče a doplňky** (own product grid underneath)
 5. **Dárková karta** banner → `/products/darkova-karta`
-6. **Co chystáme** — next 3 in-progress projects only (skips **Dokončeno**; currently Neviňátko, Odvodňovač, Probiotika) + **Zobrazit více** → `vojtahubne.cz/co-chystame`
+6. **Co chystáme** — next 3 in-progress projects only (skips **Dokončeno**; currently Neviňátko, Cafe Lean Shake, Odvodňovač) + **Zobrazit více** → `vojtahubne.cz/co-chystame`
 
 ## Snippets needed
 
