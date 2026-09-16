@@ -1,0 +1,152 @@
+{% comment %}
+  Vojta Hubne — united Blog + Novinky hub.
+
+  MUST be a SECTION (not a snippet). Schema only works in Sections.
+
+  Setup order:
+  1. Sections → Add new section → filename: vojta-hubne-blog-hub
+  2. Paste this file → Save
+  3. Then Templates → blog.json → paste docs/shopify/blog.json
+{% endcomment %}
+
+{%- assign vh_blog = blogs['blog'] -%}
+{%- assign vh_novinky = blogs['novinky'] -%}
+{%- assign vh_blog_limit = section.settings.blog_limit | default: 12 -%}
+{%- assign vh_novinky_limit = section.settings.novinky_limit | default: 12 -%}
+
+<section class="vh-blog-hub" aria-label="Blog a Novinky">
+  <div class="vh-blog-hub__inner">
+    <div class="vh-blog-hub__block" id="blog">
+      <header class="vh-blog-hub__header">
+        <h1 class="vh-blog-hub__title">Blog</h1>
+        <p class="vh-blog-hub__lead">
+          Tipy, návody a příběhy kolem hubnutí a produktů Vojta Hubne.
+        </p>
+      </header>
+
+      {%- if vh_blog != blank and vh_blog.articles_count > 0 -%}
+        <div class="vh-blog-hub__grid" role="list">
+          {%- for article in vh_blog.articles limit: vh_blog_limit -%}
+            <a
+              class="vh-blog-hub-card"
+              href="{{ article.url }}"
+              role="listitem"
+              aria-label="{{ article.title | escape }}"
+            >
+              <div class="vh-blog-hub-card__media">
+                {%- if article.image -%}
+                  <img
+                    class="vh-blog-hub-card__image"
+                    src="{{ article.image | image_url: width: 900 }}"
+                    alt="{{ article.image.alt | default: article.title | escape }}"
+                    width="900"
+                    height="560"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- else -%}
+                  <span class="vh-blog-hub-card__placeholder" aria-hidden="true"></span>
+                {%- endif -%}
+              </div>
+              <div class="vh-blog-hub-card__body">
+                <time class="vh-blog-hub-card__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                  {{ article.published_at | date: '%-d. %-m. %Y' }}
+                </time>
+                <h2 class="vh-blog-hub-card__title">{{ article.title }}</h2>
+                {%- assign vh_excerpt = article.excerpt_or_content | strip_html | strip | truncate: 140 -%}
+                {%- if vh_excerpt != blank -%}
+                  <p class="vh-blog-hub-card__excerpt">{{ vh_excerpt }}</p>
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="vh-blog-hub__empty">Zatím tu nejsou žádné články blogu.</p>
+      {%- endif -%}
+    </div>
+
+    <div class="vh-blog-hub__block" id="novinky">
+      <header class="vh-blog-hub__header">
+        <h2 class="vh-blog-hub__title vh-blog-hub__title--section">Novinky</h2>
+        <p class="vh-blog-hub__lead">
+          Aktuality z e-shopu, produktové novinky a klubové informace.
+        </p>
+      </header>
+
+      {%- if vh_novinky != blank and vh_novinky.articles_count > 0 -%}
+        <div class="vh-blog-hub__grid" role="list">
+          {%- for article in vh_novinky.articles limit: vh_novinky_limit -%}
+            <a
+              class="vh-blog-hub-card"
+              href="{{ article.url }}"
+              role="listitem"
+              aria-label="{{ article.title | escape }}"
+            >
+              <div class="vh-blog-hub-card__media">
+                {%- if article.image -%}
+                  <img
+                    class="vh-blog-hub-card__image"
+                    src="{{ article.image | image_url: width: 900 }}"
+                    alt="{{ article.image.alt | default: article.title | escape }}"
+                    width="900"
+                    height="560"
+                    loading="lazy"
+                    decoding="async"
+                  >
+                {%- else -%}
+                  <span class="vh-blog-hub-card__placeholder" aria-hidden="true"></span>
+                {%- endif -%}
+              </div>
+              <div class="vh-blog-hub-card__body">
+                <time class="vh-blog-hub-card__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+                  {{ article.published_at | date: '%-d. %-m. %Y' }}
+                </time>
+                <h3 class="vh-blog-hub-card__title">{{ article.title }}</h3>
+                {%- assign vh_excerpt = article.excerpt_or_content | strip_html | strip | truncate: 140 -%}
+                {%- if vh_excerpt != blank -%}
+                  <p class="vh-blog-hub-card__excerpt">{{ vh_excerpt }}</p>
+                {%- endif -%}
+              </div>
+            </a>
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="vh-blog-hub__empty">Zatím tu nejsou žádné novinky.</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "VH Blog + Novinky",
+  "tag": "section",
+  "class": "section-vh-blog-hub",
+  "settings": [
+    {
+      "type": "range",
+      "id": "blog_limit",
+      "label": "Počet článků blogu",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "novinky_limit",
+      "label": "Počet novinek",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "VH Blog + Novinky"
+    }
+  ]
+}
+{% endschema %}

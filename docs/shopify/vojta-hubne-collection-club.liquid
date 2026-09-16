@@ -1,0 +1,71 @@
+{% comment %}
+  Vojta Hubne — VH Club info banner (snippet).
+
+  Rendered inside catalog between advantages and Balíčky:
+  {% render 'vojta-hubne-collection-club' %}
+
+  Info mirrors: /blogs/novinky/vitejte-ve-vh-clubu
+  CTA → /products/vh-club
+
+  Setup:
+  1. Snippets → vojta-hubne-collection-club.liquid
+  2. Assets → upload vh-club-card.jpg
+  3. Re-upload vojta-hubne-collection-catalog.liquid + vojta-hubne-horizon.css
+{% endcomment %}
+
+{%- assign vh_club_product = all_products['vh-club'] -%}
+{%- if vh_club_product != blank -%}
+  {%- assign vh_club_url = vh_club_product.url -%}
+{%- else -%}
+  {%- assign vh_club_url = '/products/vh-club' -%}
+{%- endif -%}
+
+<div class="vh-club-banner vh-club-banner--embedded" aria-labelledby="vhcl-title">
+  <div class="vhcl">
+    <span class="vhcl-glow" aria-hidden="true"></span>
+    <span class="vhcl-ring" aria-hidden="true"></span>
+    <span class="vhcl-edge" aria-hidden="true"></span>
+
+    <div class="vhcl-copy">
+      <p class="vhcl-kicker">VH Club</p>
+      <h2 class="vhcl-title" id="vhcl-title">
+        12 měsíců výhod<br>
+        <span>pro naše nejvěrnější</span>
+      </h2>
+      <p class="vhcl-lead">
+        Doprava zdarma. Speciální balíčky. Novinky dříve než ostatní.
+        A bližší kontakt s Vojta Hubne.
+      </p>
+
+      <ul class="vhcl-perks" aria-label="Výhody VH Clubu">
+        <li>Doprava zdarma na výdejní místa · bez minima</li>
+        <li>Novinky až o měsíc dříve</li>
+        <li>Exkluzivní club-only balíčky</li>
+      </ul>
+
+      <div class="vhcl-actions">
+        <a class="vhcl-cta" href="{{ vh_club_url }}">
+          Vstoupit do VH Clubu
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </a>
+        <span class="vhcl-val">Zdarma nad 2&nbsp;990&nbsp;Kč</span>
+        <span class="vhcl-val">499&nbsp;Kč / 12 měsíců</span>
+      </div>
+    </div>
+
+    <div class="vhcl-visual" aria-hidden="true">
+      <img
+        class="vhcl-card"
+        src="{{ 'vh-club-card.jpg' | asset_url }}"
+        alt=""
+        width="1024"
+        height="704"
+        loading="lazy"
+        decoding="async"
+      >
+    </div>
+  </div>
+</div>

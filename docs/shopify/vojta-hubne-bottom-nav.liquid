@@ -10,7 +10,7 @@
 
 {% assign marketing = marketing_url | default: 'https://www.vojtahubne.cz' %}
 {% assign catalog_url = '/collections' %}
-{% assign novinky_url = '/blogs/novinky' %}
+{% assign blog_hub_url = '/blogs/blog' %}
 {% assign club_url = marketing | append: '/klub' %}
 {% assign home_url = marketing %}
 {% assign path = request.path %}
@@ -20,9 +20,9 @@
   {% assign products_active = true %}
 {% endif %}
 
-{% assign novinky_active = false %}
-{% if path contains '/blogs/novinky' %}
-  {% assign novinky_active = true %}
+{% assign blog_active = false %}
+{% if path contains '/blogs/' %}
+  {% assign blog_active = true %}
 {% endif %}
 
 <nav class="vh-bottom-nav" aria-label="Hlavní navigace">
@@ -71,9 +71,9 @@
   </a>
 
   <a
-    class="vh-bottom-nav__item{% if novinky_active %} is-active{% endif %}"
-    href="{{ novinky_url }}"
-    {% if novinky_active %}aria-current="page"{% endif %}
+    class="vh-bottom-nav__item{% if blog_active %} is-active{% endif %}"
+    href="{{ blog_hub_url }}"
+    {% if blog_active %}aria-current="page"{% endif %}
   >
     <span class="vh-bottom-nav__icon" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none">
@@ -91,6 +91,6 @@
         ></path>
       </svg>
     </span>
-    <span class="vh-bottom-nav__label">Novinky</span>
+    <span class="vh-bottom-nav__label">Blog</span>
   </a>
 </nav>

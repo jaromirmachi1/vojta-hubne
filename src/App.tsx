@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-route
 import { ScrollToTop } from './components/ScrollToTop'
 import { AlternativeHomePage } from './pages/AlternativeHomePage'
 import { AffiliatePage } from './pages/AffiliatePage'
+import { CalculatorPage } from './pages/CalculatorPage'
 import { ContactPage } from './pages/ContactPage'
 import { HomePage } from './pages/HomePage'
 import { CoChystamePage } from './pages/CoChystamePage'
@@ -28,6 +29,8 @@ function App() {
         <Route path="/co-chystame" element={<CoChystamePage />} />
         <Route path={LEGACY_HOME_PATH} element={<HomePage />} />
         <Route path="/klub" element={<KlubPage />} />
+        <Route path="/calculator" element={<CalculatorPage />} />
+        <Route path="/kalkulacka" element={<Navigate to="/calculator" replace />} />
         <Route path="/kontakt" element={<ContactPage />} />
         <Route path="/spoluprace" element={<AffiliatePage />} />
         <Route path="/homepage/*" element={<LegacyHomepageRedirect />} />

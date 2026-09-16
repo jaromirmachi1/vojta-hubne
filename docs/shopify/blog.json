@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": {
+      "type": "vojta-hubne-blog-hub",
+      "settings": {
+        "blog_limit": 12,
+        "novinky_limit": 12
+      }
+    }
+  },
+  "order": ["main"]
+}

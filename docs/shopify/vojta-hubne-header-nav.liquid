@@ -13,8 +13,8 @@
 {% assign catalog_url = '/collections' %}
 {% assign cart_url = routes.cart_url %}
 {% assign account_url = '/a/customerhub#account:a:dashboard' %}
-{% assign blog_url = '/blogs/blog' %}
-{% assign novinky_url = '/blogs/novinky' %}
+{% comment %} United Blog + Novinky hub (same template on both blog handles) {% endcomment %}
+{% assign blog_hub_url = '/blogs/blog' %}
 
 <div class="vh-shop-header">
   <div class="vh-shop-header__inner">
@@ -30,11 +30,11 @@
     </a>
 
     <nav class="vh-shop-header__nav" aria-label="Hlavní navigace">
-      <a class="vh-shop-header__novinky-link" href="{{ novinky_url }}">Novinky</a>
+      <a class="vh-shop-header__novinky-link" href="{{ blog_hub_url }}">Blog</a>
       <a class="vh-shop-header__nav-link" href="{{ catalog_url }}">Produkty</a>
-      <a class="vh-shop-header__nav-link" href="{{ blog_url }}">Blog</a>
       <a class="vh-shop-header__nav-link" href="{{ marketing }}/#pribeh">Proč my</a>
       <a class="vh-shop-header__nav-link" href="{{ marketing }}/co-chystame">Co chystáme</a>
+      <a class="vh-shop-header__nav-link" href="{{ marketing }}/calculator">Kalkulačka</a>
       <a class="vh-shop-header__nav-link" href="{{ marketing }}/spoluprace">Spolupráce</a>
       <a class="vh-shop-header__nav-link" href="{{ marketing }}/kontakt">Kontakt</a>
     </nav>
@@ -94,11 +94,11 @@
     </button>
 
     <nav class="vh-mobile-nav__links" aria-label="Hlavní navigace">
-      <a class="vh-mobile-nav__link vh-mobile-nav__link--novinky" href="{{ novinky_url }}">Novinky</a>
+      <a class="vh-mobile-nav__link vh-mobile-nav__link--novinky" href="{{ blog_hub_url }}">Blog</a>
       <a class="vh-mobile-nav__link" href="{{ catalog_url }}">Produkty</a>
-      <a class="vh-mobile-nav__link" href="{{ blog_url }}">Blog</a>
       <a class="vh-mobile-nav__link" href="{{ marketing }}/#pribeh">Proč my</a>
       <a class="vh-mobile-nav__link" href="{{ marketing }}/co-chystame">Co chystáme</a>
+      <a class="vh-mobile-nav__link" href="{{ marketing }}/calculator">Kalkulačka</a>
       <a class="vh-mobile-nav__link" href="{{ marketing }}/spoluprace">Spolupráce</a>
       <a class="vh-mobile-nav__link" href="{{ marketing }}/kontakt">Kontakt</a>
       <a class="vh-mobile-nav__link" href="{{ account_url }}">

@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import {
   getShopifyCatalogUrl,
-  getShopifyNovinkyUrl,
+  getShopifyBlogUrl,
 } from '../utils/shopify'
 
 export const MOBILE_BOTTOM_NAV_HEIGHT = '4.6rem'
@@ -226,11 +226,11 @@ export function MobileBottomNav({
         </Icon>
         <Label>VH Club</Label>
       </ItemLink>
-      <ItemAnchor href={getShopifyNovinkyUrl()} rel="noopener noreferrer">
+      <ItemAnchor href={getShopifyBlogUrl()} rel="noopener noreferrer">
         <Icon>
           <NewsIcon />
         </Icon>
-        <Label>Novinky</Label>
+        <Label>Blog</Label>
       </ItemAnchor>
     </Bar>
   )

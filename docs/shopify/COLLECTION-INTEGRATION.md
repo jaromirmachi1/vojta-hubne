@@ -2,7 +2,7 @@
 
 Page: **`https://shop.vojtahubne.cz/collections`**
 
-Four separate sections:
+Four sections on the page (+ VH Club snippet inside catalog):
 
 | Order | Shopify section **filename** (exact) | Paste from repo |
 |-------|--------------------------------------|-----------------|
@@ -10,6 +10,9 @@ Four separate sections:
 | 2 | `vojta-hubne-collection-care.liquid` | `docs/shopify/vojta-hubne-collection-care.liquid` |
 | 3 | `vojta-hubne-collection-giftcard.liquid` | `docs/shopify/vojta-hubne-collection-giftcard.liquid` |
 | 4 | `vojta-hubne-collection-upcoming.liquid` | `docs/shopify/vojta-hubne-collection-upcoming.liquid` |
+
+**Snippet (inside catalog, between advantages and Balíčky):**  
+`vojta-hubne-collection-club.liquid` → **Snippets**
 
 The filename in **Sections** must match the `type` in `list-collections.json`.  
 Do **not** put care content into the catalog file.
@@ -36,7 +39,11 @@ Do **not** put care content into the catalog file.
    Filename exactly: **`vojta-hubne-collection-upcoming`**  
    Paste `docs/shopify/vojta-hubne-collection-upcoming.liquid` → Save
 
-5. **Templates → `list-collections.json`**  
+5. **Snippets → `vojta-hubne-collection-club`**  
+   Paste `docs/shopify/vojta-hubne-collection-club.liquid` → Save  
+   (If you previously created this as a **Section**, delete that section — it must be a snippet.)
+
+6. **Templates → `list-collections.json`**  
    Replace with `docs/shopify/list-collections.json` (updated types):
 
 ```json
@@ -52,27 +59,30 @@ Do **not** put care content into the catalog file.
 }
 ```
 
-6. Re-upload **`vojta-hubne-horizon.css`**
+7. Re-upload **`vojta-hubne-horizon.css`**
 
-7. **Theme → Assets** — upload:
+8. **Theme → Assets** — upload:
    - **`vh-catalog-visne-banner.jpg`** and **`vh-catalog-visne-banner-mobil.jpg`** from `docs/shopify/assets/` (links to `/products/visnova-forma-complete`)
    - **`vh-giftcard-logo.webp`**, **`vh-giftcard-card-a.webp`**, **`vh-giftcard-card-b.webp`** from `docs/shopify/assets/`
+   - **`vh-club-card.jpg`** from `docs/shopify/assets/`
 
-8. Hard-refresh `/collections`
+9. Hard-refresh `/collections`
 
 ## What you should see
 
 0. **Nový balíček** promo banner → [Višňová forma COMPLETE](https://shop.vojtahubne.cz/products/visnova-forma-complete)
-1. Vaše nejoblíbenější produkty — **4 compact tiles** (GLP-1 Support, Lean Shake, Kreatin + HMB, D3 + K2 + Vápník), same style as Péče a doplňky: **2 per row mobile, 4 desktop**
-2. Trust bar
-3. **Balíčky** — real Shopify products with type **Balíčky**, same cards as heroes
-4. **Péče a doplňky** (own product grid underneath)
-5. **Dárková karta** banner → `/products/darkova-karta`
-6. **Co chystáme** — next 3 in-progress projects only (skips **Dokončeno**; currently Neviňátko, Cafe Lean Shake, Odvodňovač) + **Zobrazit více** → `vojtahubne.cz/co-chystame`
+1. Vaše nejoblíbenější produkty — **4 compact tiles**
+2. Trust bar (advantages)
+3. **VH Club** banner → [`/products/vh-club`](https://shop.vojtahubne.cz/products/vh-club) (copy from [Vítejte ve VH Clubu](https://shop.vojtahubne.cz/blogs/novinky/vitejte-ve-vh-clubu))
+4. **Balíčky**
+5. **Péče a doplňky**
+6. **Dárková karta** banner → `/products/darkova-karta`
+7. **Co chystáme** — next 3 in-progress projects only (skips **Dokončeno**; currently Neviňátko, Cafe Lean Shake, Odvodňovač) + **Zobrazit více** → `vojtahubne.cz/co-chystame`
 
 ## Snippets needed
 
 - `vojta-hubne-product-benefits.liquid` (trust bar)
+- `vojta-hubne-collection-club.liquid` (VH Club banner between trust and Balíčky)
 - `vojta-hubne-care-product-card.liquid` (favorites + péče product tiles)
 - `vojta-hubne-hero-card.liquid` (bundle product cards with quick add)
 - `vojta-hubne-quick-add.liquid` (fast add-to-cart on compact tiles)

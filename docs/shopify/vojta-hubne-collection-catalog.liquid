@@ -11,6 +11,7 @@
      (from docs/shopify/assets/)
   3. Sections → Add vojta-hubne-collection-care.liquid (Péče grid underneath)
   4. Snippets → vojta-hubne-care-product-card.liquid + vojta-hubne-quick-add.liquid
+     + vojta-hubne-collection-club.liquid (+ asset vh-club-card.jpg)
   5. Templates → list-collections.json → paste docs/shopify/list-collections.json
   6. Re-upload vojta-hubne-horizon.css
 
@@ -117,6 +118,8 @@
     <div class="vh-catalog__trust">
       {% render 'vojta-hubne-product-benefits' %}
     </div>
+
+    {% render 'vojta-hubne-collection-club' %}
 
     <div class="vh-catalog__block vh-catalog__block--bundles" aria-labelledby="vh-catalog-bundles-title">
       <header class="vh-catalog__header">

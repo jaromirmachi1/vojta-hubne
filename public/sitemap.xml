@@ -11,6 +11,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.vojtahubne.cz/calculator</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.vojtahubne.cz/klub</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

@@ -13,7 +13,6 @@ import {
   getShopifyBlogUrl,
   getShopifyCartUrl,
   getShopifyCatalogUrl,
-  getShopifyNovinkyUrl,
 } from '../utils/shopify'
 
 const Shell = styled.div`
@@ -221,7 +220,6 @@ export function SiteChrome() {
   const [promoIndex, setPromoIndex] = useState(0)
   const catalogUrl = getShopifyCatalogUrl()
   const blogUrl = getShopifyBlogUrl()
-  const novinkyUrl = getShopifyNovinkyUrl()
   const cartUrl = getShopifyCartUrl()
   const accountUrl = getShopifyAccountUrl()
   const promo = sitePromos[promoIndex] ?? sitePromos[0]
@@ -234,11 +232,11 @@ export function SiteChrome() {
   }, [])
 
   const mobileLinks: MobileNavLink[] = [
-    { label: 'Novinky', href: novinkyUrl, external: true, emphasis: true },
+    { label: 'Blog', href: blogUrl, external: true, emphasis: true },
     { label: 'Produkty', href: catalogUrl, external: true },
-    { label: 'Blog', href: blogUrl, external: true },
     { label: 'Proč my', sectionId: ALT_V4_SECTION_IDS.story },
     { label: 'Co chystáme', to: '/co-chystame' },
+    { label: 'Kalkulačka', to: '/calculator' },
     { label: 'Spolupráce', to: '/spoluprace' },
     { label: 'Kontakt', to: '/kontakt' },
     { label: 'Přihlásit se / účet', href: accountUrl, external: true },
@@ -251,14 +249,11 @@ export function SiteChrome() {
           <BrandLogo variant="nav" />
         </LogoLink>
         <DesktopNav aria-label="Hlavní menu">
-          <NavA href={novinkyUrl} rel="noopener noreferrer">
-            Novinky
+          <NavA href={blogUrl} rel="noopener noreferrer">
+            Blog
           </NavA>
           <NavA href={catalogUrl} rel="noopener noreferrer">
             Produkty
-          </NavA>
-          <NavA href={blogUrl} rel="noopener noreferrer">
-            Blog
           </NavA>
           <NavHash
             sectionId={ALT_V4_SECTION_IDS.story}
@@ -267,6 +262,7 @@ export function SiteChrome() {
             Proč my
           </NavHash>
           <NavLink to="/co-chystame">Co chystáme</NavLink>
+          <NavLink to="/calculator">Kalkulačka</NavLink>
           <NavLink to="/spoluprace">Spolupráce</NavLink>
           <NavLink to="/kontakt">Kontakt</NavLink>
         </DesktopNav>

@@ -9,7 +9,7 @@ import {
   ALT_SUB_NAV_LINKS,
 } from '../data/altHomepage'
 import { useRegimeQuiz } from '../contexts/RegimeQuizContext'
-import { getShopifyAccountUrl, getShopifyBlogUrl, getShopifyNovinkyUrl } from '../utils/shopify'
+import { getShopifyAccountUrl, getShopifyBlogUrl } from '../utils/shopify'
 import { BrandLogo } from './BrandLogo'
 import { openRegimeCategory } from './AltSubNav'
 import { HashLink } from './HashLink'
@@ -72,10 +72,6 @@ const navLinkStyles = css`
 `
 
 const NavHashLink = styled(HashLink)`
-  ${navLinkStyles}
-`
-
-const ExternalNavLink = styled.a`
   ${navLinkStyles}
 `
 
@@ -183,11 +179,10 @@ const MenuToggle = styled.button`
 `
 
 const blogUrl = getShopifyBlogUrl()
-const novinkyUrl = getShopifyNovinkyUrl()
 const accountUrl = getShopifyAccountUrl()
 
 const mobileLinks: MobileNavLink[] = [
-  { label: 'Novinky', href: novinkyUrl, external: true, emphasis: true },
+  { label: 'Blog', href: blogUrl, external: true, emphasis: true },
   { label: ALT_NAV_CTA.label, sectionId: ALT_NAV_CTA.sectionId },
   ...ALT_SUB_NAV_LINKS.map((link) => ({
     label: link.label,
@@ -197,7 +192,6 @@ const mobileLinks: MobileNavLink[] = [
     label: link.label,
     sectionId: link.sectionId,
   })),
-  { label: 'Blog', href: blogUrl, external: true },
   { label: ALT_SUB_NAV_CLUB.label, to: ALT_SUB_NAV_CLUB.path },
 ]
 
@@ -214,7 +208,7 @@ export function AltSiteHeader() {
         </LogoLink>
 
         <Nav aria-label="Hlavní navigace">
-          <NovinkyLink href={novinkyUrl}>Novinky</NovinkyLink>
+          <NovinkyLink href={blogUrl}>Blog</NovinkyLink>
           {ALT_NAV_LINKS.map((link) => (
             <NavHashLink
               key={link.sectionId}
@@ -224,7 +218,6 @@ export function AltSiteHeader() {
               {link.label}
             </NavHashLink>
           ))}
-          <ExternalNavLink href={blogUrl}>Blog</ExternalNavLink>
         </Nav>
 
         <Actions>

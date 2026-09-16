@@ -122,7 +122,9 @@ If you keep Horizon’s menu for mobile drawer, set in **Navigation → Main men
 - **Domů** → `https://www.vojtahubne.cz/homepage` (custom URL)
 - **Katalog** → `/collections` (on shop domain)
 
-Custom snippet desktop nav already matches React: Produkty, Blog, Proč my, Co chystáme, Kontakt.
+Custom snippet desktop + mobile nav already matches React: Blog, Produkty, Proč my, Co chystáme, **Kalkulačka** → `https://www.vojtahubne.cz/calculator`, Spolupráce, Kontakt.
+
+After adding Kalkulačka: re-paste `snippets/vojta-hubne-header-nav.liquid` from `docs/shopify/vojta-hubne-header-nav.liquid` and hard-refresh the shop.
 
 ## 7. Shop homepage vs marketing homepage (recommended)
 

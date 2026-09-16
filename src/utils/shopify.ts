@@ -68,26 +68,24 @@ export function getShopifyCatalogUrl(): string {
   return `${base}${clean}${separator}sort_by=best-selling`;
 }
 
-/** Blog index — default handle is `blog`; override via VITE_SHOPIFY_BLOG_PATH */
+/** Blog + Novinky hub — both listings live on /blogs/blog */
 export function getShopifyBlogUrl(): string {
   const base = getShopifyStoreUrl();
-
   const path = import.meta.env.VITE_SHOPIFY_BLOG_PATH?.trim() || "/blogs/blog";
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return `${base}${normalized}`;
 }
 
-/** Novinky blog — Shopify blog handle `novinky` */
+/** @deprecated Prefer getShopifyBlogUrl() — Novinky index is on the united hub */
 export function getShopifyNovinkyUrl(): string {
-  const base = getShopifyStoreUrl();
-  return `${base}/blogs/novinky`;
+  return getShopifyBlogUrl();
 }
 
 /** Single Novinky article: /blogs/novinky/{handle} */
 export function getShopifyNovinkyArticleUrl(handle: string): string {
-  const base = getShopifyNovinkyUrl();
-  if (!handle) return base;
-  return `${base}/${encodeURIComponent(handle)}`;
+  const base = getShopifyStoreUrl();
+  if (!handle) return getShopifyBlogUrl();
+  return `${base}/blogs/novinky/${encodeURIComponent(handle)}`;
 }
 
 /** Collection by handle, e.g. "bestsellery" */

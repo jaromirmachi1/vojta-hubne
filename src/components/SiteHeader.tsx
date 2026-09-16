@@ -10,7 +10,6 @@ import {
   getShopifyBlogUrl,
   getShopifyCartUrl,
   getShopifyCatalogUrl,
-  getShopifyNovinkyUrl,
 } from '../utils/shopify'
 
 const Header = styled.header`
@@ -158,16 +157,15 @@ export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   const catalogUrl = getShopifyCatalogUrl()
   const blogUrl = getShopifyBlogUrl()
-  const novinkyUrl = getShopifyNovinkyUrl()
   const cartUrl = getShopifyCartUrl()
   const accountUrl = getShopifyAccountUrl()
 
   const mobileLinks = [
-    { label: 'Novinky', href: novinkyUrl, external: true, emphasis: true },
+    { label: 'Blog', href: blogUrl, external: true, emphasis: true },
     { label: 'Produkty', href: catalogUrl, external: true },
-    { label: 'Blog', href: blogUrl, external: true },
     { label: 'Proč my', sectionId: 'pribeh' },
     { label: 'Co chystáme', to: '/co-chystame' },
+    { label: 'Kalkulačka', to: '/calculator' },
     { label: 'Spolupráce', to: '/spoluprace' },
     { label: 'Kontakt', to: '/kontakt' },
   ] as const
@@ -180,11 +178,11 @@ export function SiteHeader() {
         </LogoLink>
 
         <Nav aria-label="Hlavní navigace">
-          <NovinkyLink href={novinkyUrl}>Novinky</NovinkyLink>
+          <NovinkyLink href={blogUrl}>Blog</NovinkyLink>
           <ExternalNavLink href={catalogUrl}>Produkty</ExternalNavLink>
-          <ExternalNavLink href={blogUrl}>Blog</ExternalNavLink>
           <StyledHashLink sectionId="pribeh">Proč my</StyledHashLink>
           <StyledNavLink to="/co-chystame">Co chystáme</StyledNavLink>
+          <StyledNavLink to="/calculator">Kalkulačka</StyledNavLink>
           <StyledNavLink to="/spoluprace">Spolupráce</StyledNavLink>
           <StyledNavLink to="/kontakt">Kontakt</StyledNavLink>
         </Nav>

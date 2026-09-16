@@ -1,87 +1,64 @@
-# Shopify blog — Vojta Hubne styling
+# Shopify blog — Blog + Novinky hub
 
-Horizon already renders blog pages via:
+Horizon blog listings are replaced by a **united hub**:
 
-| Template | Section | URL |
-|----------|---------|-----|
-| `templates/blog.json` | `main-blog` | `/blogs/blog` |
-| `templates/article.json` | `main-blog-post` | `/blogs/blog/{handle}` |
+| Section | Content |
+|---------|---------|
+| Top | **Blog** (`blogs.blog`) |
+| Bottom | **Novinky** (`blogs.novinky`) |
 
-You **do not need to replace** `main-blog.liquid` or `main-blog-post.liquid`.  
-Styling lives in **`vojta-hubne-horizon.css`** (section **Blog listing + article**).
-
----
-
-## Deploy (5 minutes)
-
-1. **Online Store → Themes → Horizon → Edit code**
-2. Open **Assets → `vojta-hubne-horizon.css`**
-3. Replace with the latest file from this repo: `docs/shopify/vojta-hubne-horizon.css`
-4. Confirm `layout/theme.liquid` still loads it:
-
-```liquid
-{{ 'vojta-hubne-horizon.css' | asset_url | stylesheet_tag }}
-```
-
-5. Hard refresh:
-   - Listing: [shop.vojtahubne.cz/blogs/blog](https://shop.vojtahubne.cz/blogs/blog)
-   - Article: open any post
+| URL | What you see |
+|-----|----------------|
+| `/blogs/blog` | Hub (Blog + Novinky) |
+| `/blogs/novinky` | Same hub (same `blog.json` template) |
+| `/blogs/blog/{handle}` | Single blog article (unchanged) |
+| `/blogs/novinky/{handle}` | Single novinka article (unchanged) |
 
 ---
 
-## What the CSS does
+## Deploy
 
-### Blog listing (`/blogs/blog`)
+Do this **in order**. Do not paste the Liquid into **Snippets**.
 
-- Gold display title **BLOG**
-- Grid: **1 column on mobile**, **4 columns on desktop** (≥1024px); mobile uses tighter padding/gaps so cards fill the width (Horizon card scale disabled)
-- Dark cards with subtle gold border + hover lift
-- Featured image cover crop
-- Post title in Bebas Neue / gold
-- Date in small uppercase gold-muted
-- Excerpt in readable Montserrat body
-- Fixes Horizon mobile `--blog-post-card-scale: 0.5` (cards were too small)
+1. **Sections → Add a new section**  
+   Filename exactly: **`vojta-hubne-blog-hub`**  
+   Paste `docs/shopify/vojta-hubne-blog-hub.liquid` → Save  
+   If you see `Unknown tag 'schema'`, you are in **Snippets** — delete that file and create it under **Sections**.
 
-### Single article
+2. **Templates → `blog.json`**  
+   Replace with `docs/shopify/blog.json` (pure JSON, no comments) → Save  
+   This only works after step 1 exists.
 
-- Narrow readable column (`max-width: 52rem`)
-- Left-aligned title + date (overrides theme center)
-- Featured image with rounded frame
-- **Hides duplicate H1** inside article body when the title is also in the page header
-- RTE typography: paragraphs, H2/H3, links, lists, images, blockquotes
-- Comment block styled to match (if comments enabled)
+3. Re-upload:
+   - `vojta-hubne-horizon.css`
+   - `vojta-hubne-header-nav.liquid` (Snippets)
+   - `vojta-hubne-bottom-nav.liquid` (Snippets)
+
+4. Hard refresh `/blogs/blog` and `/blogs/novinky`
 
 ---
 
-## Optional theme editor tweaks
+## Nav
 
-These are **not required** if you only upload the CSS.
-
-### `templates/article.json` — recommended
-
-In **Customize → Blog post** (or edit `article.json`):
-
-| Block | Setting | Suggested |
-|-------|---------|-----------|
-| Title | Alignment | **Left** (CSS forces left anyway) |
-| Details | Show date | On |
-| Details | Show author | Off |
-| Featured image | Border radius | 0 (CSS handles radius on wrapper) |
-
-### `templates/blog.json`
-
-| Block | Setting | Suggested |
-|-------|---------|-----------|
-| Title | Text | `<h1>{{ closest.blog.title }}</h1>` |
-| Blog post card → Details | Show date | On |
+One menu item **Blog** → `/blogs/blog` (covers both sections).  
+Separate “Novinky” / “Blog” links are removed from header and bottom nav.
 
 ---
 
-## Content tip — avoid double title
+## Article pages
 
-If your article body in Shopify Admin **starts with the same H1** as the post title, the CSS hides that first H1 automatically.
+No change required. Article styling still comes from CSS on Horizon `main-blog-post`.
 
-Better long-term: use **only H2+** inside the article body; let the theme title block render the H1.
+---
+
+## Optional Customize
+
+In **Customize → Blog**, open the VH Blog + Novinky section:
+
+| Setting | Default |
+|---------|---------|
+| Počet článků blogu | 12 |
+| Počet novinek | 12 |
 
 ---
 
@@ -89,18 +66,18 @@ Better long-term: use **only H2+** inside the article body; let the theme title 
 
 | Issue | Fix |
 |-------|-----|
-| No style change | Re-upload CSS asset; hard refresh (`Cmd+Shift+R`) |
-| Title still centered | Clear theme cache; confirm latest CSS includes `blog-post-content` rules |
-| Card image too small on phone | CSS sets `--blog-post-card-scale: 1` on mobile |
-| Wrong fonts in body | Global `h1–h4` rules are overridden inside `.blog-post-content.rte` |
+| Still see old grid only | `blog.json` not replaced, or section filename wrong |
+| Empty Blog / Novinky block | Blog handles must be exactly `blog` and `novinky` in Admin |
+| Nav still shows both links | Re-upload header + bottom-nav snippets |
 
 ---
 
-## Files in this repo
+## Files
 
 | File | Purpose |
 |------|---------|
-| `vojta-hubne-horizon.css` | All blog styles (no Liquid changes) |
-| `BLOG-INTEGRATION.md` | This guide |
-
-Horizon Liquid sources you shared are kept as reference — edit them only if you need layout changes beyond CSS.
+| `vojta-hubne-blog-hub.liquid` | Hub section |
+| `blog.json` | Blog template → hub |
+| `vojta-hubne-horizon.css` | Hub + article styles |
+| `vojta-hubne-header-nav.liquid` | Single Blog link |
+| `vojta-hubne-bottom-nav.liquid` | Bottom tab → hub |
