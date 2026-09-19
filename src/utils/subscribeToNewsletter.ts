@@ -1,9 +1,10 @@
 export type NewsletterOffer = 'discount' | 'herohero'
-export type NewsletterSource = 'popup' | 'footer'
+export type NewsletterSource = 'popup' | 'footer' | 'klub'
 
 type SubscribeOptions = {
   offer?: NewsletterOffer
   source?: NewsletterSource
+  name?: string
 }
 
 export async function subscribeToNewsletter(
@@ -17,6 +18,7 @@ export async function subscribeToNewsletter(
     },
     body: JSON.stringify({
       email,
+      name: options.name,
       offer: options.offer,
       source: options.source ?? 'footer',
     }),

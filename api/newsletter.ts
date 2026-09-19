@@ -4,15 +4,17 @@ const SHOPIFY_API_VERSION = '2025-10'
 const BASE_TAG = 'newsletter'
 const SOURCE_FOOTER_TAG = 'website-footer'
 const SOURCE_POPUP_TAG = 'popup-signup'
+const SOURCE_KLUB_TAG = 'vojtahubne-klub'
 const OFFER_DISCOUNT_TAG = 'offer-200kc'
 const OFFER_HEROHERO_TAG = 'offer-herohero'
 const OFFER_TAGS = [OFFER_DISCOUNT_TAG, OFFER_HEROHERO_TAG] as const
 
 type NewsletterOffer = 'discount' | 'herohero'
-type NewsletterSource = 'popup' | 'footer'
+type NewsletterSource = 'popup' | 'footer' | 'klub'
 
 type NewsletterRequestBody = {
   email?: unknown
+  name?: unknown
   offer?: unknown
   source?: unknown
 }
@@ -172,6 +174,13 @@ function normalizeEmail(value: unknown): string | null {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : null
 }
 
+function normalizeName(value: unknown): string | null {
+  if (typeof value !== 'string') return null
+  const name = value.trim().replace(/\s+/g, ' ')
+  if (!name || name.length > 80) return null
+  return name
+}
+
 function normalizeOffer(value: unknown): NewsletterOffer | null {
   if (value === 'discount' || value === 'herohero') return value
   return null
@@ -179,6 +188,7 @@ function normalizeOffer(value: unknown): NewsletterOffer | null {
 
 function normalizeSource(value: unknown): NewsletterSource {
   if (value === 'popup') return 'popup'
+  if (value === 'klub') return 'klub'
   return 'footer'
 }
 
@@ -196,7 +206,14 @@ function buildCustomerTags(
 ): string[] {
   const tags = new Set(existingTags)
   tags.add(BASE_TAG)
-  tags.add(options.source === 'popup' ? SOURCE_POPUP_TAG : SOURCE_FOOTER_TAG)
+
+  if (options.source === 'popup') {
+    tags.add(SOURCE_POPUP_TAG)
+  } else if (options.source === 'klub') {
+    tags.add(SOURCE_KLUB_TAG)
+  } else {
+    tags.add(SOURCE_FOOTER_TAG)
+  }
 
   if (options.offer && !customerHasOfferTag([...tags])) {
     tags.add(offerToTag(options.offer))
@@ -227,7 +244,11 @@ async function findCustomerByEmail(email: string): Promise<ShopifyCustomer | nul
   return data.customers.edges[0]?.node ?? null
 }
 
-async function updateCustomerTags(customerId: string, tags: string[]) {
+async function updateCustomerTags(
+  customerId: string,
+  tags: string[],
+  name?: string | null,
+) {
   const data = await shopifyGraphQl<{
     customerUpdate: { userErrors: Array<{ message: string }> }
   }>(
@@ -244,6 +265,7 @@ async function updateCustomerTags(customerId: string, tags: string[]) {
       input: {
         id: customerId,
         tags,
+        ...(name ? { firstName: name } : {}),
       },
     },
   )
@@ -287,13 +309,17 @@ async function subscribeCustomerMarketing(customerId: string) {
 
 async function subscribeCustomer(
   email: string,
-  options: { offer?: NewsletterOffer | null; source: NewsletterSource },
+  options: {
+    offer?: NewsletterOffer | null
+    source: NewsletterSource
+    name?: string | null
+  },
 ) {
   const existingCustomer = await findCustomerByEmail(email)
   const tags = buildCustomerTags(existingCustomer?.tags ?? [], options)
 
   if (existingCustomer) {
-    await updateCustomerTags(existingCustomer.id, tags)
+    await updateCustomerTags(existingCustomer.id, tags, options.name)
     await subscribeCustomerMarketing(existingCustomer.id)
     return
   }
@@ -314,6 +340,7 @@ async function subscribeCustomer(
       input: {
         email,
         tags,
+        ...(options.name ? { firstName: options.name } : {}),
         emailMarketingConsent: {
           marketingState: 'SUBSCRIBED',
           marketingOptInLevel: 'SINGLE_OPT_IN',
@@ -338,6 +365,7 @@ export default async function handler(
   try {
     const body = await getRequestBody(request)
     const email = normalizeEmail(body.email)
+    const name = normalizeName(body.name)
     const source = normalizeSource(body.source)
     const offer = normalizeOffer(body.offer)
 
@@ -351,7 +379,7 @@ export default async function handler(
       return
     }
 
-    await subscribeCustomer(email, { offer, source })
+    await subscribeCustomer(email, { offer, source, name })
     sendJson(response, 200, { ok: true })
   } catch (error) {
     const message =

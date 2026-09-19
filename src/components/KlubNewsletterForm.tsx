@@ -1,9 +1,7 @@
-import { useId } from 'react'
+import { useId, useState, type FormEvent } from 'react'
 import styled from 'styled-components'
-import {
-  getPrivacyPolicyPageUrl,
-  getShopifyContactFormUrl,
-} from '../utils/shopify'
+import { getPrivacyPolicyPageUrl } from '../utils/shopify'
+import { subscribeToNewsletter } from '../utils/subscribeToNewsletter'
 
 const Form = styled.form`
   display: grid;
@@ -59,10 +57,21 @@ const SubmitButton = styled.button`
   border: 0;
   border-radius: ${({ theme }) => theme.radii.pill};
   cursor: pointer;
-  transition: opacity 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 
-  &:hover {
+  &:hover:not(:disabled) {
     opacity: 0.9;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
   }
 `
 
@@ -83,38 +92,62 @@ const Hint = styled.p`
   }
 `
 
+const Status = styled.p<{ $error?: boolean }>`
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: ${({ theme, $error }) =>
+    $error ? '#ffb4b4' : theme.colors.goldMuted};
+`
+
 export function KlubNewsletterForm() {
   const nameId = useId()
   const emailId = useId()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>(
+    'idle',
+  )
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (status === 'loading') return
+
+    const trimmedEmail = email.trim()
+    if (!trimmedEmail) {
+      setStatus('error')
+      return
+    }
+
+    setStatus('loading')
+    try {
+      await subscribeToNewsletter(trimmedEmail, {
+        source: 'klub',
+        name: name.trim() || undefined,
+      })
+      setName('')
+      setEmail('')
+      setStatus('success')
+    } catch {
+      setStatus('error')
+    }
+  }
 
   return (
-    <Form
-      action={getShopifyContactFormUrl()}
-      method="post"
-      acceptCharset="UTF-8"
-    >
-      <input type="hidden" name="form_type" value="contact" />
-      <input type="hidden" name="utf8" value="✓" />
-      <input
-        type="hidden"
-        name="contact[title]"
-        value="Vojta Hubne klub — přihlášení k odběru"
-      />
-      <input type="hidden" name="contact[tags]" value="vojtahubne-klub" />
-      <input
-        type="hidden"
-        name="contact[body]"
-        value="Chci být mezi prvními a dostat přístup do Vojta Hubne klubu po spuštění."
-      />
-
+    <Form onSubmit={onSubmit} noValidate>
       <Field>
         <Label htmlFor={nameId}>Jméno</Label>
         <Input
           id={nameId}
-          name="contact[name]"
+          name="name"
           type="text"
           autoComplete="name"
           placeholder="Vaše jméno"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value)
+            if (status !== 'idle') setStatus('idle')
+          }}
         />
       </Field>
 
@@ -122,22 +155,38 @@ export function KlubNewsletterForm() {
         <Label htmlFor={emailId}>E-mail *</Label>
         <Input
           id={emailId}
-          name="contact[email]"
+          name="email"
           type="email"
           autoComplete="email"
           required
           placeholder="vas@email.cz"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value)
+            if (status !== 'idle') setStatus('idle')
+          }}
         />
       </Field>
 
-      <SubmitButton type="submit">Chci být mezi prvními</SubmitButton>
+      <SubmitButton type="submit" disabled={status === 'loading'}>
+        {status === 'loading' ? 'Odesílám…' : 'Chci být mezi prvními'}
+      </SubmitButton>
+
+      {status === 'success' ? (
+        <Status role="status">
+          Děkujeme. Až bude klub ready, ozveme se s pozvánkou.
+        </Status>
+      ) : null}
+      {status === 'error' ? (
+        <Status $error role="alert">
+          Nepodařilo se přihlásit. Zkontrolujte e-mail a zkuste to znovu.
+        </Status>
+      ) : null}
+
       <Hint>
         Po spuštění klubu vám napíšeme s pozvánkou. Odesláním souhlasíte se
         zpracováním údajů dle{' '}
-        <a href={getPrivacyPolicyPageUrl()}>
-          zásad ochrany osobních údajů
-        </a>
-        .
+        <a href={getPrivacyPolicyPageUrl()}>zásad ochrany osobních údajů</a>.
       </Hint>
     </Form>
   )
