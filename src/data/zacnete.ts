@@ -45,32 +45,47 @@ export const zacneteGuides = [
 
 export const zacneteArticles = [
   {
-    id: 'kosik',
-    title: 'Nový košík, platby, VH CLUB a předplatné',
-    lead: 'Co měníme v e-shopu a jaký přínos to má pro zákazníky.',
-    handle: 'vojta-hubne-se-meni-novy-kosik-platby-vh-club-a-predplatne',
-    kind: 'novinky' as const,
-  },
-  {
-    id: 'club',
-    title: 'Vítejte ve VH Clubu',
-    lead: 'Co členství znamená a jak se k němu dostat jako první.',
-    handle: 'vitejte-ve-vh-clubu',
-    kind: 'blog' as const,
+    id: 'glp1-ziviny',
+    handle: 'hubnete-s-glp-1-mene-jidla-nesmi-znamenat-mene-zivin',
+    title: 'Hubnete s GLP-1? Méně jídla nesmí znamenat méně živin',
+    lead:
+      'Co ukázala studie o riziku závažného nedostatku vitaminu B1 — a proč u redukce záleží na kvalitě jídelníčku stejně jako na kaloriích.',
+    date: '14. 9. 2026',
+    dateTime: '2026-09-14',
+    image: undefined,
   },
   {
     id: 'muzi',
-    title: 'Hubnutí u mužů: nejde jen o břicho',
-    lead: 'TODO: napojit finální URL článku na shop.vojtahubne.cz/blogs.',
-    handle: null,
-    kind: 'todo' as const,
+    handle: 'hubnuti-u-muzu',
+    title: 'Hubnutí u mužů: nejde jen o břicho. Co při redukci řešit',
+    lead:
+      'Obvod pasu, kondice, svalová hmota a příjem bílkovin — bez stereotypů a bez zázračných slibů.',
+    date: '4. 9. 2026',
+    dateTime: '2026-09-04',
+    image:
+      'https://shop.vojtahubne.cz/cdn/shop/articles/hubnenizensketema_b9fe636c-c119-4ad4-af0f-d8b71ca53367.png?v=1789295932',
   },
   {
-    id: 'predplatne',
-    title: 'Předplatné: jak funguje a proč se vyplatí',
-    lead: 'TODO: napojit finální URL článku na shop.vojtahubne.cz/blogs.',
-    handle: null,
-    kind: 'todo' as const,
+    id: 'telo-po-zhubnuti',
+    handle: 'co-se-muze-zmenit-na-tele-po-zhubnuti',
+    title: 'Co se může změnit na těle po zhubnutí 20, 30 nebo 50 kg',
+    lead:
+      'Proporce, svaly, pokožka i vztah k tělu — milníky, ne biologické hranice.',
+    date: '4. 9. 2026',
+    dateTime: '2026-09-04',
+    image:
+      'https://shop.vojtahubne.cz/cdn/shop/articles/cosemuzestat_2e1674f2-9abe-471a-9cd6-fbb644b5a278.png?v=1789295942',
+  },
+  {
+    id: 'bilkoviny',
+    handle: 'jak-pri-redukci-hlidat-prijem-bilkovin',
+    title: 'Jak při redukci hlídat příjem bílkovin',
+    lead:
+      'Proč při hubnutí nestačí jen ubírat kalorie — a jak prakticky hlídat bílkoviny v jídelníčku.',
+    date: '4. 9. 2026',
+    dateTime: '2026-09-04',
+    image:
+      'https://shop.vojtahubne.cz/cdn/shop/articles/bilkoviny_50fa763d-8dfd-4d11-8474-f5585cc9bfc7.png?v=1789295952',
   },
 ] as const
 

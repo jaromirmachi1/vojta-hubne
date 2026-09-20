@@ -26,8 +26,6 @@ import { zacnetePageMeta } from '../seo/zacnetePageMeta'
 import { appendCampaignParams } from '../utils/campaignLinks'
 import {
   getPrivacyPolicyPageUrl,
-  getShopifyBlogUrl,
-  getShopifyNovinkyArticleUrl,
   getShopifyProductUrl,
   getShopifyStoreUrl,
 } from '../utils/shopify'
@@ -384,47 +382,106 @@ const ArticleList = styled.ul`
   padding: 0;
   list-style: none;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.85rem;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 `
 
-const ArticleLink = styled.a`
-  display: grid;
-  gap: 0.4rem;
-  padding: 1.1rem 1.15rem;
+const ArticleCard = styled.a`
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  overflow: hidden;
   border: 1px solid ${({ theme }) => theme.colors.borderSubtle};
-  border-radius: ${({ theme }) => theme.radii.lg};
-  background: ${({ theme }) => theme.colors.surface};
+  border-radius: ${({ theme }) => theme.radii.xl};
+  background: ${({ theme }) => theme.colors.surfaceRaised};
   color: inherit;
   text-decoration: none;
-  transition: border-color 160ms ease-out;
+  transition:
+    border-color 0.2s ease-out,
+    transform 0.2s ease-out,
+    box-shadow 0.2s ease-out;
 
   &:hover {
     border-color: ${({ theme }) => theme.colors.border};
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
   }
 
-  strong {
-    font-size: 1rem;
-    line-height: 1.35;
-    color: ${({ theme }) => theme.colors.text};
+  &:active {
+    transform: scale(0.99);
   }
 
-  span {
-    font-size: 0.85rem;
-    line-height: 1.55;
-    color: ${({ theme }) => theme.colors.textMuted};
+  &:hover img {
+    transform: scale(1.03);
   }
 `
 
-const TodoNote = styled.p`
-  margin: 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
+const ArticleMedia = styled.div`
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: ${({ theme }) => theme.colors.black};
+`
+
+const ArticleImage = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease-out;
+`
+
+const ArticlePlaceholder = styled.span`
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 11rem;
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(238, 220, 130, 0.16),
+      transparent 55%
+    ),
+    #111;
+`
+
+const ArticleBody = styled.div`
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.05rem 1rem 1.2rem;
+`
+
+const ArticleDate = styled.time`
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors.goldMuted};
+`
+
+const ArticleTitle = styled.strong`
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.gold};
+`
+
+const ArticleExcerpt = styled.span`
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: ${({ theme }) => theme.colors.textMuted};
 `
 
 const FooterPair = styled.div`
@@ -562,19 +619,10 @@ function articleHref(
   article: (typeof zacneteArticles)[number],
   search: string,
 ): string {
-  if (article.kind === 'novinky' && article.handle) {
-    return appendCampaignParams(
-      getShopifyNovinkyArticleUrl(article.handle),
-      search,
-    )
-  }
-  if (article.kind === 'blog' && article.handle) {
-    return appendCampaignParams(
-      `${getShopifyStoreUrl()}/blogs/blog/${encodeURIComponent(article.handle)}`,
-      search,
-    )
-  }
-  return appendCampaignParams(getShopifyBlogUrl(), search)
+  return appendCampaignParams(
+    `${getShopifyStoreUrl()}/blogs/blog/${encodeURIComponent(article.handle)}`,
+    search,
+  )
 }
 
 export function ZacnetePage() {
@@ -742,16 +790,32 @@ export function ZacnetePage() {
             <ArticleList>
               {zacneteArticles.map((article) => (
                 <li key={article.id}>
-                  <ArticleLink
+                  <ArticleCard
                     href={articleHref(article, search)}
                     rel="noopener noreferrer"
+                    aria-label={article.title}
                   >
-                    <strong>{article.title}</strong>
-                    <span>{article.lead}</span>
-                    {article.kind === 'todo' ? (
-                      <TodoNote>TODO · zatím odkaz na blog hub</TodoNote>
-                    ) : null}
-                  </ArticleLink>
+                    <ArticleMedia>
+                      {article.image ? (
+                        <ArticleImage
+                          src={article.image}
+                          alt=""
+                          width={640}
+                          height={400}
+                          loading="lazy"
+                        />
+                      ) : (
+                        <ArticlePlaceholder aria-hidden />
+                      )}
+                    </ArticleMedia>
+                    <ArticleBody>
+                      <ArticleDate dateTime={article.dateTime}>
+                        {article.date}
+                      </ArticleDate>
+                      <ArticleTitle>{article.title}</ArticleTitle>
+                      <ArticleExcerpt>{article.lead}</ArticleExcerpt>
+                    </ArticleBody>
+                  </ArticleCard>
                 </li>
               ))}
             </ArticleList>
