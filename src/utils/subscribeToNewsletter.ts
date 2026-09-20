@@ -1,5 +1,5 @@
 export type NewsletterOffer = 'discount' | 'herohero'
-export type NewsletterSource = 'popup' | 'footer' | 'klub'
+export type NewsletterSource = 'popup' | 'footer' | 'klub' | 'zacnete'
 
 type SubscribeOptions = {
   offer?: NewsletterOffer

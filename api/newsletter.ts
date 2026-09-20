@@ -5,12 +5,13 @@ const BASE_TAG = 'newsletter'
 const SOURCE_FOOTER_TAG = 'website-footer'
 const SOURCE_POPUP_TAG = 'popup-signup'
 const SOURCE_KLUB_TAG = 'vojtahubne-klub'
+const SOURCE_ZACNETE_TAG = 'zacnete-landing'
 const OFFER_DISCOUNT_TAG = 'offer-200kc'
 const OFFER_HEROHERO_TAG = 'offer-herohero'
 const OFFER_TAGS = [OFFER_DISCOUNT_TAG, OFFER_HEROHERO_TAG] as const
 
 type NewsletterOffer = 'discount' | 'herohero'
-type NewsletterSource = 'popup' | 'footer' | 'klub'
+type NewsletterSource = 'popup' | 'footer' | 'klub' | 'zacnete'
 
 type NewsletterRequestBody = {
   email?: unknown
@@ -189,6 +190,7 @@ function normalizeOffer(value: unknown): NewsletterOffer | null {
 function normalizeSource(value: unknown): NewsletterSource {
   if (value === 'popup') return 'popup'
   if (value === 'klub') return 'klub'
+  if (value === 'zacnete') return 'zacnete'
   return 'footer'
 }
 
@@ -211,6 +213,8 @@ function buildCustomerTags(
     tags.add(SOURCE_POPUP_TAG)
   } else if (options.source === 'klub') {
     tags.add(SOURCE_KLUB_TAG)
+  } else if (options.source === 'zacnete') {
+    tags.add(SOURCE_ZACNETE_TAG)
   } else {
     tags.add(SOURCE_FOOTER_TAG)
   }

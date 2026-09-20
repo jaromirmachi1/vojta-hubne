@@ -9,6 +9,7 @@ import { CoChystamePage } from './pages/CoChystamePage'
 import { KlubPage } from './pages/KlubPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { ProductPage } from './pages/ProductPage'
+import { ZacnetePage } from './pages/ZacnetePage'
 import {
   ShopifyCartRedirectPage,
   ShopifyCollectionRedirectPage,
@@ -29,6 +30,7 @@ function App() {
         <Route path="/co-chystame" element={<CoChystamePage />} />
         <Route path={LEGACY_HOME_PATH} element={<HomePage />} />
         <Route path="/klub" element={<KlubPage />} />
+        <Route path="/zacnete" element={<ZacnetePage />} />
         <Route path="/calculator" element={<CalculatorPage />} />
         <Route path="/kalkulacka" element={<Navigate to="/calculator" replace />} />
         <Route path="/kontakt" element={<ContactPage />} />
