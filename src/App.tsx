@@ -9,6 +9,7 @@ import { CoChystamePage } from './pages/CoChystamePage'
 import { KlubPage } from './pages/KlubPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 import { ProductPage } from './pages/ProductPage'
+import { GuaranteePage } from './pages/GuaranteePage'
 import { ZacnetePage } from './pages/ZacnetePage'
 import {
   ShopifyCartRedirectPage,
@@ -34,6 +35,7 @@ function App() {
         <Route path="/calculator" element={<CalculatorPage />} />
         <Route path="/kalkulacka" element={<Navigate to="/calculator" replace />} />
         <Route path="/kontakt" element={<ContactPage />} />
+        <Route path="/30denni-garance" element={<GuaranteePage />} />
         <Route path="/spoluprace" element={<AffiliatePage />} />
         <Route path="/homepage/*" element={<LegacyHomepageRedirect />} />
         <Route path="/products/:handle" element={<ProductPage />} />

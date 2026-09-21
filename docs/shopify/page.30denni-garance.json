@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "vojta-hubne-guarantee-page",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

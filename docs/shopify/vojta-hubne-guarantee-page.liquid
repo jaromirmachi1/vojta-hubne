@@ -1,0 +1,250 @@
+{% comment %}
+  Vojta Hubne — 30denní garance page (matches VH_30denni_garance_web.html).
+
+  Setup:
+  1. Upload assets:
+     vh-guarantee-product-left.webp
+     vh-guarantee-product-center.webp
+     vh-guarantee-product-right.webp
+     (from docs/shopify/assets/)
+  2. Sections → Add `vojta-hubne-guarantee-page.liquid` (this file)
+  3. Templates → Add `page.30denni-garance.json` from docs/shopify/page.30denni-garance.json
+  4. Pages → "30denní garance VH" → Theme template: 30denni-garance
+  5. Re-upload vojta-hubne-horizon.css
+  6. Clear page body content in Admin (section owns the markup)
+{% endcomment %}
+
+{%- liquid
+  assign vh_mail = 'mailto:info@vojtahubne.cz?subject=30denn%C3%AD%20garance%20VH'
+  assign img_left = 'vh-guarantee-product-left.webp' | asset_url
+  assign img_center = 'vh-guarantee-product-center.webp' | asset_url
+  assign img_right = 'vh-guarantee-product-right.webp' | asset_url
+-%}
+
+<div class="vh-guarantee-page-root">
+  <section class="vh-guarantee" aria-labelledby="vh-guarantee-hero-title">
+    <div class="vh-guarantee__inner">
+      <div class="vh-guarantee__copy">
+        <div class="vh-guarantee__eyebrow">
+          <svg viewBox="0 0 32 36" fill="none" aria-hidden="true">
+            <path
+              d="M16 2 29 7v10c0 8-8 14-13 17C11 31 3 25 3 17V7L16 2Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+            />
+            <path
+              d="m10 17 4 4 8-9"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span>30denní garance VH</span>
+        </div>
+        <p class="vh-guarantee__lead">Věříme tomu, co děláme.</p>
+        <h1 class="vh-guarantee__title" id="vh-guarantee-hero-title">
+          Nechutná? Nesedne?<br>
+          <span>Peníze ti vrátíme.</span>
+        </h1>
+        <p class="vh-guarantee__intro">
+          Našim produktům věříme. Chceme, abys je mohl vyzkoušet s klidem. Když ti
+          nechutnají nebo nesednou, ozvi se nám do 30 dnů od převzetí. Dopravu
+          platíme my a ty dostaneš 100&nbsp;% zaplacené ceny produktu zpět.
+        </p>
+        <a class="vh-guarantee__button" href="#jak-to-funguje">
+          Jak funguje garance <span aria-hidden="true">↗</span>
+        </a>
+        <p class="vh-guarantee__opened">Platí i na otevřené a vyzkoušené balení.</p>
+      </div>
+
+      <div class="vh-guarantee__visual">
+        <div class="vh-guarantee__halo" aria-hidden="true"></div>
+        <div class="vh-guarantee__seal">
+          <strong>30</strong>
+          <span>DNÍ NA VYZKOUŠENÍ</span>
+        </div>
+        <div class="vh-guarantee__products">
+          <img
+            class="vh-guarantee__product vh-guarantee__product--left"
+            src="{{ img_left }}"
+            alt="LEAN SHAKE Višeň v čokoládě"
+            width="900"
+            height="900"
+            loading="eager"
+            decoding="async"
+          >
+          <img
+            class="vh-guarantee__product vh-guarantee__product--center"
+            src="{{ img_center }}"
+            alt="iLEAN SHAKE Čokoláda"
+            width="900"
+            height="900"
+            loading="eager"
+            decoding="async"
+          >
+          <img
+            class="vh-guarantee__product vh-guarantee__product--right"
+            src="{{ img_right }}"
+            alt="LEAN SHAKE Malina"
+            width="900"
+            height="900"
+            loading="eager"
+            decoding="async"
+          >
+        </div>
+        <p class="vh-guarantee__caption">Tvoje chuť. Tvoje rozhodnutí. Naše garance.</p>
+      </div>
+
+      <div class="vh-guarantee__facts">
+        <div class="vh-guarantee__fact">
+          <strong>30 dní</strong>
+          <span>na vyzkoušení od převzetí</span>
+        </div>
+        <div class="vh-guarantee__fact">
+          <strong>0 Kč</strong>
+          <span>za odeslání zpět</span>
+        </div>
+        <div class="vh-guarantee__fact">
+          <strong>100 %</strong>
+          <span>zaplacené ceny produktu zpět</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vh-guarantee-detail" id="jak-to-funguje" aria-labelledby="vh-guarantee-detail-title">
+    <div class="vh-guarantee-page">
+      <p class="vh-guarantee-page__eyebrow">VĚŘÍME TOMU, CO DĚLÁME.</p>
+      <h2 id="vh-guarantee-detail-title">
+        Nechutná? Nesedne?<br>
+        <span>Peníze ti vrátíme.</span>
+      </h2>
+      <p class="vh-guarantee-page__intro">
+        Našim produktům věříme. A chceme, abys je mohl vyzkoušet s klidem. Pokud
+        ti produkt nechutná nebo ti nesedne, ozvi se nám do 30 dnů od převzetí a
+        domluvíme jeho vrácení. Dopravu platíme my a vrátíme ti
+        <strong>100&nbsp;% zaplacené ceny produktu.</strong>
+      </p>
+
+      <div class="vh-guarantee-page__facts">
+        <div>
+          <strong>30 dní</strong>
+          <span>od převzetí produktu</span>
+        </div>
+        <div>
+          <strong>Vrácení zdarma</strong>
+          <span>dopravu zpět platí VH</span>
+        </div>
+        <div>
+          <strong>100 % zpět</strong>
+          <span>ze zaplacené ceny produktu</span>
+        </div>
+      </div>
+
+      <p class="vh-guarantee-page__opened">
+        Ano, i když balení otevřeš a produkt vyzkoušíš.
+      </p>
+
+      <h3>Jak na vrácení? Ve třech krocích.</h3>
+      <ol class="vh-guarantee-page__steps">
+        <li>
+          <span>01</span>
+          <div>
+            <h4>Napiš nám</h4>
+            <p>
+              Ozvi se na
+              <a href="{{ vh_mail }}">info@vojtahubne.cz</a>. Připiš číslo
+              objednávky a produkt, který chceš vrátit. Pro uplatnění garance nám
+              napiš do 30 dnů od převzetí produktu.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>
+            <h4>Pošli produkt zdarma zpět</h4>
+            <p>
+              Domluvíme s tebou postup a zajistíme bezplatnou zpáteční dopravu.
+              Vyčkej na naše pokyny, zabal produkt včetně otevřeného balení a
+              odešli ho domluveným způsobem.
+            </p>
+          </div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>
+            <h4>Dostaneš peníze zpět</h4>
+            <p>
+              Po vrácení produktu ti vrátíme celou částku, kterou jsi za něj
+              skutečně zaplatil. I když už jsi ho otevřel a ochutnal.
+            </p>
+          </div>
+        </li>
+      </ol>
+
+      <a class="vh-guarantee-page__button" href="{{ vh_mail }}">
+        Chci využít garanci <span aria-hidden="true">↗</span>
+      </a>
+
+      <div class="vh-guarantee-page__faq">
+        <h3>Ještě tě možná zajímá</h3>
+        <details>
+          <summary>Můžu vrátit otevřené balení?</summary>
+          <p>
+            Ano. Garance platí i na otevřené a vyzkoušené balení. Chceme, abys
+            mohl zjistit, jestli ti produkt opravdu vyhovuje.
+          </p>
+        </details>
+        <details>
+          <summary>Od kdy běží 30 dní?</summary>
+          <p>
+            Od převzetí produktu. Pokud ti nechutná nebo nesedne, napiš nám do
+            30 dnů od převzetí. Potom s tebou domluvíme bezplatné odeslání zpět.
+          </p>
+        </details>
+        <details>
+          <summary>Kolik mi vrátíte?</summary>
+          <p>
+            100&nbsp;% částky, kterou jsi za vrácený produkt skutečně zaplatil,
+            tedy cenu po případné slevě. Zpáteční dopravu hradíme my.
+          </p>
+        </details>
+        <details>
+          <summary>Musím být členem VH Clubu?</summary>
+          <p>
+            Ne. Pro využití 30denní garance není členství ve VH Clubu potřeba.
+          </p>
+        </details>
+        <details>
+          <summary>Co když mám zvýhodněný balíček nebo dárek?</summary>
+          <p>
+            V e-mailu nám napiš, co z objednávky chceš vrátit. Před odesláním s
+            tebou projdeme konkrétní objednávku a potvrdíme další postup i
+            částku k vrácení.
+          </p>
+        </details>
+      </div>
+
+      <p class="vh-guarantee-page__legal">
+        30denní garance VH je dobrovolná garance spokojenosti. Tvoje zákonná
+        práva z vadného plnění ani právo na odstoupení od smlouvy tím nejsou
+        dotčena.
+      </p>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "VH 30denní garance",
+  "tag": "section",
+  "class": "vh-guarantee-section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "VH 30denní garance"
+    }
+  ]
+}
+{% endschema %}

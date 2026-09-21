@@ -544,6 +544,7 @@ export function SiteFooter({ id }: SiteFooterProps) {
                 <FooterExternalLink href={getShopifyPolicyUrl('terms-of-service')}>
                   Obchodní podmínky
                 </FooterExternalLink>
+                <FooterNavLink to="/30denni-garance">30denní garance</FooterNavLink>
                 <FooterExternalLink href={getShopifyPolicyUrl('refund-policy')}>
                   Reklamace
                 </FooterExternalLink>

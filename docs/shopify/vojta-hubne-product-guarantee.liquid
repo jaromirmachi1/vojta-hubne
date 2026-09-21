@@ -1,0 +1,34 @@
+{% comment %}
+  Vojta Hubne — 30-day taste/fit guarantee callout.
+
+  Wire in theme code (preferred):
+    Edit code → Blocks → buy-buttons.liquid
+    Paste this AFTER `{%- endform -%}` (still inside the `product != blank` branch),
+    so it sits under „Další platební možnosti“:
+
+      {% render 'vojta-hubne-product-guarantee' %}
+
+  Snippet must exist: Snippets → vojta-hubne-product-guarantee.liquid
+{% endcomment %}
+
+{%- assign vh_guarantee_href = 'https://www.vojtahubne.cz/30denni-garance' -%}
+
+<aside class="vh-product-guarantee" aria-labelledby="vh-product-guarantee-title">
+  <span class="vh-product-guarantee__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" focusable="false">
+      <path d="M12 3 5 6v5c0 4.6 2.8 7.9 7 10 4.2-2.1 7-5.4 7-10V6z" />
+      <path d="m9 12 2 2 4-5" />
+    </svg>
+  </span>
+  <div class="vh-product-guarantee__body">
+    <p class="vh-product-guarantee__title" id="vh-product-guarantee-title">
+      Nechutná nebo nesedne?
+    </p>
+    <p class="vh-product-guarantee__text">
+      Ozvi se do 30 dnů. Produkt pošleš zdarma zpět a my ti vrátíme 100&nbsp;% zaplacené ceny.
+    </p>
+    <a class="vh-product-guarantee__link" href="{{ vh_guarantee_href }}">
+      Podrobnosti garance <span aria-hidden="true">→</span>
+    </a>
+  </div>
+</aside>

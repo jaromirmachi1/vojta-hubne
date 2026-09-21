@@ -39,7 +39,8 @@ In **Product details** (Podrobnosti), drag blocks to this order:
 2. **Custom Liquid** — `{% render 'vojta-hubne-product-tags' %}`
 3. **Price** (Cena)
 4. Variant picker, Buy buttons…
-5. **Product description** (Popis produktu) — long text stays here
+5. **Custom Liquid** — `{% render 'vojta-hubne-product-guarantee' %}` (under „Další platební možnosti“)
+6. **Product description** (Popis produktu) — long text stays here / or move to centered section below
 
 ---
 

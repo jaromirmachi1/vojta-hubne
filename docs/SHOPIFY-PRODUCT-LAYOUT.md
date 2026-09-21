@@ -94,8 +94,27 @@ Click **Product media gallery** in the left sidebar:
 3. Price  
 4. (Optional) Divider  
 5. Variant picker  
-6. Buy buttons (quantity + Add to cart + accelerated checkout)  
-7. Remove the default **Product description** block from Product details if you add the centered description section below.
+6. Buy buttons (quantity + Add to cart + accelerated checkout)
+7. **Custom Liquid** — 30-day guarantee (below „Další platební možnosti“)
+8. Remove the default **Product description** block from Product details if you add the centered description section below.
+
+---
+
+## Step 4a — Guarantee callout (under payment options)
+
+**Preferred — theme code**
+
+1. **Snippets → Add** `vojta-hubne-product-guarantee` ← paste `docs/shopify/vojta-hubne-product-guarantee.liquid`
+2. Re-upload **`vojta-hubne-horizon.css`**
+3. **Blocks → `buy-buttons.liquid`** — after `{%- endform -%}` add:
+
+```liquid
+{% render 'vojta-hubne-product-guarantee' %}
+```
+
+Full steps: [PRODUCT-GUARANTEE.md](./shopify/PRODUCT-GUARANTEE.md)
+
+Link goes to [30denní garance VH](https://www.vojtahubne.cz/30denni-garance) (React marketing site).
 
 ---
 
