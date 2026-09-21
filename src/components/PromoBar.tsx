@@ -40,8 +40,8 @@ const Tag = styled.span`
 export function PromoBar() {
   const promo = sitePromos[0]
   return (
-    <Bar href={promo.href} rel="noopener noreferrer">
-      <Tag>{promo.tag}</Tag>
+    <Bar href={promo.href} rel={promo.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+      {promo.tag ? <Tag>{promo.tag}</Tag> : null}
       <span>{promo.text}</span>
       <span aria-hidden>→</span>
     </Bar>

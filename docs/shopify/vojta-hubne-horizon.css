@@ -8352,6 +8352,21 @@ body:has(.vh-promo-bar) announcement-bar-component {
   text-transform: uppercase !important;
 }
 
+.vh-promo-bar__icon {
+  display: grid !important;
+  place-items: center !important;
+  flex: none !important;
+  width: 1.15rem !important;
+  height: 1.35rem !important;
+  color: var(--vh-black, #000) !important;
+}
+
+.vh-promo-bar__icon svg {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
 .vh-promo-bar__text {
   flex: 1 !important;
   min-width: 0 !important;

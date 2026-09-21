@@ -62,7 +62,7 @@ Do **not** put care content into the catalog file.
 7. Re-upload **`vojta-hubne-horizon.css`**
 
 8. **Theme → Assets** — upload:
-   - Promo catalog banner assets when a new campaign is ready (Višňová banner currently hidden in the section)
+   - **`vh-catalog-3prichute-banner.jpg`** and **`vh-catalog-3prichute-banner-mobil.jpg`** from `docs/shopify/assets/` (3 příchutě / 3 dárky — links to [`/products/3shake-bundle`](https://shop.vojtahubne.cz/products/3shake-bundle))
    - **`vh-giftcard-logo.webp`**, **`vh-giftcard-card-a.webp`**, **`vh-giftcard-card-b.webp`** from `docs/shopify/assets/`
    - **`vh-club-card.jpg`** from `docs/shopify/assets/`
 
@@ -70,6 +70,7 @@ Do **not** put care content into the catalog file.
 
 ## What you should see
 
+0. **3 příchutě / 3 dárky zdarma** promo banner (desktop wide / mobile tall)
 1. Vaše nejoblíbenější produkty — **4 compact tiles**
 2. Trust bar (advantages)
 3. **VH Club** banner → [`/products/vh-club`](https://shop.vojtahubne.cz/products/vh-club) (copy from [Vítejte ve VH Clubu](https://shop.vojtahubne.cz/blogs/novinky/vitejte-ve-vh-clubu))

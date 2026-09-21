@@ -1,7 +1,10 @@
+import { GUARANTEE_PATH } from './guarantee'
 import { getShopifyCatalogUrl, getShopifyProductUrl } from '../utils/shopify'
 
 const catalogUrl = getShopifyCatalogUrl()
 const upcomingHref = '/co-chystame'
+const guaranteeHref = GUARANTEE_PATH
+const guaranteeShopifyHref = 'https://www.vojtahubne.cz/30denni-garance'
 
 function productHref(handle: string) {
   return getShopifyProductUrl(handle) ?? catalogUrl
@@ -9,6 +12,13 @@ function productHref(handle: string) {
 
 /** Rotating gold announcement bar — React SiteChrome + Shopify promo snippet. */
 export const sitePromos = [
+  {
+    tag: '',
+    text: '30 dní na vyzkoušení · Vrácení zdarma · 100 % ceny zpět',
+    href: guaranteeHref,
+    shopifyHref: guaranteeShopifyHref,
+    icon: 'shield' as const,
+  },
   {
     tag: 'Jen pro členy',
     text: 'LEAN SHAKE™ MALINA — nová příchuť pro členy klubu',

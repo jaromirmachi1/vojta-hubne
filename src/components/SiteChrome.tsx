@@ -198,6 +198,20 @@ const PromoTag = styled.span`
   text-transform: uppercase;
 `
 
+const PromoIcon = styled.span`
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 1.15rem;
+  height: 1.35rem;
+  color: ${altV4.black};
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+`
+
 const PromoText = styled.span`
   flex: 1;
   min-width: 0;
@@ -214,6 +228,25 @@ const PromoText = styled.span`
     flex: none;
   }
 `
+
+function PromoShieldIcon() {
+  return (
+    <svg viewBox="0 0 32 36" fill="none" aria-hidden="true">
+      <path
+        d="M16 2 29 7v10c0 8-8 14-13 17C11 31 3 25 3 17V7L16 2Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+      />
+      <path
+        d="m10 17 4 4 8-9"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
 
 export function SiteChrome() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -292,7 +325,13 @@ export function SiteChrome() {
         </Actions>
       </Header>
       <Promo href={promo.href} rel={promo.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
-        <PromoTag>{promo.tag}</PromoTag>
+        {'icon' in promo && promo.icon === 'shield' ? (
+          <PromoIcon>
+            <PromoShieldIcon />
+          </PromoIcon>
+        ) : promo.tag ? (
+          <PromoTag>{promo.tag}</PromoTag>
+        ) : null}
         <PromoText>{promo.text}</PromoText>
         <span aria-hidden>→</span>
       </Promo>
