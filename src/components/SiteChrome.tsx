@@ -329,9 +329,8 @@ export function SiteChrome() {
           <PromoIcon>
             <PromoShieldIcon />
           </PromoIcon>
-        ) : promo.tag ? (
-          <PromoTag>{promo.tag}</PromoTag>
         ) : null}
+        {promo.tag ? <PromoTag>{promo.tag}</PromoTag> : null}
         <PromoText>{promo.text}</PromoText>
         <span aria-hidden>→</span>
       </Promo>

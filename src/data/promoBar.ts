@@ -13,20 +13,20 @@ function productHref(handle: string) {
 /** Rotating gold announcement bar — React SiteChrome + Shopify promo snippet. */
 export const sitePromos = [
   {
-    tag: '',
-    text: '30 dní na vyzkoušení · Vrácení zdarma · 100 % ceny zpět',
+    tag: '30 dní na vyzkoušení',
+    text: '· Vrácení zdarma · 100 % ceny zpět',
     href: guaranteeHref,
     shopifyHref: guaranteeShopifyHref,
     icon: 'shield' as const,
   },
   {
-    tag: 'Jen pro členy',
-    text: 'LEAN SHAKE™ MALINA — nová příchuť pro členy klubu',
+    tag: 'Novinka',
+    text: 'LEAN SHAKE™ MALINA — nová příchuť leanu',
     href: productHref('lean-shake-glp-1'),
     shopifyHref: '/products/lean-shake-glp-1',
   },
   {
-    tag: 'Jen pro členy',
+    tag: 'Novinka',
     text: 'iLEAN SHAKE™ ČOKOLÁDA · bez inulinu, první série',
     href: productHref('lean-shake-glp-1'),
     shopifyHref: '/products/lean-shake-glp-1',
@@ -38,7 +38,7 @@ export const sitePromos = [
     shopifyHref: '/products/kreatin-hmb',
   },
   {
-    tag: 'Novinka pro VH Club',
+    tag: 'Novinka',
     text: 'BIOME 4™ — 4 živé kultury, 5 miliard CFU',
     href: productHref('biome-4'),
     shopifyHref: '/products/biome-4',
@@ -51,7 +51,7 @@ export const sitePromos = [
   },
   {
     tag: 'Nová příchuť',
-    text: 'Lean Shake™ Višeň v čokoládě — k dodání',
+    text: 'Lean Shake™ Višeň v čokoládě — již skladem',
     href: productHref('lean-shake-glp-1'),
     shopifyHref: '/products/lean-shake-glp-1',
   },
