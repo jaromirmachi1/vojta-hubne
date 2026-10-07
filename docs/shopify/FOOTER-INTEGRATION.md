@@ -37,6 +37,20 @@ The VH footer is an **accordion layout** (brand left, three collapsed sections, 
 Brand + accordion columns + bottom bar appear **inside** the footer.  
 Horizon **Email signup** and default utilities are hidden automatically.
 
+### Region / country switcher (Markets)
+
+The footer bottom bar includes Shopify’s native **localization form** (`{% form 'localization' %}`) when more than one country/market is enabled. Customers can switch e.g. Česko → Slovensko and get the right currency + tax.
+
+**Required in Admin:**
+
+1. **Settings → Markets** — Slovakia (and any other markets) must be **active**
+2. Each market needs the correct currency (SK → EUR) and taxes
+3. Soft currency conversion alone is not enough for SK DPH — use a real market
+
+If only one country is enabled, the switcher stays hidden.
+
+Re-paste **Snippets → `vojta-hubne-footer-legal`** + re-upload **`vojta-hubne-horizon.css`** after pulling this change.
+
 ---
 
 ## Option B — Separate footer section

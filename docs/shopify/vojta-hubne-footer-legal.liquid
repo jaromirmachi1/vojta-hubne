@@ -145,6 +145,63 @@
   <div class="vh-footer-bottom">
     <p class="vh-footer-bottom__copy">© {{ 'now' | date: '%Y' }} Vojta Hubne · RM Solution Group s.r.o.</p>
 
+    {%- if localization.available_countries.size > 1 -%}
+      <div class="vh-footer-locale" data-vh-locale>
+        {% form 'localization', id: 'vh-footer-localization', class: 'vh-footer-locale__form' %}
+          <button
+            type="button"
+            class="vh-footer-locale__button"
+            aria-expanded="false"
+            aria-controls="vh-footer-country-list"
+            data-vh-locale-toggle
+          >
+            <span class="vh-footer-locale__label">Oblast</span>
+            <span class="vh-footer-locale__value">
+              {{ localization.country.name }}
+              ·
+              {{ localization.country.currency.iso_code }}
+            </span>
+            <span class="vh-footer-locale__caret" aria-hidden="true">▾</span>
+          </button>
+
+          <ul
+            id="vh-footer-country-list"
+            class="vh-footer-locale__list"
+            role="list"
+            hidden
+            data-vh-locale-list
+          >
+            {%- for country in localization.available_countries -%}
+              <li>
+                <button
+                  type="button"
+                  class="vh-footer-locale__option{% if country.iso_code == localization.country.iso_code %} is-current{% endif %}"
+                  data-vh-locale-option
+                  data-value="{{ country.iso_code }}"
+                  {% if country.iso_code == localization.country.iso_code %}
+                    aria-current="true"
+                  {% endif %}
+                >
+                  <span>{{ country.name }}</span>
+                  <span class="vh-footer-locale__currency">
+                    {{ country.currency.iso_code }}
+                    {{ country.currency.symbol }}
+                  </span>
+                </button>
+              </li>
+            {%- endfor -%}
+          </ul>
+
+          <input
+            type="hidden"
+            name="country_code"
+            value="{{ localization.country.iso_code }}"
+            data-vh-locale-input
+          >
+        {% endform %}
+      </div>
+    {%- endif -%}
+
     <a class="vh-footer-bottom__email" href="mailto:info@vojtahubne.cz">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
         <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
@@ -174,3 +231,69 @@
     </button>
   </div>
 </div>
+
+<script>
+  (function () {
+    if (window.__vhFooterLocaleBound) return;
+    window.__vhFooterLocaleBound = true;
+
+    function bindLocale(root) {
+      if (!root || root.dataset.bound === 'true') return;
+      root.dataset.bound = 'true';
+
+      var toggle = root.querySelector('[data-vh-locale-toggle]');
+      var list = root.querySelector('[data-vh-locale-list]');
+      var input = root.querySelector('[data-vh-locale-input]');
+      var form = root.querySelector('form');
+      if (!toggle || !list || !input || !form) return;
+
+      function closeList() {
+        list.setAttribute('hidden', '');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+
+      function openList() {
+        list.removeAttribute('hidden');
+        toggle.setAttribute('aria-expanded', 'true');
+      }
+
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        if (list.hasAttribute('hidden')) openList();
+        else closeList();
+      });
+
+      root.querySelectorAll('[data-vh-locale-option]').forEach(function (option) {
+        option.addEventListener('click', function () {
+          var value = option.getAttribute('data-value');
+          if (!value) return;
+          input.value = value;
+          form.submit();
+        });
+      });
+
+      document.addEventListener('click', function (event) {
+        if (!root.contains(event.target)) closeList();
+      });
+
+      document.addEventListener('keyup', function (event) {
+        if (event.key === 'Escape') {
+          closeList();
+          toggle.focus();
+        }
+      });
+    }
+
+    function bindAll() {
+      document.querySelectorAll('[data-vh-locale]').forEach(bindLocale);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindAll);
+    } else {
+      bindAll();
+    }
+
+    document.addEventListener('shopify:section:load', bindAll);
+  })();
+</script>

@@ -70,7 +70,7 @@ Do **not** put care content into the catalog file.
 
 ## What you should see
 
-0. **3 příchutě / 3 dárky zdarma** promo banner (desktop wide / mobile tall)
+0. **3 příchutě / 3 dárky zdarma** promo banner — currently **hidden** (`vh_promo_enabled = false` in catalog liquid; set `true` to restore)
 1. Vaše nejoblíbenější produkty — **4 compact tiles**
 2. Trust bar (advantages)
 3. **VH Club** banner → [`/products/vh-club`](https://shop.vojtahubne.cz/products/vh-club) (copy from [Vítejte ve VH Clubu](https://shop.vojtahubne.cz/blogs/novinky/vitejte-ve-vh-clubu))
