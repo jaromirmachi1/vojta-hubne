@@ -3,7 +3,7 @@ export const companyInfo = {
   name: 'RM Solution Group s.r.o.',
   ico: '29615551',
   dic: 'CZ29615551',
-  vatStatus: 'Nejsme plátci DPH.',
+  vatStatus: 'Jsme plátci DPH.',
   dataBoxId: 'cyauddd',
   address: 'Žabeň 309',
   zipCity: '739 25 Žabeň',
