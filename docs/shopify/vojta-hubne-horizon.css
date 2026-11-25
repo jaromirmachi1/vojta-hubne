@@ -2688,6 +2688,12 @@ body.template-list-collections
   width: 100%;
 }
 
+#vh-catalog-bundles {
+  scroll-margin-top: calc(
+    var(--vh-header-height, 4.5rem) + var(--vh-promo-bar-height, 2.25rem) + 1rem
+  );
+}
+
 .vh-catalog__trust {
   width: 100%;
 }

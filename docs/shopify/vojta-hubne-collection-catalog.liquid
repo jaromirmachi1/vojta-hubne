@@ -7,8 +7,8 @@
   Setup:
   1. Sections → Add section → filename MUST be: vojta-hubne-collection-catalog.liquid
      (same name as this file)
-  2. Theme assets: upload vh-catalog-3prichute-banner.jpg + vh-catalog-3prichute-banner-mobil.jpg
-     (from docs/shopify/assets/)
+  2. Theme assets: upload vh-catalog-blackfriday-banner.jpg + vh-catalog-blackfriday-banner-mobil.jpg
+     (+ .webp variants) from docs/shopify/assets/
   3. Sections → Add vojta-hubne-collection-care.liquid (Péče grid underneath)
   4. Snippets → vojta-hubne-care-product-card.liquid + vojta-hubne-quick-add.liquid
      + vojta-hubne-collection-club.liquid (+ asset vh-club-card.jpg)
@@ -33,18 +33,16 @@
   assign vh_hero_3 = all_products['kreatin-hmb']
   assign vh_hero_4 = all_products['d3-k2-vapnik']
   assign vh_all_collection = collections.all
+  assign vh_promo_enabled = true
+  assign vh_promo_banner = 'vh-catalog-blackfriday-banner.jpg' | asset_url
+  assign vh_promo_banner_webp = 'vh-catalog-blackfriday-banner.webp' | asset_url
+  assign vh_promo_banner_mobil = 'vh-catalog-blackfriday-banner-mobil.jpg' | asset_url
+  assign vh_promo_banner_mobil_webp = 'vh-catalog-blackfriday-banner-mobil.webp' | asset_url
   comment
-    Promo banner (3 příchutě / 3 dárky) — set to true to show again.
+    Whole banner (incl. designed CTA) links to Balíčky on this page.
   endcomment
-  assign vh_promo_enabled = false
-  assign vh_promo_banner = 'vh-catalog-3prichute-banner.jpg' | asset_url
-  assign vh_promo_banner_mobil = 'vh-catalog-3prichute-banner-mobil.jpg' | asset_url
-  assign vh_promo_product = all_products['3shake-bundle']
-  if vh_promo_product != blank
-    assign vh_promo_href = vh_promo_product.url
-  else
-    assign vh_promo_href = '/products/3shake-bundle'
-  endif
+  assign vh_promo_href = '#vh-catalog-bundles'
+  assign vh_promo_label = 'Black Friday — listopadové balíčky. Ušetříte až 1 570 Kč. Zobrazit balíčky.'
 %}
 
 <section class="vh-catalog" aria-label="Katalog">
@@ -53,21 +51,34 @@
       <a
         class="vh-catalog__promo-banner"
         href="{{ vh_promo_href }}"
-        aria-label="3 příchutě LEAN SHAKE, 3 dárky zdarma — D3 + K2, Aquamin MG a BIOME 4"
+        aria-label="{{ vh_promo_label }}"
       >
         <picture>
           <source
             media="(max-width: 749px)"
+            srcset="{{ vh_promo_banner_mobil_webp }}"
+            type="image/webp"
+            width="649"
+            height="1024"
+          >
+          <source
+            media="(max-width: 749px)"
             srcset="{{ vh_promo_banner_mobil }}"
+            width="649"
+            height="1024"
+          >
+          <source
+            srcset="{{ vh_promo_banner_webp }}"
+            type="image/webp"
             width="1024"
-            height="856"
+            height="404"
           >
           <img
             class="vh-catalog__promo-banner-image"
             src="{{ vh_promo_banner }}"
-            alt="3 příchutě LEAN SHAKE, 3 dárky zdarma — D3 + K2, Aquamin MG a BIOME 4"
+            alt="{{ vh_promo_label }}"
             width="1024"
-            height="295"
+            height="404"
             loading="eager"
             decoding="async"
             fetchpriority="high"
@@ -129,7 +140,11 @@
 
     {% render 'vojta-hubne-collection-club' %}
 
-    <div class="vh-catalog__block vh-catalog__block--bundles" aria-labelledby="vh-catalog-bundles-title">
+    <div
+      id="vh-catalog-bundles"
+      class="vh-catalog__block vh-catalog__block--bundles"
+      aria-labelledby="vh-catalog-bundles-title"
+    >
       <header class="vh-catalog__header">
         <h2 class="vh-catalog__title" id="vh-catalog-bundles-title">Balíčky</h2>
         <p class="vh-catalog__subtitle">
